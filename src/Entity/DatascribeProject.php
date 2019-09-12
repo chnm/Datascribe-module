@@ -12,15 +12,9 @@ use Omeka\Entity\User;
  */
 class DatascribeProject extends AbstractEntity
 {
+    use IdTrait;
     use SyncedTrait;
     use CreatedTrait;
-
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @ManyToOne(
@@ -77,11 +71,6 @@ class DatascribeProject extends AbstractEntity
      * )
      */
     protected $recordLabel;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function setItemSet(?ItemSet $itemSet = null) : void
     {
