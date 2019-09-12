@@ -1,5 +1,5 @@
 <?php
-namespace DataScribe\Entity;
+namespace Datascribe\Entity;
 
 use DateTime;
 use Doctrine\ORM\Event\LifecycleEventArgs;
