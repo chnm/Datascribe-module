@@ -22,7 +22,7 @@ class DatascribeRecord extends AbstractEntity
      *     onDelete="CASCADE"
      * )
      */
-    protected $datascribeItem;
+    protected $item;
 
     /**
      * @ManyToOne(
@@ -35,14 +35,14 @@ class DatascribeRecord extends AbstractEntity
      */
     protected $transcriber;
 
-    public function setDatascribeItem(DatascribeProject $datascribeItem) : void
+    public function setItem(DatascribeItem $item) : void
     {
-        $this->datascribeItem = $datascribeItem;
+        $this->item = $item;
     }
 
-    public function getDatascribeItem() : DatascribeItem
+    public function getItem() : DatascribeItem
     {
-        return $this->datascribeItem;
+        return $this->item;
     }
 
     public function setTranscriber(?User $transcriber = null) : void

@@ -2,6 +2,7 @@
 namespace Datascribe\Entity;
 
 use DateTime;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\Item;
 use Omeka\Entity\User;
@@ -11,10 +12,11 @@ use Omeka\Entity\User;
  * @Table(
  *     uniqueConstraints={
  *         @UniqueConstraint(
- *             columns={"datascribe_project_id", "omeka_item_id"}
+ *             columns={"project_id", "item_id"}
  *         )
  *     }
  * )
+ * @HasLifecycleCallbacks
  */
 class DatascribeItem extends AbstractEntity
 {
@@ -30,7 +32,7 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="CASCADE"
      * )
      */
-    protected $datascribeProject;
+    protected $project;
 
     /**
      * @ManyToOne(
@@ -41,7 +43,7 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="CASCADE"
      * )
      */
-    protected $omekaItem;
+    protected $item;
 
     /**
      * @ManyToOne(
@@ -81,24 +83,24 @@ class DatascribeItem extends AbstractEntity
      */
     protected $approved;
 
-    public function setDatascribeProject(DatascribeProject $datascribeProject) : void
+    public function setProject(DatascribeProject $project) : void
     {
-        $this->datascribeProject = $datascribeProject;
+        $this->project = $project;
     }
 
-    public function getDatascribeProject() : DatascribeProject
+    public function getProject() : DatascribeProject
     {
-        return $this->datascribeProject;
+        return $this->project;
     }
 
-    public function setOmekaItem(Item $omekaItem) : void
+    public function setItem(Item $item) : void
     {
-        $this->omekaItem = $omekaItem;
+        $this->item = $item;
     }
 
-    public function getOmekaItem() : Item
+    public function getItem() : Item
     {
-        return $this->omekaItem;
+        return $this->item;
     }
 
     public function setCompletedBy(?User $completedBy = null) : void
@@ -139,5 +141,13 @@ class DatascribeItem extends AbstractEntity
     public function getApproved() : ?DateTime
     {
         return $this->approved;
+    }
+
+    /**
+     * @PrePersist
+     */
+    public function prePersist(LifecycleEventArgs $eventArgs)
+    {
+        $this->setSynced(new DateTime('now'));
     }
 }

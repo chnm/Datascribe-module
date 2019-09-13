@@ -64,10 +64,10 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'datascribeProject', 'omekaItem', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
+            return ['__isInitialized__', 'project', 'item', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
         }
 
-        return ['__isInitialized__', 'datascribeProject', 'omekaItem', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
+        return ['__isInitialized__', 'project', 'item', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
     }
 
     /**
@@ -176,45 +176,45 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setDatascribeProject(\Datascribe\Entity\DatascribeProject $datascribeProject): void
+    public function setProject(\Datascribe\Entity\DatascribeProject $project): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDatascribeProject', [$datascribeProject]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProject', [$project]);
 
-        parent::setDatascribeProject($datascribeProject);
+        parent::setProject($project);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDatascribeProject(): \Datascribe\Entity\DatascribeProject
+    public function getProject(): \Datascribe\Entity\DatascribeProject
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDatascribeProject', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProject', []);
 
-        return parent::getDatascribeProject();
+        return parent::getProject();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setOmekaItem(\Omeka\Entity\Item $omekaItem): void
+    public function setItem(\Omeka\Entity\Item $item): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOmekaItem', [$omekaItem]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setItem', [$item]);
 
-        parent::setOmekaItem($omekaItem);
+        parent::setItem($item);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getOmekaItem(): \Omeka\Entity\Item
+    public function getItem(): \Omeka\Entity\Item
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOmekaItem', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getItem', []);
 
-        return parent::getOmekaItem();
+        return parent::getItem();
     }
 
     /**
@@ -303,6 +303,17 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
 
         return parent::getApproved();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
+
+        return parent::prePersist($eventArgs);
     }
 
     /**

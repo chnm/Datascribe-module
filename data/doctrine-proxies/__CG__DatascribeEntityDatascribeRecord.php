@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'datascribeItem', 'transcriber', 'id', 'created'];
+            return ['__isInitialized__', 'item', 'transcriber', 'id', 'created'];
         }
 
-        return ['__isInitialized__', 'datascribeItem', 'transcriber', 'id', 'created'];
+        return ['__isInitialized__', 'item', 'transcriber', 'id', 'created'];
     }
 
     /**
@@ -176,23 +176,23 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setDatascribeItem(\Datascribe\Entity\DatascribeProject $datascribeItem): void
+    public function setItem(\Datascribe\Entity\DatascribeItem $item): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDatascribeItem', [$datascribeItem]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setItem', [$item]);
 
-        parent::setDatascribeItem($datascribeItem);
+        parent::setItem($item);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDatascribeItem(): \Datascribe\Entity\DatascribeItem
+    public function getItem(): \Datascribe\Entity\DatascribeItem
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDatascribeItem', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getItem', []);
 
-        return parent::getDatascribeItem();
+        return parent::getItem();
     }
 
     /**

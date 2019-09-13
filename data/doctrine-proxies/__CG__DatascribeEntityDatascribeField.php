@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'datascribeProject', 'label', 'description', 'position', 'dataType', 'data', 'id'];
+            return ['__isInitialized__', 'project', 'label', 'description', 'position', 'dataType', 'data', 'id'];
         }
 
-        return ['__isInitialized__', 'datascribeProject', 'label', 'description', 'position', 'dataType', 'data', 'id'];
+        return ['__isInitialized__', 'project', 'label', 'description', 'position', 'dataType', 'data', 'id'];
     }
 
     /**
@@ -176,23 +176,23 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setDatascribeProject(\Datascribe\Entity\DatascribeProject $datascribeProject): void
+    public function setProject(\Datascribe\Entity\DatascribeProject $project): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDatascribeProject', [$datascribeProject]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProject', [$project]);
 
-        parent::setDatascribeProject($datascribeProject);
+        parent::setProject($project);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDatascribeProject(): \Datascribe\Entity\DatascribeProject
+    public function getProject(): \Datascribe\Entity\DatascribeProject
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDatascribeProject', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProject', []);
 
-        return parent::getDatascribeProject();
+        return parent::getProject();
     }
 
     /**

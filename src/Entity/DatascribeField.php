@@ -8,7 +8,7 @@ use Omeka\Entity\AbstractEntity;
  * @Table(
  *     uniqueConstraints={
  *         @UniqueConstraint(
- *             columns={"datascribe_project_id", "position"}
+ *             columns={"project_id", "position"}
  *         )
  *     }
  * )
@@ -26,7 +26,7 @@ class DatascribeField extends AbstractEntity
      *     onDelete="CASCADE"
      * )
      */
-    protected $datascribeProject;
+    protected $project;
 
     /**
      * @Column(
@@ -70,14 +70,14 @@ class DatascribeField extends AbstractEntity
      */
     protected $data;
 
-    public function setDatascribeProject(DatascribeProject $datascribeProject) : void
+    public function setProject(DatascribeProject $project) : void
     {
-        $this->datascribeProject = $datascribeProject;
+        $this->project = $project;
     }
 
-    public function getDatascribeProject() : DatascribeProject
+    public function getProject() : DatascribeProject
     {
-        return $this->datascribeProject;
+        return $this->project;
     }
 
     public function setLabel(string $label) : void
