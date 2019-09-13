@@ -8,4 +8,14 @@ return [
             sprintf('%s/../data/doctrine-proxies', __DIR__),
         ],
     ],
+    'service_manager' => [
+        'factories' => [
+            'Datascribe\FieldDataTypeManager' => Datascribe\Service\FieldDataTypeManagerFactory::class,
+        ],
+    ],
+    'datascribe_field_data_types' => [
+        'invokables' => [
+            'text' => Datascribe\FieldDataType\Text::class,
+        ],
+    ],
 ];
