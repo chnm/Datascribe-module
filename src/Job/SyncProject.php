@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Job;
 
-use Datascribe\Entity\DatascribeProject;
+use Datascribe\Entity\DatascribeDataset;
 use Datascribe\Entity\DatascribeItem;
 use DateTime;
 use Omeka\Entity\Item;
@@ -9,27 +9,27 @@ use Omeka\Entity\ItemSet;
 use Omeka\Job\AbstractJob;
 use Omeka\Job\Exception;
 
-class SyncProject extends AbstractJob
+class SyncDataset extends AbstractJob
 {
     /**
-     * Sync a project with its item set.
+     * Sync a dataset with its item set.
      */
     public function perform()
     {
-        if (!is_numeric($this->getArg('project_id'))) {
-            throw new Exception\RuntimeException('Missing project_id');
+        if (!is_numeric($this->getArg('dataset_id'))) {
+            throw new Exception\RuntimeException('Missing dataset_id');
         }
         $em = $this->getServiceLocator()->get('Omeka\EntityManager');
-        $project = $em->find(DatascribeProject::class, $this->getArg('project_id'));
-        if (null === $project) {
-            throw new Exception\RuntimeException('Cannot find project');
+        $dataset = $em->find(DatascribeDataset::class, $this->getArg('dataset_id'));
+        if (null === $dataset) {
+            throw new Exception\RuntimeException('Cannot find dataset');
         }
-        if (null === $project->getItemSet()) {
-            throw new Exception\RuntimeException('Cannot sync project without an item set');
+        if (null === $dataset->getItemSet()) {
+            throw new Exception\RuntimeException('Cannot sync dataset without an item set');
         }
 
-        $dsItems = $this->getProjectItemIds($project);
-        $oItems = $this->getItemSetItemIds($project->getItemSet());
+        $dsItems = $this->getDatasetItemIds($dataset);
+        $oItems = $this->getItemSetItemIds($dataset->getItemSet());
 
         // Calculate which items to delete and which to create.
         $toDelete = array_diff($dsItems, $oItems);
@@ -38,7 +38,7 @@ class SyncProject extends AbstractJob
         // Create new DataScribe items.
         foreach ($toCreate as $oItemId) {
             $dsItem = new DatascribeItem;
-            $dsItem->setProject($project);
+            $dsItem->setDataset($dataset);
             $dsItem->setItem($em->getReference(Item::class, $oItemId));
             $em->persist($dsItem);
         }
@@ -50,30 +50,30 @@ class SyncProject extends AbstractJob
         ')->setParameter('dsitem_ids', array_keys($toDelete));
         $query->execute();
 
-        $project->setSynced(new DateTime('now'));
+        $dataset->setSynced(new DateTime('now'));
         $em->flush();
     }
 
     /**
-     * Get the IDs of all items in the DataScribe project.
+     * Get the IDs of all items in the DataScribe dataset.
      *
-     * @param DatascribeProject $project
+     * @param DatascribeDataset $dataset
      * @return array
      */
-    public function getProjectItemIds(DatascribeProject $project)
+    public function getDatasetItemIds(DatascribeDataset $dataset)
     {
         $em = $this->getServiceLocator()->get('Omeka\EntityManager');
         $query = $em->createQuery('
             SELECT dsitem.id dsitem_id, oitem.id oitem_id
             FROM Datascribe\Entity\DatascribeItem dsitem
             JOIN dsitem.item oitem
-            JOIN dsitem.project dsproject
-            WHERE dsproject.id = :dsproject_id'
+            JOIN dsitem.dataset dsdataset
+            WHERE dsdataset.id = :dsdataset_id'
         );
         // Execute the statement directly to optimize memory usage.
         $conn = $em->getConnection();
         $stmt = $conn->prepare($query->getSQL());
-        $stmt->bindValue(1, $project->getId());
+        $stmt->bindValue(1, $dataset->getId());
         $stmt->execute();
         $results = [];
         foreach ($stmt as $row) {

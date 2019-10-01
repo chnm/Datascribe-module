@@ -3,7 +3,7 @@ namespace Datascribe\Entity;
 
 use DateTime;
 
-trait SyncedTrait
+trait TraitSynced
 {
     /**
      * @Column(

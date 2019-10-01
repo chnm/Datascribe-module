@@ -3,7 +3,7 @@ namespace Datascribe\FieldDataType;
 
 class Text implements FieldDataTypeInterface
 {
-    public function getLabel() : string
+    public function getName() : string
     {
         return 'Text';
     }

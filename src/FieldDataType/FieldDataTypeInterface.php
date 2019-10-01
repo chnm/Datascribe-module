@@ -4,11 +4,11 @@ namespace Datascribe\FieldDataType;
 interface FieldDataTypeInterface
 {
     /**
-     * Get the label of this data type.
+     * Get the name of this data type.
      *
      * @return string
      */
-    public function getLabel() : string;
+    public function getName() : string;
 
     /**
      * Get the description of this data type.

@@ -12,7 +12,7 @@ use Omeka\Entity\User;
  * @Table(
  *     uniqueConstraints={
  *         @UniqueConstraint(
- *             columns={"project_id", "item_id"}
+ *             columns={"dataset_id", "item_id"}
  *         )
  *     }
  * )
@@ -20,19 +20,20 @@ use Omeka\Entity\User;
  */
 class DatascribeItem extends AbstractEntity
 {
-    use IdTrait;
-    use SyncedTrait;
+    use TraitId;
+    use TraitSynced;
+    use TraitApprovedApprovedBy;
 
     /**
      * @ManyToOne(
-     *     targetEntity="DatascribeProject"
+     *     targetEntity="DatascribeDataset"
      * )
      * @JoinColumn(
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
      */
-    protected $project;
+    protected $dataset;
 
     /**
      * @ManyToOne(
@@ -54,7 +55,7 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="SET NULL"
      * )
      */
-    protected $completedBy;
+    protected $prioritizedBy;
 
     /**
      * @ManyToOne(
@@ -65,7 +66,34 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="SET NULL"
      * )
      */
-    protected $approvedBy;
+    protected $lockedBy;
+
+    /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $completedBy;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $prioritized;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $locked;
 
     /**
      * @Column(
@@ -75,22 +103,14 @@ class DatascribeItem extends AbstractEntity
      */
     protected $completed;
 
-    /**
-     * @Column(
-     *     type="datetime",
-     *     nullable=true
-     * )
-     */
-    protected $approved;
-
-    public function setProject(DatascribeProject $project) : void
+    public function setDataset(DatascribeDataset $dataset) : void
     {
-        $this->project = $project;
+        $this->dataset = $dataset;
     }
 
-    public function getProject() : DatascribeProject
+    public function getDataset() : DatascribeDataset
     {
-        return $this->project;
+        return $this->dataset;
     }
 
     public function setItem(Item $item) : void
@@ -103,6 +123,26 @@ class DatascribeItem extends AbstractEntity
         return $this->item;
     }
 
+    public function setPrioritizedBy(?User $prioritizedBy = null) : void
+    {
+        $this->prioritizedBy = $prioritizedBy;
+    }
+
+    public function getPrioritizedBy() : ?User
+    {
+        return $this->prioritizedBy;
+    }
+
+    public function setLockedBy(?User $lockedBy = null) : void
+    {
+        $this->lockedBy = $lockedBy;
+    }
+
+    public function getLockedBy() : ?User
+    {
+        return $this->lockedBy;
+    }
+
     public function setCompletedBy(?User $completedBy = null) : void
     {
         $this->completedBy = $completedBy;
@@ -113,14 +153,24 @@ class DatascribeItem extends AbstractEntity
         return $this->completedBy;
     }
 
-    public function setApprovedBy(?User $approvedBy = null) : void
+    public function setPrioritized(?DateTime $prioritized) : void
     {
-        $this->approvedBy = $approvedBy;
+        $this->prioritized = $prioritized;
     }
 
-    public function getApprovedBy() : ?User
+    public function getPrioritized() : ?DateTime
     {
-        return $this->approvedBy;
+        return $this->prioritized;
+    }
+
+    public function setLocked(?DateTime $locked) : void
+    {
+        $this->locked = $locked;
+    }
+
+    public function getLocked() : ?DateTime
+    {
+        return $this->locked;
     }
 
     public function setCompleted(?DateTime $completed) : void
@@ -131,16 +181,6 @@ class DatascribeItem extends AbstractEntity
     public function getCompleted() : ?DateTime
     {
         return $this->completed;
-    }
-
-    public function setApproved(?DateTime $approved) : void
-    {
-        $this->approved = $approved;
-    }
-
-    public function getApproved() : ?DateTime
-    {
-        return $this->approved;
     }
 
     /**

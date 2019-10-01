@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'transcriber', 'id', 'created'];
+            return ['__isInitialized__', 'item', 'id', 'ownedBy', 'created', 'approvedBy', 'approved'];
         }
 
-        return ['__isInitialized__', 'item', 'transcriber', 'id', 'created'];
+        return ['__isInitialized__', 'item', 'id', 'ownedBy', 'created', 'approvedBy', 'approved'];
     }
 
     /**
@@ -198,28 +198,6 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setTranscriber(\Omeka\Entity\User $transcriber = NULL): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTranscriber', [$transcriber]);
-
-        parent::setTranscriber($transcriber);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTranscriber(): ?\Omeka\Entity\User
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTranscriber', []);
-
-        return parent::getTranscriber();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getResourceId()
     {
 
@@ -237,6 +215,28 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setOwnedBy(\Omeka\Entity\User $ownedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwnedBy', [$ownedBy]);
+
+        parent::setOwnedBy($ownedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOwnedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwnedBy', []);
+
+        return parent::getOwnedBy();
     }
 
     /**
@@ -270,6 +270,50 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
         parent::prePersist($eventArgs);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
+
+        parent::setApprovedBy($approvedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getApprovedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
+
+        return parent::getApprovedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApproved(?\DateTime $approved): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
+
+        parent::setApproved($approved);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getApproved(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
+
+        return parent::getApproved();
     }
 
 }

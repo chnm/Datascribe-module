@@ -64,10 +64,10 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'field', 'record', 'data', 'missing', 'illegible', 'review', 'id'];
+            return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'needsReview', 'id', 'data'];
         }
 
-        return ['__isInitialized__', 'field', 'record', 'data', 'missing', 'illegible', 'review', 'id'];
+        return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'needsReview', 'id', 'data'];
     }
 
     /**
@@ -220,89 +220,89 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setData(array $data): void
+    public function setIsInvalid(?bool $isInvalid): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setData', [$data]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsInvalid', [$isInvalid]);
 
-        parent::setData($data);
+        parent::setIsInvalid($isInvalid);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getData(): array
+    public function getIsInvalid(): ?bool
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsInvalid', []);
 
-        return parent::getData();
+        return parent::getIsInvalid();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setMissing(?bool $missing): void
+    public function setIsMissing(?bool $isMissing): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMissing', [$missing]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsMissing', [$isMissing]);
 
-        parent::setMissing($missing);
+        parent::setIsMissing($isMissing);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMissing(): ?bool
+    public function getIsMissing(): ?bool
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMissing', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsMissing', []);
 
-        return parent::getMissing();
+        return parent::getIsMissing();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setIllegible(?bool $illegible): void
+    public function setIsIllegible(?bool $isIllegible): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIllegible', [$illegible]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsIllegible', [$isIllegible]);
 
-        parent::setIllegible($illegible);
+        parent::setIsIllegible($isIllegible);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getIllegible(): ?bool
+    public function getIsIllegible(): ?bool
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIllegible', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIllegible', []);
 
-        return parent::getIllegible();
+        return parent::getIsIllegible();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setReview(?bool $review): void
+    public function setNeedsReview(?bool $needsReview): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReview', [$review]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsReview', [$needsReview]);
 
-        parent::setReview($review);
+        parent::setNeedsReview($needsReview);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getReview(): ?bool
+    public function getNeedsReview(): ?bool
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReview', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsReview', []);
 
-        return parent::getReview();
+        return parent::getNeedsReview();
     }
 
     /**
@@ -325,6 +325,28 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setData(array $data): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setData', [$data]);
+
+        parent::setData($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getData(): array
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData', []);
+
+        return parent::getData();
     }
 
 }

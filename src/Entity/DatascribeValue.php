@@ -8,7 +8,8 @@ use Omeka\Entity\AbstractEntity;
  */
 class DatascribeValue extends AbstractEntity
 {
-    use IdTrait;
+    use TraitId;
+    use TraitData;
 
     /**
      * @ManyToOne(
@@ -34,11 +35,11 @@ class DatascribeValue extends AbstractEntity
 
     /**
      * @Column(
-     *     type="json_array",
-     *     nullable=false
+     *     type="boolean",
+     *     nullable=true
      * )
      */
-    protected $data;
+    protected $isInvalid;
 
     /**
      * @Column(
@@ -46,7 +47,7 @@ class DatascribeValue extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $missing;
+    protected $isMissing;
 
     /**
      * @Column(
@@ -54,7 +55,7 @@ class DatascribeValue extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $illegible;
+    protected $isIllegible;
 
     /**
      * @Column(
@@ -62,7 +63,7 @@ class DatascribeValue extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $review;
+    protected $needsReview;
 
     public function setField(DatascribeField $field) : void
     {
@@ -84,43 +85,43 @@ class DatascribeValue extends AbstractEntity
         return $this->record;
     }
 
-    public function setData(array $data) : void
+    public function setIsInvalid(?bool $isInvalid) : void
     {
-        $this->data = $data;
+        $this->isInvalid = $isInvalid;
     }
 
-    public function getData() : array
+    public function getIsInvalid() : ?bool
     {
-        return $this->data;
+        return $this->isInvalid;
     }
 
-    public function setMissing(?bool $missing) : void
+    public function setIsMissing(?bool $isMissing) : void
     {
-        $this->missing = $missing;
+        $this->isMissing = $isMissing;
     }
 
-    public function getMissing() : ?bool
+    public function getIsMissing() : ?bool
     {
-        return $this->missing;
+        return $this->isMissing;
     }
 
-    public function setIllegible(?bool $illegible) : void
+    public function setIsIllegible(?bool $isIllegible) : void
     {
-        $this->illegible = $illegible;
+        $this->isIllegible = $isIllegible;
     }
 
-    public function getIllegible() : ?bool
+    public function getIsIllegible() : ?bool
     {
-        return $this->illegible;
+        return $this->isIllegible;
     }
 
-    public function setReview(?bool $review) : void
+    public function setNeedsReview(?bool $needsReview) : void
     {
-        $this->review = $review;
+        $this->needsReview = $needsReview;
     }
 
-    public function getReview() : ?bool
+    public function getNeedsReview() : ?bool
     {
-        return $this->review;
+        return $this->needsReview;
     }
 }

@@ -8,25 +8,27 @@ use Omeka\Entity\AbstractEntity;
  * @Table(
  *     uniqueConstraints={
  *         @UniqueConstraint(
- *             columns={"project_id", "position"}
+ *             columns={"dataset_id", "position"}
  *         )
  *     }
  * )
  */
 class DatascribeField extends AbstractEntity
 {
-    use IdTrait;
+    use TraitId;
+    use TraitNameDescription;
+    use TraitData;
 
     /**
      * @ManyToOne(
-     *     targetEntity="DatascribeProject"
+     *     targetEntity="DatascribeDataset"
      * )
      * @JoinColumn(
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
      */
-    protected $project;
+    protected $dataset;
 
     /**
      * @Column(
@@ -43,7 +45,7 @@ class DatascribeField extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $description;
+    protected $hint;
 
     /**
      * @Column(
@@ -55,6 +57,14 @@ class DatascribeField extends AbstractEntity
 
     /**
      * @Column(
+     *     type="boolean",
+     *     nullable=true
+     * )
+     */
+    protected $isPrimary;
+
+    /**
+     * @Column(
      *     type="string",
      *     length=255,
      *     nullable=false
@@ -62,22 +72,14 @@ class DatascribeField extends AbstractEntity
      */
     protected $dataType;
 
-    /**
-     * @Column(
-     *     type="json_array",
-     *     nullable=false
-     * )
-     */
-    protected $data;
-
-    public function setProject(DatascribeProject $project) : void
+    public function setDataset(DatascribeDataset $dataset) : void
     {
-        $this->project = $project;
+        $this->dataset = $dataset;
     }
 
-    public function getProject() : DatascribeProject
+    public function getDataset() : DatascribeDataset
     {
-        return $this->project;
+        return $this->dataset;
     }
 
     public function setLabel(string $label) : void
@@ -90,14 +92,14 @@ class DatascribeField extends AbstractEntity
         return $this->label;
     }
 
-    public function setDescription(?string $description) : void
+    public function setHint(?string $hint) : void
     {
-        $this->description = $description;
+        $this->hint = $hint;
     }
 
-    public function getDescription() : ?string
+    public function getHint() : ?string
     {
-        return $this->description;
+        return $this->hint;
     }
 
     public function setPosition(int $position) : void
@@ -110,6 +112,16 @@ class DatascribeField extends AbstractEntity
         return $this->position;
     }
 
+    public function setIsPrimary(?bool $isPrimary) : void
+    {
+        $this->isPrimary = $isPrimary;
+    }
+
+    public function getIsPrimary() : ?bool
+    {
+        return $this->isPrimary;
+    }
+
     public function setDataType(?string $dataType) : void
     {
         $this->dataType = $dataType;
@@ -118,15 +130,5 @@ class DatascribeField extends AbstractEntity
     public function getDataType() : ?string
     {
         return $this->dataType;
-    }
-
-    public function setData(array $data) : void
-    {
-        $this->data = $data;
-    }
-
-    public function getData() : array
-    {
-        return $this->data;
     }
 }

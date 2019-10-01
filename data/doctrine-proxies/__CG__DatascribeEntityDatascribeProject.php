@@ -64,10 +64,10 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'itemSet', 'owner', 'title', 'description', 'guidelines', 'recordLabel', 'id', 'synced', 'created'];
+            return ['__isInitialized__', 'id', 'name', 'description', 'ownedBy', 'created'];
         }
 
-        return ['__isInitialized__', 'itemSet', 'owner', 'title', 'description', 'guidelines', 'recordLabel', 'id', 'synced', 'created'];
+        return ['__isInitialized__', 'id', 'name', 'description', 'ownedBy', 'created'];
     }
 
     /**
@@ -176,67 +176,45 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
     /**
      * {@inheritDoc}
      */
-    public function setItemSet(\Omeka\Entity\ItemSet $itemSet = NULL): void
+    public function getResourceId()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setItemSet', [$itemSet]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResourceId', []);
 
-        parent::setItemSet($itemSet);
+        return parent::getResourceId();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getItemSet(): ?\Omeka\Entity\ItemSet
+    public function getId()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getItemSet', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
-        return parent::getItemSet();
+        return parent::getId();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setOwner(\Omeka\Entity\User $owner = NULL): void
+    public function setName(string $name): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwner', [$owner]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
-        parent::setOwner($owner);
+        parent::setName($name);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getOwner(): ?\Omeka\Entity\User
+    public function getName(): string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwner', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
-        return parent::getOwner();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTitle(string $title): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTitle', [$title]);
-
-        parent::setTitle($title);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTitle(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTitle', []);
-
-        return parent::getTitle();
+        return parent::getName();
     }
 
     /**
@@ -264,89 +242,23 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
     /**
      * {@inheritDoc}
      */
-    public function setGuidelines(?string $guidelines): void
+    public function setOwnedBy(\Omeka\Entity\User $ownedBy = NULL): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setGuidelines', [$guidelines]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwnedBy', [$ownedBy]);
 
-        parent::setGuidelines($guidelines);
+        parent::setOwnedBy($ownedBy);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getGuidelines(): ?string
+    public function getOwnedBy(): ?\Omeka\Entity\User
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGuidelines', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwnedBy', []);
 
-        return parent::getGuidelines();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setRecordLabel(string $recordLabel): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRecordLabel', [$recordLabel]);
-
-        parent::setRecordLabel($recordLabel);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRecordLabel(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRecordLabel', []);
-
-        return parent::getRecordLabel();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getResourceId()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResourceId', []);
-
-        return parent::getResourceId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getId()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
-
-        return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setSynced(?\DateTime $synced): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSynced', [$synced]);
-
-        parent::setSynced($synced);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSynced(): ?\DateTime
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSynced', []);
-
-        return parent::getSynced();
+        return parent::getOwnedBy();
     }
 
     /**

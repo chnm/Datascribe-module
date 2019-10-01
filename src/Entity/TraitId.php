@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Entity;
 
-trait IdTrait
+trait TraitId
 {
     /**
      * @Id

@@ -64,10 +64,10 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'item', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
+            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'synced', 'approvedBy', 'approved'];
         }
 
-        return ['__isInitialized__', 'project', 'item', 'completedBy', 'approvedBy', 'completed', 'approved', 'id', 'synced'];
+        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'synced', 'approvedBy', 'approved'];
     }
 
     /**
@@ -176,23 +176,23 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setProject(\Datascribe\Entity\DatascribeProject $project): void
+    public function setDataset(\Datascribe\Entity\DatascribeDataset $dataset): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProject', [$project]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDataset', [$dataset]);
 
-        parent::setProject($project);
+        parent::setDataset($dataset);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getProject(): \Datascribe\Entity\DatascribeProject
+    public function getDataset(): \Datascribe\Entity\DatascribeDataset
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProject', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDataset', []);
 
-        return parent::getProject();
+        return parent::getDataset();
     }
 
     /**
@@ -220,6 +220,50 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
+    public function setPrioritizedBy(\Omeka\Entity\User $prioritizedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPrioritizedBy', [$prioritizedBy]);
+
+        parent::setPrioritizedBy($prioritizedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPrioritizedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrioritizedBy', []);
+
+        return parent::getPrioritizedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLockedBy(\Omeka\Entity\User $lockedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLockedBy', [$lockedBy]);
+
+        parent::setLockedBy($lockedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLockedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLockedBy', []);
+
+        return parent::getLockedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setCompletedBy(\Omeka\Entity\User $completedBy = NULL): void
     {
 
@@ -242,23 +286,45 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
+    public function setPrioritized(?\DateTime $prioritized): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPrioritized', [$prioritized]);
 
-        parent::setApprovedBy($approvedBy);
+        parent::setPrioritized($prioritized);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getApprovedBy(): ?\Omeka\Entity\User
+    public function getPrioritized(): ?\DateTime
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrioritized', []);
 
-        return parent::getApprovedBy();
+        return parent::getPrioritized();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocked(?\DateTime $locked): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLocked', [$locked]);
+
+        parent::setLocked($locked);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLocked(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLocked', []);
+
+        return parent::getLocked();
     }
 
     /**
@@ -281,28 +347,6 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompleted', []);
 
         return parent::getCompleted();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setApproved(?\DateTime $approved): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
-
-        parent::setApproved($approved);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getApproved(): ?\DateTime
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
-
-        return parent::getApproved();
     }
 
     /**
@@ -358,6 +402,50 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSynced', []);
 
         return parent::getSynced();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
+
+        parent::setApprovedBy($approvedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getApprovedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
+
+        return parent::getApprovedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApproved(?\DateTime $approved): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
+
+        parent::setApproved($approved);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getApproved(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
+
+        return parent::getApproved();
     }
 
 }
