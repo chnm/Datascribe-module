@@ -23,6 +23,14 @@ return [
             'Datascribe\FieldDataTypeManager' => Datascribe\Service\FieldDataTypeManagerFactory::class,
         ],
     ],
+    'api_adapters' => [
+        'invokables' => [
+            'datascribe_projects' => Datascribe\Api\Adapter\DatascribeProjectAdapter::class,
+            'datascribe_datasets' => Datascribe\Api\Adapter\DatascribeDatasetdapter::class,
+            'datascribe_items' => Datascribe\Api\Adapter\DatascribeItemAdapter::class,
+            'datascribe_records' => Datascribe\Api\Adapter\DatascribeRecordAdapter::class,
+        ],
+    ],
     'controllers' => [
         'invokables' => [
             'Datascribe\Controller\Admin\Index' => Datascribe\Controller\Admin\IndexController::class,
