@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'id', 'ownedBy', 'created', 'approvedBy', 'approved'];
+            return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'approvedBy', 'approved'];
         }
 
-        return ['__isInitialized__', 'item', 'id', 'ownedBy', 'created', 'approvedBy', 'approved'];
+        return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'approvedBy', 'approved'];
     }
 
     /**
@@ -220,23 +220,23 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setOwnedBy(\Omeka\Entity\User $ownedBy = NULL): void
+    public function setOwner(\Omeka\Entity\User $owner = NULL): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwnedBy', [$ownedBy]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwner', [$owner]);
 
-        parent::setOwnedBy($ownedBy);
+        parent::setOwner($owner);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getOwnedBy(): ?\Omeka\Entity\User
+    public function getOwner(): ?\Omeka\Entity\User
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwnedBy', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwner', []);
 
-        return parent::getOwnedBy();
+        return parent::getOwner();
     }
 
     /**

@@ -8,7 +8,7 @@ use Omeka\Entity\User;
 /**
  * Entities using this trait must include the @HasLifecycleCallbacks annotation.
  */
-trait TraitCreatedOwnedBy
+trait TraitCreatedOwner
 {
     /**
      * @ManyToOne(
@@ -19,7 +19,7 @@ trait TraitCreatedOwnedBy
      *     onDelete="SET NULL"
      * )
      */
-    protected $ownedBy;
+    protected $owner;
 
     /**
      * @Column(
@@ -29,14 +29,14 @@ trait TraitCreatedOwnedBy
      */
     protected $created;
 
-    public function setOwnedBy(?User $ownedBy = null) : void
+    public function setOwner(?User $owner = null) : void
     {
-        $this->ownedBy = $ownedBy;
+        $this->owner = $owner;
     }
 
-    public function getOwnedBy() : ?User
+    public function getOwner() : ?User
     {
-        return $this->ownedBy;
+        return $this->owner;
     }
 
     public function setCreated(DateTime $created) : void

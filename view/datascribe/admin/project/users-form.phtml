@@ -1,0 +1,48 @@
+<div id="project-users" class="section">
+    <table id="project-users-table" class="tablesaw" data-tablesaw-mode="stack" style="display: none;">
+        <thead>
+        <tr>
+            <th><?php echo $this->translate('Name'); ?></th>
+            <th><?php echo $this->translate('Email'); ?></th>
+            <th><?php echo $this->translate('Role'); ?></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <?php echo $this->userSelector($this->translate('Click on a user to add them to the project.')); ?>
+</div>
+
+<?php
+$users = [];
+if (isset($project)) {
+    foreach ($project->users() as $user) {
+        $users[] = $user->user();
+    }
+}
+$deleteIcon = $this->hyperlink('', '#', ['class' => 'o-icon-delete', 'title' => $this->translate('Delete')]);
+$restoreIcon = $this->hyperlink('', '#', ['class' => 'o-icon-undo', 'style' => 'display: none;', 'title' => $this->translate('Restore')]);
+$reviewer = $this->translate('Reviewer');
+$transcriber = $this->translate('Transcriber');
+$template = <<<TEMPLATE
+<tr>
+    <td class="user-name"></td>
+    <td class="user-email"></td>
+    <td class="user-role">
+        <select name="user-roles[]">
+            <option value="transcriber">$transcriber</option>
+            <option value="reviewer">$reviewer</option>
+        </select>
+    </td>
+    <td>
+        <ul class="actions">
+            <li>$deleteIcon</li>
+            <li>$restoreIcon</li>
+        </ul>
+        <input class="user-id" type="hidden" name="user-ids[]" value="">
+    </td>
+</tr>
+TEMPLATE
+?>
+<span id="users" data-users="<?php echo $this->escapeHtml(json_encode($users, true)); ?>"></span>
+<span id="user-row-template" data-template="<?php echo $this->escapeHtml($template); ?>"></span>

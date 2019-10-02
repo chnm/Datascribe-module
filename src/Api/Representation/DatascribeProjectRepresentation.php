@@ -13,4 +13,18 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
     public function getJsonLd()
     {
     }
+
+    public function adminUrl($action = null, $canonical = false)
+    {
+        $url = $this->getViewHelper('Url');
+        return $url(
+            'admin/datascribe-project-id',
+            [
+                'action' => $action,
+                'project-id' => $this->resource->getId(),
+            ],
+            ['force_canonical' => $canonical]
+        );
+    }
+
 }

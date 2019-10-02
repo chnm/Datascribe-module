@@ -14,7 +14,7 @@ class DatascribeDataset extends AbstractEntity
     use TraitId;
     use TraitNameDescription;
     use TraitSynced;
-    use TraitCreatedOwnedBy;
+    use TraitCreatedOwner;
 
     /**
      * @ManyToOne(

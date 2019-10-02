@@ -1,1 +1,27 @@
+<?php
+$this->headScript()->appendFile($this->assetUrl('js/admin/project-form.js', 'Datascribe'));
+$this->htmlElement('body')->appendAttribute('class', 'datascribe project add');
+$form->prepare();
+?>
+
+<?php echo $this->pageTitle($this->translate('New project'), 1, $this->translate('DataScribe')); ?>
+
+<?php echo $this->sectionNav([
+    'project-config' => $this->translate('Configuration'),
+    'project-users' => $this->translate('Users'),
+]); ?>
+
+<?php echo $this->form()->openTag($form); ?>
+
+<div id="page-actions">
+    <button><?php echo $this->translate('Add'); ?></button>
+</div>
+
+<div id="project-config" class="active section">
+    <?php echo $this->formCollection($form, false); ?>
+</div>
+
+<?php echo $this->partial('users-form'); ?>
+
+<?php echo $this->form()->closeTag(); ?>
 

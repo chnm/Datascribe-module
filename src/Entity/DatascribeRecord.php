@@ -10,7 +10,7 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeRecord extends AbstractEntity
 {
     use TraitId;
-    use TraitCreatedOwnedBy;
+    use TraitCreatedOwner;
     use TraitApprovedApprovedBy;
 
     /**
