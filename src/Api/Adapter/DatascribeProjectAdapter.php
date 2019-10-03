@@ -66,16 +66,16 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
-        $this->hydrateOwner($request, $entity);
-        if ($this->shouldHydrate($request, 'o:is_public')) {
-            $entity->setIsPublic($request->getValue('o:is_public', true));
-        }
         if ($this->shouldHydrate($request, 'o-module-datascribe:name')) {
             $entity->setName($request->getValue('o-module-datascribe:name'));
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:description')) {
             $entity->setDescription($request->getValue('o-module-datascribe:description'));
         }
+        if ($this->shouldHydrate($request, 'o:is_public')) {
+            $entity->setIsPublic($request->getValue('o:is_public', true));
+        }
+        $this->hydrateOwner($request, $entity);
         if ($this->shouldHydrate($request, 'o-module-datascribe:user')) {
             $oUserAdapter = $this->getAdapter('users');
             $users = $entity->getUsers();
@@ -117,7 +117,7 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
         if (null === $entity->getName()) {
-            $errorStore->addError('o-module-datascribe:name', 'A DataScribe project name must not be null'); // @translate
+            $errorStore->addError('o-module-datascribe:name', 'A project name must not be null'); // @translate
         }
     }
 }

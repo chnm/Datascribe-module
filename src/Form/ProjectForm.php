@@ -2,8 +2,6 @@
 namespace Datascribe\Form;
 
 use Zend\Form\Form;
-use Omeka\Form\Element\ItemSetSelect;
-use Omeka\Form\Element\PropertySelect;
 
 class ProjectForm extends Form
 {
@@ -18,6 +16,7 @@ class ProjectForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'id' => 'o-module-datascribe-name',
             ],
         ]);
         $this->add([
@@ -29,6 +28,7 @@ class ProjectForm extends Form
             ],
             'attributes' => [
                 'required' => false,
+                'id' => 'o-module-datascribe-description',
             ],
         ]);
 

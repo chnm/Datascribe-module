@@ -36,11 +36,6 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
         );
     }
 
-    public function isPublic()
-    {
-        return $this->resource->getIsPublic();
-    }
-
     public function name()
     {
         return $this->resource->getName();
@@ -49,6 +44,11 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
     public function description()
     {
         return $this->resource->getDescription();
+    }
+
+    public function isPublic()
+    {
+        return $this->resource->getIsPublic();
     }
 
     public function created()

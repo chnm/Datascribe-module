@@ -35,12 +35,12 @@ class ProjectController extends AbstractActionController
 
     public function editAction()
     {
-        $form = $this->getForm(ProjectForm::class);
         try {
             $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
         } catch (NotFoundException $e) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
+        $form = $this->getForm(ProjectForm::class);
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->params()->fromPost());
