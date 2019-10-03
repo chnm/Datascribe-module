@@ -14,6 +14,12 @@ $form->prepare();
 <?php echo $this->form()->openTag($form); ?>
 
 <div id="page-actions">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'o-icon-private button',
+        'title' => $this->translate('Make public'),
+    ]); ?>
+    <input type="hidden" name="o:is_public" value="0">
+    <?php echo $this->cancelButton(); ?>
     <button><?php echo $this->translate('Add'); ?></button>
 </div>
 

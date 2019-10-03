@@ -16,6 +16,7 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
         return [
             'o-module-datascribe:name' => $this->name(),
             'o-module-datascribe:description' => $this->description(),
+            'o:is_public' => $this->isPublic(),
             'o:created' => $this->getDateTime($this->created()),
             'o:owner' => $owner ? $owner->getReference() : null,
             'o-module-datascribe:user' => $this->users(),
@@ -33,6 +34,11 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
             ],
             ['force_canonical' => $canonical]
         );
+    }
+
+    public function isPublic()
+    {
+        return $this->resource->getIsPublic();
     }
 
     public function name()

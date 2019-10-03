@@ -6,11 +6,13 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe project browse'
 
 <div id="page-actions">
     <div id="page-action-menu">
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeProjectAdapter', 'create')): ?>
         <?php echo $this->hyperlink(
             $this->translate('Add new project'),
             $this->url('admin/datascribe-project', ['action' => 'add']),
             ['class' => 'button']
         ); ?>
+    <?php endif; ?>
     </div>
 </div>
 
@@ -44,6 +46,9 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe project browse'
         <tr>
             <td>
                 <?php echo $project->link($project->name()); ?>
+                <?php if (!$project->isPublic()): ?>
+                    <span class="o-icon-private" aria-label="<?php echo $this->translate('Private'); ?>"></span>
+                <?php endif; ?>
                 <ul class="actions">
                     <?php if ($project->userIsAllowed('update')): ?>
                     <li><?php echo $project->link('', 'edit', [

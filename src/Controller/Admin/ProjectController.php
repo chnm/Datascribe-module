@@ -16,6 +16,7 @@ class ProjectController extends AbstractActionController
             $form->setData($this->params()->fromPost());
             if ($form->isValid()) {
                 $formData = $form->getData();
+                $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
                 $formData['o-module-datascribe:user'] = $this->params()->fromPost('o-module-datascribe:user');
                 $response = $this->api($form)->create('datascribe_projects', $formData);
                 if ($response) {
@@ -45,6 +46,7 @@ class ProjectController extends AbstractActionController
             $form->setData($this->params()->fromPost());
             if ($form->isValid()) {
                 $formData = $form->getData();
+                $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
                 $formData['o-module-datascribe:user'] = $this->params()->fromPost('o-module-datascribe:user');
                 $response = $this->api($form)->update('datascribe_projects', $this->params('project-id'), $formData);
                 if ($response) {
