@@ -7,6 +7,7 @@ use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
 use Omeka\Entity\EntityInterface;
 use Omeka\Stdlib\ErrorStore;
+use Omeka\Stdlib\Message;
 
 class DatascribeProjectAdapter extends AbstractEntityAdapter
 {
@@ -116,6 +117,12 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
+        if (!$this->isUnique($entity, ['name' => $entity->getName()])) {
+            $errorStore->addError('o-module-datascribe:name', new Message(
+                'The name "%s" is already taken.', // @translate
+                $entity->getName()
+            ));
+        }
         if (null === $entity->getName()) {
             $errorStore->addError('o-module-datascribe:name', 'A project name must not be null'); // @translate
         }

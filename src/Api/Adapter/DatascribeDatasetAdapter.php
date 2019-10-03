@@ -80,6 +80,12 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
+        if (!$this->isUnique($entity, ['name' => $entity->getName()])) {
+            $errorStore->addError('o-module-datascribe:name', new Message(
+                'The name "%s" is already taken.', // @translate
+                $entity->getName()
+            ));
+        }
         if (null === $entity->getName()) {
             $errorStore->addError('o-module-datascribe:name', 'A dataset name must not be null'); // @translate
         }
