@@ -13,8 +13,9 @@ class DatascribeDataset extends AbstractEntity
 {
     use TraitId;
     use TraitNameDescription;
-    use TraitSynced;
+    use TraitSyncedSyncedBy;
     use TraitCreatedOwner;
+    use TraitIsPublic;
 
     /**
      * @ManyToOne(
@@ -46,14 +47,6 @@ class DatascribeDataset extends AbstractEntity
      */
     protected $guidelines;
 
-    /**
-     * @Column(
-     *     type="boolean",
-     *     nullable=true
-     * )
-     */
-    protected $isPublic;
-
     public function setProject(DatascribeProject $project) : void
     {
         $this->project = $project;
@@ -82,15 +75,5 @@ class DatascribeDataset extends AbstractEntity
     public function getGuidelines() : ?string
     {
         return $this->guidelines;
-    }
-
-    public function setIsPublic(bool $isPublic) : void
-    {
-        $this->isPublic = $isPublic;
-    }
-
-    public function getIsPublic() : bool
-    {
-        return $this->isPublic;
     }
 }

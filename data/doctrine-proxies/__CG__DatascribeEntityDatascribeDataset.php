@@ -64,10 +64,10 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'isPublic', 'id', 'name', 'description', 'synced', 'owner', 'created'];
+            return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'isPublic', 'id', 'name', 'description', 'synced', 'owner', 'created'];
+        return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
     }
 
     /**
@@ -242,28 +242,6 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     /**
      * {@inheritDoc}
      */
-    public function setIsPublic(bool $isPublic): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPublic', [$isPublic]);
-
-        parent::setIsPublic($isPublic);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getIsPublic(): bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPublic', []);
-
-        return parent::getIsPublic();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getResourceId()
     {
 
@@ -325,6 +303,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
 
         return parent::getDescription();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSyncedBy(\Omeka\Entity\User $syncedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSyncedBy', [$syncedBy]);
+
+        parent::setSyncedBy($syncedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSyncedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSyncedBy', []);
+
+        return parent::getSyncedBy();
     }
 
     /**
@@ -402,6 +402,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
         parent::prePersist($eventArgs);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsPublic(bool $isPublic): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPublic', [$isPublic]);
+
+        parent::setIsPublic($isPublic);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsPublic(): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPublic', []);
+
+        return parent::getIsPublic();
     }
 
 }

@@ -58,7 +58,10 @@ class DatascribeField extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={
+     *         "default": false
+     *     }
      * )
      */
     protected $isPrimary;

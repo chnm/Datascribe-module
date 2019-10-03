@@ -7,6 +7,13 @@ use Omeka\Entity\User;
 
 /**
  * @Entity
+ * @Table(
+ *     uniqueConstraints={
+ *         @UniqueConstraint(
+ *             columns={"project_id", "user_id"}
+ *         )
+ *     }
+ * )
  */
 class DatascribeUser extends AbstractEntity
 {

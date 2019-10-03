@@ -5,7 +5,7 @@ trait TraitData
 {
     /**
      * @Column(
-     *     type="json_array",
+     *     type="json",
      *     nullable=false
      * )
      */

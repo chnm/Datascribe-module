@@ -64,10 +64,10 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'users', 'id', 'name', 'description', 'owner', 'created'];
+            return ['__isInitialized__', 'users', 'id', 'name', 'description', 'owner', 'created', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'users', 'id', 'name', 'description', 'owner', 'created'];
+        return ['__isInitialized__', 'users', 'id', 'name', 'description', 'owner', 'created', 'isPublic'];
     }
 
     /**
@@ -303,6 +303,28 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
         parent::prePersist($eventArgs);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsPublic(bool $isPublic): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPublic', [$isPublic]);
+
+        parent::setIsPublic($isPublic);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsPublic(): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPublic', []);
+
+        return parent::getIsPublic();
     }
 
 }

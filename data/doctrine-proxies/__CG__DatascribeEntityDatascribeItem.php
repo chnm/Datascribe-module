@@ -64,10 +64,10 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'synced', 'approvedBy', 'approved'];
+            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'approvedBy', 'approved'];
         }
 
-        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'synced', 'approvedBy', 'approved'];
+        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'approvedBy', 'approved'];
     }
 
     /**
@@ -380,6 +380,28 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSyncedBy(\Omeka\Entity\User $syncedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSyncedBy', [$syncedBy]);
+
+        parent::setSyncedBy($syncedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSyncedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSyncedBy', []);
+
+        return parent::getSyncedBy();
     }
 
     /**

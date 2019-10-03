@@ -5,7 +5,12 @@ trait TraitId
 {
     /**
      * @Id
-     * @Column(type="integer")
+     * @Column(
+     *     type="integer",
+     *     options={
+     *         "unsigned"=true
+     *     }
+     * )
      * @GeneratedValue(strategy="AUTO")
      */
     protected $id;

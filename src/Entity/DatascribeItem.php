@@ -21,7 +21,7 @@ use Omeka\Entity\User;
 class DatascribeItem extends AbstractEntity
 {
     use TraitId;
-    use TraitSynced;
+    use TraitSyncedSyncedBy;
     use TraitApprovedApprovedBy;
 
     /**

@@ -13,6 +13,7 @@ class DatascribeProject extends AbstractEntity
     use TraitId;
     use TraitNameDescription;
     use TraitCreatedOwner;
+    use TraitIsPublic;
 
     /**
      * @OneToMany(
