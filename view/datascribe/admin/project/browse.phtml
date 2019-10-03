@@ -1,1 +1,92 @@
+<?php
+$this->htmlElement('body')->appendAttribute('class', 'datascribe project browse');
+?>
 
+<?php echo $this->pageTitle($this->translate('Projects'), 1, $this->translate('DataScribe')); ?>
+
+<div id="page-actions">
+    <div id="page-action-menu">
+        <?php echo $this->hyperlink(
+            $this->translate('Add new project'),
+            $this->url('admin/datascribe-project', ['action' => 'add']),
+            ['class' => 'button']
+        ); ?>
+    </div>
+</div>
+
+<?php if ($projects): ?>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+    <?php echo $this->sortSelector([
+    [
+        'label' => $this->translate('Date created'),
+        'value' => 'created'
+    ],
+    [
+        'label' => $this->translate('Name'),
+        'value' => 'name'
+    ],
+]); ?>
+</div>
+
+<table class="tablesaw" data-tablesaw-mode="stack">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Project'); ?></th>
+            <th><?php echo $this->translate('Owner'); ?></th>
+            <th><?php echo $this->translate('Date created'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($projects as $project): ?>
+    <?php $owner = $project->owner(); ?>
+        <tr>
+            <td>
+                <?php echo $project->link($project->name()); ?>
+                <ul class="actions">
+                    <?php if ($project->userIsAllowed('update')): ?>
+                    <li><?php echo $project->link('', 'edit', [
+                        'class' => 'o-icon-edit',
+                        'title' => $this->translate('Edit'),
+                    ]) ?></li>
+                    <?php endif; ?>
+                    <li><?php echo $this->hyperlink('', '#', [
+                        'data-sidebar-content-url' => $project->url('show-details'),
+                        'class' => 'o-icon-more sidebar-content',
+                        'data-sidebar-selector' => '#show-details',
+                        'title' => $this->translate('Details'),
+                    ]); ?></li>
+                </ul>
+            </td>
+            <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
+            <td><?php echo $this->i18n()->dateFormat($project->created()); ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+</div>
+
+<div id="show-details" class="sidebar">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $this->translate('Close'),
+    ]); ?>
+    <div class="sidebar-content"></div>
+</div>
+
+<?php else: ?>
+<div class="no-resources">
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeProjectAdapter', 'create')): ?>
+    <p><?php echo sprintf(
+        $this->translate('No DataScribe projects found. %s'),
+        $this->hyperlink($this->translate('Add a new project.'), $this->url('admin/datascribe-project', ['action' => 'add']))
+    ); ?></p>
+    <?php else: ?>
+    <p><?php echo $this->translate('No DataScribe projects found.'); ?></p>
+    <?php endif; ?>
+</div>
+<?php endif; ?>

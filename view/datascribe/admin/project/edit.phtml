@@ -1,0 +1,29 @@
+<?php
+$this->headScript()->appendFile($this->assetUrl('js/admin/project-form.js', 'Datascribe'));
+$this->htmlElement('body')->appendAttribute('class', 'datascribe project edit');
+$form->prepare();
+?>
+
+<?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('Edit')); ?>
+
+<?php echo $this->sectionNav([
+    'project-config' => $this->translate('Configuration'),
+    'project-users' => $this->translate('Users'),
+]); ?>
+
+<?php echo $this->form()->openTag($form); ?>
+
+<div id="page-actions">
+    <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
+    <button><?php echo $this->translate('Save'); ?></button>
+</div>
+
+<div id="project-config" class="active section">
+    <?php echo $this->formCollection($form, false); ?>
+</div>
+
+<?php echo $this->partial('users-form'); ?>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<?php echo $this->deleteConfirm($project, 'project'); ?>

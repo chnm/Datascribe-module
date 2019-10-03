@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\Entity\DatascribeUser;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
@@ -59,6 +60,9 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
                 if (!isset($userNew['o:user']['o:id'])) {
                     continue;
                 }
+                if (!isset($userNew['o-module-datascribe:role'])) {
+                    continue;
+                }
 
                 $oUser = $oUserAdapter->findEntity($userNew['o:user']['o:id']);
                 // The $users collection is indexed by user_id.
@@ -69,6 +73,7 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
                     $user->setProject($entity);
                     $users->set($oUser->getId(), $user);
                 }
+                $user->setRole($userNew['o-module-datascribe:role']);
                 $usersToRetain[] = $user;
             }
 

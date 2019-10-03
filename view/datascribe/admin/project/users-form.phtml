@@ -14,22 +14,17 @@
 </div>
 
 <?php
-$users = [];
-if (isset($project)) {
-    foreach ($project->users() as $user) {
-        $users[] = $user->user();
-    }
-}
+$users = isset($project) ? $project->users() : [];
+$transcriber = $this->translate('Transcriber');
+$reviewer = $this->translate('Reviewer');
 $deleteIcon = $this->hyperlink('', '#', ['class' => 'o-icon-delete', 'title' => $this->translate('Delete')]);
 $restoreIcon = $this->hyperlink('', '#', ['class' => 'o-icon-undo', 'style' => 'display: none;', 'title' => $this->translate('Restore')]);
-$reviewer = $this->translate('Reviewer');
-$transcriber = $this->translate('Transcriber');
 $template = <<<TEMPLATE
 <tr>
     <td class="user-name"></td>
     <td class="user-email"></td>
     <td class="user-role">
-        <select name="user-roles[]">
+        <select class="user-role" name="o-module-datascribe:user[__INDEX__][o-module-datascribe:role]">
             <option value="transcriber">$transcriber</option>
             <option value="reviewer">$reviewer</option>
         </select>
@@ -39,7 +34,7 @@ $template = <<<TEMPLATE
             <li>$deleteIcon</li>
             <li>$restoreIcon</li>
         </ul>
-        <input class="user-id" type="hidden" name="user-ids[]" value="">
+        <input class="user-id" type="hidden" name="o-module-datascribe:user[__INDEX__][o:user][o:id]" value="">
     </td>
 </tr>
 TEMPLATE

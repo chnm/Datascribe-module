@@ -12,6 +12,14 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
 
     public function getJsonLd()
     {
+        $owner = $this->owner();
+        return [
+            'o-module-datascribe:name' => $this->name(),
+            'o-module-datascribe:description' => $this->description(),
+            'o:created' => $this->getDateTime($this->created()),
+            'o:owner' => $owner ? $owner->getReference() : null,
+            'o-module-datascribe:user' => $this->users(),
+        ];
     }
 
     public function adminUrl($action = null, $canonical = false)
@@ -27,4 +35,33 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
         );
     }
 
+    public function name()
+    {
+        return $this->resource->getName();
+    }
+
+    public function description()
+    {
+        return $this->resource->getDescription();
+    }
+
+    public function created()
+    {
+        return $this->resource->getCreated();
+    }
+
+    public function owner()
+    {
+        return $this->getAdapter('users')
+            ->getRepresentation($this->resource->getOwner());
+    }
+
+    public function users()
+    {
+        $users = [];
+        foreach ($this->resource->getUsers() as $user) {
+            $users[] = new DatascribeUserRepresentation($user, $this->getServiceLocator());
+        }
+        return $users;
+    }
 }

@@ -1,0 +1,19 @@
+<h3><?php echo $this->translate('Project metadata'); ?></h3>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Project'); ?></h4>
+    <div class="value"><?php echo $project->link($project->name()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Description'); ?></h4>
+    <?php $description = $project->description(); ?>
+    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('No description'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Owner'); ?></h4>
+    <?php $owner = $project->owner(); ?>
+    <div class="value"><?php echo $owner ? $owner->link($owner->name()) : $this->translate('No owner'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Date created'); ?></h4>
+    <div class="value"><?php echo $this->i18n()->dateFormat($project->created(), 'long', 'medium'); ?></div>
+</div>

@@ -9,16 +9,18 @@ class DatascribeUserRepresentation extends AbstractRepresentation
 {
     protected $datascribeUser;
 
-    public function __construct(DatascribeUser $datascribeUser, ServiceLocatorInterface $services)
+    public function __construct(DatascribeUser $user, ServiceLocatorInterface $services)
     {
         $this->setServiceLocator($services);
-        $this->datascribeUser = $datascribeUser;
+        $this->user = $user;
     }
 
     public function jsonSerialize()
     {
+        // The project forms need the Omeka user name and email, so set the full
+        // user serialization instead of just the reference.
         return [
-            'o:user' => $this->user()->getReference(),
+            'o:user' => $this->user(),
             'o-module-datascribe:project' => $this->project()->getReference(),
             'o-module-datascribe:role' => $this->role(),
         ];
@@ -27,17 +29,17 @@ class DatascribeUserRepresentation extends AbstractRepresentation
     public function project()
     {
         return $this->getAdapter('datascribe_projects')
-            ->getRepresentation($this->datascribeUser->getDatascribeProject());
+            ->getRepresentation($this->user->getProject());
     }
 
     public function user()
     {
         return $this->getAdapter('users')
-            ->getRepresentation($this->datascribeUser->getUser());
+            ->getRepresentation($this->user->getUser());
     }
 
     public function role()
     {
-        return $this->datascribeUser->getRole();
+        return $this->user->getRole();
     }
 }

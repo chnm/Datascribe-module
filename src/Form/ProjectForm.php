@@ -33,5 +33,19 @@ class ProjectForm extends Form
         ]);
 
         $inputFilter = $this->getInputFilter();
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:name',
+            'required' => true,
+            'filters' => [
+                ['name' => 'toNull'],
+            ],
+        ]);
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:description',
+            'required' => false,
+            'filters' => [
+                ['name' => 'toNull'],
+            ],
+        ]);
     }
 }

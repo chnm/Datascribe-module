@@ -1,28 +1,36 @@
 $(document).ready(function() {
 
-var template = $($('#user-row-template').data('template'));
+var template = $('#user-row-template').data('template');
+var userIndex = 0;
 
 // Add a row to the users table.
 var addUserRow = function(user) {
     $('#project-users-table').show();
-    var userRow = template.clone();
-    userRow.find('.user-id').val(user['o:id']);
-    userRow.find('.user-name').text(user['o:name']);
-    userRow.find('.user-email').text(user['o:email']);
+    var userRow = $(template.replace(/__INDEX__/g, userIndex));
+    userIndex++;
+    userRow.find('.user-name').text(user['o:user']['o:name']);
+    userRow.find('.user-email').text(user['o:user']['o:email']);
+    userRow.find('.user-id').val(user['o:user']['o:id']);
+    userRow.find('.user-role').val(user['o-module-datascribe:role']);
     $('#project-users-table tbody').append(userRow);
 };
 
 // Add existing users to the users table.
 $.each($('#users').data('users'), function(index, user) {
+    console.log(user);
     addUserRow(user);
 });
 
 // Add a new user to the users table.
 $('#new-users').find('.selector-child').on('click', function(e) {
-    var user = $(this).data('user');
-    var existingUser = $('#project-users-table').find('input.user-id[value="' + user['o:id'] + '"]');
-    if (!existingUser.length) {
-        // Do not add existing users.
+    var oUser = $(this).data('user');
+    var user = $('#project-users-table').find('input.user-id[value="' + oUser['o:id'] + '"]');
+    // Do not add an existing user.
+    if (!user.length) {
+        var user = {
+            'o:user': oUser,
+            'o-module-datascribe:role': 'transcriber'
+        };
         addUserRow(user);
     }
 });
