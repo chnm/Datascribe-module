@@ -10,7 +10,10 @@ use Omeka\Stdlib\ErrorStore;
 
 class DatascribeProjectAdapter extends AbstractEntityAdapter
 {
-    protected $sortFields = [];
+    protected $sortFields = [
+        'name' => 'name',
+        'created' => 'created',
+    ];
 
     public function getResourceName()
     {
@@ -29,6 +32,28 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
+        if (isset($query['is_public'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.isPublic',
+                $this->createNamedParameter($qb, (bool) $query['is_public'])
+            ));
+        }
+        if (isset($query['owner_id'])) {
+            $alias = $this->createAlias();
+            $qb->innerJoin('omeka_root.owner', $alias);
+            $qb->andWhere($qb->expr()->eq(
+                "$alias.id",
+                $this->createNamedParameter($qb, $query['owner_id']))
+            );
+        }
+        if (isset($query['has_user_id'])) {
+            $alias = $this->createAlias();
+            $qb->innerJoin('omeka_root.users', $alias);
+            $qb->andWhere($qb->expr()->eq(
+                "$alias.user",
+                $this->createNamedParameter($qb, $query['has_user_id']))
+            );
+        }
     }
 
     public function validateRequest(Request $request, ErrorStore $errorStore)
