@@ -39,6 +39,11 @@ return [
             'Datascribe\Controller\Admin\Item' => Datascribe\Controller\Admin\ItemController::class,
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            'datascribe' => Datascribe\Service\ViewHelper\DatascribeFactory::class,
+        ],
+    ],
     'navigation' => [
         'AdminModule' => [
             [
