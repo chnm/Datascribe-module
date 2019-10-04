@@ -1,5 +1,5 @@
 <?php
-namespace Datascribe\FieldDataType;
+namespace Datascribe\DatascribeDataType;
 
 use Omeka\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
@@ -8,5 +8,5 @@ class Manager extends AbstractPluginManager
 {
     protected $autoAddInvokableClass = false;
 
-    protected $instanceOf = FieldDataTypeInterface::class;
+    protected $instanceOf = DatascribeDataTypeInterface::class;
 }

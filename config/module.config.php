@@ -1,8 +1,8 @@
 <?php
 return [
-    'datascribe_field_data_types' => [
+    'datascribe_data_types' => [
         'invokables' => [
-            'text' => Datascribe\FieldDataType\Text::class,
+            'text' => Datascribe\DatascribeDataType\Text::class,
         ],
     ],
     'view_manager' => [

@@ -1,7 +1,7 @@
 <?php
-namespace Datascribe\FieldDataType;
+namespace Datascribe\DatascribeDataType;
 
-interface FieldDataTypeInterface
+interface DatascribeDataTypeInterface
 {
     /**
      * Get the name of this data type.

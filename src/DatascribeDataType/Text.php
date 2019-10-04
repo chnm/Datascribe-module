@@ -1,7 +1,7 @@
 <?php
-namespace Datascribe\FieldDataType;
+namespace Datascribe\DatascribeDataType;
 
-class Text implements FieldDataTypeInterface
+class Text implements DatascribeDataTypeInterface
 {
     public function getName() : string
     {
