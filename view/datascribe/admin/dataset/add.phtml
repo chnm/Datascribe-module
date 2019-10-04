@@ -5,7 +5,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset add');
 $form->prepare();
 ?>
 
-<?php echo $this->pageTitle($this->translate('New dataset'), 1, $this->translate('DataScribe')); ?>
+<?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('New dataset')); ?>
 
 <?php echo $this->form()->openTag($form); ?>
 

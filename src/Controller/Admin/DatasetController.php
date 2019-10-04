@@ -36,6 +36,7 @@ class DatasetController extends AbstractActionController
 
         $view = new ViewModel;
         $view->setVariable('form', $form);
+        $view->setVariable('project', $project);
         return $view;
     }
 
@@ -70,6 +71,7 @@ class DatasetController extends AbstractActionController
 
         $view = new ViewModel;
         $view->setVariable('form', $form);
+        $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
         return $view;
     }

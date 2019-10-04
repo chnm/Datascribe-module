@@ -9,6 +9,11 @@ class ItemController extends AbstractActionController
     public function browseAction()
     {
     }
+
+    public function showDetailsAction()
+    {
+    }
+
     public function showAction()
     {
     }

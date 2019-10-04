@@ -4,17 +4,17 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset browse'
 
 <?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('Datasets')); ?>
 
+<?php if ($project->userIsAllowed('update')): ?>
 <div id="page-actions">
     <div id="page-action-menu">
-    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
-        <?php echo $this->hyperlink(
-            $this->translate('Add new dataset'),
-            $this->url('admin/datascribe-dataset', ['action' => 'add', 'project-id' => $project->id()]),
-            ['class' => 'button']
-        ); ?>
-    <?php endif; ?>
+        <a href="#" class="expand button" aria-label="<?php echo $this->translate('Expand'); ?>"><?php echo $this->translate('Actions'); ?></a>
+        <ul class="collapsible">
+            <li><?php echo $project->link($this->translate('Edit project'), 'edit'); ?></li>
+            <li><?php echo $this->hyperlink($this->translate('Add new dataset'), $this->url('admin/datascribe-dataset', ['action' => 'add', 'project-id' => $project->id()])); ?></li>
+        </ul>
     </div>
 </div>
+<?php endif; ?>
 
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
