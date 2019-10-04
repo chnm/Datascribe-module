@@ -9,6 +9,10 @@
     <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('No description'); ?></div>
 </div>
 <div class="meta-group">
+    <h4><?php echo $this->translate('Visibility'); ?></h4>
+    <div class="value"><?php echo ($project->isPublic()) ? $this->translate('Public') : $this->translate('Private'); ?></div>
+</div>
+<div class="meta-group">
     <h4><?php echo $this->translate('Owner'); ?></h4>
     <?php $owner = $project->owner(); ?>
     <div class="value"><?php echo $owner ? $owner->link($owner->name()) : $this->translate('No owner'); ?></div>

@@ -1,0 +1,42 @@
+<h3><?php echo $this->translate('Dataset metadata'); ?></h3>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Dataset'); ?></h4>
+    <div class="value"><?php echo $dataset->link($dataset->name()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Project'); ?></h4>
+    <div class="value"><?php echo $project->link($project->name()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Description'); ?></h4>
+    <?php $description = $project->description(); ?>
+    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('No description'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Visibility'); ?></h4>
+    <div class="value"><?php echo ($dataset->isPublic()) ? $this->translate('Public') : $this->translate('Private'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Item set'); ?></h4>
+    <?php $itemSet = $dataset->itemSet(); ?>
+    <div class="value"><?php echo $itemSet ? $itemSet->link($itemSet->displayTitle()) : $this->translate('Not set'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Owner'); ?></h4>
+    <?php $owner = $dataset->owner(); ?>
+    <div class="value"><?php echo $owner ? $owner->link($owner->name()) : $this->translate('No owner'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Date created'); ?></h4>
+    <div class="value"><?php echo $this->i18n()->dateFormat($dataset->created(), 'long', 'medium'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last synced'); ?></h4>
+    <?php $synced = $dataset->synced(); ?>
+    <div class="value"><?php echo $synced ? $this->i18n()->dateFormat($dataset->synced(), 'long', 'medium') : $this->translate('Not synced'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last synced by'); ?></h4>
+    <?php $syncedBy = $dataset->syncedBy(); ?>
+    <div class="value"><?php echo $syncedBy ? $syncedBy->link($syncedBy->name()) : $this->translate('Not synced'); ?></div>
+</div>

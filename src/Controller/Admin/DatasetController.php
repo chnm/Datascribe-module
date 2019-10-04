@@ -112,6 +112,17 @@ class DatasetController extends AbstractActionController
 
     public function showDetailsAction()
     {
+        try {
+            $dataset = $this->api()->read('datascribe_datasets', $this->params('dataset-id'))->getContent();
+        } catch (NotFoundException $e) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $view = new ViewModel;
+        $view->setTerminal(true);
+        $view->setVariable('project', $dataset->project());
+        $view->setVariable('dataset', $dataset);
+        return $view;
     }
 
     public function showAction()
