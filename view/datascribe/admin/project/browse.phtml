@@ -16,7 +16,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe project browse'
     </div>
 </div>
 
-<?php if ($projects): ?>
+<?php echo $this->datascribe()->breadcrumbs(); ?>
 
 <div class="browse-controls">
     <?php echo $this->pagination(); ?>
@@ -31,6 +31,8 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe project browse'
     ],
 ]); ?>
 </div>
+
+<?php if ($projects): ?>
 
 <table class="tablesaw" data-tablesaw-mode="stack">
     <thead>

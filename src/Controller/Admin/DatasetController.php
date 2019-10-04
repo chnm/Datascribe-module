@@ -48,6 +48,21 @@ class DatasetController extends AbstractActionController
 
     public function browseAction()
     {
+        try {
+            $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
+        } catch (NotFoundException $e) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $this->setBrowseDefaults('created');
+        $response = $this->api()->search('datascribe_datasets', $this->params()->fromQuery());
+        $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
+        $datasets = $response->getContent();
+
+        $view = new ViewModel;
+        $view->setVariable('project', $project);
+        $view->setVariable('datasets', $datasets);
+        return $view;
     }
 
     public function showDetailsAction()

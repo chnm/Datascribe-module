@@ -1,0 +1,105 @@
+<?php
+$this->htmlElement('body')->appendAttribute('class', 'datascribe dataset browse');
+?>
+
+<?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('Datasets')); ?>
+
+<div id="page-actions">
+    <div id="page-action-menu">
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
+        <?php echo $this->hyperlink(
+            $this->translate('Add new dataset'),
+            $this->url('admin/datascribe-dataset', ['action' => 'add', 'project-id' => $project->id()]),
+            ['class' => 'button']
+        ); ?>
+    <?php endif; ?>
+    </div>
+</div>
+
+<?php echo $this->datascribe()->breadcrumbs(); ?>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+    <?php echo $this->sortSelector([
+    [
+        'label' => $this->translate('Date created'),
+        'value' => 'created'
+    ],
+    [
+        'label' => $this->translate('Last synced'),
+        'value' => 'synced'
+    ],
+    [
+        'label' => $this->translate('Name'),
+        'value' => 'name'
+    ],
+]); ?>
+</div>
+
+<?php if ($datasets): ?>
+
+<table class="tablesaw" data-tablesaw-mode="stack">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Dataset'); ?></th>
+            <th><?php echo $this->translate('Owner'); ?></th>
+            <th><?php echo $this->translate('Date created'); ?></th>
+            <th><?php echo $this->translate('Last synced'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($datasets as $dataset): ?>
+    <?php $owner = $dataset->owner(); ?>
+        <tr>
+            <td>
+                <?php echo $dataset->link($dataset->name()); ?>
+                <?php if (!$dataset->isPublic()): ?>
+                    <span class="o-icon-private" aria-label="<?php echo $this->translate('Private'); ?>"></span>
+                <?php endif; ?>
+                <ul class="actions">
+                    <?php if ($dataset->userIsAllowed('update')): ?>
+                    <li><?php echo $dataset->link('', 'edit', [
+                        'class' => 'o-icon-edit',
+                        'title' => $this->translate('Edit'),
+                    ]) ?></li>
+                    <?php endif; ?>
+                    <li><?php echo $this->hyperlink('', '#', [
+                        'data-sidebar-content-url' => $dataset->url('show-details'),
+                        'class' => 'o-icon-more sidebar-content',
+                        'data-sidebar-selector' => '#show-details',
+                        'title' => $this->translate('Details'),
+                    ]); ?></li>
+                </ul>
+            </td>
+            <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
+            <td><?php echo $this->i18n()->dateFormat($dataset->created()); ?></td>
+            <td><?php echo $this->i18n()->dateFormat($dataset->synced()); ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+</div>
+
+<div id="show-details" class="sidebar">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $this->translate('Close'),
+    ]); ?>
+    <div class="sidebar-content"></div>
+</div>
+
+<?php else: ?>
+<div class="no-resources">
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
+    <p><?php echo sprintf(
+        $this->translate('No DataScribe datasets found. %s'),
+        $this->hyperlink($this->translate('Add a new dataset.'), $this->url('admin/datascribe-dataset', ['action' => 'add']))
+    ); ?></p>
+    <?php else: ?>
+    <p><?php echo $this->translate('No DataScribe datasets found.'); ?></p>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
