@@ -13,6 +13,7 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
     public function getJsonLd()
     {
         $owner = $this->owner();
+        $synced = $this->synced();
         $syncedBy = $this->syncedBy();
         $itemSet = $this->itemSet();
         return [
@@ -22,7 +23,7 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             'o:is_public' => $this->isPublic(),
             'o-module-datascribe:project' => $this->project()->getReference(),
             'o:item_set' => $itemSet ? $itemSet->getReference() : null,
-            'o-module-datascribe:synced' => $this->getDateTime($this->synced()),
+            'o-module-datascribe:synced' => $synced ? $this->getDateTime($synced) : null,
             'o-module-datascribe:synced_by' => $syncedBy ? $syncedBy->getReference() : null,
             'o:created' => $this->getDateTime($this->created()),
             'o:owner' => $owner ? $owner->getReference() : null,

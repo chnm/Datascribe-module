@@ -89,11 +89,11 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe project browse'
 <div class="no-resources">
     <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeProjectAdapter', 'create')): ?>
     <p><?php echo sprintf(
-        $this->translate('No DataScribe projects found. %s'),
+        $this->translate('No projects found. %s'),
         $this->hyperlink($this->translate('Add a new project.'), $this->url('admin/datascribe-project', ['action' => 'add']))
     ); ?></p>
     <?php else: ?>
-    <p><?php echo $this->translate('No DataScribe projects found.'); ?></p>
+    <p><?php echo $this->translate('No projects found.'); ?></p>
     <?php endif; ?>
 </div>
 <?php endif; ?>

@@ -57,7 +57,8 @@ class ProjectController extends AbstractActionController
                 $this->messenger()->addFormErrors($form);
             }
         } else {
-            $form->setData($project->jsonSerialize());
+            $data = $project->jsonSerialize();
+            $form->setData($data);
         }
 
         $view = new ViewModel;

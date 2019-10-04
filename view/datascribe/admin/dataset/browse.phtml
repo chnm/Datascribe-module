@@ -95,11 +95,11 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset browse'
 <div class="no-resources">
     <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
     <p><?php echo sprintf(
-        $this->translate('No DataScribe datasets found. %s'),
-        $this->hyperlink($this->translate('Add a new dataset.'), $this->url('admin/datascribe-dataset', ['action' => 'add']))
+        $this->translate('No datasets found for this project. %s'),
+        $this->hyperlink($this->translate('Add a new dataset.'), $this->url('admin/datascribe-dataset', ['action' => 'add', 'project-id' => $project->id()]))
     ); ?></p>
     <?php else: ?>
-    <p><?php echo $this->translate('No DataScribe datasets found.'); ?></p>
+    <p><?php echo $this->translate('No datasets found for this project.'); ?></p>
     <?php endif; ?>
 </div>
 <?php endif; ?>
