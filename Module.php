@@ -16,6 +16,11 @@ class Module extends AbstractModule
     public function onBootstrap(MvcEvent $event)
     {
         parent::onBootstrap($event);
+
+        // Set the corresponding visibility rules on DataScribe resources.
+        $em = $this->getServiceLocator()->get('Omeka\EntityManager');
+        $filter = $em->getFilters()->getFilter('resource_visibility');
+        $filter->addRelatedEntity('Datascribe\Entity\DataScribeItem', 'item_id');
     }
 
     public function install(ServiceLocatorInterface $services)
