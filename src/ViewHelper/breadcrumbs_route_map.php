@@ -10,19 +10,14 @@ return [
         'text' => 'Projects', // @translate
         'params' => [],
     ],
-    'admin/datascribe-project-id' => [
-        'breadcrumbs' => ['admin/datascribe'],
-        'text' => 'Projects', // @translate
-        'params' => [],
-    ],
     'admin/datascribe-dataset' => [
         'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project'],
         'text' => 'Datasets', // @translate
         'params' => ['project-id'],
     ],
-    'admin/datascribe-dataset-id' => [
-        'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project'],
-        'text' => 'Datasets', // @translate
-        'params' => ['project-id'],
+    'admin/datascribe-item' => [
+        'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project', 'admin/datascribe-dataset'],
+        'text' => 'Items', // @translate
+        'params' => ['project-id', 'dataset-id'],
     ],
 ];

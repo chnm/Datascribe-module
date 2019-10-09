@@ -16,11 +16,11 @@ class SyncDataset extends AbstractJob
      */
     public function perform()
     {
-        if (!is_numeric($this->getArg('dataset_id'))) {
-            throw new Exception\RuntimeException('Missing dataset_id');
+        if (!is_numeric($this->getArg('datascribe_dataset_id'))) {
+            throw new Exception\RuntimeException('Missing datascribe_dataset_id');
         }
         $em = $this->getServiceLocator()->get('Omeka\EntityManager');
-        $dataset = $em->find(DatascribeDataset::class, $this->getArg('dataset_id'));
+        $dataset = $em->find(DatascribeDataset::class, $this->getArg('datascribe_dataset_id'));
         if (null === $dataset) {
             throw new Exception\RuntimeException('Cannot find dataset');
         }
@@ -51,6 +51,7 @@ class SyncDataset extends AbstractJob
         $query->execute();
 
         $dataset->setSynced(new DateTime('now'));
+        $dataset->setSyncedBy($this->job->getOwner());
         $em->flush();
     }
 

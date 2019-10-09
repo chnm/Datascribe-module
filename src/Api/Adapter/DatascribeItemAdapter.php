@@ -31,13 +31,14 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
     {
         // DataScribe items are created only when a dataset is synced.
         throw new Exception\OperationNotImplementedException(
-            'The Datascribe\Api\Adapter\DatascribeItemAdapter adapter does not implement the create operation.' // @translate
+            'The DatascribeItemAdapter adapter does not implement the create operation.' // @translate
         );
     }
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
     }
+
     public function validateRequest(Request $request, ErrorStore $errorStore)
     {
     }
@@ -48,5 +49,11 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
+        if (null === $entity->getDataset()) {
+            $errorStore->addError('o-module-dataset:dataset', 'A DataScribe dataset must not be null'); // @translate
+        }
+        if (null === $entity->getItem()) {
+            $errorStore->addError('o:item', 'An item must not be null'); // @translate
+        }
     }
 }

@@ -2,7 +2,10 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetForm;
+use Datascribe\Form\DatasetSyncForm;
+use Datascribe\Job\SyncDataset;
 use Omeka\Form\ConfirmForm;
+use Omeka\Stdlib\Message;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -130,5 +133,30 @@ class DatasetController extends AbstractActionController
     public function showAction()
     {
         return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+    }
+
+    public function syncAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $form = $this->getForm(DatasetSyncForm::class);
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $job = $this->jobDispatcher()->dispatch(
+                    SyncDataset::class,
+                    ['datascribe_dataset_id' => $this->params('dataset-id')]
+                );
+                $message = new Message(
+                    'Syncing DataScribe dataset. This may take a while. %s', // @translate
+                    sprintf(
+                        '<a href="%s">%s</a>',
+                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
+                        $this->translate('See this job for sync progress.')
+                    ));
+                $message->setEscapeHtml(false);
+                $this->messenger()->addSuccess($message);
+                return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+            }
+        }
+        return $this->redirect()->toRoute('admin/datascribe-dataset', ['action' => 'browse'], true);
     }
 }
