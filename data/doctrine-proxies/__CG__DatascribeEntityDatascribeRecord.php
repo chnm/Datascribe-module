@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'approvedBy', 'approved'];
+            return ['__isInitialized__', 'item', 'isApproved', 'id', 'owner', 'created', 'approvedBy', 'approved'];
         }
 
-        return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'approvedBy', 'approved'];
+        return ['__isInitialized__', 'item', 'isApproved', 'id', 'owner', 'created', 'approvedBy', 'approved'];
     }
 
     /**
@@ -193,6 +193,28 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getItem', []);
 
         return parent::getItem();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsApproved(?bool $isApproved): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsApproved', [$isApproved]);
+
+        parent::setIsApproved($isApproved);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsApproved(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsApproved', []);
+
+        return parent::getIsApproved();
     }
 
     /**
