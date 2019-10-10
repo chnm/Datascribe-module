@@ -33,8 +33,11 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:locked_by' => $lockedBy ? $lockedBy->getReference() : null,
             'o-module-datascribe:completed' => $completed ? $this->getDateTime($completed) : null,
             'o-module-datascribe:completed_by' => $completedBy ? $completedBy->getReference() : null,
+            'o-module-datascribe:is_approved' => $this->isApproved(),
             'o-module-datascribe:approved' => $approved ? $this->getDateTime($approved) : null,
             'o-module-datascribe:approved_by' => $approvedBy ? $approvedBy->getReference() : null,
+            'o-module-datascribe:transcriber_notes' => $this->transcriberNotes(),
+            'o-module-datascribe:reviewer_notes' => $this->reviewerNotes(),
         ];
     }
 
@@ -130,6 +133,11 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
             ->getRepresentation($this->resource->getCompletedBy());
     }
 
+    public function isApproved()
+    {
+        return $this->resource->getIsApproved();
+    }
+
     public function approved()
     {
         return $this->resource->getApproved();
@@ -139,5 +147,15 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
     {
         return $this->getAdapter('users')
             ->getRepresentation($this->resource->getApprovedBy());
+    }
+
+    public function transcriberNotes()
+    {
+        return $this->resource->getTranscriberNotes();
+    }
+
+    public function reviewerNotes()
+    {
+        return $this->resource->getReviewerNotes();
     }
 }

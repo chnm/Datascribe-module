@@ -57,14 +57,6 @@ class DatascribeValue extends AbstractEntity
      */
     protected $isIllegible;
 
-    /**
-     * @Column(
-     *     type="boolean",
-     *     nullable=true
-     * )
-     */
-    protected $needsReview;
-
     public function setField(DatascribeField $field) : void
     {
         $this->field = $field;
@@ -113,15 +105,5 @@ class DatascribeValue extends AbstractEntity
     public function getIsIllegible() : ?bool
     {
         return $this->isIllegible;
-    }
-
-    public function setNeedsReview(?bool $needsReview) : void
-    {
-        $this->needsReview = $needsReview;
-    }
-
-    public function getNeedsReview() : ?bool
-    {
-        return $this->needsReview;
     }
 }

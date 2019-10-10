@@ -11,7 +11,7 @@ class DatascribeRecord extends AbstractEntity
 {
     use TraitId;
     use TraitOwnership;
-    use TraitApproval;
+    use TraitNotes;
 
     /**
      * @ManyToOne(
@@ -24,6 +24,22 @@ class DatascribeRecord extends AbstractEntity
      */
     protected $item;
 
+    /**
+     * @Column(
+     *     type="boolean",
+     *     nullable=true
+     * )
+     */
+    protected $needsReview;
+
+    /**
+     * @Column(
+     *     type="boolean",
+     *     nullable=true
+     * )
+     */
+    protected $needsWork;
+
     public function setItem(DatascribeItem $item) : void
     {
         $this->item = $item;
@@ -32,5 +48,25 @@ class DatascribeRecord extends AbstractEntity
     public function getItem() : DatascribeItem
     {
         return $this->item;
+    }
+
+    public function setNeedsReview(?bool $needsReview) : void
+    {
+        $this->needsReview = $needsReview;
+    }
+
+    public function getNeedsReview() : ?bool
+    {
+        return $this->needsReview;
+    }
+
+    public function setNeedsWork(?bool $needsWork) : void
+    {
+        $this->needsWork = $needsWork;
+    }
+
+    public function getNeedsWork() : ?bool
+    {
+        return $this->needsWork;
     }
 }

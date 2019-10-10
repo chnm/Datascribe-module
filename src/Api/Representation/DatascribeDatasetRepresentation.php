@@ -17,11 +17,11 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
         $syncedBy = $this->syncedBy();
         $itemSet = $this->itemSet();
         return [
+            'o-module-datascribe:project' => $this->project()->getReference(),
             'o-module-datascribe:name' => $this->name(),
             'o-module-datascribe:description' => $this->description(),
             'o-module-datascribe:guidelines' => $this->guidelines(),
             'o:is_public' => $this->isPublic(),
-            'o-module-datascribe:project' => $this->project()->getReference(),
             'o:item_set' => $itemSet ? $itemSet->getReference() : null,
             'o-module-datascribe:synced' => $synced ? $this->getDateTime($synced) : null,
             'o-module-datascribe:synced_by' => $syncedBy ? $syncedBy->getReference() : null,

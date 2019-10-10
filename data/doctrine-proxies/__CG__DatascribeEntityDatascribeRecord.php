@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'isApproved', 'approved', 'approvedBy'];
+            return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'id', 'owner', 'created', 'transcriberNotes', 'reviewerNotes'];
         }
 
-        return ['__isInitialized__', 'item', 'id', 'owner', 'created', 'isApproved', 'approved', 'approvedBy'];
+        return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'id', 'owner', 'created', 'transcriberNotes', 'reviewerNotes'];
     }
 
     /**
@@ -198,6 +198,50 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
+    public function setNeedsReview(?bool $needsReview): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsReview', [$needsReview]);
+
+        parent::setNeedsReview($needsReview);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNeedsReview(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsReview', []);
+
+        return parent::getNeedsReview();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setNeedsWork(?bool $needsWork): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsWork', [$needsWork]);
+
+        parent::setNeedsWork($needsWork);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNeedsWork(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsWork', []);
+
+        return parent::getNeedsWork();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getResourceId()
     {
 
@@ -275,67 +319,45 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setIsApproved(?bool $isApproved): void
+    public function setTranscriberNotes(?string $transcriberNotes): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsApproved', [$isApproved]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTranscriberNotes', [$transcriberNotes]);
 
-        parent::setIsApproved($isApproved);
+        parent::setTranscriberNotes($transcriberNotes);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getIsApproved(): ?bool
+    public function getTranscriberNotes(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsApproved', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTranscriberNotes', []);
 
-        return parent::getIsApproved();
+        return parent::getTranscriberNotes();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setApproved(?\DateTime $approved): void
+    public function setReviewerNotes(?string $reviewerNotes): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReviewerNotes', [$reviewerNotes]);
 
-        parent::setApproved($approved);
+        parent::setReviewerNotes($reviewerNotes);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getApproved(): ?\DateTime
+    public function getReviewerNotes(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReviewerNotes', []);
 
-        return parent::getApproved();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
-
-        parent::setApprovedBy($approvedBy);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getApprovedBy(): ?\Omeka\Entity\User
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
-
-        return parent::getApprovedBy();
+        return parent::getReviewerNotes();
     }
 
 }

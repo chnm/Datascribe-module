@@ -64,10 +64,10 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'needsReview', 'id', 'data'];
+            return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'id', 'data'];
         }
 
-        return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'needsReview', 'id', 'data'];
+        return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'id', 'data'];
     }
 
     /**
@@ -281,28 +281,6 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIllegible', []);
 
         return parent::getIsIllegible();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setNeedsReview(?bool $needsReview): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsReview', [$needsReview]);
-
-        parent::setNeedsReview($needsReview);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getNeedsReview(): ?bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsReview', []);
-
-        return parent::getNeedsReview();
     }
 
     /**

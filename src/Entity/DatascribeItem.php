@@ -22,7 +22,7 @@ class DatascribeItem extends AbstractEntity
 {
     use TraitId;
     use TraitSync;
-    use TraitApproval;
+    use TraitNotes;
 
     /**
      * @ManyToOne(
@@ -80,6 +80,17 @@ class DatascribeItem extends AbstractEntity
     protected $completedBy;
 
     /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $approvedBy;
+
+    /**
      * @Column(
      *     type="datetime",
      *     nullable=true
@@ -102,6 +113,22 @@ class DatascribeItem extends AbstractEntity
      * )
      */
     protected $completed;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $approved;
+
+    /**
+     * @Column(
+     *     type="boolean",
+     *     nullable=true
+     * )
+     */
+    protected $isApproved;
 
     public function setDataset(DatascribeDataset $dataset) : void
     {
@@ -153,6 +180,16 @@ class DatascribeItem extends AbstractEntity
         return $this->completedBy;
     }
 
+    public function setApprovedBy(?User $approvedBy = null) : void
+    {
+        $this->approvedBy = $approvedBy;
+    }
+
+    public function getApprovedBy() : ?User
+    {
+        return $this->approvedBy;
+    }
+
     public function setPrioritized(?DateTime $prioritized) : void
     {
         $this->prioritized = $prioritized;
@@ -181,6 +218,26 @@ class DatascribeItem extends AbstractEntity
     public function getCompleted() : ?DateTime
     {
         return $this->completed;
+    }
+
+    public function setApproved(?DateTime $approved) : void
+    {
+        $this->approved = $approved;
+    }
+
+    public function getApproved() : ?DateTime
+    {
+        return $this->approved;
+    }
+
+    public function setIsApproved(?bool $isApproved) : void
+    {
+        $this->isApproved = $isApproved;
+    }
+
+    public function getIsApproved() : ?bool
+    {
+        return $this->isApproved;
     }
 
     /**
