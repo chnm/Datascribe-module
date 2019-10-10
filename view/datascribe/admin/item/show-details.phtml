@@ -1,0 +1,17 @@
+<h3><?php echo $this->translate('DataScribe item metadata'); ?></h3>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Item'); ?></h4>
+    <div class="value"><?php echo $item->linkPretty(); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Dataset'); ?></h4>
+    <div class="value"><?php echo $dataset->link($dataset->name()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Project'); ?></h4>
+    <div class="value"><?php echo $project->link($project->name()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Omeka item'); ?></h4>
+    <div class="value"><?php echo $oItem->linkPretty(); ?></div>
+</div>
