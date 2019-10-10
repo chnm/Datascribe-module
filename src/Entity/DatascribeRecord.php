@@ -10,8 +10,8 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeRecord extends AbstractEntity
 {
     use TraitId;
-    use TraitCreatedOwner;
-    use TraitApprovedApprovedBy;
+    use TraitOwnership;
+    use TraitApproval;
 
     /**
      * @ManyToOne(
@@ -24,14 +24,6 @@ class DatascribeRecord extends AbstractEntity
      */
     protected $item;
 
-    /**
-     * @Column(
-     *     type="boolean",
-     *     nullable=true
-     * )
-     */
-    protected $isApproved;
-
     public function setItem(DatascribeItem $item) : void
     {
         $this->item = $item;
@@ -40,15 +32,5 @@ class DatascribeRecord extends AbstractEntity
     public function getItem() : DatascribeItem
     {
         return $this->item;
-    }
-
-    public function setIsApproved(?bool $isApproved) : void
-    {
-        $this->isApproved = $isApproved;
-    }
-
-    public function getIsApproved() : ?bool
-    {
-        return $this->isApproved;
     }
 }

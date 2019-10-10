@@ -11,9 +11,9 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeProject extends AbstractEntity
 {
     use TraitId;
-    use TraitNameDescription;
-    use TraitCreatedOwner;
-    use TraitIsPublic;
+    use TraitIdentity;
+    use TraitOwnership;
+    use TraitVisibility;
 
     /**
      * @OneToMany(

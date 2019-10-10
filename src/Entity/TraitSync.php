@@ -4,7 +4,7 @@ namespace Datascribe\Entity;
 use DateTime;
 use Omeka\Entity\User;
 
-trait TraitSyncedSyncedBy
+trait TraitSync
 {
     /**
      * @ManyToOne(

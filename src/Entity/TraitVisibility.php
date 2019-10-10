@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Entity;
 
-trait TraitIsPublic
+trait TraitVisibility
 {
     /**
      * @Column(

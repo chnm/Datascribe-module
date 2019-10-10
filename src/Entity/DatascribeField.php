@@ -16,7 +16,7 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeField extends AbstractEntity
 {
     use TraitId;
-    use TraitNameDescription;
+    use TraitIdentity;
     use TraitData;
 
     /**

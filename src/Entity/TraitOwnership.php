@@ -8,7 +8,7 @@ use Omeka\Entity\User;
 /**
  * Entities using this trait must include the @HasLifecycleCallbacks annotation.
  */
-trait TraitCreatedOwner
+trait TraitOwnership
 {
     /**
      * @ManyToOne(

@@ -12,10 +12,10 @@ use Omeka\Entity\ItemSet;
 class DatascribeDataset extends AbstractEntity
 {
     use TraitId;
-    use TraitNameDescription;
-    use TraitSyncedSyncedBy;
-    use TraitCreatedOwner;
-    use TraitIsPublic;
+    use TraitIdentity;
+    use TraitSync;
+    use TraitOwnership;
+    use TraitVisibility;
 
     /**
      * @ManyToOne(

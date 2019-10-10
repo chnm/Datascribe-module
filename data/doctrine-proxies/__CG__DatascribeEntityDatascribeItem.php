@@ -64,10 +64,10 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'approvedBy', 'approved'];
+            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'isApproved', 'approved', 'approvedBy'];
         }
 
-        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'approvedBy', 'approved'];
+        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'prioritized', 'locked', 'completed', 'id', 'syncedBy', 'synced', 'isApproved', 'approved', 'approvedBy'];
     }
 
     /**
@@ -429,23 +429,23 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
+    public function setIsApproved(?bool $isApproved): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsApproved', [$isApproved]);
 
-        parent::setApprovedBy($approvedBy);
+        parent::setIsApproved($isApproved);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getApprovedBy(): ?\Omeka\Entity\User
+    public function getIsApproved(): ?bool
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsApproved', []);
 
-        return parent::getApprovedBy();
+        return parent::getIsApproved();
     }
 
     /**
@@ -468,6 +468,28 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproved', []);
 
         return parent::getApproved();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApprovedBy(\Omeka\Entity\User $approvedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApprovedBy', [$approvedBy]);
+
+        parent::setApprovedBy($approvedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getApprovedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApprovedBy', []);
+
+        return parent::getApprovedBy();
     }
 
 }
