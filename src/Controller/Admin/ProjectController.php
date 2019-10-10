@@ -35,9 +35,8 @@ class ProjectController extends AbstractActionController
 
     public function editAction()
     {
-        try {
-            $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $project = $this->datascribe()->getRepresentation($this->params('project-id'));
+        if (!$project) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
         $form = $this->getForm(ProjectForm::class);
@@ -98,9 +97,8 @@ class ProjectController extends AbstractActionController
 
     public function showDetailsAction()
     {
-        try {
-            $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $project = $this->datascribe()->getRepresentation($this->params('project-id'));
+        if (!$project) {
             exit;
         }
 

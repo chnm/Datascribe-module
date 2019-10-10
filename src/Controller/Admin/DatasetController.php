@@ -13,9 +13,8 @@ class DatasetController extends AbstractActionController
 {
     public function addAction()
     {
-        try {
-            $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $project = $this->datascribe()->getRepresentation($this->params('project-id'));
+        if (!$project) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
         $form = $this->getForm(DatasetForm::class);
@@ -45,9 +44,11 @@ class DatasetController extends AbstractActionController
 
     public function editAction()
     {
-        try {
-            $dataset = $this->api()->read('datascribe_datasets', $this->params('dataset-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
         $form = $this->getForm(DatasetForm::class);
@@ -98,14 +99,17 @@ class DatasetController extends AbstractActionController
 
     public function browseAction()
     {
-        try {
-            $project = $this->api()->read('datascribe_projects', $this->params('project-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $project = $this->datascribe()->getRepresentation($this->params('project-id'));
+        if (!$project) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
         $this->setBrowseDefaults('created');
-        $response = $this->api()->search('datascribe_datasets', $this->params()->fromQuery());
+        $query = array_merge(
+            $this->params()->fromQuery(),
+            ['datascribe_project_id' => $project->id()]
+        );
+        $response = $this->api()->search('datascribe_datasets', $query);
         $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
         $datasets = $response->getContent();
 
@@ -117,9 +121,11 @@ class DatasetController extends AbstractActionController
 
     public function showDetailsAction()
     {
-        try {
-            $dataset = $this->api()->read('datascribe_datasets', $this->params('dataset-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
 

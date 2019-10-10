@@ -37,6 +37,22 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
+        if (isset($query['datascribe_dataset_id'])) {
+            $alias = $this->createAlias();
+            $qb->innerJoin('omeka_root.dataset', $alias);
+            $qb->andWhere($qb->expr()->eq(
+                "$alias.id",
+                $this->createNamedParameter($qb, $query['datascribe_dataset_id']))
+            );
+        }
+        if (isset($query['item_id'])) {
+            $alias = $this->createAlias();
+            $qb->innerJoin('omeka_root.item', $alias);
+            $qb->andWhere($qb->expr()->eq(
+                "$alias.id",
+                $this->createNamedParameter($qb, $query['item_id']))
+            );
+        }
     }
 
     public function validateRequest(Request $request, ErrorStore $errorStore)

@@ -2,6 +2,7 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetSyncForm;
+use Omeka\Stdlib\Message;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -9,18 +10,20 @@ class ItemController extends AbstractActionController
 {
     public function browseAction()
     {
-        try {
-            $dataset = $this->api()->read('datascribe_datasets', $this->params('dataset-id'))->getContent();
-        } catch (NotFoundException $e) {
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
         $this->setBrowseDefaults('created');
         $query = array_merge(
-            ['datascribe_dataset_id' => $this->params('dataset-id')],
-            $this->params()->fromQuery()
+            $this->params()->fromQuery(),
+            ['datascribe_dataset_id' => $dataset->id()]
         );
-        $response = $this->api()->search('datascribe_items', $this->params()->fromQuery());
+        $response = $this->api()->search('datascribe_items', $query);
         $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
         $items = $response->getContent();
 
