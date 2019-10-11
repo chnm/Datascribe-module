@@ -19,7 +19,14 @@
 <div class="meta-group">
     <h4><?php echo $this->translate('Item set'); ?></h4>
     <?php $itemSet = $dataset->itemSet(); ?>
-    <div class="value"><?php echo $itemSet ? $itemSet->link($itemSet->displayTitle()) : $this->translate('Not set'); ?></div>
+    <div class="value">
+    <?php
+    try {
+        echo $itemSet ? $itemSet->link($itemSet->displayTitle()) : $this->translate('Not set');
+    } catch (\Doctrine\ORM\EntityNotFoundException $e) {
+        echo $this->translate('[Unknown]');
+    }
+    ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Owner'); ?></h4>
