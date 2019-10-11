@@ -1,9 +1,13 @@
 <?php
 namespace Datascribe;
 
+use Datascribe\PermissionsAssertion\UserCanReviewAssertion;
+use Datascribe\PermissionsAssertion\UserCanTranscribeAssertion;
 use Omeka\Module\AbstractModule;
+use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Assertion\AssertionAggregate;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module extends AbstractModule
@@ -16,11 +20,12 @@ class Module extends AbstractModule
     public function onBootstrap(MvcEvent $event)
     {
         parent::onBootstrap($event);
+        $this->addAclRules();
 
-        // Set the corresponding visibility rules on DataScribe resources.
+        // Set the corresponding visibility rules on DataScribe items.
         $em = $this->getServiceLocator()->get('Omeka\EntityManager');
         $filter = $em->getFilters()->getFilter('resource_visibility');
-        $filter->addRelatedEntity('Datascribe\Entity\DataScribeItem', 'item_id');
+        $filter->addRelatedEntity('Datascribe\Entity\DatascribeItem', 'item_id');
     }
 
     public function install(ServiceLocatorInterface $services)
@@ -75,5 +80,110 @@ SQL;
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
+        $sharedEventManager->attach(
+            'Datascribe\Api\Adapter\DatascribeProjectAdapter',
+            'api.search.query',
+            [$this, 'filterProjects']
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Api\Adapter\DatascribeProjectAdapter',
+            'api.find.query',
+            [$this, 'filterProjects']
+        );
+    }
+
+    /**
+     * Add ACL rules for this module.
+     */
+    protected function addAclRules()
+    {
+        $acl = $this->getServiceLocator()->get('Omeka\Acl');
+
+        // Set controller/action privileges.
+        $acl->allow(
+            null,
+            'Datascribe\Controller\Admin\Index',
+            ['index']
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Controller\Admin\Project',
+            ['browse', 'show-details', 'show']
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Controller\Admin\Dataset',
+            ['browse', 'show-details', 'show']
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Controller\Admin\Item',
+            ['browse', 'show-details', 'show']
+        );
+
+        // Set API adapter privileges.
+        $acl->allow(
+            null,
+            [
+                'Datascribe\Api\Adapter\DatascribeProjectAdapter',
+                'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
+                'Datascribe\Api\Adapter\DatascribeItemAdapter',
+            ],
+            ['search', 'read']
+        );
+
+        // Set entity privileges.
+        $viewerAssertion = new AssertionAggregate;
+        $viewerAssertion->addAssertions([
+            new UserCanReviewAssertion,
+            new UserCanTranscribeAssertion
+        ]);
+        $viewerAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
+        $acl->allow(
+            null,
+            [
+                'Datascribe\Entity\DatascribeProject',
+                'Datascribe\Entity\DatascribeDataset',
+                'Datascribe\Entity\DatascribeItem',
+            ],
+            'read',
+            $viewerAssertion
+        );
+    }
+
+    /**
+     * Filter projects for visibility.
+     *
+     * @param Event $event
+     */
+    public function filterProjects(Event $event)
+    {
+        $qb = $event->getParam('queryBuilder');
+
+        // Users can view projects that are public.
+        $expression = $qb->expr()->eq('omeka_root.isPublic', true);
+
+        $auth = $this->getServiceLocator()->get('Omeka\AuthenticationService');
+        $acl = $this->getServiceLocator()->get('Omeka\Acl');
+
+        if ($auth->hasIdentity()) {
+            $identity = $auth->getIdentity();
+            if ($acl->isAdminRole($identity->getRole())) {
+                // Admin users can view all projects.
+                return;
+            }
+            $adapter = $event->getTarget();
+            $projectAlias = $adapter->createAlias();
+            $qb->leftJoin('omeka_root.users', $projectAlias);
+            $expression = $qb->expr()->orX(
+                $expression,
+                // Users can view projects that they belong to.
+                $qb->expr()->eq(
+                    "$projectAlias.user",
+                    $adapter->createNamedParameter($qb, $identity)
+                )
+            );
+        }
+        $qb->andWhere($expression);
     }
 }
