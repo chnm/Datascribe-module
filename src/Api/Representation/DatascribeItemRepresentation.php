@@ -20,8 +20,8 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         $lockedBy = $this->lockedBy();
         $completed = $this->completed();
         $completedBy = $this->completedBy();
-        $approved = $this->approved();
-        $approvedBy = $this->approvedBy();
+        $reviewed = $this->reviewed();
+        $reviewedBy = $this->reviewedBy();
         return [
             'o-module-datascribe:dataset' => $this->dataset()->getReference(),
             'o-module-datascribe:item' => $this->item()->getReference(),
@@ -34,8 +34,8 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:completed' => $completed ? $this->getDateTime($completed) : null,
             'o-module-datascribe:completed_by' => $completedBy ? $completedBy->getReference() : null,
             'o-module-datascribe:is_approved' => $this->isApproved(),
-            'o-module-datascribe:approved' => $approved ? $this->getDateTime($approved) : null,
-            'o-module-datascribe:approved_by' => $approvedBy ? $approvedBy->getReference() : null,
+            'o-module-datascribe:reviewed' => $reviewed ? $this->getDateTime($reviewed) : null,
+            'o-module-datascribe:reviewed_by' => $reviewedBy ? $reviewedBy->getReference() : null,
             'o-module-datascribe:transcriber_notes' => $this->transcriberNotes(),
             'o-module-datascribe:reviewer_notes' => $this->reviewerNotes(),
         ];
@@ -138,15 +138,15 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         return $this->resource->getIsApproved();
     }
 
-    public function approved()
+    public function reviewed()
     {
-        return $this->resource->getApproved();
+        return $this->resource->getReviewed();
     }
 
-    public function approvedBy()
+    public function reviewedBy()
     {
         return $this->getAdapter('users')
-            ->getRepresentation($this->resource->getApprovedBy());
+            ->getRepresentation($this->resource->getReviewedBy());
     }
 
     public function transcriberNotes()

@@ -88,7 +88,7 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="SET NULL"
      * )
      */
-    protected $approvedBy;
+    protected $reviewedBy;
 
     /**
      * @Column(
@@ -120,7 +120,7 @@ class DatascribeItem extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $approved;
+    protected $reviewed;
 
     /**
      * @Column(
@@ -180,14 +180,14 @@ class DatascribeItem extends AbstractEntity
         return $this->completedBy;
     }
 
-    public function setApprovedBy(?User $approvedBy = null) : void
+    public function setReviewedBy(?User $reviewedBy = null) : void
     {
-        $this->approvedBy = $approvedBy;
+        $this->reviewedBy = $reviewedBy;
     }
 
-    public function getApprovedBy() : ?User
+    public function getReviewedBy() : ?User
     {
-        return $this->approvedBy;
+        return $this->reviewedBy;
     }
 
     public function setPrioritized(?DateTime $prioritized) : void
@@ -220,14 +220,14 @@ class DatascribeItem extends AbstractEntity
         return $this->completed;
     }
 
-    public function setApproved(?DateTime $approved) : void
+    public function setReviewed(?DateTime $reviewed) : void
     {
-        $this->approved = $approved;
+        $this->reviewed = $reviewed;
     }
 
-    public function getApproved() : ?DateTime
+    public function getReviewed() : ?DateTime
     {
-        return $this->approved;
+        return $this->reviewed;
     }
 
     public function setIsApproved(?bool $isApproved) : void
