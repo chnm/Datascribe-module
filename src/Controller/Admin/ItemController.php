@@ -68,6 +68,23 @@ class ItemController extends AbstractActionController
         return $view;
     }
 
+    public function searchAction()
+    {
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $view = new ViewModel;
+        $view->setVariable('project', $dataset->project());
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('query', $this->params()->fromQuery());
+        return $view;
+    }
+
     public function showAction()
     {
         $item = $this->datascribe()->getRepresentation(

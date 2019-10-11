@@ -1,0 +1,26 @@
+<?php
+$this->headLink()->prependStylesheet($this->assetUrl('css/advanced-search.css', 'Omeka'));
+$this->headScript()->appendFile($this->assetUrl('js/advanced-search.js', 'Omeka'));
+$query = isset($query) ? $query : null;
+$this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
+?>
+
+<?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Search')); ?>
+
+<form id="advanced-search" method="get" action="<?php echo $this->escapeHtml($this->url(null, ['action' => 'browse'], true)); ?>">
+    <div id="page-actions">
+        <?php echo $this->hyperlink($this->translate('Reset'), $this->url(null, [], true), ['class' => 'button']); ?>
+        <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
+    </div>
+    <div class="field">
+        <div class="field-meta">
+            <label for="search"><?php echo $this->translate('Search'); ?></label>
+        </div>
+        <div class="inputs">
+            <?php $value = isset($query['search']) ? $query['search'] : null; ?>
+            <input type="text" name="search" id="fulltext_search" value="<?php echo $this->escapeHtml($value); ?>">
+        </div>
+    </div>
+    <?php echo $this->partial('common/advanced-search/resource-class', ['query' => $query]); ?>
+    <?php echo $this->partial('common/advanced-search/resource-template', ['query' => $query]); ?>
+</form>

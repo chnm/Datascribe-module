@@ -118,7 +118,7 @@ SQL;
         $acl->allow(
             null,
             'Datascribe\Controller\Admin\Item',
-            ['browse', 'show-details', 'show']
+            ['browse', 'show-details', 'search', 'show']
         );
 
         // Set API adapter privileges.

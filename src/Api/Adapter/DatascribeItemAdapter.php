@@ -53,6 +53,49 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $query['item_id']))
             );
         }
+        if (isset($query['resource_class_id'])) {
+            $classes = $query['resource_class_id'];
+            if (!is_array($classes)) {
+                $classes = [$classes];
+            }
+            $classes = array_filter($classes, 'is_numeric');
+            if ($classes) {
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->andWhere($qb->expr()->in(
+                    "$alias.resourceClass",
+                    $this->createNamedParameter($qb, $classes)
+                ));
+            }
+        }
+        if (isset($query['resource_template_id'])) {
+            $templates = $query['resource_template_id'];
+            if (!is_array($templates)) {
+                $templates = [$templates];
+            }
+            $templates = array_filter($templates, 'is_numeric');
+            if ($templates) {
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->andWhere($qb->expr()->in(
+                    "$alias.resourceTemplate",
+                    $this->createNamedParameter($qb, $templates)
+                ));
+            }
+        }
+        if (isset($query['search'])) {
+            // Filter by search query. Equivalent to property=null, type=in.
+            $value = $query['search'];
+            $itemAlias = $this->createAlias();
+            $valueAlias = $this->createAlias();
+            $param = $this->createNamedParameter($qb, "%$value%");
+            $qb->leftJoin('omeka_root.item', $itemAlias)
+                ->leftJoin("$itemAlias.values", $valueAlias)
+                ->andWhere($qb->expr()->orX(
+                    $qb->expr()->like("$valueAlias.value", $param),
+                    $qb->expr()->like("$valueAlias.uri", $param)
+                ));
+        }
     }
 
     public function validateRequest(Request $request, ErrorStore $errorStore)

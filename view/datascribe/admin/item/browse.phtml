@@ -21,12 +21,7 @@ if ($dataset->userIsAllowed('update')):
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
 <div class="browse-controls">
-    <?php echo sprintf(
-        '<form id="datascribe-search"><input type="text" name="search" value="%s" aria-label="%s"><button type="submit" aria-label="%s" class="o-icon-search"></button></form>',
-        $this->escapeHtml($this->params()->fromQuery('search')),
-        $this->translate('Query'),
-        $this->translate('Search')
-    ); ?>
+    <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true)); ?>
     <?php echo $this->pagination(); ?>
     <?php echo $this->sortSelector([
         [
