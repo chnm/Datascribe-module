@@ -96,6 +96,34 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->expr()->like("$valueAlias.uri", $param)
                 ));
         }
+        if (isset($query['is_not_reviewed'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+        } elseif (isset($query['is_approved'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.isApproved',
+                $this->createNamedParameter($qb, true)
+            ));
+        } elseif (isset($query['is_not_approved'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.isApproved',
+                $this->createNamedParameter($qb, false)
+            ));
+        }
+        if (isset($query['is_completed'])) {
+            $qb->andWhere($qb->expr()->isNotNull('omeka_root.completed'));
+        } elseif (isset($query['is_not_completed'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.completed'));
+        }
+        if (isset($query['is_locked'])) {
+            $qb->andWhere($qb->expr()->isNotNull('omeka_root.locked'));
+        } elseif (isset($query['is_not_locked'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
+        }
+        if (isset($query['is_prioritized'])) {
+            $qb->andWhere($qb->expr()->isNotNull('omeka_root.prioritized'));
+        } elseif (isset($query['is_not_prioritized'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.prioritized'));
+        }
     }
 
     public function sortQuery(QueryBuilder $qb, array $query)

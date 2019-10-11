@@ -21,8 +21,8 @@ if ($dataset->userIsAllowed('update')):
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
 <div class="browse-controls">
-    <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true)); ?>
     <?php echo $this->pagination(); ?>
+    <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true)); ?>
     <?php echo $this->sortSelector([
         [
             'label' => $this->translate('Priority'),
@@ -31,6 +31,44 @@ if ($dataset->userIsAllowed('update')):
         [
             'label' => $this->translate('Title'),
             'value' => 'title'
+        ],
+    ]); ?>
+    <?php echo $this->filterSelector([
+        [
+            'label' => $this->translate('Is prioritized'),
+            'value' => 'is_prioritized',
+        ],
+        [
+            'label' => $this->translate('Is not prioritized'),
+            'value' => 'is_not_prioritized',
+        ],
+        [
+            'label' => $this->translate('Is locked'),
+            'value' => 'is_locked',
+        ],
+        [
+            'label' => $this->translate('Is not locked'),
+            'value' => 'is_not_locked',
+        ],
+        [
+            'label' => $this->translate('Is completed'),
+            'value' => 'is_completed',
+        ],
+        [
+            'label' => $this->translate('Is not completed'),
+            'value' => 'is_not_completed',
+        ],
+        [
+            'label' => $this->translate('Is not reviewed'),
+            'value' => 'is_not_reviewed',
+        ],
+        [
+            'label' => $this->translate('Is approved'),
+            'value' => 'is_approved',
+        ],
+        [
+            'label' => $this->translate('Is not approved'),
+            'value' => 'is_not_approved',
         ],
     ]); ?>
 </div>
