@@ -9,7 +9,10 @@ use Omeka\Stdlib\ErrorStore;
 
 class DatascribeDatasetAdapter extends AbstractEntityAdapter
 {
-    protected $sortFields = [];
+    protected $sortFields = [
+        'name' => 'name',
+        'created' => 'created',
+    ];
 
     public function getResourceName()
     {

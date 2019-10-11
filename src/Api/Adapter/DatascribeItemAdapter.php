@@ -98,6 +98,21 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         }
     }
 
+    public function sortQuery(QueryBuilder $qb, array $query)
+    {
+        switch ($query['sort_by']) {
+            case 'title':
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->addOrderBy("$alias.title", $query['sort_order']);
+                break;
+            default:
+                // Sort by priority by default.
+                $qb->addOrderBy("omeka_root.prioritized", $query['sort_order']);
+                break;
+        }
+    }
+
     public function validateRequest(Request $request, ErrorStore $errorStore)
     {
     }

@@ -25,8 +25,12 @@ if ($dataset->userIsAllowed('update')):
     <?php echo $this->pagination(); ?>
     <?php echo $this->sortSelector([
         [
-            'label' => $this->translate('Date synced'),
-            'value' => 'synced'
+            'label' => $this->translate('Priority'),
+            'value' => 'priority'
+        ],
+        [
+            'label' => $this->translate('Title'),
+            'value' => 'title'
         ],
     ]); ?>
 </div>
