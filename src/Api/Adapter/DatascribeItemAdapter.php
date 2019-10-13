@@ -83,22 +83,13 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 ));
             }
         }
-        if (isset($query['search'])) {
-            // Filter by search query. Equivalent to property=null, type=in.
-            $value = $query['search'];
-            $itemAlias = $this->createAlias();
-            $valueAlias = $this->createAlias();
-            $param = $this->createNamedParameter($qb, "%$value%");
-            $qb->leftJoin('omeka_root.item', $itemAlias)
-                ->leftJoin("$itemAlias.values", $valueAlias)
-                ->andWhere($qb->expr()->orX(
-                    $qb->expr()->like("$valueAlias.value", $param),
-                    $qb->expr()->like("$valueAlias.uri", $param)
-                ));
-        }
-
-        if (isset($query['status'])) {
-            switch ($query['status']) {
+        if (isset($query['review_status'])) {
+            switch ($query['review_status']) {
+                case 'not_in_review':
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+                    break;
                 case 'new':
                     $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
@@ -120,11 +111,11 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                     break;
-                case 'in_review': // needs_work + resubmitted
+                case 'in_review':
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.isApproved'));
-                case 'needs_work':
+                    $qb->andWhere($qb->expr()->not('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
+                case 'not_approved': // "needs work"
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->lt('omeka_root.submitted', 'omeka_root.reviewed'));
@@ -137,9 +128,6 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
                     break;
                 case 'approved':
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
-                    $qb->andWhere($qb->expr()->lt('omeka_root.submitted', 'omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
                     break;
                 default:

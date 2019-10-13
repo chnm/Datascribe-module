@@ -14,30 +14,22 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
     </div>
     <div class="field">
         <div class="field-meta">
-            <label for="search"><?php echo $this->translate('Search'); ?></label>
+            <label for="review_status"><?php echo $this->translate('Search by review status'); ?></label>
         </div>
         <div class="inputs">
-            <?php $value = isset($query['search']) ? $query['search'] : null; ?>
-            <input type="text" name="search" id="fulltext_search" value="<?php echo $this->escapeHtml($value); ?>">
-        </div>
-    </div>
-    <?php echo $this->partial('common/advanced-search/resource-class', ['query' => $query]); ?>
-    <?php echo $this->partial('common/advanced-search/resource-template', ['query' => $query]); ?>
-    <div class="field">
-        <div class="field-meta">
-            <label for="search"><?php echo $this->translate('Search by review status'); ?></label>
-        </div>
-        <div class="inputs">
-            <select name="status">
+            <select name="review_status">
                 <option>Select review status…</option>
+                <option value="not_in_review"><?php echo $this->translate('Not in review'); ?></option>
                 <option value="new"><?php echo $this->translate('New'); ?></option>
                 <option value="in_progress"><?php echo $this->translate('In progress'); ?></option>
                 <option value="submitted"><?php echo $this->translate('Submitted for review'); ?></option>
                 <option value="in_review"><?php echo $this->translate('In review'); ?></option>
-                <option value="needs_work"><?php echo $this->translate('Needs work'); ?></option>
+                <option value="not_approved"><?php echo $this->translate('Not approved'); ?></option>
                 <option value="resubmitted"><?php echo $this->translate('Resubmitted for review'); ?></option>
                 <option value="approved"><?php echo $this->translate('Approved'); ?></option>
             </select>
         </div>
     </div>
+    <?php echo $this->partial('common/advanced-search/resource-class', ['query' => $query]); ?>
+    <?php echo $this->partial('common/advanced-search/resource-template', ['query' => $query]); ?>
 </form>
