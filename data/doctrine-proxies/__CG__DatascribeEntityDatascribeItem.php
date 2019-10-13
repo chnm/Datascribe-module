@@ -64,10 +64,10 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'reviewedBy', 'prioritized', 'locked', 'completed', 'reviewed', 'isApproved', 'id', 'syncedBy', 'synced', 'transcriberNotes', 'reviewerNotes'];
+            return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'submittedBy', 'reviewedBy', 'prioritized', 'locked', 'submitted', 'reviewed', 'isApproved', 'id', 'syncedBy', 'synced', 'transcriberNotes', 'reviewerNotes'];
         }
 
-        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'completedBy', 'reviewedBy', 'prioritized', 'locked', 'completed', 'reviewed', 'isApproved', 'id', 'syncedBy', 'synced', 'transcriberNotes', 'reviewerNotes'];
+        return ['__isInitialized__', 'dataset', 'item', 'prioritizedBy', 'lockedBy', 'submittedBy', 'reviewedBy', 'prioritized', 'locked', 'submitted', 'reviewed', 'isApproved', 'id', 'syncedBy', 'synced', 'transcriberNotes', 'reviewerNotes'];
     }
 
     /**
@@ -264,23 +264,23 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setCompletedBy(\Omeka\Entity\User $completedBy = NULL): void
+    public function setSubmittedBy(\Omeka\Entity\User $submittedBy = NULL): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompletedBy', [$completedBy]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubmittedBy', [$submittedBy]);
 
-        parent::setCompletedBy($completedBy);
+        parent::setSubmittedBy($submittedBy);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getCompletedBy(): ?\Omeka\Entity\User
+    public function getSubmittedBy(): ?\Omeka\Entity\User
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompletedBy', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubmittedBy', []);
 
-        return parent::getCompletedBy();
+        return parent::getSubmittedBy();
     }
 
     /**
@@ -352,23 +352,23 @@ class DatascribeItem extends \Datascribe\Entity\DatascribeItem implements \Doctr
     /**
      * {@inheritDoc}
      */
-    public function setCompleted(?\DateTime $completed): void
+    public function setSubmitted(?\DateTime $submitted): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompleted', [$completed]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubmitted', [$submitted]);
 
-        parent::setCompleted($completed);
+        parent::setSubmitted($submitted);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getCompleted(): ?\DateTime
+    public function getSubmitted(): ?\DateTime
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompleted', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubmitted', []);
 
-        return parent::getCompleted();
+        return parent::getSubmitted();
     }
 
     /**

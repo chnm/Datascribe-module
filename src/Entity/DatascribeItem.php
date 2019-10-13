@@ -2,6 +2,7 @@
 namespace Datascribe\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\Item;
@@ -77,7 +78,7 @@ class DatascribeItem extends AbstractEntity
      *     onDelete="SET NULL"
      * )
      */
-    protected $completedBy;
+    protected $submittedBy;
 
     /**
      * @ManyToOne(
@@ -112,7 +113,7 @@ class DatascribeItem extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $completed;
+    protected $submitted;
 
     /**
      * @Column(
@@ -129,6 +130,19 @@ class DatascribeItem extends AbstractEntity
      * )
      */
     protected $isApproved;
+
+    /**
+     * @OneToMany(
+     *     targetEntity="DatascribeRecord",
+     *     mappedBy="item"
+     * )
+     */
+    protected $records;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection;
+    }
 
     public function setDataset(DatascribeDataset $dataset) : void
     {
@@ -170,14 +184,14 @@ class DatascribeItem extends AbstractEntity
         return $this->lockedBy;
     }
 
-    public function setCompletedBy(?User $completedBy = null) : void
+    public function setSubmittedBy(?User $submittedBy = null) : void
     {
-        $this->completedBy = $completedBy;
+        $this->submittedBy = $submittedBy;
     }
 
-    public function getCompletedBy() : ?User
+    public function getSubmittedBy() : ?User
     {
-        return $this->completedBy;
+        return $this->submittedBy;
     }
 
     public function setReviewedBy(?User $reviewedBy = null) : void
@@ -210,14 +224,14 @@ class DatascribeItem extends AbstractEntity
         return $this->locked;
     }
 
-    public function setCompleted(?DateTime $completed) : void
+    public function setSubmitted(?DateTime $submitted) : void
     {
-        $this->completed = $completed;
+        $this->submitted = $submitted;
     }
 
-    public function getCompleted() : ?DateTime
+    public function getSubmitted() : ?DateTime
     {
-        return $this->completed;
+        return $this->submitted;
     }
 
     public function setReviewed(?DateTime $reviewed) : void
@@ -238,6 +252,11 @@ class DatascribeItem extends AbstractEntity
     public function getIsApproved() : ?bool
     {
         return $this->isApproved;
+    }
+
+    public function getRecords()
+    {
+        return $this->records;
     }
 
     /**

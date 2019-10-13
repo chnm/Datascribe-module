@@ -97,51 +97,54 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 ));
         }
 
-        if (isset($query['review_status'])) {
-            switch ($query['review_status']) {
-                case 'is_not_completed_and_is_not_reviewed':
-                    // Not ready for review
-                    $qb->andWhere($qb->expr()->isNull('omeka_root.completed'));
+        if (isset($query['status'])) {
+            switch ($query['status']) {
+                case 'new':
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+                    $alias = $this->createAlias();
+                    $qb->leftJoin('omeka_root.records', $alias);
+                    $qb->andHaving($qb->expr()->eq($qb->expr()->count("$alias.id"), 0));
+                    break;
+                case 'in_progress':
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+                    $alias = $this->createAlias();
+                    $qb->leftJoin('omeka_root.records', $alias);
+                    $qb->andHaving($qb->expr()->gt($qb->expr()->count("$alias.id"), 0));
+                    break;
+                case 'submitted':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                     break;
-                case 'is_completed_and_is_not_reviewed':
-                    // Need review
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.completed'));
-                    $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
-                    break;
-                case 'is_completed_and_is_not_approved':
-                    // Need work
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.completed'));
+                case 'in_review': // needs_work + resubmitted
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.isApproved'));
+                case 'needs_work':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->lt('omeka_root.submitted', 'omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
                     break;
-                case 'is_approved':
-                    // Approved
+                case 'resubmitted':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
+                    break;
+                case 'approved':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->lt('omeka_root.submitted', 'omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
                     break;
                 default:
                     break;
             }
-        }
-
-        // Simple filters
-        if (isset($query['is_not_reviewed'])) {
-            $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
-        } elseif (isset($query['is_approved'])) {
-            $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
-        } elseif (isset($query['is_not_approved'])) {
-            $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
-        } elseif (isset($query['is_completed'])) {
-            $qb->andWhere($qb->expr()->isNotNull('omeka_root.completed'));
-        } elseif (isset($query['is_not_completed'])) {
-            $qb->andWhere($qb->expr()->isNull('omeka_root.completed'));
-        } elseif (isset($query['is_locked'])) {
-            $qb->andWhere($qb->expr()->isNotNull('omeka_root.locked'));
-        } elseif (isset($query['is_not_locked'])) {
-            $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
-        } elseif (isset($query['is_prioritized'])) {
-            $qb->andWhere($qb->expr()->isNotNull('omeka_root.prioritized'));
-        } elseif (isset($query['is_not_prioritized'])) {
-            $qb->andWhere($qb->expr()->isNull('omeka_root.prioritized'));
         }
     }
 

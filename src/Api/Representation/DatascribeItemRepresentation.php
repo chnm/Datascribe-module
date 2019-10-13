@@ -18,8 +18,8 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         $prioritizedBy = $this->prioritizedBy();
         $locked = $this->locked();
         $lockedBy = $this->lockedBy();
-        $completed = $this->completed();
-        $completedBy = $this->completedBy();
+        $submitted = $this->submitted();
+        $submittedBy = $this->submittedBy();
         $reviewed = $this->reviewed();
         $reviewedBy = $this->reviewedBy();
         return [
@@ -31,8 +31,8 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:prioritized_by' => $prioritizedBy ? $prioritizedBy->getReference() : null,
             'o-module-datascribe:locked' => $locked ? $this->getDateTime($locked) : null,
             'o-module-datascribe:locked_by' => $lockedBy ? $lockedBy->getReference() : null,
-            'o-module-datascribe:completed' => $completed ? $this->getDateTime($completed) : null,
-            'o-module-datascribe:completed_by' => $completedBy ? $completedBy->getReference() : null,
+            'o-module-datascribe:submitted' => $submitted ? $this->getDateTime($submitted) : null,
+            'o-module-datascribe:submitted_by' => $submittedBy ? $submittedBy->getReference() : null,
             'o-module-datascribe:is_approved' => $this->isApproved(),
             'o-module-datascribe:reviewed' => $reviewed ? $this->getDateTime($reviewed) : null,
             'o-module-datascribe:reviewed_by' => $reviewedBy ? $reviewedBy->getReference() : null,
@@ -122,15 +122,15 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
             ->getRepresentation($this->resource->getLockedBy());
     }
 
-    public function completed()
+    public function submitted()
     {
-        return $this->resource->getCompleted();
+        return $this->resource->getSubmitted();
     }
 
-    public function completedBy()
+    public function submittedBy()
     {
         return $this->getAdapter('users')
-            ->getRepresentation($this->resource->getCompletedBy());
+            ->getRepresentation($this->resource->getSubmittedBy());
     }
 
     public function isApproved()

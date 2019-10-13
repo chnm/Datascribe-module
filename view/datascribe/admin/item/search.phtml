@@ -28,12 +28,15 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
             <label for="search"><?php echo $this->translate('Search by review status'); ?></label>
         </div>
         <div class="inputs">
-            <select name="review_status">
+            <select name="status">
                 <option>Select review status…</option>
-                <option value="is_not_completed_and_is_not_reviewed"><?php echo $this->translate('Not ready for review'); ?></option>
-                <option value="is_completed_and_is_not_reviewed"><?php echo $this->translate('Need review'); ?></option>
-                <option value="is_completed_and_is_not_approved"><?php echo $this->translate('Need work'); ?></option>
-                <option value="is_approved"><?php echo $this->translate('Approved'); ?></option>
+                <option value="new"><?php echo $this->translate('New'); ?></option>
+                <option value="in_progress"><?php echo $this->translate('In progress'); ?></option>
+                <option value="submitted"><?php echo $this->translate('Submitted for review'); ?></option>
+                <option value="in_review"><?php echo $this->translate('In review'); ?></option>
+                <option value="needs_work"><?php echo $this->translate('Needs work'); ?></option>
+                <option value="resubmitted"><?php echo $this->translate('Resubmitted for review'); ?></option>
+                <option value="approved"><?php echo $this->translate('Approved'); ?></option>
             </select>
         </div>
     </div>
