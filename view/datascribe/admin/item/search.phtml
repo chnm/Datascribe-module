@@ -1,8 +1,13 @@
 <?php
 $this->headLink()->prependStylesheet($this->assetUrl('css/advanced-search.css', 'Omeka'));
 $this->headScript()->appendFile($this->assetUrl('js/advanced-search.js', 'Omeka'));
-$query = isset($query) ? $query : null;
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
+
+$query = $this->params()->fromQuery();
+$reviewStatus = isset($query['review_status']) ? $query['review_status'] : null;
+$lockedById = isset($query['locked_by_id']) ? $query['locked_by_id'] : null;
+$submittedById = isset($query['submitted_by_id']) ? $query['submitted_by_id'] : null;
+$reviewedById = isset($query['reviewed_by_id']) ? $query['reviewed_by_id'] : null;
 ?>
 
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Search')); ?>
@@ -12,24 +17,10 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
         <?php echo $this->hyperlink($this->translate('Reset'), $this->url(null, [], true), ['class' => 'button']); ?>
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
-    <div class="field">
-        <div class="field-meta">
-            <label for="review_status"><?php echo $this->translate('Search by review status'); ?></label>
-        </div>
-        <div class="inputs">
-            <select name="review_status">
-                <option>Select review status…</option>
-                <option value="not_in_review"><?php echo $this->translate('Not in review'); ?></option>
-                <option value="new"><?php echo $this->translate('New'); ?></option>
-                <option value="in_progress"><?php echo $this->translate('In progress'); ?></option>
-                <option value="submitted"><?php echo $this->translate('Submitted for review'); ?></option>
-                <option value="in_review"><?php echo $this->translate('In review'); ?></option>
-                <option value="not_approved"><?php echo $this->translate('Not approved'); ?></option>
-                <option value="resubmitted"><?php echo $this->translate('Resubmitted for review'); ?></option>
-                <option value="approved"><?php echo $this->translate('Approved'); ?></option>
-            </select>
-        </div>
-    </div>
+    <?php echo $this->datascribe()->itemReviewStatusSelect($project->id(), 'review_status', $reviewStatus, $this->translate('Review status')); ?>
+    <?php echo $this->datascribe()->itemLockedBySelect($project->id(), 'locked_by_id', $lockedById, $this->translate('Locked by user')); ?>
+    <?php echo $this->datascribe()->itemSubmittedBySelect($project->id(), 'submitted_by_id', $submittedById, $this->translate('Submitted by user')); ?>
+    <?php echo $this->datascribe()->itemReviewedBySelect($project->id(), 'reviewed_by_id', $reviewedById, $this->translate('Reviewed by user')); ?>
     <?php echo $this->partial('common/advanced-search/resource-class', ['query' => $query]); ?>
     <?php echo $this->partial('common/advanced-search/resource-template', ['query' => $query]); ?>
 </form>

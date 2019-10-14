@@ -37,7 +37,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
-        if (isset($query['datascribe_dataset_id'])) {
+        if (isset($query['datascribe_dataset_id']) && is_numeric($query['datascribe_dataset_id'])) {
             $alias = $this->createAlias();
             $qb->innerJoin('omeka_root.dataset', $alias);
             $qb->andWhere($qb->expr()->eq(
@@ -45,7 +45,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $query['datascribe_dataset_id']))
             );
         }
-        if (isset($query['item_id'])) {
+        if (isset($query['item_id']) && is_numeric($query['item_id'])) {
             $alias = $this->createAlias();
             $qb->innerJoin('omeka_root.item', $alias);
             $qb->andWhere($qb->expr()->eq(
@@ -83,12 +83,35 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 ));
             }
         }
+        if (isset($query['locked_by_id']) && is_numeric($query['locked_by_id'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.lockedBy',
+                $this->createNamedParameter($qb, $query['locked_by_id'])
+            ));
+        }
+        if (isset($query['submitted_by_id']) && is_numeric($query['submitted_by_id'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.submittedBy',
+                $this->createNamedParameter($qb, $query['submitted_by_id'])
+            ));
+        }
+        if (isset($query['reviewed_by_id']) && is_numeric($query['reviewed_by_id'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.reviewedBy',
+                $this->createNamedParameter($qb, $query['reviewed_by_id'])
+            ));
+        }
         if (isset($query['review_status'])) {
             switch ($query['review_status']) {
                 case 'not_in_review':
                     $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+                    break;
+                case 'in_review':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                    $qb->andWhere($qb->expr()->neq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
                     break;
                 case 'new':
                     $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
@@ -106,15 +129,11 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->leftJoin('omeka_root.records', $alias);
                     $qb->andHaving($qb->expr()->gt($qb->expr()->count("$alias.id"), 0));
                     break;
-                case 'submitted':
+                case 'submitted': // "submitted but not reviewed"
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                     break;
-                case 'in_review':
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
-                    $qb->andWhere($qb->expr()->not('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
                 case 'not_approved': // "needs work"
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));

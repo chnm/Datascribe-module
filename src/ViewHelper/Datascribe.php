@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\ViewHelper;
 
-use Zend\Router\Http\RouteMatch;
+use Zend\Form\Element\Select;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
 
@@ -11,16 +11,21 @@ use Zend\View\Helper\AbstractHelper;
 class Datascribe extends AbstractHelper
 {
     /**
-     * @var RouteMatch
+     * @var ServiceLocatorInterface
      */
-    protected $routeMatch;
+    protected $services;
 
     /**
-     * @param RouteMatch $routeMatch
+     * @var array
      */
-    public function __construct(RouteMatch $routeMatch)
+    protected $bcRouteMap;
+
+    /**
+     * @param ServiceLocatorInterface $services
+     */
+    public function __construct(ServiceLocatorInterface $services)
     {
-        $this->routeMatch = $routeMatch;
+        $this->services = $services;
         $this->bcRouteMap = include('breadcrumbs_route_map.php');
     }
 
@@ -33,18 +38,84 @@ class Datascribe extends AbstractHelper
     {
         $bc = [];
         $view = $this->getView();
-        $routeName = $this->routeMatch->getMatchedRouteName();
+        $routeMatch =  $this->services->get('Application')->getMvcEvent()->getRouteMatch();
+        $routeName = $routeMatch->getMatchedRouteName();
         if (!isset($this->bcRouteMap[$routeName])) {
             return '';
         }
         foreach ($this->bcRouteMap[$routeName]['breadcrumbs'] as $bcRoute) {
             $params = [];
             foreach ($this->bcRouteMap[$bcRoute]['params'] as $bcParam) {
-                $params[$bcParam] = $this->routeMatch->getParam($bcParam);
+                $params[$bcParam] = $routeMatch->getParam($bcParam);
             }
             $bc[] = $view->hyperlink($this->bcRouteMap[$bcRoute]['text'], $view->url($bcRoute, $params));
         }
         $bc[] = $view->translate($this->bcRouteMap[$routeName]['text']);
         return sprintf('<div class="breadcrumbs">%s</div>', implode('<div class="separator"></div>', $bc));
+    }
+
+    public function itemReviewStatusSelect($projectId, $name, $value, $label)
+    {
+        $view = $this->getView();
+        $valueOptions = [
+            'not_in_review' => $view->translate('Not in review'),
+            'in_review' => $view->translate('In review'),
+            'new' => $view->translate('New - not submitted and has no records'),
+            'in_progress' => $view->translate('In progress - not submitted and has records'),
+            'submitted' => $view->translate('Submitted - needs review'),
+            'not_approved' => $view->translate('Not approved - reviewed and needs work'),
+            'resubmitted' => $view->translate('Re-submitted - needs review'),
+            'approved' => $view->translate('Approved'),
+        ];
+        $select = (new Select($name))
+            ->setLabel($label)
+            ->setValueOptions($valueOptions)
+            ->setEmptyOption($view->translate('Select review status…'))
+            ->setValue($value);
+        return $view->formRow($select);
+    }
+
+    public function itemLockedBySelect($projectId, $name, $value, $label)
+    {
+        return $this->itemUserSelect('lockedBy', $projectId, $name, $value, $label);
+    }
+
+    public function itemSubmittedBySelect($projectId, $name, $value, $label)
+    {
+        return $this->itemUserSelect('submittedBy', $projectId, $name, $value, $label);
+    }
+
+    public function itemReviewedBySelect($projectId, $name, $value, $label)
+    {
+        return $this->itemUserSelect('reviewedBy', $projectId, $name, $value, $label);
+    }
+
+    protected function itemUserSelect($byColumn, $projectId, $name, $value, $label)
+    {
+        $view = $this->getView();
+        $em = $this->services->get('Omeka\EntityManager');
+        $dql = "
+            SELECT u
+            FROM Omeka\Entity\User u
+            JOIN Datascribe\Entity\DatascribeItem i WITH i.$byColumn = u
+            JOIN i.dataset d
+            JOIN d.project p
+            WHERE p = :projectId";
+        $query = $em->createQuery($dql);
+        $query->setParameter('projectId', $projectId);
+        $users = $query->getResult();
+        usort($users, function ($userA, $userB) {
+            return strcmp($userA->getName(), $userB->getName());
+        });
+        $valueOptions = [];
+        foreach ($users as $user) {
+            $valueOptions[$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
+        }
+        $select = (new Select($name))
+            ->setLabel($label)
+            ->setValueOptions($valueOptions)
+            ->setEmptyOption($view->translate('Select user…'))
+            ->setValue($value);
+        return $view->formRow($select);
     }
 }
