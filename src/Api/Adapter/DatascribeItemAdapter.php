@@ -155,6 +155,18 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     break;
             }
         }
+        if (isset($query['locked_status'])) {
+            switch ($query['locked_status']) {
+                case 'unlocked':
+                    $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
+                    break;
+                case 'locked':
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.locked'));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public function sortQuery(QueryBuilder $qb, array $query)

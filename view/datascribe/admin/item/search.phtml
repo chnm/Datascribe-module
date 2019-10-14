@@ -5,6 +5,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
 
 $query = $this->params()->fromQuery();
 $reviewStatus = isset($query['review_status']) ? $query['review_status'] : null;
+$lockedStatus = isset($query['locked_status']) ? $query['locked_status'] : null;
 $lockedById = isset($query['locked_by_id']) ? $query['locked_by_id'] : null;
 $submittedById = isset($query['submitted_by_id']) ? $query['submitted_by_id'] : null;
 $reviewedById = isset($query['reviewed_by_id']) ? $query['reviewed_by_id'] : null;
@@ -19,6 +20,7 @@ $reviewedById = isset($query['reviewed_by_id']) ? $query['reviewed_by_id'] : nul
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
     <?php echo $this->datascribe()->itemReviewStatusSelect('review_status', $reviewStatus, $this->translate('Review status')); ?>
+    <?php echo $this->datascribe()->itemLockedStatusSelect('locked_status', $lockedStatus, $this->translate('Locked status')); ?>
     <?php echo $this->datascribe()->itemLockedBySelect($project->id(), 'locked_by_id', $lockedById, $this->translate('Locked by user')); ?>
     <?php echo $this->datascribe()->itemSubmittedBySelect($project->id(), 'submitted_by_id', $submittedById, $this->translate('Submitted by user')); ?>
     <?php echo $this->datascribe()->itemReviewedBySelect($project->id(), 'reviewed_by_id', $reviewedById, $this->translate('Reviewed by user')); ?>

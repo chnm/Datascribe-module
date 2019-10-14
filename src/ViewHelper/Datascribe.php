@@ -75,6 +75,21 @@ class Datascribe extends AbstractHelper
         return $view->formRow($select);
     }
 
+    public function itemLockedStatusSelect($name, $value, $label)
+    {
+        $view = $this->getView();
+        $valueOptions = [
+            'unlocked' => $view->translate('Unlocked'),
+            'locked' => $view->translate('Locked'),
+        ];
+        $select = (new Select($name))
+            ->setLabel($label)
+            ->setValueOptions($valueOptions)
+            ->setEmptyOption($view->translate('Select locked status…'))
+            ->setValue($value);
+        return $view->formRow($select);
+    }
+
     public function itemLockedBySelect($projectId, $name, $value, $label)
     {
         return $this->itemUserSelect('lockedBy', $projectId, $name, $value, $label);
