@@ -54,7 +54,7 @@ class Datascribe extends AbstractHelper
         return sprintf('<div class="breadcrumbs">%s</div>', implode('<div class="separator"></div>', $bc));
     }
 
-    public function itemReviewStatusSelect($projectId, $name, $value, $label)
+    public function itemReviewStatusSelect($name, $value, $label)
     {
         $view = $this->getView();
         $valueOptions = [

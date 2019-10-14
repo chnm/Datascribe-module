@@ -18,7 +18,7 @@ $reviewedById = isset($query['reviewed_by_id']) ? $query['reviewed_by_id'] : nul
         <?php echo $this->cancelButton(); ?>
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
-    <?php echo $this->datascribe()->itemReviewStatusSelect($project->id(), 'review_status', $reviewStatus, $this->translate('Review status')); ?>
+    <?php echo $this->datascribe()->itemReviewStatusSelect('review_status', $reviewStatus, $this->translate('Review status')); ?>
     <?php echo $this->datascribe()->itemLockedBySelect($project->id(), 'locked_by_id', $lockedById, $this->translate('Locked by user')); ?>
     <?php echo $this->datascribe()->itemSubmittedBySelect($project->id(), 'submitted_by_id', $submittedById, $this->translate('Submitted by user')); ?>
     <?php echo $this->datascribe()->itemReviewedBySelect($project->id(), 'reviewed_by_id', $reviewedById, $this->translate('Reviewed by user')); ?>

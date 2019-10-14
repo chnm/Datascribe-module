@@ -126,9 +126,9 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->andWhere($qb->expr()->orX(
                         $qb->expr()->isNull('omeka_root.isApproved'),
                         $qb->expr()->andX(
-                            $qb->expr()->isNotNull('omeka_root.reviewed')
-                            $qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'))
-                            $qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)),
+                            $qb->expr()->isNotNull('omeka_root.reviewed'),
+                            $qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'),
+                            $qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false))
                         )
                     ));
                     break;
