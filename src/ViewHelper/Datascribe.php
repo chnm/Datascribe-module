@@ -58,12 +58,13 @@ class Datascribe extends AbstractHelper
     {
         $view = $this->getView();
         $valueOptions = [
-            'new' => $view->translate('New - not submitted and has no records'),
-            'in_progress' => $view->translate('In progress - not submitted and has records'),
-            'submitted' => $view->translate('Submitted - needs review'),
-            'not_approved' => $view->translate('Not approved - reviewed and needs work'),
-            'resubmitted' => $view->translate('Re-submitted - needs review'),
-            'needs_review' => $view->translate('Needs review'),
+            'not_submitted' => $view->translate('Not submitted'),
+            'new' => $view->translate('New - not submitted and have no records'),
+            'in_progress' => $view->translate('In progress - not submitted and have records'),
+            'need_review' => $view->translate('Need review'),
+            'submitted' => $view->translate('Submitted - need review'),
+            'resubmitted' => $view->translate('Re-submitted - need re-review'),
+            'not_approved' => $view->translate('Not approved - reviewed and need work'),
             'approved' => $view->translate('Approved'),
         ];
         $select = (new Select($name))
