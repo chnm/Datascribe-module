@@ -15,6 +15,7 @@ $reviewedById = isset($query['reviewed_by_id']) ? $query['reviewed_by_id'] : nul
 <form id="advanced-search" method="get" action="<?php echo $this->escapeHtml($this->url(null, ['action' => 'browse'], true)); ?>">
     <div id="page-actions">
         <?php echo $this->hyperlink($this->translate('Reset'), $this->url(null, [], true), ['class' => 'button']); ?>
+        <?php echo $this->cancelButton(); ?>
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
     <?php echo $this->datascribe()->itemReviewStatusSelect($project->id(), 'review_status', $reviewStatus, $this->translate('Review status')); ?>

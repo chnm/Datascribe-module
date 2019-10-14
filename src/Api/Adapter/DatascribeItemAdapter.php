@@ -103,16 +103,6 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         }
         if (isset($query['review_status'])) {
             switch ($query['review_status']) {
-                case 'not_in_review':
-                    $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
-                    $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
-                    $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
-                    break;
-                case 'in_review':
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
-                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
-                    $qb->andWhere($qb->expr()->neq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
-                    break;
                 case 'new':
                     $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
@@ -129,12 +119,12 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->leftJoin('omeka_root.records', $alias);
                     $qb->andHaving($qb->expr()->gt($qb->expr()->count("$alias.id"), 0));
                     break;
-                case 'submitted': // "submitted but not reviewed"
+                case 'submitted':
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                     break;
-                case 'not_approved': // "needs work"
+                case 'not_approved':
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->lt('omeka_root.submitted', 'omeka_root.reviewed'));
@@ -145,6 +135,13 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                     $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'));
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
+                    break;
+                case 'needs_review': // submitted and resubmitted
+                    $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                    $qb->andWhere($qb->expr()->orX(
+                        $qb->expr()->isNull('omeka_root.isApproved'),
+                        $qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false))
+                    ));
                     break;
                 case 'approved':
                     $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, true)));
