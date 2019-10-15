@@ -58,19 +58,16 @@ class Datascribe extends AbstractHelper
     {
         $view = $this->getView();
         $valueOptions = [
-            'not_submitted' => $view->translate('Not submitted'),
-            'new' => $view->translate('New - not submitted and have no records'),
-            'in_progress' => $view->translate('In progress - not submitted and have records'),
-            'need_review' => $view->translate('Need review'),
-            'submitted' => $view->translate('Submitted - need review'),
-            'resubmitted' => $view->translate('Re-submitted - need re-review'),
-            'not_approved' => $view->translate('Not approved - reviewed and need work'),
+            'new' => $view->translate('New'),
+            'in_progress' => $view->translate('In progress'),
+            'submitted_and_need_review' => $view->translate('Submitted and need review'),
+            'submitted_and_not_approved' => $view->translate('Submitted and not approved'),
             'approved' => $view->translate('Approved'),
         ];
         $select = (new Select($name))
             ->setLabel($label)
             ->setValueOptions($valueOptions)
-            ->setEmptyOption($view->translate('Select review status…'))
+            ->setEmptyOption($view->translate('Select status…'))
             ->setValue($value);
         return $view->formRow($select);
     }
@@ -85,7 +82,7 @@ class Datascribe extends AbstractHelper
         $select = (new Select($name))
             ->setLabel($label)
             ->setValueOptions($valueOptions)
-            ->setEmptyOption($view->translate('Select locked status…'))
+            ->setEmptyOption($view->translate('Select status…'))
             ->setValue($value);
         return $view->formRow($select);
     }
