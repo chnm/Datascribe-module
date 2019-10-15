@@ -33,6 +33,60 @@ if ($dataset->userIsAllowed('update')):
             'value' => 'title'
         ],
     ]); ?>
+    <?php echo $this->filterSelector([
+        [
+            'label' => $this->translate('My new items'),
+            'value' => 'my_new'
+        ],
+        [
+            'label' => $this->translate('My in progress items'),
+            'value' => 'my_in_progress'
+        ],
+        [
+            'label' => $this->translate('My items that need review'),
+            'value' => 'my_need_review'
+        ],
+        [
+            'label' => $this->translate('My items that are not approved'),
+            'value' => 'my_not_approved'
+        ],
+        [
+            'label' => $this->translate('My items that are approved'),
+            'value' => 'my_approved'
+        ],
+        [
+            'label' => $this->translate('Items I reviewed that need review'),
+            'value' => 'my_reviewed_and_need_review'
+        ],
+        [
+            'label' => $this->translate('Items I reviewed that are not approved'),
+            'value' => 'my_reviewed_and_not_approved'
+        ],
+        [
+            'label' => $this->translate('Items I reviewed that are approved'),
+            'value' => 'my_reviewed_and_approved'
+        ],
+        [
+            'label' => $this->translate('All new items'),
+            'value' => 'all_new'
+        ],
+        [
+            'label' => $this->translate('All in progress items'),
+            'value' => 'all_in_progress'
+        ],
+        [
+            'label' => $this->translate('All items that need review'),
+            'value' => 'all_need_review'
+        ],
+        [
+            'label' => $this->translate('All items that are not approved'),
+            'value' => 'all_not_approved'
+        ],
+        [
+            'label' => $this->translate('All items that are approved'),
+            'value' => 'all_approved'
+        ],
+    ]); ?>
 </div>
 
 <?php if ($items): ?>
