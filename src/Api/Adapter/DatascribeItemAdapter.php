@@ -150,13 +150,13 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $identity))
             );
         } elseif (isset($query['my_reviewed_and_need_review'])) {
-            $this->buildReviewStatusQuery($qb, 'submitted_and_need_review');
+            $this->buildReviewStatusQuery($qb, 'need_review');
             $qb->andWhere($qb->expr()->eq(
                 'omeka_root.reviewedBy',
                 $this->createNamedParameter($qb, $identity))
             );
         } elseif (isset($query['my_reviewed_and_not_approved'])) {
-            $this->buildReviewStatusQuery($qb, 'submitted_and_not_approved');
+            $this->buildReviewStatusQuery($qb, 'not_approved');
             $qb->andWhere($qb->expr()->eq(
                 'omeka_root.reviewedBy',
                 $this->createNamedParameter($qb, $identity))
@@ -185,6 +185,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         switch ($reviewStatus) {
             case 'new':
                 $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
+                $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                 $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                 $alias = $this->createAlias();
                 $qb->leftJoin('omeka_root.records', $alias);
@@ -192,6 +193,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 break;
             case 'in_progress':
                 $qb->andWhere($qb->expr()->isNull('omeka_root.submitted'));
+                $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                 $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                 $alias = $this->createAlias();
                 $qb->leftJoin('omeka_root.records', $alias);
@@ -200,7 +202,10 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
             case 'need_review':
                 $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                 $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->isNull('omeka_root.isApproved'),
+                    $qb->expr()->andX(
+                        $qb->expr()->isNull('omeka_root.reviewed'),
+                        $qb->expr()->isNull('omeka_root.isApproved')
+                    ),
                     $qb->expr()->andX(
                         $qb->expr()->isNotNull('omeka_root.reviewed'),
                         $qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'),
