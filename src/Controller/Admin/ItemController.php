@@ -2,6 +2,7 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetSyncForm;
+use Datascribe\Form\ItemBatchForm;
 use Omeka\Stdlib\Message;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -82,6 +83,48 @@ class ItemController extends AbstractActionController
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
         $view->setVariable('query', $this->params()->fromQuery());
+        return $view;
+    }
+
+    public function batchEditAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        }
+
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $itemIds = $this->params()->fromPost('item_ids', []);
+
+        $items = [];
+        foreach ($itemIds as $itemId) {
+            $items[] = $this->api()->read('datascribe_items', $itemId)->getContent();
+        }
+
+        $form = $this->getForm(ItemBatchForm::class);
+
+        if ($this->params()->fromPost('batch_edit')) {
+            $form->setData($this->params()->fromPost());
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $this->messenger()->addSuccess('DataScribe item successfully edited'); // @translate
+                return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+
+        $view = new ViewModel;
+        $view->setVariable('project', $dataset->project());
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('items', $items);
+        $view->setVariable('form', $form);
         return $view;
     }
 
