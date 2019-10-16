@@ -10,7 +10,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 class Datascribe extends AbstractPlugin
 {
     /**
-     * Get a Scripto representation.
+     * Get a DataScribe representation.
      *
      * Provides a single method to get a DataScribe project, dataset, or item
      * representation. Used primarily to ensure that the route is valid.

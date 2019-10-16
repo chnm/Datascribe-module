@@ -62,7 +62,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    public function itemReviewStatusSelect($name, $value, $label)
+    public function itemReviewStatusSelect(string $name, ?string $value, string $label) : string
     {
         $view = $this->getView();
         $valueOptions = [
@@ -88,7 +88,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    public function itemLockedStatusSelect($name, $value, $label)
+    public function itemLockedStatusSelect(string $name, ?string $value, string $label) : string
     {
         $view = $this->getView();
         $valueOptions = [
@@ -112,7 +112,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    public function itemLockedBySelect($projectId, $name, $value, $label)
+    public function itemLockedBySelect(int $projectId, string $name, ?string $value, string $label) : string
     {
         return $this->itemUserSelect('lockedBy', $projectId, $name, $value, $label);
     }
@@ -126,7 +126,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    public function itemSubmittedBySelect($projectId, $name, $value, $label)
+    public function itemSubmittedBySelect(int $projectId, string $name, ?string $value, string $label) : string
     {
         return $this->itemUserSelect('submittedBy', $projectId, $name, $value, $label);
     }
@@ -140,7 +140,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    public function itemReviewedBySelect($projectId, $name, $value, $label)
+    public function itemReviewedBySelect(int $projectId, string $name, ?string $value, string $label) : string
     {
         return $this->itemUserSelect('reviewedBy', $projectId, $name, $value, $label);
     }
@@ -157,7 +157,7 @@ class Datascribe extends AbstractHelper
      * @param string $label
      * @return string
      */
-    protected function itemUserSelect($byColumn, $projectId, $name, $value, $label)
+    protected function itemUserSelect(string $byColumn, int $projectId, string $name, ?string $value, string $label) : string
     {
         $view = $this->getView();
         $valueOptions = [];

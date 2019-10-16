@@ -100,15 +100,31 @@ if ($dataset->userIsAllowed('update')):
 
 <?php if ($items): ?>
 
+<div class="batch-inputs">
+    <select class="batch-actions-select" aria-label="<?php echo $this->translate('Batch actions'); ?>">
+        <option value="default"><?php echo $this->translate('Batch actions'); ?></option>
+        <option value="update-selected" disabled="true"><?php echo $this->translate('Edit selected'); ?></option>
+        <option value="update-all"><?php echo $this->translate('Edit all'); ?></option>
+    </select>
+    <div class="batch-actions">
+        <button type="button" class="default active" disabled="true"><?php echo $this->translate('Go'); ?></button>
+        <input type="submit" class="update-selected" name="update_selected" value="<?php echo $this->translate('Go'); ?>" formaction="<?php echo $this->escapeHtml($this->url(null, ['action' => 'batch-edit'], true)); ?>">
+        <input type="submit" class="update-all" name="update_all" value="<?php echo $this->translate('Go'); ?>" formaction="<?php echo $this->escapeHtml($this->url(null, ['action' => 'batch-edit-all'], true)); ?>">
+        <input type="hidden" name="query" class="batch-query" value="<?php echo $this->escapeHtml(json_encode($this->params()->fromQuery())); ?>">
+    </div>
+</div>
+
 <table class="tablesaw" data-tablesaw-mode="stack">
     <thead>
         <tr>
+            <th class="row-select"><input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>"></th>
             <th><?php echo $this->translate('Item'); ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($items as $item): ?>
         <tr>
+            <td><input type="checkbox" name="item_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select items'); ?>"></td>
             <td>
                 <?php echo $item->linkPretty(); ?>
                 <ul class="actions">
