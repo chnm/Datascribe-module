@@ -100,6 +100,8 @@ if ($dataset->userIsAllowed('update')):
 
 <?php if ($items): ?>
 
+<form method="post" id="batch-form" class="disable-unsaved-warning">
+
 <div class="batch-inputs">
     <select class="batch-actions-select" aria-label="<?php echo $this->translate('Batch actions'); ?>">
         <option value="default"><?php echo $this->translate('Batch actions'); ?></option>
@@ -140,6 +142,8 @@ if ($dataset->userIsAllowed('update')):
     <?php endforeach; ?>
     </tbody>
 </table>
+
+</form>
 
 <div class="browse-controls">
     <?php echo $this->pagination(); ?>
