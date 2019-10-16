@@ -167,10 +167,14 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 'omeka_root.reviewedBy',
                 $this->createNamedParameter($qb, $identity))
             );
+        } elseif (isset($query['all_unlocked'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
         } elseif (isset($query['all_new'])) {
             $this->buildReviewStatusQuery($qb, 'new');
         } elseif (isset($query['all_in_progress'])) {
             $this->buildReviewStatusQuery($qb, 'in_progress');
+        } elseif (isset($query['all_need_initial_review'])) {
+            $this->buildReviewStatusQuery($qb, 'need_initial_review');
         } elseif (isset($query['all_need_review'])) {
             $this->buildReviewStatusQuery($qb, 'need_review');
         } elseif (isset($query['all_not_approved'])) {
@@ -199,13 +203,20 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->leftJoin('omeka_root.records', $alias);
                 $qb->andHaving($qb->expr()->gt($qb->expr()->count("$alias.id"), 0));
                 break;
+            case 'need_initial_review':
+                $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
+                $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
+                break;
             case 'need_review':
                 $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                 $qb->andWhere($qb->expr()->orX(
+                    // initial review
                     $qb->expr()->andX(
                         $qb->expr()->isNull('omeka_root.reviewed'),
                         $qb->expr()->isNull('omeka_root.isApproved')
                     ),
+                    // re-review
                     $qb->expr()->andX(
                         $qb->expr()->isNotNull('omeka_root.reviewed'),
                         $qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'),
