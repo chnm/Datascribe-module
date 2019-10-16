@@ -128,6 +128,56 @@ class ItemController extends AbstractActionController
         return $view;
     }
 
+    public function batchEditAllAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        }
+
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $query = json_decode($this->params()->fromPost('query', []), true);
+        unset(
+            $query['submit'], $query['page'], $query['per_page'],
+            $query['limit'], $query['offset'], $query['sort_by'],
+            $query['sort_order']
+        );
+        $count = $this->api()->search('datascribe_items', array_merge($query, ['limit' => 0]))->getTotalResults();
+
+        $form = $this->getForm(ItemBatchForm::class);
+
+        if ($this->params()->fromPost('batch_edit')) {
+            $form->setData($this->params()->fromPost());
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $job = $this->jobDispatcher()->dispatch('Omeka\Job\BatchUpdate', [
+                    'query' => $query,
+                    'data' => $data['replace'] ?? [],
+                    'data_remove' => $data['remove'] ?? [],
+                    'data_append' => $data['append'] ?? [],
+                ]);
+                $this->messenger()->addSuccess('Editing items. This may take a while.'); // @translate
+                return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+
+        $view = new ViewModel;
+        $view->setVariable('project', $dataset->project());
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('count', $count);
+        $view->setVariable('query', $query);
+        $view->setVariable('form', $form);
+        return $view;
+    }
+
     public function showAction()
     {
         $item = $this->datascribe()->getRepresentation(
