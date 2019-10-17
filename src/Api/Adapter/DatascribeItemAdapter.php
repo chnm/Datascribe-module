@@ -208,6 +208,12 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->andWhere($qb->expr()->isNull('omeka_root.reviewed'));
                 $qb->andWhere($qb->expr()->isNull('omeka_root.isApproved'));
                 break;
+            case 'need_rereview':
+                $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
+                $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewed'));
+                $qb->andWhere($qb->expr()->gt('omeka_root.submitted', 'omeka_root.reviewed'));
+                $qb->andWhere($qb->expr()->eq('omeka_root.isApproved', $this->createNamedParameter($qb, false)));
+                break;
             case 'need_review':
                 $qb->andWhere($qb->expr()->isNotNull('omeka_root.submitted'));
                 $qb->andWhere($qb->expr()->orX(
@@ -245,6 +251,12 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $alias = $this->createAlias();
                 $qb->innerJoin('omeka_root.item', $alias);
                 $qb->addOrderBy("$alias.title", $query['sort_order']);
+                break;
+            case 'submitted':
+                $qb->addOrderBy("omeka_root.submitted", $query['sort_order']);
+                break;
+            case 'reviewed':
+                $qb->addOrderBy("omeka_root.reviewed", $query['sort_order']);
                 break;
             default:
                 // Sort by priority by default.

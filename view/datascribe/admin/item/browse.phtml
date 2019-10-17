@@ -33,6 +33,14 @@ if ($dataset->userIsAllowed('update')):
             'label' => $this->translate('Title'),
             'value' => 'title'
         ],
+        [
+            'label' => $this->translate('Submitted'),
+            'value' => 'submitted'
+        ],
+        [
+            'label' => $this->translate('Reviewed'),
+            'value' => 'reviewed'
+        ],
     ]); ?>
     <?php echo $this->filterSelector([
         [
@@ -121,6 +129,9 @@ if ($dataset->userIsAllowed('update')):
         <tr>
             <th class="row-select"><input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>"></th>
             <th><?php echo $this->translate('Item'); ?></th>
+            <th><?php echo $this->translate('Submitted'); ?></th>
+            <th><?php echo $this->translate('Reviewed'); ?></th>
+            <th><?php echo $this->translate('Review status'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -138,6 +149,9 @@ if ($dataset->userIsAllowed('update')):
                     ]); ?></li>
                 </ul>
             </td>
+            <td><?php echo $this->i18n()->dateFormat($item->submitted()); ?></td>
+            <td><?php echo $this->i18n()->dateFormat($item->reviewed()); ?></td>
+            <td><?php echo $this->translate($item->reviewStatusLabel()); ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
