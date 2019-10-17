@@ -40,6 +40,8 @@ class SyncDataset extends AbstractJob
             $dsItem = new DatascribeItem;
             $dsItem->setDataset($dataset);
             $dsItem->setItem($em->getReference(Item::class, $oItemId));
+            $dsItem->setSynced(new DateTime('now'));
+            $dsItem->setSyncedBy($this->job->getOwner());
             $em->persist($dsItem);
         }
 
