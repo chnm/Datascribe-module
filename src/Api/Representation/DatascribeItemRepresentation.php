@@ -10,6 +10,7 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
     const REVIEW_STATUS_NEEDS_REVIEW = 'needs_review';
     const REVIEW_STATUS_NOT_APPROVED = 'not_approved';
     const REVIEW_STATUS_APPROVED = 'approved';
+    const REVIEW_STATUS_UNKNOWN = 'unknown';
 
     public function getJsonLdType()
     {
@@ -206,9 +207,15 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         ) {
             return self::REVIEW_STATUS_NOT_APPROVED;
         }
+        if (null === $this->submitted()
+            && false === $this->isApproved()
+        ) {
+            return self::REVIEW_STATUS_NOT_APPROVED;
+        }
         if (true === $this->isApproved()) {
             return self::REVIEW_STATUS_APPROVED;
         }
+        return self::REVIEW_STATUS_UNKNOWN;
     }
 
     public function reviewStatusLabel() : string
@@ -224,8 +231,9 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
                 return 'Not approved'; // @translate
             case self::REVIEW_STATUS_APPROVED:
                 return 'Approved'; // @translate
+            case self::REVIEW_STATUS_UNKNOWN:
             default:
-                return '';
+                return '[Unknown]'; // @translate
         }
     }
 }
