@@ -14,6 +14,8 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
     <input type="submit" name="batch_edit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
 </div>
 
+<?php echo $this->formCollection($form, false); ?>
+
 <?php echo $this->form()->closeTag(); ?>
 
 <div class="sidebar always-open">
