@@ -124,11 +124,13 @@ if ($dataset->userIsAllowed('update')):
     </div>
 </div>
 
-<table class="tablesaw" data-tablesaw-mode="stack">
+<table class="tablesaw batch-edit" data-tablesaw-mode="stack">
     <thead>
         <tr>
-            <th class="row-select"><input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>"></th>
-            <th><?php echo $this->translate('Item'); ?></th>
+            <th class="row-select">
+                <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
+                <?php echo $this->translate('Item'); ?>
+            </th>
             <th><?php echo $this->translate('Submitted'); ?></th>
             <th><?php echo $this->translate('Reviewed'); ?></th>
             <th><?php echo $this->translate('Review status'); ?></th>
@@ -137,8 +139,8 @@ if ($dataset->userIsAllowed('update')):
     <tbody>
     <?php foreach ($items as $item): ?>
         <tr>
-            <td><input type="checkbox" name="item_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select items'); ?>"></td>
             <td>
+                <input type="checkbox" name="item_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select items'); ?>">
                 <?php echo $item->linkPretty(); ?>
                 <ul class="actions">
                     <li><?php echo $this->hyperlink('', '#', [

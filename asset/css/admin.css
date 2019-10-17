@@ -103,3 +103,40 @@
     margin: 0;
     font-weight: 900;
 }
+
+/* Browse */
+
+.browse .browse-controls {
+    justify-content: space-between;
+    width: 100%;
+    clear: both;
+}
+
+.browse .browse-controls > form,
+.browse .browse-controls > div,
+.browse .browse-controls > nav,
+.browse .browse-controls > a {
+    width: 50%;
+}
+
+.browse .browse-controls .sorting,
+.browse .browse-controls .filtering {
+    text-align: right;
+}
+
+.browse-controls .pagination {
+    order: 1;
+}
+
+.browse-controls .sorting {
+    order: 2;
+}
+
+.browse-controls > a {
+  order: 3;
+}
+
+.browse-controls .filtering {
+  order: 4;
+  margin-left: 0;
+}
