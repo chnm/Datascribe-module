@@ -50,10 +50,10 @@ class ItemBatchForm extends Form
             ],
         ]);
         $this->add([
-            'name' => 'reviewed',
+            'name' => 'is_approved',
             'type' => 'radio',
             'options' => [
-                'label' => 'Review status', // @translate
+                'label' => 'Approval status', // @translate
                 'value_options' => [
                     '1' => 'Approved', // @translate
                     '0' => 'Not approved', // @translate
