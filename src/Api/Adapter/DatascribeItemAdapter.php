@@ -266,7 +266,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->addOrderBy("omeka_root.reviewed", $query['sort_order']);
                 break;
             default:
-                // Sort by priority by default.
+                // Sort by prioritized by default.
                 $qb->addOrderBy("omeka_root.prioritized", $query['sort_order']);
                 break;
         }

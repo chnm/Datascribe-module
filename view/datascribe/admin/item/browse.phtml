@@ -26,12 +26,8 @@ if ($dataset->userIsAllowed('update')):
     <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true)); ?>
     <?php echo $this->sortSelector([
         [
-            'label' => $this->translate('Priority'),
-            'value' => 'priority'
-        ],
-        [
-            'label' => $this->translate('Title'),
-            'value' => 'title'
+            'label' => $this->translate('Prioritized'),
+            'value' => 'prioritized'
         ],
         [
             'label' => $this->translate('Submitted'),
@@ -40,6 +36,10 @@ if ($dataset->userIsAllowed('update')):
         [
             'label' => $this->translate('Reviewed'),
             'value' => 'reviewed'
+        ],
+        [
+            'label' => $this->translate('Title'),
+            'value' => 'title'
         ],
     ]); ?>
     <?php echo $this->filterSelector([

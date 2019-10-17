@@ -29,7 +29,7 @@
     echo $submitted
         ? sprintf(
             '%s by %s',
-            $this->i18n()->dateFormat($submitted, 'long', 'medium'),
+            $this->i18n()->dateFormat($submitted, 'medium', 'medium'),
             null === $submittedBy
                 ? $this->translate('[Unknown]')
                 : $submittedBy->link($submittedBy->name())
@@ -46,10 +46,31 @@
     echo $reviewed
         ? sprintf(
             '%s by %s',
-            $this->i18n()->dateFormat($reviewed, 'long', 'medium'),
+            $this->i18n()->dateFormat($reviewed, 'medium', 'medium'),
             null === $reviewedBy
                 ? $this->translate('[Unknown]')
                 : $reviewedBy->link($reviewedBy->name())
         ) : $this->translate('Not reviewed');
     ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last locked'); ?></h4>
+    <?php
+    $locked = $item->locked();
+    $lockedBy = $item->lockedBy();
+    ?>
+    <div class="value"><?php
+    echo $locked
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($locked, 'medium', 'medium'),
+            null === $lockedBy
+                ? $this->translate('[Unknown]')
+                : $lockedBy->link($lockedBy->name())
+        ) : $this->translate('Unlocked');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Record count'); ?></h4>
+    <div class="value"><?php echo number_format($item->recordCount()); ?></div>
 </div>
