@@ -1,7 +1,11 @@
-<h3><?php echo $this->translate('DataScribe item metadata'); ?></h3>
+<h3><?php echo $this->translate('Item metadata'); ?></h3>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Item'); ?></h4>
+    <h4><?php echo $this->translate('DataScribe item'); ?></h4>
     <div class="value"><?php echo $item->linkPretty(); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Omeka item'); ?></h4>
+    <div class="value"><?php echo $oItem->linkPretty(); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Dataset'); ?></h4>
@@ -12,6 +16,40 @@
     <div class="value"><?php echo $project->link($project->name()); ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Omeka item'); ?></h4>
-    <div class="value"><?php echo $oItem->linkPretty(); ?></div>
+    <h4><?php echo $this->translate('Review status'); ?></h4>
+    <div class="value"><?php echo $this->translate($item->reviewStatusLabel()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last submitted'); ?></h4>
+    <?php
+    $submitted = $item->submitted();
+    $submittedBy = $item->submittedBy();
+    ?>
+    <div class="value"><?php
+    echo $submitted
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($submitted, 'long', 'medium'),
+            null === $submittedBy
+                ? $this->translate('[Unknown]')
+                : $submittedBy->link($submittedBy->name())
+        ) : $this->translate('Not submitted');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last reviewed'); ?></h4>
+    <?php
+    $reviewed = $item->reviewed();
+    $reviewedBy = $item->reviewedBy();
+    ?>
+    <div class="value"><?php
+    echo $reviewed
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($reviewed, 'long', 'medium'),
+            null === $reviewedBy
+                ? $this->translate('[Unknown]')
+                : $reviewedBy->link($reviewedBy->name())
+        ) : $this->translate('Not reviewed');
+    ?></div>
 </div>
