@@ -218,7 +218,7 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         return self::REVIEW_STATUS_UNKNOWN;
     }
 
-    public function reviewStatusLabel() : string
+    public function reviewStatusLabel()
     {
         switch ($this->reviewStatus()) {
             case self::REVIEW_STATUS_NEW:
