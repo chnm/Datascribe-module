@@ -134,7 +134,8 @@ class DatascribeItem extends AbstractEntity
     /**
      * @OneToMany(
      *     targetEntity="DatascribeRecord",
-     *     mappedBy="item"
+     *     mappedBy="item",
+     *     fetch="EXTRA_LAZY"
      * )
      */
     protected $records;
