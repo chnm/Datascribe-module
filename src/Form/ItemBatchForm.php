@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
+use Omeka\Form\Element\UserSelect;
 use Zend\Form\Form;
 
 class ItemBatchForm extends Form
@@ -8,60 +9,54 @@ class ItemBatchForm extends Form
     public function init()
     {
         $this->add([
-            'type' => 'radio',
-            'name' => 'locked',
+            'type' => UserSelect::class,
+            'name' => 'locked_status',
             'options' => [
-                'label' => 'Lock  status', // @translate
-                'value_options' => [
-                    '1' => 'Locked', // @translate
-                    '0' => 'Unlocked', // @translate
-                    '' => '[No change]', // @translate
-                ],
-            ],
-            'attributes' => [
-                'value' => '',
-            ],
-        ]);
-        $this->add([
-            'type' => 'Omeka\Form\Element\UserSelect',
-            'name' => 'locked_user',
-            'options' => [
-                'label' => 'Lock to user', // @translate
+                'label' => 'Locked status', // @translate
+                'info' => 'Select to unlock these items or to lock these items to a user.', // @translate
                 'empty_option' => '',
+                'prepend_value_options' => [
+                    '0' => 'Unlock', // @translate
+                ]
             ],
             'attributes' => [
                 'class' => 'chosen-select',
-                'data-placeholder' => 'Select a user', // @translate
+                'data-placeholder' => '[No change]', // @translate
             ],
         ]);
         $this->add([
-            'name' => 'prioritized',
-            'type' => 'radio',
+            'type' => 'select',
+            'name' => 'approved_status',
             'options' => [
-                'label' => 'Priority status', // @translate
-                'value_options' => [
-                    '1' => 'Prioritized', // @translate
-                    '0' => 'Not prioritized', // @translate
-                    '' => '[No change]', // @translate
-                ],
-            ],
-            'attributes' => [
-                'value' => '',
-            ],
-        ]);
-        $this->add([
-            'name' => 'is_approved',
-            'type' => 'radio',
-            'options' => [
-                'label' => 'Approval status', // @translate
+                'label' => 'Approved status', // @translate
+                'info' => 'Select to mark these items as approved, not approved, or not reviewed.', // @translate
+                'empty_option' => '',
                 'value_options' => [
                     '1' => 'Approved', // @translate
                     '0' => 'Not approved', // @translate
-                    '' => '[No change]', // @translate
+                    '2' => 'Not reviewed', // @translate
                 ],
             ],
             'attributes' => [
-                'value' => '',
+                'class' => 'chosen-select',
+                'data-placeholder' => '[No change]', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'select',
+            'name' => 'prioritized_status',
+            'options' => [
+                'label' => 'Prioritized status', // @translate
+                'info' => 'Select to mark these items as prioritized or not prioritized.', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    '1' => 'Prioritized', // @translate
+                    '0' => 'Not prioritized', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => '[No change]', // @translate
             ],
         ]);
 

@@ -5,12 +5,12 @@ use Omeka\Api\Representation\AbstractEntityRepresentation;
 
 class DatascribeItemRepresentation extends AbstractEntityRepresentation
 {
-    const REVIEW_STATUS_NEW = 'new';
-    const REVIEW_STATUS_IN_PROGRESS = 'in_progress';
-    const REVIEW_STATUS_NEEDS_REVIEW = 'needs_review';
-    const REVIEW_STATUS_NOT_APPROVED = 'not_approved';
-    const REVIEW_STATUS_APPROVED = 'approved';
-    const REVIEW_STATUS_UNKNOWN = 'unknown';
+    const STATUS_NEW = 'new';
+    const STATUS_IN_PROGRESS = 'in_progress';
+    const STATUS_NEEDS_REVIEW = 'needs_review';
+    const STATUS_NOT_APPROVED = 'not_approved';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_UNKNOWN = 'unknown';
 
     public function getJsonLdType()
     {
@@ -171,67 +171,67 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         return $this->resource->getRecords()->count();
     }
 
-    public function reviewStatus()
+    public function status()
     {
         if (null === $this->submitted()
             && null === $this->reviewed()
             && null === $this->isApproved()
             && 0 === $this->recordCount()
         ) {
-            return self::REVIEW_STATUS_NEW;
+            return self::STATUS_NEW;
         }
         if (null === $this->submitted()
             && null === $this->reviewed()
             && null === $this->isApproved()
             && 0 < $this->recordCount()
         ) {
-            return self::REVIEW_STATUS_IN_PROGRESS;
+            return self::STATUS_IN_PROGRESS;
         }
         if (null !== $this->submitted()
             && null === $this->reviewed()
             && null === $this->isApproved()
         ) {
-            return self::REVIEW_STATUS_NEEDS_REVIEW;
+            return self::STATUS_NEEDS_REVIEW;
         }
         if (null !== $this->submitted()
             && null !== $this->reviewed()
             && ($this->submitted() > $this->reviewed())
             && false === $this->isApproved()
         ) {
-            return self::REVIEW_STATUS_NEEDS_REVIEW;
+            return self::STATUS_NEEDS_REVIEW;
         }
         if (null !== $this->submitted()
             && null !== $this->reviewed()
             && ($this->submitted() < $this->reviewed())
             && false === $this->isApproved()
         ) {
-            return self::REVIEW_STATUS_NOT_APPROVED;
+            return self::STATUS_NOT_APPROVED;
         }
         if (null === $this->submitted()
             && false === $this->isApproved()
         ) {
-            return self::REVIEW_STATUS_NOT_APPROVED;
+            return self::STATUS_NOT_APPROVED;
         }
         if (true === $this->isApproved()) {
-            return self::REVIEW_STATUS_APPROVED;
+            return self::STATUS_APPROVED;
         }
-        return self::REVIEW_STATUS_UNKNOWN;
+        return self::STATUS_UNKNOWN;
     }
 
-    public function reviewStatusLabel()
+    public function statusLabel()
     {
-        switch ($this->reviewStatus()) {
-            case self::REVIEW_STATUS_NEW:
+        switch ($this->status()) {
+            case self::STATUS_NEW:
                 return 'New'; // @translate
-            case self::REVIEW_STATUS_IN_PROGRESS:
+            case self::STATUS_IN_PROGRESS:
                 return 'In progress'; // @translate
-            case self::REVIEW_STATUS_NEEDS_REVIEW:
+            case self::STATUS_NEEDS_REVIEW:
                 return 'Needs review'; // @translate
-            case self::REVIEW_STATUS_NOT_APPROVED:
+            case self::STATUS_NOT_APPROVED:
                 return 'Not approved'; // @translate
-            case self::REVIEW_STATUS_APPROVED:
+            case self::STATUS_APPROVED:
                 return 'Approved'; // @translate
-            case self::REVIEW_STATUS_UNKNOWN:
+            case self::STATUS_UNKNOWN:
             default:
                 return '[Unknown]'; // @translate
         }

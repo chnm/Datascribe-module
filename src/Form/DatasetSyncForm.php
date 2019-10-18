@@ -8,8 +8,8 @@ class DatasetSyncForm extends Form
     public function init()
     {
         $this->add([
-            'name' => 'submit',
             'type' => 'submit',
+            'name' => 'submit',
             'attributes' => [
                 'value' => 'Sync dataset', // @translate
             ],

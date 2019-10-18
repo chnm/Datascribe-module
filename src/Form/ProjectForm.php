@@ -8,8 +8,8 @@ class ProjectForm extends Form
     public function init()
     {
         $this->add([
-            'name' => 'o-module-datascribe:name',
             'type' => 'text',
+            'name' => 'o-module-datascribe:name',
             'options' => [
                 'label' => 'Name', // @translate
                 'info' => 'Enter the name of this project.', // @translate
@@ -20,8 +20,8 @@ class ProjectForm extends Form
             ],
         ]);
         $this->add([
-            'name' => 'o-module-datascribe:description',
             'type' => 'textarea',
+            'name' => 'o-module-datascribe:description',
             'options' => [
                 'label' => 'Description', // @translate
                 'info' => 'Enter the description of this project.', // @translate

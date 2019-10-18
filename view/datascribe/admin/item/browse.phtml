@@ -153,7 +153,7 @@ if ($dataset->userIsAllowed('update')):
             </td>
             <td><?php echo $this->i18n()->dateFormat($item->submitted()); ?></td>
             <td><?php echo $this->i18n()->dateFormat($item->reviewed()); ?></td>
-            <td><?php echo $this->translate($item->reviewStatusLabel()); ?></td>
+            <td><?php echo $this->translate($item->statusLabel()); ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

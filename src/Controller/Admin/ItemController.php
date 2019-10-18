@@ -3,6 +3,7 @@ namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetSyncForm;
 use Datascribe\Form\ItemBatchForm;
+use Datascribe\Form\ItemSearchForm;
 use Omeka\Stdlib\Message;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -79,9 +80,16 @@ class ItemController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
+        $project = $dataset->project();
+        $form = $this->getForm(ItemSearchForm::class, ['project_id' => $project->id()]);
+        $form->setAttribute('method', 'get');
+        $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
+        $form->setData($this->params()->fromQuery());
+
         $view = new ViewModel;
-        $view->setVariable('project', $dataset->project());
+        $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
+        $view->setVariable('form', $form);
         $view->setVariable('query', $this->params()->fromQuery());
         return $view;
     }

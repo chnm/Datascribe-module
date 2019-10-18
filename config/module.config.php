@@ -44,6 +44,11 @@ return [
             'datascribe' => Datascribe\Service\ControllerPlugin\DatascribeFactory::class,
         ],
     ],
+    'form_elements' => [
+        'factories' => [
+            'Datascribe\Form\ItemSearchForm' => Datascribe\Service\Form\ItemSearchFormFactory::class,
+        ],
+    ],
     'view_helpers' => [
         'factories' => [
             'datascribe' => Datascribe\Service\ViewHelper\DatascribeFactory::class,

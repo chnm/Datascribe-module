@@ -9,8 +9,8 @@ class DatasetForm extends Form
     public function init()
     {
         $this->add([
-            'name' => 'o-module-datascribe:name',
             'type' => 'text',
+            'name' => 'o-module-datascribe:name',
             'options' => [
                 'label' => 'Name', // @translate
                 'info' => 'Enter the name of this dataset.', // @translate
@@ -21,8 +21,8 @@ class DatasetForm extends Form
             ],
         ]);
         $this->add([
-            'name' => 'o-module-datascribe:description',
             'type' => 'textarea',
+            'name' => 'o-module-datascribe:description',
             'options' => [
                 'label' => 'Description', // @translate
                 'info' => 'Enter the description of this dataset.', // @translate
@@ -33,8 +33,8 @@ class DatasetForm extends Form
             ],
         ]);
         $this->add([
-            'name' => 'o-module-datascribe:guidelines',
             'type' => 'textarea',
+            'name' => 'o-module-datascribe:guidelines',
             'options' => [
                 'label' => 'Guidelines', // @translate
                 'info' => 'Enter guidelines for transcribing this dataset.', // @translate
@@ -45,8 +45,8 @@ class DatasetForm extends Form
             ],
         ]);
         $this->add([
-            'name' => 'o:item_set',
             'type' => ItemSetSelect::class,
+            'name' => 'o:item_set',
             'options' => [
                 'label' => 'Item set', // @translate
                 'info' => 'Select the item set used to synchronize dataset items. Once synchronized, this dataset will contain every item in this item set.', // @translate
