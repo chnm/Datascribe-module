@@ -61,5 +61,17 @@ class ItemBatchForm extends Form
         ]);
 
         $inputFilter = $this->getInputFilter();
+        $inputFilter->add([
+            'name' => 'locked_status',
+            'allow_empty' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'approved_status',
+            'allow_empty' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'prioritized_status',
+            'allow_empty' => true,
+        ]);
     }
 }
