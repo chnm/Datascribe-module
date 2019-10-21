@@ -115,7 +115,8 @@ class ItemController extends AbstractActionController
             $items[] = $this->api()->read('datascribe_items', $itemId)->getContent();
         }
 
-        $form = $this->getForm(ItemBatchForm::class);
+        $project = $dataset->project();
+        $form = $this->getForm(ItemBatchForm::class, ['project_id' => $project->id()]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
@@ -129,7 +130,7 @@ class ItemController extends AbstractActionController
         }
 
         $view = new ViewModel;
-        $view->setVariable('project', $dataset->project());
+        $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('items', $items);
         $view->setVariable('form', $form);
@@ -158,7 +159,8 @@ class ItemController extends AbstractActionController
         );
         $count = $this->api()->search('datascribe_items', array_merge($query, ['limit' => 0]))->getTotalResults();
 
-        $form = $this->getForm(ItemBatchForm::class);
+        $project = $dataset->project();
+        $form = $this->getForm(ItemBatchForm::class, ['project_id' => $project->id()]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
@@ -178,7 +180,7 @@ class ItemController extends AbstractActionController
         }
 
         $view = new ViewModel;
-        $view->setVariable('project', $dataset->project());
+        $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('count', $count);
         $view->setVariable('query', $query);

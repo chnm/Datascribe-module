@@ -41,9 +41,13 @@ class ItemSearchForm extends Form
         $valueOptions = [
             'not_submitted' => 'Not submitted', // @translate
             'submitted' => 'Submitted', // @translate
+            'submitted_by' => [
+                'label' => 'Submitted by', // @translate
+                'options' => [],
+            ],
         ];
-        foreach ($this->getByUsers('submittedBy', $this->getOption('project_id')) as $user) {
-            $valueOptions[$user->getId()] = sprintf('Submitted by %s (%s)', $user->getName(), $user->getEmail());
+        foreach ($this->getByUsers('submittedBy') as $user) {
+            $valueOptions['submitted_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
             'type' => 'select',
@@ -61,9 +65,13 @@ class ItemSearchForm extends Form
         $valueOptions = [
             'not_reviewed' => 'Not reviewed', // @translate
             'reviewed' => 'Reviewed', // @translate
+            'reviewed_by' => [
+                'label' => 'Reviewed by', // @translate
+                'options' => [],
+            ],
         ];
-        foreach ($this->getByUsers('reviewedBy', $this->getOption('project_id')) as $user) {
-            $valueOptions[$user->getId()] = sprintf('Reviewed by %s (%s)', $user->getName(), $user->getEmail());
+        foreach ($this->getByUsers('reviewedBy') as $user) {
+            $valueOptions['reviewed_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
             'type' => 'select',
@@ -81,9 +89,13 @@ class ItemSearchForm extends Form
         $valueOptions = [
             'not_locked' => 'Unlocked', // @translate
             'locked' => 'Locked', // @translate
+            'locked_by' => [
+                'label' => 'Locked by', // @translate
+                'options' => [],
+            ],
         ];
-        foreach ($this->getByUsers('lockedBy', $this->getOption('project_id')) as $user) {
-            $valueOptions[$user->getId()] = sprintf('Locked by %s (%s)', $user->getName(), $user->getEmail());
+        foreach ($this->getByUsers('lockedBy') as $user) {
+            $valueOptions['locked_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
             'type' => 'select',
@@ -101,20 +113,20 @@ class ItemSearchForm extends Form
     }
 
     /**
-     * Get users for the value options.
+     * Get project users for the value options.
      *
      * This will only get users who are set in the $byColumn.
      *
      * @param string $byColumn
-     * @param int $projectId
-     * @param string $name
-     * @param string $value
-     * @param string $label
      * @return string
      */
-    protected function getByUsers(string $byColumn, int $projectId)
+    protected function getByUsers(string $byColumn)
     {
         if (!in_array($byColumn, ['lockedBy', 'submittedBy', 'reviewedBy'])) {
+            return [];
+        }
+        $projectId = $this->getOption('project_id');
+        if (!$projectId) {
             return [];
         }
         $dql = "

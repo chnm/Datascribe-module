@@ -46,6 +46,7 @@ return [
     ],
     'form_elements' => [
         'factories' => [
+            'Datascribe\Form\ItemBatchForm' => Datascribe\Service\Form\ItemBatchFormFactory::class,
             'Datascribe\Form\ItemSearchForm' => Datascribe\Service\Form\ItemSearchFormFactory::class,
         ],
     ],
