@@ -1,6 +1,73 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item browse');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
+$filters = [
+    [
+        'label' => $this->translate('All unlocked and new items'),
+        'value' => 'all_unlocked_and_new'
+    ],
+    [
+        'label' => $this->translate('All unlocked and in progress items'),
+        'value' => 'all_unlocked_and_in_progress'
+    ],
+    [
+        'label' => $this->translate('My new items'),
+        'value' => 'my_new'
+    ],
+    [
+        'label' => $this->translate('My in progress items'),
+        'value' => 'my_in_progress'
+    ],
+    [
+        'label' => $this->translate('My items that need review'),
+        'value' => 'my_need_review'
+    ],
+    [
+        'label' => $this->translate('My items that are not approved'),
+        'value' => 'my_not_approved'
+    ],
+    [
+        'label' => $this->translate('My items that are approved'),
+        'value' => 'my_approved'
+    ],
+];
+if ($canViewBatchUpdate) {
+    $filters = array_merge([
+        [
+            'label' => $this->translate('Items I reviewed that need re-review'),
+            'value' => 'my_reviewed_and_need_review'
+        ],
+        [
+            'label' => $this->translate('Items I reviewed that are not approved'),
+            'value' => 'my_reviewed_and_not_approved'
+        ],
+        [
+            'label' => $this->translate('Items I reviewed that are approved'),
+            'value' => 'my_reviewed_and_approved'
+        ],
+        [
+            'label' => $this->translate('All items that need initial review'),
+            'value' => 'all_need_initial_review'
+        ],
+        [
+            'label' => $this->translate('All items that need re-review'),
+            'value' => 'all_need_rereview'
+        ],
+        [
+            'label' => $this->translate('All items that need review'),
+            'value' => 'all_need_review'
+        ],
+        [
+            'label' => $this->translate('All items that are not approved'),
+            'value' => 'all_not_approved'
+        ],
+        [
+            'label' => $this->translate('All items that are approved'),
+            'value' => 'all_approved'
+        ],
+    ], $filters);
+}
 ?>
 
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Browse')); ?>
@@ -42,74 +109,14 @@ if ($dataset->userIsAllowed('update')):
             'value' => 'title'
         ],
     ]); ?>
-    <?php echo $this->filterSelector([
-        [
-            'label' => $this->translate('All unlocked items'),
-            'value' => 'all_unlocked'
-        ],
-        [
-            'label' => $this->translate('All new items'),
-            'value' => 'all_new'
-        ],
-        [
-            'label' => $this->translate('All in progress items'),
-            'value' => 'all_in_progress'
-        ],
-        [
-            'label' => $this->translate('All items that need initial review'),
-            'value' => 'all_need_initial_review'
-        ],
-        [
-            'label' => $this->translate('All items that need review'),
-            'value' => 'all_need_review'
-        ],
-        [
-            'label' => $this->translate('All items that are not approved'),
-            'value' => 'all_not_approved'
-        ],
-        [
-            'label' => $this->translate('All items that are approved'),
-            'value' => 'all_approved'
-        ],
-        [
-            'label' => $this->translate('My new items'),
-            'value' => 'my_new'
-        ],
-        [
-            'label' => $this->translate('My in progress items'),
-            'value' => 'my_in_progress'
-        ],
-        [
-            'label' => $this->translate('My items that need review'),
-            'value' => 'my_need_review'
-        ],
-        [
-            'label' => $this->translate('My items that are not approved'),
-            'value' => 'my_not_approved'
-        ],
-        [
-            'label' => $this->translate('My items that are approved'),
-            'value' => 'my_approved'
-        ],
-        [
-            'label' => $this->translate('Items I reviewed that need re-review'),
-            'value' => 'my_reviewed_and_need_review'
-        ],
-        [
-            'label' => $this->translate('Items I reviewed that are not approved'),
-            'value' => 'my_reviewed_and_not_approved'
-        ],
-        [
-            'label' => $this->translate('Items I reviewed that are approved'),
-            'value' => 'my_reviewed_and_approved'
-        ],
-    ]); ?>
+    <?php echo $this->filterSelector($filters); ?>
 </div>
 
 <?php if ($items): ?>
 
 <form method="post" id="batch-form">
 
+<?php if ($canViewBatchUpdate): ?>
 <div class="batch-inputs">
     <select class="batch-actions-select" aria-label="<?php echo $this->translate('Batch actions'); ?>">
         <option value="default"><?php echo $this->translate('Batch actions'); ?></option>
@@ -123,12 +130,15 @@ if ($dataset->userIsAllowed('update')):
         <input type="hidden" name="query" class="batch-query" value="<?php echo $this->escapeHtml(json_encode($this->params()->fromQuery())); ?>">
     </div>
 </div>
+<?php endif; ?>
 
 <table class="tablesaw batch-edit" data-tablesaw-mode="stack">
     <thead>
         <tr>
             <th class="row-select">
+                <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
+                <?php endif; ?>
                 <?php echo $this->translate('Item'); ?>
             </th>
             <th><?php echo $this->translate('Last submitted'); ?></th>
@@ -140,7 +150,9 @@ if ($dataset->userIsAllowed('update')):
     <?php foreach ($items as $item): ?>
         <tr>
             <td>
+                <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" name="item_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select items'); ?>">
+                <?php endif; ?>
                 <?php echo $item->linkPretty(); ?>
                 <ul class="actions">
                     <li><?php echo $this->hyperlink('', '#', [
@@ -167,11 +179,16 @@ if ($dataset->userIsAllowed('update')):
 
 <?php else: ?>
 <div class="no-resources">
-    <p>
-        <?php echo $this->translate('No items found'); ?>
-        <br>
-        <?php echo $this->translate('Do you need to sync the dataset? If you have recently synced, the sync job has likely not finished.'); ?>
-    </p>
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
+    <p><?php echo sprintf(
+        '%s%s%s',
+        $this->translate('No items found.'),
+        '<br>',
+        $this->translate('Do you need to sync the dataset? If you have recently synced, the sync job has likely not finished.')
+    ); ?></p>
+    <?php else: ?>
+    <p><?php echo $this->translate('No items found.'); ?></p>
+    <?php endif; ?>
 </div>
 <?php endif; ?>
 

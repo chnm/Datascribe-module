@@ -20,7 +20,7 @@ class ProjectController extends AbstractActionController
                 $formData['o-module-datascribe:user'] = $this->params()->fromPost('o-module-datascribe:user');
                 $response = $this->api($form)->create('datascribe_projects', $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe project successfully created.'); // @translate
+                    $this->messenger()->addSuccess('Project successfully created.'); // @translate
                     return $this->redirect()->toUrl($response->getContent()->url());
                 }
             } else {
@@ -49,7 +49,7 @@ class ProjectController extends AbstractActionController
                 $formData['o-module-datascribe:user'] = $this->params()->fromPost('o-module-datascribe:user');
                 $response = $this->api($form)->update('datascribe_projects', $this->params('project-id'), $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe project successfully edited.'); // @translate
+                    $this->messenger()->addSuccess('Project successfully edited.'); // @translate
                     return $this->redirect()->toUrl($response->getContent()->url());
                 }
             } else {
@@ -74,7 +74,7 @@ class ProjectController extends AbstractActionController
             if ($form->isValid()) {
                 $response = $this->api($form)->delete('datascribe_projects', $this->params('project-id'));
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe project successfully deleted'); // @translate
+                    $this->messenger()->addSuccess('Project successfully deleted'); // @translate
                 }
             } else {
                 $this->messenger()->addFormErrors($form);

@@ -78,14 +78,6 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
     <?php echo $this->pagination(); ?>
 </div>
 
-<div id="show-details" class="sidebar">
-    <?php echo $this->hyperlink('', '#', [
-        'class' => 'sidebar-close o-icon-close',
-        'title' => $this->translate('Close'),
-    ]); ?>
-    <div class="sidebar-content"></div>
-</div>
-
 <?php else: ?>
 <div class="no-resources">
     <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
@@ -101,4 +93,12 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
 
 <div id="project-metadata" class="sidebar always-open">
     <?php echo $this->partial('datascribe/admin/project/show-details') ?>
+</div>
+
+<div id="show-details" class="sidebar">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $this->translate('Close'),
+    ]); ?>
+    <div class="sidebar-content"></div>
 </div>

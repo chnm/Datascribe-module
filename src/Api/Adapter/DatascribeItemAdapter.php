@@ -177,14 +177,16 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 'omeka_root.reviewedBy',
                 $this->createNamedParameter($qb, $identity))
             );
-        } elseif (isset($query['all_unlocked'])) {
+        } elseif (isset($query['all_unlocked_and_new'])) {
             $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
-        } elseif (isset($query['all_new'])) {
             $this->buildStatusQuery($qb, 'new');
-        } elseif (isset($query['all_in_progress'])) {
+        } elseif (isset($query['all_unlocked_and_in_progress'])) {
+            $qb->andWhere($qb->expr()->isNull('omeka_root.locked'));
             $this->buildStatusQuery($qb, 'in_progress');
         } elseif (isset($query['all_need_initial_review'])) {
             $this->buildStatusQuery($qb, 'need_initial_review');
+        } elseif (isset($query['all_need_rereview'])) {
+            $this->buildStatusQuery($qb, 'need_rereview');
         } elseif (isset($query['all_need_review'])) {
             $this->buildStatusQuery($qb, 'need_review');
         } elseif (isset($query['all_not_approved'])) {

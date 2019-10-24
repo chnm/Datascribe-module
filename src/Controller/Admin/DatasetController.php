@@ -28,7 +28,7 @@ class DatasetController extends AbstractActionController
                 $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
                 $response = $this->api($form)->create('datascribe_datasets', $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe dataset successfully created.'); // @translate
+                    $this->messenger()->addSuccess('Dataset successfully created.'); // @translate
                     return $this->redirect()->toUrl($response->getContent()->url());
                 }
             } else {
@@ -61,7 +61,7 @@ class DatasetController extends AbstractActionController
                 $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe dataset successfully edited.'); // @translate
+                    $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate
                     return $this->redirect()->toUrl($response->getContent()->url());
                 }
             } else {
@@ -88,7 +88,7 @@ class DatasetController extends AbstractActionController
             if ($form->isValid()) {
                 $response = $this->api($form)->delete('datascribe_datasets', $this->params('dataset-id'));
                 if ($response) {
-                    $this->messenger()->addSuccess('DataScribe dataset successfully deleted'); // @translate
+                    $this->messenger()->addSuccess('Dataset successfully deleted'); // @translate
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
@@ -151,15 +151,7 @@ class DatasetController extends AbstractActionController
                     SyncDataset::class,
                     ['datascribe_dataset_id' => $this->params('dataset-id')]
                 );
-                $message = new Message(
-                    'Syncing DataScribe dataset. This may take a while. %s', // @translate
-                    sprintf(
-                        '<a href="%s">%s</a>',
-                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
-                        $this->translate('See this job for sync progress.')
-                    ));
-                $message->setEscapeHtml(false);
-                $this->messenger()->addSuccess($message);
+                $this->messenger()->addSuccess('Syncing dataset. This may take a while.'); // @translate
                 return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
             }
         }
