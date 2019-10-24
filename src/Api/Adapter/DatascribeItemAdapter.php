@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Exception;
@@ -287,6 +288,58 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
+        $services = $this->getServiceLocator();
+        $currentUser = $services->get('Omeka\AuthenticationService')->getIdentity();
+
+        // Handle a priority action.
+        $priorityAction = $request->getValue('priority_action');
+        if ('not_prioritized' === $priorityAction) {
+            $entity->setPrioritized(null);
+            $entity->setPrioritizedBy(null);
+        } elseif ('prioritized' === $priorityAction) {
+            $entity->setPrioritized(new DateTime('now'));
+            $entity->setPrioritizedBy($currentUser);
+        }
+
+        // Handle a lock action.
+        $lockAction = $request->getValue('lock_action');
+        if ('unlock' === $lockAction) {
+            $entity->setLocked(null);
+            $entity->setLockedBy(null);
+        } elseif ('lock' === $lockAction) {
+            $entity->setLocked(new DateTime('now'));
+            $entity->setLockedBy($currentUser);
+        } elseif (is_numeric($lockAction)) {
+            $user = $this->getAdapter('users')->findEntity($lockAction);
+            $entity->setLocked(new DateTime('now'));
+            $entity->setLockedBy($user);
+        }
+
+        // Handle a submit action.
+        $submitAction = $request->getValue('submit_action');
+        if ('not_submitted' === $submitAction) {
+            $entity->setSubmitted(null);
+            $entity->setSubmittedBy(null);
+        } elseif ('submitted' === $submitAction) {
+            $entity->setSubmitted(new DateTime('now'));
+            $entity->setSubmittedBy($currentUser);
+        }
+
+        // Handle a review action.
+        $reviewAction = $request->getValue('review_action');
+        if ('not_reviewed' === $reviewAction) {
+            $entity->setReviewed(null);
+            $entity->setReviewedBy(null);
+            $entity->setIsApproved(null);
+        } elseif ('not_approved' === $reviewAction) {
+            $entity->setReviewed(new DateTime('now'));
+            $entity->setReviewedBy($currentUser);
+            $entity->setIsApproved(false);
+        } elseif ('approved' === $reviewAction) {
+            $entity->setReviewed(new DateTime('now'));
+            $entity->setReviewedBy($currentUser);
+            $entity->setIsApproved(true);
+        }
     }
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
@@ -297,5 +350,16 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         if (null === $entity->getItem()) {
             $errorStore->addError('o:item', 'An item must not be null'); // @translate
         }
+    }
+
+    public function preprocessBatchUpdate(array $data, Request $request)
+    {
+        $data = parent::preprocessBatchUpdate($data, $request);
+        $rawData = $request->getContent();
+        $data['priority_action'] =  $rawData['priority_action'] ?? null;
+        $data['lock_action'] =  $rawData['lock_action'] ?? null;
+        $data['submit_action'] =  $rawData['submit_action'] ?? null;
+        $data['review_action'] =  $rawData['review_action'] ?? null;
+        return $data;
     }
 }

@@ -122,6 +122,7 @@ class ItemController extends AbstractActionController
             $form->setData($this->params()->fromPost());
             if ($form->isValid()) {
                 $formData = $form->getData();
+                $this->api($form)->batchUpdate('datascribe_items', $itemIds, $formData);
                 $this->messenger()->addSuccess('DataScribe item successfully edited'); // @translate
                 return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
             } else {
@@ -167,12 +168,19 @@ class ItemController extends AbstractActionController
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $job = $this->jobDispatcher()->dispatch('Omeka\Job\BatchUpdate', [
+                    'resource' => 'datascribe_items',
                     'query' => $query,
-                    'data' => $data['replace'] ?? [],
-                    'data_remove' => $data['remove'] ?? [],
-                    'data_append' => $data['append'] ?? [],
+                    'data' => $formData,
                 ]);
-                $this->messenger()->addSuccess('Editing items. This may take a while.'); // @translate
+                $message = new Message(
+                    'Batch editing DataScribe items. This may take a while. %s', // @translate
+                    sprintf(
+                        '<a href="%s">%s</a>',
+                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
+                        $this->translate('See this job for batch edit progress.')
+                    ));
+                $message->setEscapeHtml(false);
+                $this->messenger()->addSuccess($message);
                 return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
             } else {
                 $this->messenger()->addFormErrors($form);

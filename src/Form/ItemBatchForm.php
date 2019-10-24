@@ -21,7 +21,8 @@ class ItemBatchForm extends Form
     public function init()
     {
         $valueOptions = [
-            '0' => 'Unlock',
+            'unlock' => 'Unlock',
+            'lock' => 'Lock to me',
             'transcribers' => [
                 'label' => 'Lock to transcriber', // @translate
                 'options' => [],
@@ -48,7 +49,7 @@ class ItemBatchForm extends Form
         }
         $this->add([
             'type' => 'select',
-            'name' => 'locked_action',
+            'name' => 'lock_action',
             'options' => [
                 'label' => 'Lock action', // @translate
                 'empty_option' => '',
@@ -66,9 +67,9 @@ class ItemBatchForm extends Form
                 'label' => 'Review action', // @translate
                 'empty_option' => '',
                 'value_options' => [
-                    '1' => 'Mark as approved', // @translate
-                    '0' => 'Mark as not approved', // @translate
-                    '2' => 'Mark as not reviewed', // @translate
+                    'approved' => 'Mark as approved', // @translate
+                    'not_approved' => 'Mark as not approved', // @translate
+                    'not_reviewed' => 'Mark as not reviewed', // @translate
                 ],
             ],
             'attributes' => [
@@ -83,8 +84,8 @@ class ItemBatchForm extends Form
                 'label' => 'Priority action', // @translate
                 'empty_option' => '',
                 'value_options' => [
-                    '1' => 'Mark as prioritized', // @translate
-                    '0' => 'Mark as not prioritized', // @translate
+                    'prioritized' => 'Mark as prioritized', // @translate
+                    'not_prioritized' => 'Mark as not prioritized', // @translate
                 ],
             ],
             'attributes' => [
@@ -95,15 +96,15 @@ class ItemBatchForm extends Form
 
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
-            'name' => 'locked_status',
+            'name' => 'lock_action',
             'allow_empty' => true,
         ]);
         $inputFilter->add([
-            'name' => 'approved_status',
+            'name' => 'review_action',
             'allow_empty' => true,
         ]);
         $inputFilter->add([
-            'name' => 'prioritized_status',
+            'name' => 'priority_action',
             'allow_empty' => true,
         ]);
     }

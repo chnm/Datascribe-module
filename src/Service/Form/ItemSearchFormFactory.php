@@ -9,7 +9,7 @@ class ItemSearchFormFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $form = new ItemSearchForm($requestedName, $options);
+        $form = new ItemSearchForm(null, $options);
         $form->setEntityManager($services->get('Omeka\EntityManager'));
         return $form;
     }
