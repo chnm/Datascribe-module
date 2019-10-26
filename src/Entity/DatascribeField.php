@@ -5,18 +5,10 @@ use Omeka\Entity\AbstractEntity;
 
 /**
  * @Entity
- * @Table(
- *     uniqueConstraints={
- *         @UniqueConstraint(
- *             columns={"dataset_id", "position"}
- *         )
- *     }
- * )
  */
 class DatascribeField extends AbstractEntity
 {
     use TraitId;
-    use TraitIdentity;
     use TraitData;
 
     /**

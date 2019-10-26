@@ -1,29 +1,26 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
-interface DatascribeDataTypeInterface
+use Zend\Form\Fieldset;
+
+interface DataTypeInterface
 {
     /**
-     * Get the name of this data type.
+     * Get the label of this data type.
      *
      * @return string
      */
-    public function getName() : string;
+    public function getLabel() : string;
 
     /**
-     * Get the description of this data type.
+     * Add elements used for administering a field of this data type to the
+     * passed fieldset.
      *
-     * @return string
-     */
-    public function getDescription() : ?string;
-
-    /**
-     * Get the form control for administering a field of this data type.
-     *
+     * @param Fieldset $fieldset
      * @param array $fieldData
      * @return string
      */
-    public function getFieldFormControl(array $fieldData) : string;
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void;
 
     /**
      * Get structured data from field form data (for storing).
@@ -34,12 +31,14 @@ interface DatascribeDataTypeInterface
     public function getFieldData(array $fieldFormData) : array;
 
     /**
-     * Get the form control for transcribing a value of this data type.
+     * Add elements used for transcribing a value of this data type to the
+     * passed fieldset.
      *
+     * @param Fieldset $fieldset
      * @param array $valueData
      * @return string
      */
-    public function getValueFormControl(array $valueData) : string;
+    public function addValueElements(Fieldset $fieldset, array $valueData) : void;
 
     /**
      * Get structured data from value form data (for storing).

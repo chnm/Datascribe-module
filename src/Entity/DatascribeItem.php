@@ -142,7 +142,7 @@ class DatascribeItem extends AbstractEntity
 
     public function __construct()
     {
-        $this->users = new ArrayCollection;
+        $this->records = new ArrayCollection;
     }
 
     public function setDataset(DatascribeDataset $dataset) : void

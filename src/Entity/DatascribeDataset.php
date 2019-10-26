@@ -2,6 +2,7 @@
 namespace Datascribe\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\ItemSet;
 
@@ -47,6 +48,23 @@ class DatascribeDataset extends AbstractEntity
      */
     protected $guidelines;
 
+    /**
+     * @OneToMany(
+     *     targetEntity="DatascribeField",
+     *     mappedBy="dataset",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove", "detach"},
+     *     indexBy="id"
+     * )
+     * @OrderBy({"position" = "ASC"})
+     */
+    protected $fields;
+
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection;
+    }
+
     public function setProject(DatascribeProject $project) : void
     {
         $this->project = $project;
@@ -75,5 +93,10 @@ class DatascribeDataset extends AbstractEntity
     public function getGuidelines() : ?string
     {
         return $this->guidelines;
+    }
+
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

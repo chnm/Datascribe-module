@@ -20,7 +20,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'Datascribe\FieldDataTypeManager' => Datascribe\Service\FieldDataTypeManagerFactory::class,
+            'Datascribe\DataTypeManager' => Datascribe\Service\DataTypeManagerFactory::class,
         ],
     ],
     'api_adapters' => [

@@ -97,4 +97,8 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
         return $this->resource->getCreated();
     }
 
+    public function fields()
+    {
+        return $this->resource->getFields();
+    }
 }

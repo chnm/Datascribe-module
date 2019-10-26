@@ -64,10 +64,10 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
+            return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
+        return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'created', 'isPublic'];
     }
 
     /**
@@ -237,6 +237,17 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGuidelines', []);
 
         return parent::getGuidelines();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFields()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFields', []);
+
+        return parent::getFields();
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\Entity\DatascribeField;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
@@ -87,6 +88,32 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $entity->setItemSet($itemSet);
         }
         $this->hydrateOwner($request, $entity);
+
+        $fieldCollection = $entity->getFields();
+        $dataTypeManager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        $position = 1;
+        foreach ($request->getValue('o-module-datascribe:field', []) as $fieldFormData) {
+            if (isset($fieldFormData['o:id']) && $fieldCollection->containsKey($fieldFormData['o:id'])) {
+                // This field exists. Get it.
+                $field = $fieldCollection->get($fieldFormData['o:id']);
+            } elseif (isset($fieldFormData['o-module-datascribe:data_type']) && $dataTypeManager->has($fieldFormData['o-module-datascribe:data_type'])) {
+                // This is a new field. Create it.
+                $field = new DatascribeField;
+                $field->setDataset($entity);
+                $field->setDataType($fieldFormData['o-module-datascribe:data_type']);
+                $fieldCollection->add($field);
+            } else {
+                // This field is in an invalid format. Ignore it.
+                continue;
+            }
+            $dataType = $dataTypeManager->get($field->getDataType());
+            $field->setData($dataType->getFieldData($fieldFormData));
+            $field->setLabel($fieldFormData['o-module-datascribe:label']);
+            $field->setHint($fieldFormData['o-module-datascribe:hint']);
+            $field->setIsPrimary($fieldFormData['o-module-datascribe:is_primary']);
+            $field->setPosition($position);
+            $position++;
+        }
     }
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)

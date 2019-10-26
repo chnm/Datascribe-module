@@ -54,11 +54,13 @@ class DatasetController extends AbstractActionController
         $form = $this->getForm(DatasetForm::class);
 
         if ($this->getRequest()->isPost()) {
-            $form->setData($this->params()->fromPost());
+            $postData = $this->params()->fromPost();
+            $form->setData($postData);
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $formData['o:item_set'] = ['o:id' => $formData['o:item_set']];
                 $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
+                $formData['o-module-datascribe:field'] = $postData['o-module-datascribe:field'];
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate

@@ -8,5 +8,5 @@ class Manager extends AbstractPluginManager
 {
     protected $autoAddInvokableClass = false;
 
-    protected $instanceOf = DatascribeDataTypeInterface::class;
+    protected $instanceOf = DataTypeInterface::class;
 }
