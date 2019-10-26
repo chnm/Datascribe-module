@@ -70,12 +70,12 @@ class Text implements DataTypeInterface
         $fieldData['rows'] =
             (isset($fieldFormData['rows']) && preg_match('/^\d+$/', $fieldFormData['rows']))
             ? $fieldFormData['rows'] : null;
-        $fieldData['maxlength'] =
-            (isset($fieldFormData['maxlength']) && preg_match('/^\d+$/', $fieldFormData['maxlength']))
-            ? $fieldFormData['maxlength'] : null;
         $fieldData['minlength'] =
             (isset($fieldFormData['minlength']) && preg_match('/^\d+$/', $fieldFormData['minlength']))
             ? $fieldFormData['minlength'] : null;
+        $fieldData['maxlength'] =
+            (isset($fieldFormData['maxlength']) && preg_match('/^\d+$/', $fieldFormData['maxlength']))
+            ? $fieldFormData['maxlength'] : null;
         $fieldData['placeholder'] =
             (isset($fieldFormData['placeholder']) && preg_match('/^.+$/', $fieldFormData['placeholder']))
             ? $fieldFormData['placeholder'] : null;
