@@ -62,6 +62,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
+        $this->hydrateOwner($request, $entity);
         if ($this->shouldHydrate($request, 'o-module-datascribe:name')) {
             $entity->setName($request->getValue('o-module-datascribe:name'));
         }
@@ -87,32 +88,47 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             }
             $entity->setItemSet($itemSet);
         }
-        $this->hydrateOwner($request, $entity);
+        if ($this->shouldHydrate($request, 'o-module-datascribe:field')) {
+            $this->hydrateFields($request, $entity, $errorStore);
+        }
+    }
 
-        $fieldCollection = $entity->getFields();
-        $dataTypeManager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+    protected function hydrateFields(Request $request, EntityInterface $entity, ErrorStore $errorStore)
+    {
+        $dataTypes = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        $fields = $entity->getFields();
+        $fieldsToRetain = [];
         $position = 1;
+
+        // Update existing fields and create new fields.
         foreach ($request->getValue('o-module-datascribe:field', []) as $fieldFormData) {
-            if (isset($fieldFormData['o:id']) && $fieldCollection->containsKey($fieldFormData['o:id'])) {
-                // This field exists. Get it.
-                $field = $fieldCollection->get($fieldFormData['o:id']);
-            } elseif (isset($fieldFormData['o-module-datascribe:data_type']) && $dataTypeManager->has($fieldFormData['o-module-datascribe:data_type'])) {
+            if (isset($fieldFormData['o:id']) && $fields->containsKey($fieldFormData['o:id'])) {
+                // This field exists. Update it.
+                $field = $fields->get($fieldFormData['o:id']);
+                $fieldsToRetain[] = $field->getId();
+            } elseif (isset($fieldFormData['o-module-datascribe:data_type']) && $dataTypes->has($fieldFormData['o-module-datascribe:data_type'])) {
                 // This is a new field. Create it.
                 $field = new DatascribeField;
                 $field->setDataset($entity);
                 $field->setDataType($fieldFormData['o-module-datascribe:data_type']);
-                $fieldCollection->add($field);
+                $fields->add($field);
             } else {
                 // This field is in an invalid format. Ignore it.
                 continue;
             }
-            $dataType = $dataTypeManager->get($field->getDataType());
+            $field->setLabel($fieldFormData['o-module-datascribe:label'] ?? null);
+            $field->setHint($fieldFormData['o-module-datascribe:hint'] ?? null);
+            $field->setIsPrimary($fieldFormData['o-module-datascribe:isPrimary'] ?? false);
+            $field->setPosition($position++);
+            $dataType = $dataTypes->get($field->getDataType());
             $field->setData($dataType->getFieldData($fieldFormData));
-            $field->setLabel($fieldFormData['o-module-datascribe:label']);
-            $field->setHint($fieldFormData['o-module-datascribe:hint']);
-            $field->setIsPrimary($fieldFormData['o-module-datascribe:is_primary']);
-            $field->setPosition($position);
-            $position++;
+        }
+
+        // Remove fields not passed in the request.
+        foreach ($fields as $field) {
+            if ($field->getId() && !in_array($field->getId(), $fieldsToRetain)) {
+                $fields->removeElement($field);
+            }
         }
     }
 

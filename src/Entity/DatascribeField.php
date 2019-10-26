@@ -89,6 +89,9 @@ class DatascribeField extends AbstractEntity
 
     public function setHint(?string $hint) : void
     {
+        if (is_string($hint) && '' === trim($hint)) {
+            $hint = null;
+        }
         $this->hint = $hint;
     }
 
@@ -107,7 +110,7 @@ class DatascribeField extends AbstractEntity
         return $this->position;
     }
 
-    public function setIsPrimary(?bool $isPrimary) : void
+    public function setIsPrimary(bool $isPrimary) : void
     {
         $this->isPrimary = $isPrimary;
     }

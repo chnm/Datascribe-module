@@ -264,7 +264,7 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setIsPrimary(?bool $isPrimary): void
+    public function setIsPrimary(bool $isPrimary): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPrimary', [$isPrimary]);

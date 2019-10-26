@@ -14,8 +14,12 @@ $('#data-types').on('click', '.option', function(e) {
 
 // Handle the is_primary control.
 $('#form-builder').on('change', 'input[name$="[o-module-datascribe:is_primary]"]', function(e) {
+    var thisCheckbox = $(this);
+    var wasUnchecked = thisCheckbox.prop('checked');
     $('#form-builder').find('input[name$="[o-module-datascribe:is_primary]"]').prop('checked', false);
-    $(this).prop('checked', true);
+    if (wasUnchecked) {
+        thisCheckbox.prop('checked', true);
+    }
 });
 
 });
