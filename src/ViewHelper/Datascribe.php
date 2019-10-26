@@ -166,7 +166,7 @@ class Datascribe extends AbstractHelper
         $fieldset->add($element);
 
         $element = new Element\Checkbox('o-module-datascribe:is_primary');
-        $element->setLabel('Is primary'); // @translate
+        $element->setLabel('Field is primary'); // @translate
         $element->setAttributes([
             'required' => false,
             'value' => $field ? $field->getIsPrimary() : null,

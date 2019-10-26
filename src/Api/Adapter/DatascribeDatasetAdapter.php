@@ -118,7 +118,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             }
             $field->setLabel($fieldFormData['o-module-datascribe:label'] ?? null);
             $field->setHint($fieldFormData['o-module-datascribe:hint'] ?? null);
-            $field->setIsPrimary($fieldFormData['o-module-datascribe:isPrimary'] ?? false);
+            $field->setIsPrimary($fieldFormData['o-module-datascribe:is_primary'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
             $field->setData($dataType->getFieldData($fieldFormData));
