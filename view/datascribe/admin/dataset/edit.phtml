@@ -38,7 +38,13 @@ $form->prepare();
 </div>
 
 <div id="form-builder" class="section">
-    <?php echo $this->datascribe()->fields($dataset); ?>
+    <div id="form-builder-fields"
+        data-field-position-decrement="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-position-decrement">%s</button>', $this->translate('Move up'))); ?>"
+        data-field-position-increment="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-position-increment">%s</button>', $this->translate('Move down'))); ?>"
+        data-field-disable="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-disable">%s</button>', $this->translate('Delete'))); ?>"
+        data-field-enable="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-enable">%s</button>', $this->translate('Undo delete'))); ?>">
+        <?php echo $this->datascribe()->fields($dataset); ?>
+    </div>
     <div id="data-types" class="sidebar always-open">
         <h3><?php echo $this->translate('Add a field to the form'); ?></h3>
         <?php foreach ($this->datascribe()->dataTypes() as $dataTypeName => $dataType): ?>
