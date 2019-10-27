@@ -5,11 +5,11 @@ use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
-class Numeric implements DataTypeInterface
+class Number implements DataTypeInterface
 {
     public function getLabel() : string
     {
-        return 'Numeric';
+        return 'Number';
     }
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
