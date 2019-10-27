@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\DatascribeDataType\Fallback;
 use Datascribe\Entity\DatascribeField;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
@@ -129,7 +130,9 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $field->setIsPrimary($fieldFormData['o-module-datascribe:is_primary'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
-            $field->setData($dataType->getFieldData($fieldFormData));
+            if (!($dataType instanceof Fallback)) {
+                $field->setData($dataType->getFieldData($fieldFormData));
+            }
         }
 
         // Remove fields not passed in the request.
