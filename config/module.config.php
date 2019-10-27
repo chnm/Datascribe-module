@@ -3,6 +3,7 @@ return [
     'datascribe_data_types' => [
         'invokables' => [
             'text' => Datascribe\DatascribeDataType\Text::class,
+            'numeric' => Datascribe\DatascribeDataType\Numeric::class,
         ],
     ],
     'view_manager' => [

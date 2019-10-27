@@ -5,42 +5,31 @@ use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
-class Text implements DataTypeInterface
+class Numeric implements DataTypeInterface
 {
     public function getLabel() : string
     {
-        return 'Text';
+        return 'Numeric';
     }
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
-        $element = new Element\Radio('type');
-        $element->setLabel('Input type');
-        $element->setValueOptions([
-           'text_input' => 'Single line',
-           'textarea' => 'Multiline',
-        ]);
-        $element->setAttribute('value', $fieldData['type'] ?? 'text_input');
+        $element = new Element\Number('min');
+        $element->setLabel('Minimum value');
+        $element->setOption('info', 'The minimum value to accept for this input.');
+        $element->setAttribute('value', $fieldData['min'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('rows');
-        $element->setLabel('Rows (multiline only)');
-        $element->setAttribute('min', 1);
-        $element->setAttribute('value', $fieldData['rows'] ?? null);
+        $element = new Element\Number('max');
+        $element->setLabel('Maximum value');
+        $element->setOption('info', 'The maximum value to accept for this input.');
+        $element->setAttribute('value', $fieldData['max'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('minlength');
-        $element->setLabel('Minimum length');
-        $element->setOption('info', 'The minimum number of characters long the input can be and still be considered valid.');
-        $element->setAttribute('min', 1);
-        $element->setAttribute('value', $fieldData['minlength'] ?? null);
-        $fieldset->add($element);
-
-        $element = new Element\Number('maxlength');
-        $element->setLabel('Maximum length');
-        $element->setOption('info', 'The maximum number of characters the input should accept.');
-        $element->setAttribute('min', 1);
-        $element->setAttribute('value', $fieldData['maxlength'] ?? null);
+        $element = new Element\Number('step');
+        $element->setLabel('Stepping interval');
+        $element->setOption('info', 'A number that specifies the granularity that the value must adhere to.');
+        $element->setAttribute('value', $fieldData['step'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Text('placeholder');
@@ -64,18 +53,12 @@ class Text implements DataTypeInterface
     public function getFieldData(array $fieldFormData) : array
     {
         $fieldData = [];
-        $fieldData['type'] =
-            (isset($fieldFormData['type']) && in_array($fieldFormData['type'], ['text_input', 'textarea']))
-            ? $fieldFormData['type'] : 'text_input';
-        $fieldData['rows'] =
-            (isset($fieldFormData['rows']) && preg_match('/^\d+$/', $fieldFormData['rows']))
-            ? $fieldFormData['rows'] : null;
-        $fieldData['minlength'] =
-            (isset($fieldFormData['minlength']) && preg_match('/^\d+$/', $fieldFormData['minlength']))
-            ? $fieldFormData['minlength'] : null;
-        $fieldData['maxlength'] =
-            (isset($fieldFormData['maxlength']) && preg_match('/^\d+$/', $fieldFormData['maxlength']))
-            ? $fieldFormData['maxlength'] : null;
+        $fieldData['min'] =
+            (isset($fieldFormData['min']) && preg_match('/^\d+$/', $fieldFormData['min']))
+            ? $fieldFormData['min'] : null;
+        $fieldData['max'] =
+            (isset($fieldFormData['max']) && preg_match('/^\d+$/', $fieldFormData['max']))
+            ? $fieldFormData['max'] : null;
         $fieldData['placeholder'] =
             (isset($fieldFormData['placeholder']) && preg_match('/^.+$/', $fieldFormData['placeholder']))
             ? $fieldFormData['placeholder'] : null;
