@@ -140,3 +140,78 @@
   order: 4;
   margin-left: 0;
 }
+
+/* Form Builder */
+
+#form-builder-fields fieldset {
+  position: relative;
+  padding: 4px;
+  background-color: rgba(0,0,0,0.04);
+}
+
+#form-builder-fields legend {
+  float: left;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  font-weight: bold;
+  width: calc(100% + 8px);
+  position: relative;
+  margin-bottom: 8px;
+}
+
+#form-builder-fields legend:before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  left: -4px;
+  bottom: -4px;
+  background-color: rgba(0,0,0,0.12);
+}
+
+.field-actions {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  margin-top: 4px;
+  width: 100%;
+  text-align: right;
+  z-index: 10;
+}
+
+.field-actions button {
+  box-shadow: none;
+  background-color: transparent;
+  opacity: .75;
+  cursor: pointer;
+}
+
+.field-actions button:hover {
+  box-shadow: none;
+  opacity: 1;
+  cursor: pointer;
+}
+
+#form-builder-fields fieldset:only-of-type .field-position-increment,
+#form-builder-fields fieldset:only-of-type .field-position-decrement,
+#form-builder-fields fieldset:first-of-type .field-position-decrement,
+#form-builder-fields fieldset:last-of-type .field-position-increment {
+  display: none;
+}
+
+.field-enable,
+.field-disable {
+  display: none;
+}
+
+.field-actions .active {
+  display: inline-block;
+}
+
+#form-builder-fields .field {
+  padding: 0;
+  border-color: transparent;
+  background-color: transparent;
+  margin-top: 6px;
+}

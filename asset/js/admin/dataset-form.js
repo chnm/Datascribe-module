@@ -4,11 +4,7 @@ CKEDITOR.inline(document.getElementById('o-module-datascribe-guidelines'));
 
 var fields = $('#form-builder-fields');
 var addFieldControls = function(field) {
-    field.prepend(fields.data('field-position-decrement'));
-    field.prepend(fields.data('field-position-increment'));
-    field.prepend(fields.data('field-disable'));
-    field.prepend(fields.data('field-enable'));
-    field.children('button.field-enable').hide();
+    field.prepend(fields.data('field-actions'));
 }
 
 // Add field controls to existing fields.
@@ -42,15 +38,14 @@ fields.on('change', 'input[name$="[o-module-datascribe:is_primary]"]', function(
 fields.on('click', 'button.field-disable', function(e) {
     var field = $(this).closest('fieldset');
     field.find(':input').prop('disabled', true);
-    field.children('button.field-disable').hide();
-    field.children('button.field-enable').prop('disabled', false).show();
+    field.find('button.field-disable, button.field-enable').toggleClass('active');
+    field.find('button.field-enable').prop('disabled', false);
 });
 // Handle the field enable controls.
 fields.on('click', 'button.field-enable', function(e) {
     var field = $(this).closest('fieldset');
     field.find(':input').prop('disabled', false);
-    field.children('button.field-disable').show();
-    field.children('button.field-enable').hide();
+    field.find('button.field-disable, button.field-enable').toggleClass('active');
 });
 // Handle the field position decrement controls.
 fields.on('click', 'button.field-position-decrement', function(e) {

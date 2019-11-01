@@ -1,5 +1,6 @@
 <?php
 $this->headScript()->appendFile($this->assetUrl('js/admin/dataset-form.js', 'Datascribe'));
+$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->ckEditor();
 $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset edit');
 $form->prepare();
@@ -39,10 +40,7 @@ $form->prepare();
 
 <div id="form-builder" class="section">
     <div id="form-builder-fields"
-        data-field-position-decrement="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-position-decrement">%s</button>', $this->translate('Move up'))); ?>"
-        data-field-position-increment="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-position-increment">%s</button>', $this->translate('Move down'))); ?>"
-        data-field-disable="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-disable">%s</button>', $this->translate('Delete'))); ?>"
-        data-field-enable="<?php echo $this->escapeHtml(sprintf('<button type="button" class="field-enable">%s</button>', $this->translate('Undo delete'))); ?>">
+        data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>">
         <?php echo $this->datascribe()->fields($dataset); ?>
     </div>
     <div id="data-types" class="sidebar always-open">
