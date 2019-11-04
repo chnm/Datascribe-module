@@ -157,11 +157,11 @@ class Datascribe extends AbstractHelper
         ]);
         $fieldset->add($element);
 
-        $element = new Element\Text('o-module-datascribe:hint');
-        $element->setLabel('Field hint'); // @translate
+        $element = new Element\Text('o-module-datascribe:info');
+        $element->setLabel('Field info'); // @translate
         $element->setAttributes([
             'required' => false,
-            'value' => $field ? $field->getHint() : null,
+            'value' => $field ? $field->getInfo() : null,
         ]);
         $fieldset->add($element);
 

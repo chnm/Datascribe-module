@@ -198,5 +198,13 @@ class ItemController extends AbstractActionController
         if (!$item) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
+
+        $view = new ViewModel;
+        $dataset = $item->dataset();
+        $view->setVariable('project', $dataset->project());
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('item', $item);
+        $view->setVariable('oItem', $item->item());
+        return $view;
     }
 }

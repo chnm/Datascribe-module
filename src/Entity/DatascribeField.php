@@ -37,7 +37,7 @@ class DatascribeField extends AbstractEntity
      *     nullable=true
      * )
      */
-    protected $hint;
+    protected $info;
 
     /**
      * @Column(
@@ -87,17 +87,17 @@ class DatascribeField extends AbstractEntity
         return $this->label;
     }
 
-    public function setHint(?string $hint) : void
+    public function setInfo(?string $info) : void
     {
-        if (is_string($hint) && '' === trim($hint)) {
-            $hint = null;
+        if (is_string($info) && '' === trim($info)) {
+            $info = null;
         }
-        $this->hint = $hint;
+        $this->info = $info;
     }
 
-    public function getHint() : ?string
+    public function getInfo() : ?string
     {
-        return $this->hint;
+        return $this->info;
     }
 
     public function setPosition(int $position) : void

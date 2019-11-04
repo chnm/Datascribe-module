@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'label', 'hint', 'position', 'isPrimary', 'dataType', 'id', 'data'];
+            return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'id', 'data'];
         }
 
-        return ['__isInitialized__', 'dataset', 'label', 'hint', 'position', 'isPrimary', 'dataType', 'id', 'data'];
+        return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'id', 'data'];
     }
 
     /**
@@ -220,23 +220,23 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setHint(?string $hint): void
+    public function setInfo(?string $info): void
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHint', [$hint]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setInfo', [$info]);
 
-        parent::setHint($hint);
+        parent::setInfo($info);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getHint(): ?string
+    public function getInfo(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHint', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInfo', []);
 
-        return parent::getHint();
+        return parent::getInfo();
     }
 
     /**
