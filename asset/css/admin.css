@@ -147,6 +147,7 @@
   position: relative;
   padding: 4px;
   background-color: rgba(0,0,0,0.04);
+  margin-bottom: 8px;
 }
 
 #form-builder-fields legend {
@@ -157,7 +158,7 @@
   font-weight: bold;
   width: calc(100% + 8px);
   position: relative;
-  margin-bottom: 8px;
+  text-indent: -9999px;
 }
 
 #form-builder-fields legend:before {
@@ -170,12 +171,54 @@
   background-color: rgba(0,0,0,0.12);
 }
 
+legend:after {
+  text-indent: 0;
+  font-size: 12px;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  line-height: 44px;
+  color: #fff;
+}
+
+fieldset.number legend:after {
+  content: "123";
+}
+
+fieldset.text legend:after {
+  content: "ABC";
+}
+
+#form-builder-fields .field.required {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  padding-left: 52px;
+  width: 100%;
+  padding-right: 192px;
+  margin-top: 6px;
+}
+
+.field.required .field-meta {
+  width: calc(30% + 22px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.field.required .inputs {
+  width: calc(70% - 22px);
+}
+
 .field-actions {
   position: absolute;
   top: 0;
   right: 4px;
   margin-top: 4px;
-  width: 100%;
   text-align: right;
   z-index: 10;
 }
@@ -185,6 +228,7 @@
   background-color: transparent;
   opacity: .75;
   cursor: pointer;
+  width: 36px;
 }
 
 .field-actions button:hover {
@@ -201,7 +245,9 @@
 }
 
 .field-enable,
-.field-disable {
+.field-disable,
+.field-collapse,
+.field-expand {
   display: none;
 }
 
@@ -213,5 +259,13 @@
   padding: 0;
   border-color: transparent;
   background-color: transparent;
-  margin-top: 6px;
+}
+
+.field-options {
+  display: none;
+  margin-top: 48px;
+}
+
+.field-options.active {
+  display: block;
 }
