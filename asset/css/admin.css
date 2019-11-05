@@ -159,7 +159,7 @@
   width: calc(100% + 8px);
   position: relative;
   padding-left: 48px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 #form-builder-fields legend:after {
@@ -192,6 +192,10 @@ fieldset.number legend:before {
 
 fieldset.text legend:before {
   content: "ABC";
+}
+
+#form-builder-fields fieldset.closed legend {
+    margin-bottom: 0;
 }
 
 .field-actions {
@@ -241,7 +245,7 @@ fieldset.text legend:before {
   background-color: transparent;
 }
 
-.field.closed {
+fieldset.closed .field {
     height: 0;
     overflow: hidden;
     margin: 0;

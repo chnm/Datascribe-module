@@ -61,6 +61,6 @@ fields.on('click', 'button.field-position-increment', function(e) {
 fields.on('click', 'button.field-collapse, button.field-expand', function() {
     var field = $(this).closest('fieldset');
     field.find('.field-collapse, .field-expand').toggleClass('active');
-    field.find('.field').toggleClass('closed')
+    field.toggleClass('closed')
 });
 });
