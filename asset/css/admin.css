@@ -178,20 +178,18 @@
 legend .data-type-label {
   font-weight: normal;
   font-size: 14px;
-  padding: 9px;
+  padding: 0 8px;
   background-color: rgba(0,0,0,.5);
   color: #fff;
-  margin: -16px 8px -16px -10px;
   display: inline-block;
   position: relative;
   letter-spacing: 1px;
-  width: 132px;
-  text-align: center;
+  margin-left: 16px;
 }
 
 legend .field-label {
   position: relative;
-  width: calc(100% - 296px);
+  max-width: calc(100% - 296px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

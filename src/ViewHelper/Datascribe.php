@@ -89,9 +89,9 @@ class Datascribe extends AbstractHelper
 
             $fieldset = new Fieldset($field->getPosition());
             $fieldset->setLabel(sprintf(
-                '<span class="data-type-label">%s</span><span class="field-label">%s</span>',
-                $dataType->getLabel(),
-                $field->getLabel()
+                '<span class="field-label">%s</span><span class="data-type-label">%s</span>',
+                $field->getLabel(),
+                $dataType->getLabel()
             ));
             $fieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldset->setAttribute('class', $field->getDataType());
@@ -125,7 +125,7 @@ class Datascribe extends AbstractHelper
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
             $fieldset = new Fieldset('__INDEX__');
             $fieldset->setLabel(sprintf(
-                '<span class="data-type-label">%s</span><span class="field-label"></span>',
+                '<span class="field-label"></span><span class="data-type-label">%s</span>',
                 $dataType->getLabel()
             ));
             $fieldset->setLabelOptions(['disable_html_escape' => true]);
