@@ -158,10 +158,11 @@
   font-weight: bold;
   width: calc(100% + 8px);
   position: relative;
-  text-indent: -9999px;
+  padding-left: 48px;
+  margin-bottom: 16px;
 }
 
-#form-builder-fields legend:before {
+#form-builder-fields legend:after {
   content: "";
   position: absolute;
   top: -4px;
@@ -171,7 +172,7 @@
   background-color: rgba(0,0,0,0.12);
 }
 
-legend:after {
+legend:before {
   text-indent: 0;
   font-size: 12px;
   position: absolute;
@@ -185,33 +186,12 @@ legend:after {
   color: #fff;
 }
 
-fieldset.number legend:after {
+fieldset.number legend:before {
   content: "123";
 }
 
-fieldset.text legend:after {
+fieldset.text legend:before {
   content: "ABC";
-}
-
-#form-builder-fields .field.required {
-  position: absolute;
-  top: -2px;
-  left: 0;
-  padding-left: 52px;
-  width: 100%;
-  padding-right: 192px;
-  margin-top: 6px;
-}
-
-.field.required .field-meta {
-  width: calc(30% + 22px);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.field.required .inputs {
-  width: calc(70% - 22px);
 }
 
 .field-actions {
@@ -261,11 +241,8 @@ fieldset.text legend:after {
   background-color: transparent;
 }
 
-.field-options {
-  display: none;
-  margin-top: 48px;
-}
-
-.field-options.active {
-  display: block;
+.field.closed {
+    height: 0;
+    overflow: hidden;
+    margin: 0;
 }

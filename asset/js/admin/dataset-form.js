@@ -6,17 +6,11 @@ var fields = $('#form-builder-fields');
 var addFieldControls = function(field) {
     field.prepend(fields.data('field-actions'));    
 }
-var wrapFieldOptions = function(field) {
-    var fieldOptions = $('<div class="field-options active"></div>');
-    field.children('.field:not(.required)').appendTo(fieldOptions);
-    field.append(fieldOptions);
-}
 
 // Add field controls to existing fields.
 fields.children('fieldset').each(function(i) {
     var field = $(this);
     addFieldControls(field);
-    wrapFieldOptions(field);
 });
 
 // Hande the add field control.
@@ -28,7 +22,6 @@ $('#data-types').on('click', '.option', function(e) {
     template = template.replace(/__INDEX__/g, uniqueKey);
     var field = $($.parseHTML(template));
     addFieldControls(field);
-    wrapFieldOptions(field);
     fields.append(field);
     field[0].scrollIntoView();
 });
@@ -67,6 +60,7 @@ fields.on('click', 'button.field-position-increment', function(e) {
 // Handle the field options expand/collapse controls.
 fields.on('click', 'button.field-collapse, button.field-expand', function() {
     var field = $(this).closest('fieldset');
-    field.find('.field-collapse, .field-expand, .field-options').toggleClass('active');
+    field.find('.field-collapse, .field-expand').toggleClass('active');
+    field.find('.field').toggleClass('closed')
 });
 });
