@@ -42,12 +42,19 @@ fields.on('click', 'button.field-disable', function(e) {
     field.find(':input').prop('disabled', true);
     field.find('button.field-disable, button.field-enable').toggleClass('active');
     field.find('button.field-enable').prop('disabled', false);
+    field.toggleClass('deleted');
+    if (!field.hasClass('closed')) {
+      field.addClass('closed');
+      field.find('button.field-collapse, button.field-expand').toggleClass('active');
+    }
 });
 // Handle the field enable controls.
 fields.on('click', 'button.field-enable', function(e) {
     var field = $(this).closest('fieldset');
     field.find(':input').prop('disabled', false);
-    field.find('button.field-disable, button.field-enable').toggleClass('active');
+    field.find('button.field-disable, button.field-enable, button.field-collapse, button.field-expand').toggleClass('active');
+    field.toggleClass('deleted');
+    field.removeClass('closed');
 });
 // Handle the field position decrement controls.
 fields.on('click', 'button.field-position-decrement', function(e) {

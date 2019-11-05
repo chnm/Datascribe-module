@@ -163,6 +163,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 8px;
 }
 
 #form-builder-fields fieldset:before {
@@ -254,4 +255,20 @@ fieldset.closed .field {
     height: 0;
     overflow: hidden;
     margin: 0;
+}
+
+#form-builder-fields fieldset.deleted:before {
+    background-color: #fcc;
+}
+
+#form-builder-fields fieldset.deleted button:disabled {
+    display: none;
+}
+
+#form-builder-fields fieldset.deleted button {
+    color: #A91919;
+}
+
+#form-builder-fields fieldset.deleted .data-type-label {
+    background-color: #A9191987;
 }
