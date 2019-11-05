@@ -6,6 +6,7 @@ var fields = $('#form-builder-fields');
 var addFieldControls = function(field) {
     field.prepend(fields.data('field-actions'));    
 }
+var newFieldIndex = 1;
 
 // Add field controls to existing fields.
 fields.children('fieldset').each(function(i) {
@@ -21,6 +22,7 @@ $('#data-types').on('click', '.option', function(e) {
     var uniqueKey = Math.random().toString(36).substr(2);
     template = template.replace(/__INDEX__/g, uniqueKey);
     var field = $($.parseHTML(template));
+    field.find('legend span.field-label').text(`New field - ${newFieldIndex++}`);
     addFieldControls(field);
     fields.append(field);
     field[0].scrollIntoView();

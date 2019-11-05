@@ -88,7 +88,12 @@ class Datascribe extends AbstractHelper
             $dataType = $manager->get($field->getDataType());
 
             $fieldset = new Fieldset($field->getPosition());
-            $fieldset->setLabel($dataType->getLabel());
+            $fieldset->setLabel(sprintf(
+                '<span class="data-type-label">%s</span><span class="field-label">%s</span>',
+                $dataType->getLabel(),
+                $field->getLabel()
+            ));
+            $fieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldset->setAttribute('class', $field->getDataType());
 
             $element = new Element\Hidden('o:id');
@@ -119,7 +124,11 @@ class Datascribe extends AbstractHelper
         $templates = [];
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
             $fieldset = new Fieldset('__INDEX__');
-            $fieldset->setLabel($dataType->getLabel());
+            $fieldset->setLabel(sprintf(
+                '<span class="data-type-label">%s</span><span class="field-label"></span>',
+                $dataType->getLabel()
+            ));
+            $fieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldset->setAttribute('class', $dataTypeName);
 
             $element = new Element\Hidden('o-module-datascribe:data_type');
