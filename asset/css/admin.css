@@ -154,20 +154,24 @@
   float: left;
   display: flex;
   align-items: center;
-  padding: 6px;
+  padding: 0;
   font-weight: bold;
-  width: calc(100% + 8px);
   position: relative;
-  margin-bottom: 24px;
+  margin-top: -4px;
+  width: calc(100% - 192px);
+  height: 44px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-#form-builder-fields legend:before {
+#form-builder-fields fieldset:before {
   content: "";
   position: absolute;
-  top: -4px;
-  right: -4px;
-  left: -4px;
-  bottom: -4px;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 44px;
   background-color: rgba(0,0,0,0.12);
 }
 
@@ -185,6 +189,10 @@ legend .data-type-label {
   position: relative;
   letter-spacing: 1px;
   margin-left: 16px;
+  max-width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 legend .field-label {
