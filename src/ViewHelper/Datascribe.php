@@ -89,7 +89,7 @@ class Datascribe extends AbstractHelper
 
             $fieldset = new Fieldset($field->getPosition());
             $fieldset->setLabel($dataType->getLabel());
-            $fieldset->setAttribute('class', strtolower($dataType->getLabel())); 
+            $fieldset->setAttribute('class', $field->getDataType());
 
             $element = new Element\Hidden('o:id');
             $element->setAttribute('value', $field->getId());
