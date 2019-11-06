@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Omeka\Entity\AbstractEntity;
 
 /**
