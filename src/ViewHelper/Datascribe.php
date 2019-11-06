@@ -53,7 +53,7 @@ class Datascribe extends AbstractHelper
             foreach ($this->bcRouteMap[$bcRoute]['params'] as $bcParam) {
                 $params[$bcParam] = $routeMatch->getParam($bcParam);
             }
-            $bc[] = $view->hyperlink($this->bcRouteMap[$bcRoute]['text'], $view->url($bcRoute, $params));
+            $bc[] = $view->hyperlink($view->translate($this->bcRouteMap[$bcRoute]['text']), $view->url($bcRoute, $params));
         }
         $bc[] = $view->translate($this->bcRouteMap[$routeName]['text']);
         return sprintf('<div class="breadcrumbs">%s</div>', implode('<div class="separator"></div>', $bc));
@@ -95,7 +95,7 @@ class Datascribe extends AbstractHelper
             $fieldset->setLabel(sprintf(
                 '<span class="field-label">%s</span><span class="data-type-label">%s</span>',
                 $field->getLabel(),
-                $dataType->getLabel()
+                $view->translate($dataType->getLabel())
             ));
             $fieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldset->setAttribute('class', $field->getDataType());
@@ -129,8 +129,9 @@ class Datascribe extends AbstractHelper
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
             $fieldset = new Fieldset('__INDEX__');
             $fieldset->setLabel(sprintf(
-                '<span class="field-label"></span><span class="data-type-label">%s</span>',
-                $dataType->getLabel()
+                '<span class="field-label" data-new-field-label="%s"></span><span class="data-type-label">%s</span>',
+                $view->escapeHtml($view->translate('New field')),
+                $view->translate($dataType->getLabel())
             ));
             $fieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldset->setAttribute('class', $dataTypeName);

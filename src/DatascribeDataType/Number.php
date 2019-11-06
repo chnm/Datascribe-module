@@ -9,43 +9,43 @@ class Number implements DataTypeInterface
 {
     public function getLabel() : string
     {
-        return 'Number';
+        return 'Number'; // @translate
     }
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Number('min');
-        $element->setLabel('Minimum value');
-        $element->setOption('info', 'The minimum value to accept for this input.');
+        $element->setLabel('Minimum value'); // @translate
+        $element->setOption('info', 'The minimum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['min'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Number('max');
-        $element->setLabel('Maximum value');
-        $element->setOption('info', 'The maximum value to accept for this input.');
+        $element->setLabel('Maximum value'); // @translate
+        $element->setOption('info', 'The maximum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['max'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Number('step');
-        $element->setLabel('Stepping interval');
-        $element->setOption('info', 'A number that specifies the granularity that the value must adhere to.');
+        $element->setLabel('Stepping interval'); // @translate
+        $element->setOption('info', 'A number that specifies the granularity that the value must adhere to.'); // @translate
         $element->setAttribute('value', $fieldData['step'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Text('placeholder');
-        $element->setLabel('Placeholder');
-        $element->setOption('info', 'An exemplar value to display in the input field whenever it is empty.');
+        $element->setLabel('Placeholder'); // @translate
+        $element->setOption('info', 'An exemplar value to display in the input field whenever it is empty.'); // @translate
         $element->setAttribute('value', $fieldData['placeholder'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Text('pattern');
-        $element->setLabel('Regex pattern');
-        $element->setOption('info', 'A regular expression the input\'s contents must match in order to be valid.');
+        $element->setLabel('Regex pattern'); // @translate
+        $element->setOption('info', 'A regular expression the input\'s contents must match in order to be valid.'); // @translate
         $element->setAttribute('value', $fieldData['pattern'] ?? null);
         $fieldset->add($element);
 
         $element = new Element\Text('default_value');
-        $element->setLabel('Default value');
+        $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
     }

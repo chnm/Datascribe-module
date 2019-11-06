@@ -9,7 +9,7 @@ class Fallback implements DataTypeInterface
 {
     public function getLabel() : string
     {
-        return '[Unknown]';
+        return '[Unknown]'; // @translate
     }
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
