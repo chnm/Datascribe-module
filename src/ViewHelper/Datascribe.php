@@ -2,6 +2,7 @@
 namespace Datascribe\ViewHelper;
 
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
+use Datascribe\DatascribeDataType\Fallback;
 use Datascribe\Entity\DatascribeField;
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
@@ -68,7 +69,10 @@ class Datascribe extends AbstractHelper
         $manager = $this->services->get('Datascribe\DataTypeManager');
         $dataTypes = [];
         foreach ($manager->getRegisteredNames() as $dataTypeName) {
-            $dataTypes[$dataTypeName] = $manager->get($dataTypeName);
+            $dataType = $manager->get($dataTypeName);
+            if (!($dataType instanceof Fallback)) {
+                $dataTypes[$dataTypeName] = $dataType;
+            }
         }
         return $dataTypes;
     }
