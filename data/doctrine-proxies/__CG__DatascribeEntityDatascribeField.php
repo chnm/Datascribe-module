@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'id', 'data'];
+            return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
         }
 
-        return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'id', 'data'];
+        return ['__isInitialized__', 'dataset', 'label', 'info', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
     }
 
     /**
@@ -303,6 +303,17 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDataType', []);
 
         return parent::getDataType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getValues()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValues', []);
+
+        return parent::getValues();
     }
 
     /**

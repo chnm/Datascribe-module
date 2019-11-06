@@ -67,6 +67,20 @@ class DatascribeField extends AbstractEntity
      */
     protected $dataType;
 
+    /**
+     * @OneToMany(
+     *     targetEntity="DatascribeValue",
+     *     mappedBy="field",
+     *     fetch="EXTRA_LAZY"
+     * )
+     */
+    protected $values;
+
+    public function __construct()
+    {
+        $this->values = new ArrayCollection;
+    }
+
     public function setDataset(DatascribeDataset $dataset) : void
     {
         $this->dataset = $dataset;
@@ -128,5 +142,10 @@ class DatascribeField extends AbstractEntity
     public function getDataType() : ?string
     {
         return $this->dataType;
+    }
+
+    public function getValues()
+    {
+        return $this->values;
     }
 }
