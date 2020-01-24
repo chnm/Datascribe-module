@@ -70,7 +70,7 @@ class Text implements DataTypeInterface
 
     public function getValueDataElement(array $fieldData, array $valueData) : Element
     {
-        return new DatascribeElement\Text(null, [
+        return new DatascribeElement\Text('text', [
             'datascribe_field_data' => $fieldData,
             'datascribe_value_data' => $valueData,
         ]);

@@ -29,7 +29,6 @@ class Textarea extends ZendTextarea implements InputProviderInterface
             $value = $fieldData['default_value'];
         }
 
-        $this->setName('text');
         $this->setAttributes(array_filter($attributes));
         $this->setValue($value);
     }
