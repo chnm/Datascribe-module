@@ -78,6 +78,9 @@ class Text implements DataTypeInterface
 
     public function getValueData(array $valueFormData) : array
     {
+        $valueData = [];
+        $valueData['text'] = $valueFormData['text'] ?? null;
+        return $valueData;
     }
 
     public function getHtml(array $valueData) : string

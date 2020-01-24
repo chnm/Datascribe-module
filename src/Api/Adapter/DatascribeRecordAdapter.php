@@ -85,6 +85,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:value')) {
             $em = $this->getServiceLocator()->get('Omeka\EntityManager');
+            $dataTypes = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
             $values = $entity->getValues();
             foreach ($request->getValue('o-module-datascribe:value') as $fieldId => $valueData) {
                 if ($values->containsKey($fieldId)) {
@@ -100,7 +101,8 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 }
                 $value->setIsMissing($valueData['is_missing']);
                 $value->setIsIllegible($valueData['is_illegible']);
-                $value->setData($valueData['data']);
+                $dataType = $dataTypes->get($field->getDataType());
+                $value->setData($dataType->getValueData($valueData['data']));
             }
         }
     }
