@@ -69,7 +69,9 @@ class Datascribe extends AbstractHelper
     {
         $manager = $this->services->get('Datascribe\DataTypeManager');
         $dataTypes = [];
-        foreach ($manager->getRegisteredNames() as $dataTypeName) {
+        $dataTypeNames = $manager->getRegisteredNames();
+        natcasesort($dataTypeNames);
+        foreach ($dataTypeNames as $dataTypeName) {
             $dataType = $manager->get($dataTypeName);
             if (!($dataType instanceof Fallback)) {
                 $dataTypes[$dataTypeName] = $dataType;
