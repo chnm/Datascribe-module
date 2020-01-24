@@ -3,6 +3,7 @@ return [
     'datascribe_data_types' => [
         'invokables' => [
             'text' => Datascribe\DatascribeDataType\Text::class,
+            'textarea' => Datascribe\DatascribeDataType\Textarea::class,
             'number' => Datascribe\DatascribeDataType\Number::class,
         ],
     ],
@@ -47,6 +48,7 @@ return [
             'Datascribe\Controller\Admin\Project' => Datascribe\Controller\Admin\ProjectController::class,
             'Datascribe\Controller\Admin\Dataset' => Datascribe\Controller\Admin\DatasetController::class,
             'Datascribe\Controller\Admin\Item' => Datascribe\Controller\Admin\ItemController::class,
+            'Datascribe\Controller\Admin\Record' => Datascribe\Controller\Admin\RecordController::class,
         ],
     ],
     'controller_plugins' => [
@@ -63,6 +65,11 @@ return [
     'view_helpers' => [
         'factories' => [
             'datascribe' => Datascribe\Service\ViewHelper\DatascribeFactory::class,
+        ],
+        'delegators' => [
+            'Zend\Form\View\Helper\FormElement' => [
+                Datascribe\Service\Delegator\FormElementDelegatorFactory::class,
+            ],
         ],
     ],
     'navigation' => [
@@ -182,6 +189,41 @@ return [
                             'defaults' => [
                                 '__NAMESPACE__' => 'Datascribe\Controller\Admin',
                                 'controller' => 'item',
+                                'action' => 'show',
+                            ],
+                        ],
+                    ],
+                    'datascribe-record' =>  [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/datascribe/:project-id/:dataset-id/:item-id/record[/:action]',
+                            'constraints' => [
+                                'project-id' => '\d+',
+                                'dataset-id' => '\d+',
+                                'item-id' => '\d+',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Datascribe\Controller\Admin',
+                                'controller' => 'record',
+                                'action' => 'browse',
+                            ],
+                        ],
+                    ],
+                    'datascribe-record-id' =>  [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/datascribe/:project-id/:dataset-id/:item-id/:record-id[/:action]',
+                            'constraints' => [
+                                'project-id' => '\d+',
+                                'dataset-id' => '\d+',
+                                'item-id' => '\d+',
+                                'record-id' => '\d+',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Datascribe\Controller\Admin',
+                                'controller' => 'record',
                                 'action' => 'show',
                             ],
                         ],

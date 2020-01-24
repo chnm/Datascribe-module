@@ -21,7 +21,7 @@ class Fallback implements DataTypeInterface
         return [];
     }
 
-    public function addValueElements(Fieldset $fieldset, array $valueData) : void
+    public function getValueElement(Fieldset $fieldset, array $fieldData, array $valueData) : Element
     {
     }
 

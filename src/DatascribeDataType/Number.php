@@ -71,7 +71,7 @@ class Number implements DataTypeInterface
         return $fieldData;
     }
 
-    public function addValueElements(Fieldset $fieldset, array $valueData) : void
+    public function getValueDataElement(array $fieldData, array $valueData) : Element
     {
     }
 

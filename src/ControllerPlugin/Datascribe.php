@@ -1,14 +1,39 @@
 <?php
 namespace Datascribe\ControllerPlugin;
 
+use Datascribe\DatascribeDataType\Manager;
 use Omeka\Api\Exception\NotFoundException;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Controller plugin used for DataScribe-specific functionality.
  */
 class Datascribe extends AbstractPlugin
 {
+    /**
+     * @var ServiceLocatorInterface
+     */
+    protected $services;
+
+    /**
+     * @param ServiceLocatorInterface $services
+     */
+    public function __construct(ServiceLocatorInterface $services)
+    {
+        $this->services = $services;
+    }
+
+    /**
+     * Get the DataScribe data type manager.
+     *
+     * @return Manager
+     */
+    public function getDataTypeManager() : Manager
+    {
+        return $this->services->get('Datascribe\DataTypeManager');
+    }
+
     /**
      * Get a DataScribe representation.
      *

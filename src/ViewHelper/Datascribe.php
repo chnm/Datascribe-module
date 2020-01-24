@@ -2,6 +2,7 @@
 namespace Datascribe\ViewHelper;
 
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
+use Datascribe\Api\Representation\DatascribeRecordRepresentation;
 use Datascribe\DatascribeDataType\Fallback;
 use Datascribe\Entity\DatascribeField;
 use Zend\Form\Element;

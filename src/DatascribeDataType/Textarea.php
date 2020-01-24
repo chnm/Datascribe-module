@@ -6,15 +6,21 @@ use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
-class Text implements DataTypeInterface
+class Textarea implements DataTypeInterface
 {
     public function getLabel() : string
     {
-        return 'Text'; // @translate
+        return 'Textarea'; // @translate
     }
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Number('rows');
+        $element->setLabel('Rows'); // @translate
+        $element->setAttribute('min', 1);
+        $element->setAttribute('value', $fieldData['rows'] ?? null);
+        $fieldset->add($element);
+
         $element = new Element\Number('minlength');
         $element->setLabel('Minimum length'); // @translate
         $element->setOption('info', 'The minimum number of characters long the input can be and still be considered valid.'); // @translate
@@ -50,6 +56,9 @@ class Text implements DataTypeInterface
     public function getFieldData(array $fieldFormData) : array
     {
         $fieldData = [];
+        $fieldData['rows'] =
+            (isset($fieldFormData['rows']) && preg_match('/^\d+$/', $fieldFormData['rows']))
+            ? $fieldFormData['rows'] : null;
         $fieldData['minlength'] =
             (isset($fieldFormData['minlength']) && preg_match('/^\d+$/', $fieldFormData['minlength']))
             ? $fieldFormData['minlength'] : null;
@@ -70,7 +79,7 @@ class Text implements DataTypeInterface
 
     public function getValueDataElement(array $fieldData, array $valueData) : Element
     {
-        return new DatascribeElement\Text(null, [
+        return new DatascribeElement\Textarea('text', [
             'datascribe_field_data' => $fieldData,
             'datascribe_value_data' => $valueData,
         ]);

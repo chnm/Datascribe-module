@@ -5,6 +5,13 @@ use Omeka\Entity\AbstractEntity;
 
 /**
  * @Entity
+ * @Table(
+ *     uniqueConstraints={
+ *         @UniqueConstraint(
+ *             columns={"field_id", "record_id"}
+ *         )
+ *     }
+ * )
  */
 class DatascribeValue extends AbstractEntity
 {

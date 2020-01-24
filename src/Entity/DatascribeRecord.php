@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Omeka\Entity\AbstractEntity;
 
 /**
@@ -40,6 +41,22 @@ class DatascribeRecord extends AbstractEntity
      */
     protected $needsWork;
 
+    /**
+     * @OneToMany(
+     *     targetEntity="DatascribeValue",
+     *     mappedBy="record",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove", "detach"},
+     *     indexBy="field_id"
+     * )
+     */
+    protected $values;
+
+    public function __construct()
+    {
+        $this->values = new ArrayCollection;
+    }
+
     public function setItem(DatascribeItem $item) : void
     {
         $this->item = $item;
@@ -68,5 +85,10 @@ class DatascribeRecord extends AbstractEntity
     public function getNeedsWork() : ?bool
     {
         return $this->needsWork;
+    }
+
+    public function getValues()
+    {
+        return $this->values;
     }
 }

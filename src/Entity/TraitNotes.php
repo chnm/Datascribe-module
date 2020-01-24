@@ -31,7 +31,7 @@ trait TraitNotes
 
     public function setReviewerNotes(?string $reviewerNotes) : void
     {
-        $this->transcriberNotes = $transcriberNotes;
+        $this->reviewerNotes = $reviewerNotes;
     }
 
     public function getReviewerNotes() : ?string

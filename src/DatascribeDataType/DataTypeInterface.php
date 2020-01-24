@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
+use Zend\Form\Element;
 use Zend\Form\Fieldset;
 
 interface DataTypeInterface
@@ -31,14 +32,13 @@ interface DataTypeInterface
     public function getFieldData(array $fieldFormData) : array;
 
     /**
-     * Add elements used for transcribing a value of this data type to the
-     * passed fieldset.
+     * Get the form element used for the value data.
      *
-     * @param Fieldset $fieldset
+     * @param array $fieldData
      * @param array $valueData
-     * @return string
+     * @return Element
      */
-    public function addValueElements(Fieldset $fieldset, array $valueData) : void;
+    public function getValueDataElement(array $fieldData, array $valueData) : Element;
 
     /**
      * Get structured data from value form data (for storing).

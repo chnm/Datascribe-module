@@ -9,6 +9,6 @@ class DatascribeFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        return new Datascribe();
+        return new Datascribe($services);
     }
 }
