@@ -102,16 +102,16 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
         $position = 1;
 
         // Update existing fields and create new fields.
-        foreach ($request->getValue('o-module-datascribe:field', []) as $fieldFormData) {
-            if (isset($fieldFormData['o:id']) && $fields->containsKey($fieldFormData['o:id'])) {
+        foreach ($request->getValue('o-module-datascribe:field', []) as $fieldData) {
+            if (isset($fieldData['o:id']) && $fields->containsKey($fieldData['o:id'])) {
                 // This field exists. Update it.
-                $field = $fields->get($fieldFormData['o:id']);
+                $field = $fields->get($fieldData['o:id']);
                 $fieldsToRetain[] = $field->getId();
-            } elseif (isset($fieldFormData['o-module-datascribe:data_type']) && $dataTypes->has($fieldFormData['o-module-datascribe:data_type'])) {
+            } elseif (isset($fieldData['o-module-datascribe:data_type']) && $dataTypes->has($fieldData['o-module-datascribe:data_type'])) {
                 // This is a new field. Create it.
                 $field = new DatascribeField;
                 $field->setDataset($entity);
-                $field->setDataType($fieldFormData['o-module-datascribe:data_type']);
+                $field->setDataType($fieldData['o-module-datascribe:data_type']);
                 $fields->add($field);
             } else {
                 // This field is in an invalid format. Ignore it.
@@ -119,19 +119,19 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             }
 
             $label =
-                (isset($fieldFormData['o-module-datascribe:label']) && preg_match('/^.+$/', $fieldFormData['o-module-datascribe:label']))
-                ? $fieldFormData['o-module-datascribe:label'] : null;
+                (isset($fieldData['o-module-datascribe:label']) && preg_match('/^.+$/', $fieldData['o-module-datascribe:label']))
+                ? $fieldData['o-module-datascribe:label'] : null;
             $info =
-                (isset($fieldFormData['o-module-datascribe:info']) && preg_match('/^.+$/', $fieldFormData['o-module-datascribe:info']))
-                ? $fieldFormData['o-module-datascribe:info'] : null;
+                (isset($fieldData['o-module-datascribe:info']) && preg_match('/^.+$/', $fieldData['o-module-datascribe:info']))
+                ? $fieldData['o-module-datascribe:info'] : null;
 
             $field->setLabel($label);
             $field->setInfo($info);
-            $field->setIsPrimary($fieldFormData['o-module-datascribe:is_primary'] ?? false);
+            $field->setIsPrimary($fieldData['o-module-datascribe:is_primary'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
             if (!($dataType instanceof Fallback)) {
-                $field->setData($dataType->getFieldData($fieldFormData));
+                $field->setData($dataType->getFieldData($fieldData['data']));
             }
         }
 

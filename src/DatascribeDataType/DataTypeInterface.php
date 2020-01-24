@@ -14,14 +14,13 @@ interface DataTypeInterface
     public function getLabel() : string;
 
     /**
-     * Add elements used for administering a field of this data type to the
-     * passed fieldset.
+     * Add the form elements used for the field data.
      *
      * @param Fieldset $fieldset
      * @param array $fieldData
      * @return string
      */
-    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void;
+    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void;
 
     /**
      * Get structured data from field form data (for storing).

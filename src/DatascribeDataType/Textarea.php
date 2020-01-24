@@ -13,7 +13,7 @@ class Textarea implements DataTypeInterface
         return 'Textarea'; // @translate
     }
 
-    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Number('rows');
         $element->setLabel('Rows'); // @translate

@@ -92,28 +92,31 @@ class Datascribe extends AbstractHelper
         foreach ($dataset->fields() as $field) {
             $dataType = $manager->get($field->getDataType());
 
-            $fieldset = new Fieldset($field->getPosition());
-            $fieldset->setLabel(sprintf(
+            $fieldFieldset = new Fieldset($field->getPosition());
+            $fieldFieldset->setLabel(sprintf(
                 '<span class="field-label">%s</span><span class="data-type-label">%s</span>',
                 $field->getLabel(),
                 $view->translate($dataType->getLabel())
             ));
-            $fieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldset->setAttribute('class', $field->getDataType());
+            $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
+            $fieldFieldset->setAttribute('class', $field->getDataType());
 
             $element = new Element\Hidden('o:id');
             $element->setAttribute('value', $field->getId());
-            $fieldset->add($element);
+            $fieldFieldset->add($element);
 
-            $this->addFieldElements($fieldset, $field);
-            $dataType->addFieldElements($fieldset, $field->getData());
+            $this->addFieldElements($fieldFieldset, $field);
+
+            $fieldDataFieldset = new Fieldset('data');
+            $fieldFieldset->add($fieldDataFieldset);
+            $dataType->addFieldDataElements($fieldDataFieldset, $field->getData());
 
             $form = new Form;
             $form->add(new Fieldset('o-module-datascribe:field'));
-            $form->get('o-module-datascribe:field')->add($fieldset);
+            $form->get('o-module-datascribe:field')->add($fieldFieldset);
             $form->prepare();
 
-            $fields[] = $view->formCollection($fieldset);
+            $fields[] = $view->formCollection($fieldFieldset);
         }
         return implode("\n", $fields);
     }
@@ -128,31 +131,34 @@ class Datascribe extends AbstractHelper
         $view = $this->getView();
         $templates = [];
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
-            $fieldset = new Fieldset('__INDEX__');
-            $fieldset->setLabel(sprintf(
+            $fieldFieldset = new Fieldset('__INDEX__');
+            $fieldFieldset->setLabel(sprintf(
                 '<span class="field-label" data-new-field-label="%s"></span><span class="data-type-label">%s</span>',
                 $view->escapeHtml($view->translate('New field')),
                 $view->translate($dataType->getLabel())
             ));
-            $fieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldset->setAttribute('class', $dataTypeName);
+            $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
+            $fieldFieldset->setAttribute('class', $dataTypeName);
 
             $element = new Element\Hidden('o-module-datascribe:data_type');
             $element->setAttribute('value', $dataTypeName);
-            $fieldset->add($element);
+            $fieldFieldset->add($element);
 
-            $this->addFieldElements($fieldset, null);
-            $dataType->addFieldElements($fieldset, []);
+            $this->addFieldElements($fieldFieldset, null);
+
+            $fieldDataFieldset = new Fieldset('data');
+            $fieldFieldset->add($fieldDataFieldset);
+            $dataType->addFieldDataElements($fieldDataFieldset, []);
 
             $form = new Form;
             $form->add(new Fieldset('o-module-datascribe:field'));
-            $form->get('o-module-datascribe:field')->add($fieldset);
+            $form->get('o-module-datascribe:field')->add($fieldFieldset);
             $form->prepare();
 
             $templates[] = sprintf(
                 '<span class="data-type-template" data-name="%s" data-template="%s"></span>',
                 $view->escapeHtml($dataTypeName),
-                $view->escapeHtml($view->formCollection($fieldset))
+                $view->escapeHtml($view->formCollection($fieldFieldset))
             );
         }
         return implode("\n", $templates);

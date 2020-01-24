@@ -13,7 +13,7 @@ class Text implements DataTypeInterface
         return 'Text'; // @translate
     }
 
-    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Number('minlength');
         $element->setLabel('Minimum length'); // @translate

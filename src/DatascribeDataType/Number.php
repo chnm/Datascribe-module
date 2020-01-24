@@ -12,7 +12,7 @@ class Number implements DataTypeInterface
         return 'Number'; // @translate
     }
 
-    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Number('min');
         $element->setLabel('Minimum value'); // @translate
