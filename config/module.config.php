@@ -1,10 +1,12 @@
 <?php
+namespace Datascribe;
+
 return [
     'datascribe_data_types' => [
         'invokables' => [
-            'text' => Datascribe\DatascribeDataType\Text::class,
-            'textarea' => Datascribe\DatascribeDataType\Textarea::class,
-            'number' => Datascribe\DatascribeDataType\Number::class,
+            'text' => DatascribeDataType\Text::class,
+            'textarea' => DatascribeDataType\Textarea::class,
+            'number' => DatascribeDataType\Number::class,
         ],
     ],
     'translator' => [
@@ -31,44 +33,47 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'Datascribe\DataTypeManager' => Datascribe\Service\DataTypeManagerFactory::class,
+            'Datascribe\DataTypeManager' => Service\DataTypeManagerFactory::class,
         ],
     ],
     'api_adapters' => [
         'invokables' => [
-            'datascribe_projects' => Datascribe\Api\Adapter\DatascribeProjectAdapter::class,
-            'datascribe_datasets' => Datascribe\Api\Adapter\DatascribeDatasetAdapter::class,
-            'datascribe_items' => Datascribe\Api\Adapter\DatascribeItemAdapter::class,
-            'datascribe_records' => Datascribe\Api\Adapter\DatascribeRecordAdapter::class,
+            'datascribe_projects' => Api\Adapter\DatascribeProjectAdapter::class,
+            'datascribe_datasets' => Api\Adapter\DatascribeDatasetAdapter::class,
+            'datascribe_items' => Api\Adapter\DatascribeItemAdapter::class,
+            'datascribe_records' => Api\Adapter\DatascribeRecordAdapter::class,
         ],
     ],
     'controllers' => [
         'invokables' => [
-            'Datascribe\Controller\Admin\Index' => Datascribe\Controller\Admin\IndexController::class,
-            'Datascribe\Controller\Admin\Project' => Datascribe\Controller\Admin\ProjectController::class,
-            'Datascribe\Controller\Admin\Dataset' => Datascribe\Controller\Admin\DatasetController::class,
-            'Datascribe\Controller\Admin\Item' => Datascribe\Controller\Admin\ItemController::class,
-            'Datascribe\Controller\Admin\Record' => Datascribe\Controller\Admin\RecordController::class,
+            'Datascribe\Controller\Admin\Index' => Controller\Admin\IndexController::class,
+            'Datascribe\Controller\Admin\Project' => Controller\Admin\ProjectController::class,
+            'Datascribe\Controller\Admin\Dataset' => Controller\Admin\DatasetController::class,
+            'Datascribe\Controller\Admin\Item' => Controller\Admin\ItemController::class,
+            'Datascribe\Controller\Admin\Record' => Controller\Admin\RecordController::class,
         ],
     ],
     'controller_plugins' => [
         'factories' => [
-            'datascribe' => Datascribe\Service\ControllerPlugin\DatascribeFactory::class,
+            'datascribe' => Service\ControllerPlugin\DatascribeFactory::class,
         ],
     ],
     'form_elements' => [
         'factories' => [
-            'Datascribe\Form\ItemBatchForm' => Datascribe\Service\Form\ItemBatchFormFactory::class,
-            'Datascribe\Form\ItemSearchForm' => Datascribe\Service\Form\ItemSearchFormFactory::class,
+            'Datascribe\Form\ItemBatchForm' => Service\Form\ItemBatchFormFactory::class,
+            'Datascribe\Form\ItemSearchForm' => Service\Form\ItemSearchFormFactory::class,
         ],
     ],
     'view_helpers' => [
+        'invokables' => [
+            'datascribeFormTextarea' => ViewHelper\DatascribeFormTextarea::class,
+        ],
         'factories' => [
-            'datascribe' => Datascribe\Service\ViewHelper\DatascribeFactory::class,
+            'datascribe' => Service\ViewHelper\DatascribeFactory::class,
         ],
         'delegators' => [
             'Zend\Form\View\Helper\FormElement' => [
-                Datascribe\Service\Delegator\FormElementDelegatorFactory::class,
+                Service\Delegator\FormElementDelegatorFactory::class,
             ],
         ],
     ],

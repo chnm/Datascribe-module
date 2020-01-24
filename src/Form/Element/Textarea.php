@@ -15,10 +15,10 @@ class Textarea extends ZendTextarea implements InputProviderInterface
         $valueData = $this->getOption('datascribe_value_data');
 
         $attributes = [];
-        // Note that "pattern" and "minlength" are invalid attributes in ZF3.
-        // They would be removed by the formTextarea view helper even if we set
-        // them here. Rely on server-side validation instead.
+        // Note that "pattern" is an invalid attribute for <textarea>. Rely on
+        // server-side validation instead.
         $attributes['rows'] = $fieldData['rows'] ?? null;
+        $attributes['minlength'] = $fieldData['minlength'] ?? null;
         $attributes['maxlength'] = $fieldData['maxlength'] ?? null;
         $attributes['placeholder'] = $fieldData['placeholder'] ?? null;
 
