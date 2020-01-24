@@ -1,5 +1,5 @@
 <?php
-namespace Datascribe\ViewHelper;
+namespace Datascribe\Form\ViewHelper;
 
 use Zend\Form\View\Helper\FormTextarea;
 

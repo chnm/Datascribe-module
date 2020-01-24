@@ -66,7 +66,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'datascribeFormTextarea' => ViewHelper\DatascribeFormTextarea::class,
+            'datascribeFormTextarea' => Form\ViewHelper\DatascribeFormTextarea::class,
         ],
         'factories' => [
             'datascribe' => Service\ViewHelper\DatascribeFactory::class,
