@@ -81,49 +81,6 @@ class Datascribe extends AbstractHelper
     }
 
     /**
-     * Get the fields of a dataset.
-     *
-     * @param DatascribeDatasetRepresentation $dataset
-     * @return string
-     */
-    public function fields(DatascribeDatasetRepresentation $dataset) : string
-    {
-        $manager = $this->services->get('Datascribe\DataTypeManager');
-        $view = $this->getView();
-        $fields = [];
-        foreach ($dataset->fields() as $field) {
-            $dataType = $manager->get($field->getDataType());
-
-            $fieldFieldset = new Fieldset($field->getPosition());
-            $fieldFieldset->setLabel(sprintf(
-                '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
-                $field->getName(),
-                $view->translate($dataType->getLabel())
-            ));
-            $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldFieldset->setAttribute('class', $field->getDataType());
-
-            $element = new Element\Hidden('o:id');
-            $element->setAttribute('value', $field->getId());
-            $fieldFieldset->add($element);
-
-            $this->addFieldElements($fieldFieldset, $field);
-
-            $fieldDataFieldset = new Fieldset('data');
-            $fieldFieldset->add($fieldDataFieldset);
-            $dataType->addFieldDataElements($fieldDataFieldset, $field->getData());
-
-            $form = new Form;
-            $form->add(new Fieldset('o-module-datascribe:field'));
-            $form->get('o-module-datascribe:field')->add($fieldFieldset);
-            $form->prepare();
-
-            $fields[] = $view->formCollection($fieldFieldset);
-        }
-        return implode("\n", $fields);
-    }
-
-    /**
      * Get field templates for every data type.
      *
      * @return string
@@ -135,7 +92,7 @@ class Datascribe extends AbstractHelper
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
             $fieldFieldset = new Fieldset('__INDEX__');
             $fieldFieldset->setLabel(sprintf(
-                '<span class="field-name" data-new-field-label="%s"></span><span class="data-type-label">%s</span>',
+                '<span class="field-name" data-new-field-name="%s"></span><span class="data-type-label">%s</span>',
                 $view->escapeHtml($view->translate('New field')),
                 $view->translate($dataType->getLabel())
             ));
@@ -146,8 +103,31 @@ class Datascribe extends AbstractHelper
             $element->setAttribute('value', $dataTypeName);
             $fieldFieldset->add($element);
 
-            $this->addFieldElements($fieldFieldset, null);
+            // Add the common "name" element.
+            $element = new Element\Text('o-module-datascribe:name');
+            $element->setLabel('Field name'); // @translate
+            $element->setAttributes([
+                'required' => true,
+            ]);
+            $fieldFieldset->add($element);
 
+            // Add the common "description" element.
+            $element = new Element\Text('o-module-datascribe:description');
+            $element->setLabel('Field description'); // @translate
+            $element->setAttributes([
+                'required' => false,
+            ]);
+            $fieldFieldset->add($element);
+
+            // Add the common "is_primary" element.
+            $element = new Element\Checkbox('o-module-datascribe:is_primary');
+            $element->setLabel('Field is primary'); // @translate
+            $element->setAttributes([
+                'required' => false,
+            ]);
+            $fieldFieldset->add($element);
+
+            // Add the custom "data" elements.
             $fieldDataFieldset = new Fieldset('data');
             $fieldFieldset->add($fieldDataFieldset);
             $dataType->addFieldDataElements($fieldDataFieldset, []);
@@ -164,38 +144,5 @@ class Datascribe extends AbstractHelper
             );
         }
         return implode("\n", $templates);
-    }
-
-    /**
-     * Add field elements common to all fields.
-     *
-     * @param Fieldset $fieldset
-     * @param ?DatascribeField $field
-     */
-    protected function addFieldElements(Fieldset $fieldset, ?DatascribeField $field) : void
-    {
-        $element = new Element\Text('o-module-datascribe:name');
-        $element->setLabel('Field name'); // @translate
-        $element->setAttributes([
-            'required' => true,
-            'value' => $field ? $field->getName() : null,
-        ]);
-        $fieldset->add($element);
-
-        $element = new Element\Text('o-module-datascribe:description');
-        $element->setLabel('Field description'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $field ? $field->getDescription() : null,
-        ]);
-        $fieldset->add($element);
-
-        $element = new Element\Checkbox('o-module-datascribe:is_primary');
-        $element->setLabel('Field is primary'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $field ? $field->getIsPrimary() : null,
-        ]);
-        $fieldset->add($element);
     }
 }

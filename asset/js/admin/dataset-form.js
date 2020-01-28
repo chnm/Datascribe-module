@@ -10,7 +10,7 @@ var addFieldControls = function(field) {
 }
 
 // Add field controls to existing fields.
-fields.children('fieldset').each(function(i) {
+$('#form-builder-fields > fieldset > fieldset').each(function(i) {
     var field = $(this);
     addFieldControls(field);
 });
@@ -23,8 +23,8 @@ $('#data-types').on('click', '.option', function(e) {
     var uniqueKey = Math.random().toString(36).substr(2);
     template = template.replace(/__INDEX__/g, uniqueKey);
     var field = $($.parseHTML(template));
-    var fieldLabelSpan = field.find('legend span.field-label');
-    fieldLabelSpan.text(fieldLabelSpan.data('new-field-label') + ` - ${newFieldIndex++}`);
+    var fieldLabelSpan = field.find('legend span.field-name');
+    fieldLabelSpan.text(fieldLabelSpan.data('new-field-name') + ` - ${newFieldIndex++}`);
     addFieldControls(field);
     fields.append(field);
     field[0].scrollIntoView();

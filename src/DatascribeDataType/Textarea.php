@@ -16,20 +16,20 @@ class Textarea implements DataTypeInterface
 
     public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
-        $element = new Element\Number('rows');
+        $element = new DatascribeElement\OptionalNumber('rows');
         $element->setLabel('Rows'); // @translate
         $element->setAttribute('min', 1);
         $element->setAttribute('value', $fieldData['rows'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('minlength');
+        $element = new DatascribeElement\OptionalNumber('minlength');
         $element->setLabel('Minimum length'); // @translate
         $element->setOption('info', 'The minimum number of characters long the input can be and still be considered valid.'); // @translate
         $element->setAttribute('min', 1);
         $element->setAttribute('value', $fieldData['minlength'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('maxlength');
+        $element = new DatascribeElement\OptionalNumber('maxlength');
         $element->setLabel('Maximum length'); // @translate
         $element->setOption('info', 'The maximum number of characters the input should accept.'); // @translate
         $element->setAttribute('min', 1);

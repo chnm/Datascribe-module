@@ -9,6 +9,7 @@ $form->prepare();
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Edit')); ?>
 
 <?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formElement($form->get('datasetform_csrf')); ?>
 
 <div id="page-actions">
     <?php if ($dataset->isPublic()): ?>
@@ -35,13 +36,15 @@ $form->prepare();
 ]); ?>
 
 <div id="general" class="active section">
-    <?php echo $this->formCollection($form); ?>
+    <?php echo $this->formRow($form->get('o-module-datascribe:name')); ?>
+    <?php echo $this->formRow($form->get('o-module-datascribe:description')); ?>
+    <?php echo $this->formRow($form->get('o-module-datascribe:guidelines')); ?>
+    <?php echo $this->formRow($form->get('o:item_set')); ?>
 </div>
 
 <div id="form-builder" class="section">
-    <div id="form-builder-fields"
-        data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>">
-        <?php echo $this->datascribe()->fields($dataset); ?>
+    <div id="form-builder-fields" data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>">
+        <?php echo $this->formCollection($form->get('o-module-datascribe:field')); ?>
     </div>
     <div id="data-types" class="sidebar always-open">
         <h3><?php echo $this->translate('Add a field to the form'); ?></h3>

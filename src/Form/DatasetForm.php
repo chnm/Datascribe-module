@@ -1,12 +1,45 @@
 <?php
 namespace Datascribe\Form;
 
-use Zend\Form\Form;
 use Omeka\Form\Element\ItemSetSelect;
+use Zend\Form\Element;
+use Zend\Form\Form;
+use Zend\Form\Fieldset;
 
 class DatasetForm extends Form
 {
     public function init()
+    {
+        $this->addCommonElements();
+        if ($this->getOption('dataset')) {
+            $this->addFieldElements();
+        }
+
+        $inputFilter = $this->getInputFilter();
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:name',
+            'required' => true,
+            'filters' => [
+                ['name' => 'toNull'],
+            ],
+        ]);
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:description',
+            'required' => false,
+            'filters' => [
+                ['name' => 'toNull'],
+            ],
+        ]);
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:guidelines',
+            'required' => false,
+            'filters' => [
+                ['name' => 'toNull'],
+            ],
+        ]);
+    }
+
+    protected function addCommonElements()
     {
         $this->add([
             'type' => 'text',
@@ -59,28 +92,63 @@ class DatasetForm extends Form
                 'id' => 'o-item-set',
             ],
         ]);
+    }
 
-        $inputFilter = $this->getInputFilter();
-        $inputFilter->add([
-            'name' => 'o-module-datascribe:name',
-            'required' => true,
-            'filters' => [
-                ['name' => 'toNull'],
-            ],
-        ]);
-        $inputFilter->add([
-            'name' => 'o-module-datascribe:description',
-            'required' => false,
-            'filters' => [
-                ['name' => 'toNull'],
-            ],
-        ]);
-        $inputFilter->add([
-            'name' => 'o-module-datascribe:guidelines',
-            'required' => false,
-            'filters' => [
-                ['name' => 'toNull'],
-            ],
-        ]);
+    protected function addFieldElements()
+    {
+        $manager = $this->getOption('data_type_manager');
+        $dataset = $this->getOption('dataset');
+
+        $fieldsFieldset = new Fieldset('o-module-datascribe:field');
+        $this->add($fieldsFieldset);
+        foreach ($dataset->fields() as $field) {
+            $dataType = $manager->get($field->getDataType());
+
+            $fieldFieldset = new Fieldset($field->getPosition());
+            $fieldsFieldset->add($fieldFieldset);
+            $fieldFieldset->setLabel(sprintf(
+                '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
+                $field->getName(),
+                $dataType->getLabel()
+            ));
+            $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
+            $fieldFieldset->setAttribute('class', $field->getDataType());
+
+            $element = new Element\Hidden('o:id');
+            $element->setAttribute('value', $field->getId());
+            $fieldFieldset->add($element);
+
+            // Add the common "name" element.
+            $element = new Element\Text('o-module-datascribe:name');
+            $element->setLabel('Field name'); // @translate
+            $element->setAttributes([
+                'required' => true,
+                'value' => $field ? $field->getName() : null,
+            ]);
+            $fieldFieldset->add($element);
+
+            // Add the common "description" element.
+            $element = new Element\Text('o-module-datascribe:description');
+            $element->setLabel('Field description'); // @translate
+            $element->setAttributes([
+                'required' => false,
+                'value' => $field ? $field->getDescription() : null,
+            ]);
+            $fieldFieldset->add($element);
+
+            // Add the common "is_primary" element.
+            $element = new Element\Checkbox('o-module-datascribe:is_primary');
+            $element->setLabel('Field is primary'); // @translate
+            $element->setAttributes([
+                'required' => false,
+                'value' => $field ? $field->getIsPrimary() : null,
+            ]);
+            $fieldFieldset->add($element);
+
+            // Add the custom "data" elements.
+            $fieldDataFieldset = new Fieldset('data');
+            $fieldFieldset->add($fieldDataFieldset);
+            $dataType->addFieldDataElements($fieldDataFieldset, $field->getData());
+        }
     }
 }

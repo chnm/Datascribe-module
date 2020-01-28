@@ -51,18 +51,21 @@ class DatasetController extends AbstractActionController
         if (!$dataset) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
-        $form = $this->getForm(DatasetForm::class);
+        $form = $this->getForm(DatasetForm::class, [
+            'data_type_manager' => $this->datascribe()->getDataTypeManager(),
+            'dataset' => $dataset,
+        ]);
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
+            // @todo: The form cannot validate new fields unless it knows about
+            // them. We should try to detect new fields here and add the corresponding
+            // data type elements to the form before calling $form->isValid().
             $form->setData($postData);
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $formData['o:item_set'] = ['o:id' => $formData['o:item_set']];
                 $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
-                if (isset($postData['o-module-datascribe:field'])) {
-                    $formData['o-module-datascribe:field'] = $postData['o-module-datascribe:field'];
-                }
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate
