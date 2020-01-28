@@ -5,6 +5,7 @@ use Datascribe\Form\Element as DatascribeElement;
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\ValidatorChain;
 
 class Textarea implements DataTypeInterface
 {
@@ -77,12 +78,20 @@ class Textarea implements DataTypeInterface
         return $fieldData;
     }
 
-    public function getValueDataElement(array $fieldData, array $valueData) : Element
+    public function addValueDataElements(Fieldset $fieldset, string $fieldLabel, ?string $fieldInfo, array $fieldData, array $valueData) : void
     {
-        return new DatascribeElement\Textarea('text', [
+        $element = new DatascribeElement\Textarea('text', [
             'datascribe_field_data' => $fieldData,
-            'datascribe_value_data' => $valueData,
         ]);
+        $element->setLabel($fieldLabel);
+        $value = null;
+        if (isset($valueData['text'])) {
+            $value = $valueData['text'];
+        } elseif (isset($fieldData['default_value'])) {
+            $value = $fieldData['default_value'];
+        }
+        $element->setValue($value);
+        $fieldset->add($element);
     }
 
     public function getValueData(array $valueFormData) : array
@@ -90,6 +99,18 @@ class Textarea implements DataTypeInterface
         $valueData = [];
         $valueData['text'] = $valueFormData['text'] ?? null;
         return $valueData;
+    }
+
+    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    {
+        $element = new DatascribeElement\Text('text', [
+            'datascribe_field_data' => $fieldData,
+        ]);
+        $validatorChain = new ValidatorChain;
+        foreach ($element->getValidators() as $validator) {
+            $validatorChain->attach($validator);
+        }
+        return $validatorChain->isValid($valueData['text']);
     }
 
     public function getHtml(array $valueData) : string

@@ -12,7 +12,6 @@ class Textarea extends ZendTextarea implements InputProviderInterface
         parent::__construct($name, $options);
 
         $fieldData = $this->getOption('datascribe_field_data');
-        $valueData = $this->getOption('datascribe_value_data');
 
         $attributes = [];
         // Note that "pattern" is an invalid attribute for <textarea>. Rely on
@@ -22,15 +21,7 @@ class Textarea extends ZendTextarea implements InputProviderInterface
         $attributes['maxlength'] = $fieldData['maxlength'] ?? null;
         $attributes['placeholder'] = $fieldData['placeholder'] ?? null;
 
-        $value = null;
-        if (isset($valueData['text'])) {
-            $value = $valueData['text'];
-        } elseif (isset($fieldData['default_value'])) {
-            $value = $fieldData['default_value'];
-        }
-
         $this->setAttributes(array_filter($attributes));
-        $this->setValue($value);
     }
 
     public function getValidators()
@@ -55,7 +46,7 @@ class Textarea extends ZendTextarea implements InputProviderInterface
     public function getInputSpecification()
     {
         return [
-            'name' => 'text',
+            'name' => $this->getName(),
             'required' => null,
             'validators' => $this->getValidators(),
             'filters' => [],

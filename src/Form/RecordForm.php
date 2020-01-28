@@ -73,6 +73,8 @@ class RecordForm extends Form
             $dataType = $manager->get($field->getDataType());
 
             $valueFieldset = new Fieldset($field->getId());
+            $valueFieldset->setLabel($field->getLabel());
+            $valueFieldset->setOption('info', $field->getInfo());
             $valuesFieldset->add($valueFieldset);
             $valueDataFieldset = new Fieldset('data');
             $valueFieldset->add($valueDataFieldset);
@@ -87,11 +89,14 @@ class RecordForm extends Form
                 }
             }
 
-            // Add the custom "data" element.
-            $element = $dataType->getValueDataElement($field->getData(), $valueData);
-            $element->setLabel($field->getLabel());
-            $element->setOption('info', $field->getInfo());
-            $valueDataFieldset->add($element);
+            // Add the custom "data" elements.
+            $dataType->addValueDataElements(
+                $valueDataFieldset,
+                $field->getLabel(),
+                $field->getInfo(),
+                $field->getData(),
+                $valueData
+            );
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');

@@ -12,7 +12,6 @@ class Text extends ZendText implements InputProviderInterface
         parent::__construct($name, $options);
 
         $fieldData = $this->getOption('datascribe_field_data');
-        $valueData = $this->getOption('datascribe_value_data');
 
         $attributes = [];
         $attributes['pattern'] = $fieldData['pattern'] ?? null;
@@ -20,20 +19,13 @@ class Text extends ZendText implements InputProviderInterface
         $attributes['maxlength'] = $fieldData['maxlength'] ?? null;
         $attributes['placeholder'] = $fieldData['placeholder'] ?? null;
 
-        $value = null;
-        if (isset($valueData['text'])) {
-            $value = $valueData['text'];
-        } elseif (isset($fieldData['default_value'])) {
-            $value = $fieldData['default_value'];
-        }
-
         $this->setAttributes(array_filter($attributes));
-        $this->setValue($value);
     }
 
     public function getValidators()
     {
         $fieldData = $this->getOption('datascribe_field_data');
+
         $validators = [];
         if (isset($fieldData['pattern'])) {
             $validator = new Validator\Regex(['pattern' => sprintf('/%s/', $fieldData['pattern'])]);
@@ -53,7 +45,7 @@ class Text extends ZendText implements InputProviderInterface
     public function getInputSpecification()
     {
         return [
-            'name' => 'text',
+            'name' => $this->getName(),
             'required' => null,
             'validators' => $this->getValidators(),
             'filters' => [],

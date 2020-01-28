@@ -12,5 +12,13 @@ $form->prepare();
 <?php echo $this->formRow($form->get('o-module-datascribe:needs_work')); ?>
 <?php echo $this->formRow($form->get('o-module-datascribe:transcriber_notes')); ?>
 <?php echo $this->formRow($form->get('o-module-datascribe:reviewer_notes')); ?>
-<?php echo $this->formCollection($form->get('o-module-datascribe:value'), false); ?>
+
+<?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
+<?php echo sprintf('<legend>%s</legend>', $fieldset->getLabel()); ?>
+<?php echo sprintf('<p>%s</p>', $fieldset->getOption('info')); ?>
+<?php echo $this->formCollection($fieldset->get('data'), false); ?>
+<?php echo $this->formRow($fieldset->get('is_missing')); ?>
+<?php echo $this->formRow($fieldset->get('is_illegible')); ?>
+<?php endforeach; ?>
+
 <?php echo $this->form()->closeTag(); ?>

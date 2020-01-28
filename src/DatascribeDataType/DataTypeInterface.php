@@ -18,7 +18,6 @@ interface DataTypeInterface
      *
      * @param Fieldset $fieldset
      * @param array $fieldData
-     * @return string
      */
     public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void;
 
@@ -33,11 +32,13 @@ interface DataTypeInterface
     /**
      * Get the form element used for the value data.
      *
+     * @param Fieldset $fieldset
+     * @param string $fieldLabel
+     * @param ?string $fieldInfo
      * @param array $fieldData
      * @param array $valueData
-     * @return Element
      */
-    public function getValueDataElement(array $fieldData, array $valueData) : Element;
+    public function addValueDataElements(Fieldset $fieldset, string $fieldLabel, ?string $fieldInfo, array $fieldData, array $valueData) : void;
 
     /**
      * Get structured data from value form data (for storing).
@@ -46,6 +47,15 @@ interface DataTypeInterface
      * @return array
      */
     public function getValueData(array $valueFormData) : array;
+
+    /**
+     * Is the value data valid?
+     *
+     * @param array $fieldData
+     * @param array $valueData
+     * @return bool
+     */
+    public function valueDataIsValid(array $fieldData, array $valueData) : bool;
 
     /**
      * Get the HTML value from value data (for rendering to page).

@@ -2,6 +2,7 @@
 namespace Datascribe\Api\Adapter;
 
 use Datascribe\Entity\DatascribeValue;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
@@ -43,34 +44,48 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
     {
         $data = $request->getContent();
         if (Request::CREATE === $request->getOperation()) {
-            if (!isset($data['o-module-datascribe:item'])) {
-                $errorStore->addError('o-module-datascribe:item', 'A record must have an item'); // @translate
-            } elseif (!isset($data['o-module-datascribe:item']['o:id'])) {
-                $errorStore->addError('o-module-datascribe:item', 'An item must have an ID'); // @translate
+            if (!isset($data['o-module-datascribe:item'])
+                || !isset($data['o-module-datascribe:item']['o:id'])
+                || !is_numeric($data['o-module-datascribe:item']['o:id'])
+            ) {
+                $errorStore->addError('o-module-datascribe:item', 'Invalid item format passed in request.'); // @translate
             }
         }
         if (isset($data['o:owner']) && !isset($data['o:owner']['o:id'])) {
-            $errorStore->addError('o:owner', 'An owner must have an ID'); // @translate
+            $errorStore->addError('o:owner', 'Invalid owner format passed in request.'); // @translate
         }
         if (isset($data['o-module-datascribe:value'])) {
-            if (is_array($data['o-module-datascribe:value'])) {
-                foreach ($data['o-module-datascribe:value'] as $fieldId => $valueData) {
-                    // @todo: Validate the structure for each value here ("is_missing", "is_illegible", and "data" must exist)
-                }
+            if (!is_array($data['o-module-datascribe:value'])) {
+                $errorStore->addError('o-module-datascribe:value', 'Invalid values format passed in request.'); // @translate
             } else {
-                $errorStore->addError('o-module-datascribe:value', 'Record values must be an array'); // @translate
+                foreach ($data['o-module-datascribe:value'] as $fieldId => $valueData) {
+                    if (!isset($valueData['is_missing'])) {
+                        $errorStore->addError('is_missing', sprintf('Invalid value format passed in request. Missing "is_missing" for field #%s.', $fieldId));
+                    }
+                    if (!isset($valueData['is_illegible'])) {
+                        $errorStore->addError('is_illegible', sprintf('Invalid value format passed in request. Missing "is_illegible" for field #%s.', $fieldId));
+                    }
+                    if (!isset($valueData['data'])) {
+                        $errorStore->addError('data', sprintf('Invalid value format passed in request. Missing "data" for field #%s.', $fieldId));
+                    } elseif (!is_array($valueData['data'])) {
+                        $errorStore->addError('data', sprintf('Invalid value format passed in request. Invalid "data" format for field #%s.', $fieldId));
+                    }
+                }
             }
         }
     }
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
-        $this->hydrateOwner($request, $entity);
+        $services = $this->getServiceLocator();
+        $em = $services->get('Omeka\EntityManager');
+        $dataTypes = $services->get('Datascribe\DataTypeManager');
         if (Request::CREATE === $request->getOperation()) {
             $itemData = $request->getValue('o-module-datascribe:item');
             $item = $this->getAdapter('datascribe_items')->findEntity($itemData['o:id']);
             $entity->setItem($item);
         }
+        $this->hydrateOwner($request, $entity);
         if ($this->shouldHydrate($request, 'o-module-datascribe:transcriber_notes')) {
             $entity->setTranscriberNotes($request->getValue('o-module-datascribe:transcriber_notes'));
         }
@@ -84,17 +99,16 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             $entity->setNeedsWork($request->getValue('o-module-datascribe:needs_work'));
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:value')) {
-            $em = $this->getServiceLocator()->get('Omeka\EntityManager');
-            $dataTypes = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
             $values = $entity->getValues();
+            $valuesToRetain = new ArrayCollection;
             foreach ($request->getValue('o-module-datascribe:value') as $fieldId => $valueData) {
+                $field = $em->getReference('Datascribe\Entity\DatascribeField', $fieldId);
                 if ($values->containsKey($fieldId)) {
                     // This is an existing value.
-                    $value = $values->get($fieldId);
+                    $value = $values->get($field->getId());
                 } else {
                     // This is a new value.
                     $value = new DatascribeValue;
-                    $field = $em->getReference('Datascribe\Entity\DatascribeField', $fieldId);
                     $value->setField($field);
                     $value->setRecord($entity);
                     $values->add($value);
@@ -103,15 +117,34 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $value->setIsIllegible($valueData['is_illegible']);
                 $dataType = $dataTypes->get($field->getDataType());
                 $value->setData($dataType->getValueData($valueData['data']));
+                $valuesToRetain->add($value);
+            }
+            // Remove values not passed in the request.
+            foreach ($values as $value) {
+                if (!$valuesToRetain->contains($value)) {
+                    $values->removeElement($value);
+                }
             }
         }
     }
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
+        $services = $this->getServiceLocator();
+        $dataTypes = $services->get('Datascribe\DataTypeManager');
+
         if (null === $entity->getItem()) {
-            $errorStore->addError('o-module-datascribe:item', 'An item must not be null'); // @translate
+            $errorStore->addError('o-module-datascribe:item', 'Missing item.'); // @translate
         }
-        // @todo: Verify that all fields in "o-module-datascribe:value" exist and are assigned to this dataset (via the item).
+        foreach ($entity->getValues() as $value) {
+            $field = $value->getField();
+            // Validate the field. It must be assigned to the item's dataset.
+
+            // Validate the value data.
+            $dataType = $dataTypes->get($field->getDataType());
+            if (!$dataType->valueDataIsValid($field->getData(), $value->getData())) {
+                $errorStore->addError('data', sprintf('Invalid value data for field "%s".', $field->getLabel())); // @translate
+            }
+        }
     }
 }
