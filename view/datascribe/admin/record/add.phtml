@@ -14,11 +14,13 @@ $form->prepare();
 <?php echo $this->formRow($form->get('o-module-datascribe:reviewer_notes')); ?>
 
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
-<?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
-<?php echo sprintf('<p>%s</p>', $fieldset->getOption('datascribe_field_description')); ?>
-<?php echo $this->formCollection($fieldset->get('data'), false); ?>
-<?php echo $this->formRow($fieldset->get('is_missing')); ?>
-<?php echo $this->formRow($fieldset->get('is_illegible')); ?>
+<fieldset>
+    <?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
+    <?php echo sprintf('<p>%s</p>', $fieldset->getOption('datascribe_field_description')); ?>
+    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+    <?php echo $this->formRow($fieldset->get('is_missing')); ?>
+    <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
+</fieldset>
 <?php endforeach; ?>
 
 <?php echo $this->form()->closeTag(); ?>
