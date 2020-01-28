@@ -58,15 +58,13 @@ class DatasetController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
-            // @todo: The form cannot validate new fields unless it knows about
-            // them. We should try to detect new fields here and add the corresponding
-            // data type elements to the form before calling $form->isValid().
+            // @todo: Ideally we'd detect new fields here and add them to the form.
+            // This would allow us to validate new fields and pass validated form
+            // data to update(). Until that happens, we cannot validate new fields.
             $form->setData($postData);
             if ($form->isValid()) {
-                $formData = $form->getData();
-                $formData['o:item_set'] = ['o:id' => $formData['o:item_set']];
-                $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
-                $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $formData);
+                $postData['o:item_set'] = ['o:id' => $postData['o:item_set']];
+                $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $postData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate
                     return $this->redirect()->toUrl($response->getContent()->url());
