@@ -1,9 +1,11 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
+use Datascribe\Form\Element as DatascribeElement;
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\ValidatorChain;
 
 class Number implements DataTypeInterface
 {
@@ -14,19 +16,19 @@ class Number implements DataTypeInterface
 
     public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
-        $element = new Element\Number('min');
+        $element = new Element\Text('min');
         $element->setLabel('Minimum value'); // @translate
         $element->setOption('info', 'The minimum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['min'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('max');
+        $element = new Element\Text('max');
         $element->setLabel('Maximum value'); // @translate
         $element->setOption('info', 'The maximum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['max'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Number('step');
+        $element = new Element\Text('step');
         $element->setLabel('Stepping interval'); // @translate
         $element->setOption('info', 'A number that specifies the granularity that the value must adhere to.'); // @translate
         $element->setAttribute('value', $fieldData['step'] ?? null);
@@ -54,11 +56,14 @@ class Number implements DataTypeInterface
     {
         $fieldData = [];
         $fieldData['min'] =
-            (isset($fieldFormData['min']) && preg_match('/^\d+$/', $fieldFormData['min']))
+            (isset($fieldFormData['min']) && is_numeric($fieldFormData['min']))
             ? $fieldFormData['min'] : null;
         $fieldData['max'] =
-            (isset($fieldFormData['max']) && preg_match('/^\d+$/', $fieldFormData['max']))
+            (isset($fieldFormData['max']) && is_numeric($fieldFormData['max']))
             ? $fieldFormData['max'] : null;
+        $fieldData['step'] =
+            (isset($fieldFormData['step']) && is_numeric($fieldFormData['step']))
+            ? $fieldFormData['step'] : null;
         $fieldData['placeholder'] =
             (isset($fieldFormData['placeholder']) && preg_match('/^.+$/', $fieldFormData['placeholder']))
             ? $fieldFormData['placeholder'] : null;
@@ -66,21 +71,44 @@ class Number implements DataTypeInterface
             (isset($fieldFormData['pattern']) && preg_match('/^.+$/', $fieldFormData['pattern']))
             ? $fieldFormData['pattern'] : null;
         $fieldData['default_value'] =
-            (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
+            (isset($fieldFormData['default_value']) && is_numeric($fieldFormData['default_value']))
             ? $fieldFormData['default_value'] : null;
         return $fieldData;
     }
 
     public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
+        $element = new DatascribeElement\Number('number', [
+            'datascribe_field_data' => $fieldData,
+        ]);
+        $element->setLabel($fieldName);
+        $value = null;
+        if (isset($valueData['number'])) {
+            $value = $valueData['number'];
+        } elseif (isset($fieldData['default_value'])) {
+            $value = $fieldData['default_value'];
+        }
+        $element->setValue($value);
+        $fieldset->add($element);
     }
 
     public function getValueData(array $valueFormData) : array
     {
+        $valueData = [];
+        $valueData['number'] = $valueFormData['number'] ?? null;
+        return $valueData;
     }
 
     public function valueDataIsValid(array $fieldData, array $valueData) : bool
     {
+        $element = new DatascribeElement\Text('number', [
+            'datascribe_field_data' => $fieldData,
+        ]);
+        $validatorChain = new ValidatorChain;
+        foreach ($element->getValidators() as $validator) {
+            $validatorChain->attach($validator);
+        }
+        return $validatorChain->isValid($valueData['number']);
     }
 
     public function getHtml(array $valueData) : string
