@@ -135,7 +135,7 @@ class Datascribe extends AbstractHelper
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
             $fieldFieldset = new Fieldset('__INDEX__');
             $fieldFieldset->setLabel(sprintf(
-                '<span class="field-label" data-new-field-label="%s"></span><span class="data-type-label">%s</span>',
+                '<span class="field-name" data-new-field-label="%s"></span><span class="data-type-label">%s</span>',
                 $view->escapeHtml($view->translate('New field')),
                 $view->translate($dataType->getLabel())
             ));
