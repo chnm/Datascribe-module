@@ -96,8 +96,8 @@ class Datascribe extends AbstractHelper
 
             $fieldFieldset = new Fieldset($field->getPosition());
             $fieldFieldset->setLabel(sprintf(
-                '<span class="field-label">%s</span><span class="data-type-label">%s</span>',
-                $field->getLabel(),
+                '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
+                $field->getName(),
                 $view->translate($dataType->getLabel())
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
@@ -174,19 +174,19 @@ class Datascribe extends AbstractHelper
      */
     protected function addFieldElements(Fieldset $fieldset, ?DatascribeField $field) : void
     {
-        $element = new Element\Text('o-module-datascribe:label');
-        $element->setLabel('Field label'); // @translate
+        $element = new Element\Text('o-module-datascribe:name');
+        $element->setLabel('Field name'); // @translate
         $element->setAttributes([
             'required' => true,
-            'value' => $field ? $field->getLabel() : null,
+            'value' => $field ? $field->getName() : null,
         ]);
         $fieldset->add($element);
 
-        $element = new Element\Text('o-module-datascribe:info');
-        $element->setLabel('Field info'); // @translate
+        $element = new Element\Text('o-module-datascribe:description');
+        $element->setLabel('Field description'); // @translate
         $element->setAttributes([
             'required' => false,
-            'value' => $field ? $field->getInfo() : null,
+            'value' => $field ? $field->getDescription() : null,
         ]);
         $fieldset->add($element);
 

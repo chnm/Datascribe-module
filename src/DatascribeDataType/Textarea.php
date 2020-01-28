@@ -78,12 +78,12 @@ class Textarea implements DataTypeInterface
         return $fieldData;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, string $fieldLabel, ?string $fieldInfo, array $fieldData, array $valueData) : void
+    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
         $element = new DatascribeElement\Textarea('text', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldLabel);
+        $element->setLabel($fieldName);
         $value = null;
         if (isset($valueData['text'])) {
             $value = $valueData['text'];

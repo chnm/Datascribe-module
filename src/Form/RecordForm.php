@@ -73,8 +73,8 @@ class RecordForm extends Form
             $dataType = $manager->get($field->getDataType());
 
             $valueFieldset = new Fieldset($field->getId());
-            $valueFieldset->setLabel($field->getLabel());
-            $valueFieldset->setOption('info', $field->getInfo());
+            $valueFieldset->setOption('datascribe_field_name', $field->getName());
+            $valueFieldset->setOption('datascribe_field_description', $field->getDescription());
             $valuesFieldset->add($valueFieldset);
             $valueDataFieldset = new Fieldset('data');
             $valueFieldset->add($valueDataFieldset);
@@ -92,8 +92,8 @@ class RecordForm extends Form
             // Add the custom "data" elements.
             $dataType->addValueDataElements(
                 $valueDataFieldset,
-                $field->getLabel(),
-                $field->getInfo(),
+                $field->getName(),
+                $field->getDescription(),
                 $field->getData(),
                 $valueData
             );

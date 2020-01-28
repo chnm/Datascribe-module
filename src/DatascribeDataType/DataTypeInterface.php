@@ -33,12 +33,12 @@ interface DataTypeInterface
      * Get the form element used for the value data.
      *
      * @param Fieldset $fieldset
-     * @param string $fieldLabel
-     * @param ?string $fieldInfo
+     * @param string $fieldName
+     * @param ?string $fieldDescription
      * @param array $fieldData
      * @param array $valueData
      */
-    public function addValueDataElements(Fieldset $fieldset, string $fieldLabel, ?string $fieldInfo, array $fieldData, array $valueData) : void;
+    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void;
 
     /**
      * Get structured data from value form data (for storing).

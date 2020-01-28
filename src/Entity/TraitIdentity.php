@@ -33,6 +33,9 @@ trait TraitIdentity
 
     public function setDescription(?string $description) : void
     {
+        if (is_string($description) && '' === trim($description)) {
+            $description = null;
+        }
         $this->description = $description;
     }
 

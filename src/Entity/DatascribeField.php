@@ -10,6 +10,7 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeField extends AbstractEntity
 {
     use TraitId;
+    use TraitIdentity;
     use TraitData;
 
     /**
@@ -22,23 +23,6 @@ class DatascribeField extends AbstractEntity
      * )
      */
     protected $dataset;
-
-    /**
-     * @Column(
-     *     type="string",
-     *     length=255,
-     *     nullable=false
-     * )
-     */
-    protected $label;
-
-    /**
-     * @Column(
-     *     type="text",
-     *     nullable=true
-     * )
-     */
-    protected $info;
 
     /**
      * @Column(
@@ -90,29 +74,6 @@ class DatascribeField extends AbstractEntity
     public function getDataset() : DatascribeDataset
     {
         return $this->dataset;
-    }
-
-    public function setLabel(string $label) : void
-    {
-        $this->label = $label;
-    }
-
-    public function getLabel() : string
-    {
-        return $this->label;
-    }
-
-    public function setInfo(?string $info) : void
-    {
-        if (is_string($info) && '' === trim($info)) {
-            $info = null;
-        }
-        $this->info = $info;
-    }
-
-    public function getInfo() : ?string
-    {
-        return $this->info;
     }
 
     public function setPosition(int $position) : void

@@ -12,7 +12,7 @@ class Fallback implements DataTypeInterface
         return '[Unknown]'; // @translate
     }
 
-    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
     {
     }
 
@@ -21,19 +21,27 @@ class Fallback implements DataTypeInterface
         return [];
     }
 
-    public function getValueElement(Fieldset $fieldset, array $fieldData, array $valueData) : Element
+    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
     }
 
     public function getValueData(array $valueFormData) : array
     {
+        return [];
+    }
+
+    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    {
+        return true;
     }
 
     public function getHtml(array $valueData) : string
     {
+        return '';
     }
 
     public function getValue(array $valueData) : string
     {
+        return '';
     }
 }
