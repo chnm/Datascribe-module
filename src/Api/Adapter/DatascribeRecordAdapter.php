@@ -133,12 +133,17 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         $services = $this->getServiceLocator();
         $dataTypes = $services->get('Datascribe\DataTypeManager');
 
-        if (null === $entity->getItem()) {
+        $item = $entity->getItem();
+        if (null === $item) {
             $errorStore->addError('o-module-datascribe:item', 'Missing item.'); // @translate
         }
+        $fields = $item->getDataset()->getFields();
         foreach ($entity->getValues() as $value) {
             $field = $value->getField();
             // Validate the field. It must be assigned to the item's dataset.
+            if (!$fields->containsKey($field->getId())) {
+                $errorStore->addError('data', 'Invalid field. Field not in dataset.'); // @translate
+            }
 
             // Validate the value data.
             $dataType = $dataTypes->get($field->getDataType());
