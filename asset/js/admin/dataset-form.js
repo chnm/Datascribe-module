@@ -30,10 +30,10 @@ $('#data-types').on('click', '.option', function(e) {
     field[0].scrollIntoView();
 });
 // Handle the field is primary controls.
-fields.on('change', 'input[name$="[o-module-datascribe:is_primary]"]', function(e) {
+fields.on('change', 'input[name$="[is_primary]"]', function(e) {
     var thisCheckbox = $(this);
     var wasUnchecked = thisCheckbox.prop('checked');
-    fields.find('input[name$="[o-module-datascribe:is_primary]"]').prop('checked', false);
+    fields.find('input[name$="[is_primary]"]').prop('checked', false);
     if (wasUnchecked) {
         thisCheckbox.prop('checked', true);
     }
