@@ -30,6 +30,14 @@ interface DataTypeInterface
     public function getFieldData(array $fieldFormData) : array;
 
     /**
+     * Is the field data valid?
+     *
+     * @param array $fieldData
+     * @return bool
+     */
+    public function fieldDataIsValid(array $fieldData) : bool;
+
+    /**
      * Get the form element used for the value data.
      *
      * @param Fieldset $fieldset

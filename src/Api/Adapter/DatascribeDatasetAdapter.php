@@ -60,6 +60,28 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
         if (isset($data['o:owner']) && !isset($data['o:owner']['o:id'])) {
             $errorStore->addError('o:owner', 'Invalid owner format passed in request.'); // @translate
         }
+        if (isset($data['o-module-datascribe:field'])) {
+            if (!is_array($data['o-module-datascribe:field'])) {
+                $errorStore->addError('o-module-datascribe:field', 'Invalid fields format passed in request.'); // @translate
+            } else {
+                foreach ($data['o-module-datascribe:field'] as $fieldId => $fieldData) {
+                    if (!isset($fieldData['name'])) {
+                        $errorStore->addError('name', sprintf('Invalid field format passed in request. Missing "name" for field #%s.', $fieldId));
+                    }
+                    if (!isset($fieldData['description'])) {
+                        $errorStore->addError('description', sprintf('Invalid field format passed in request. Missing "description" for field #%s.', $fieldId));
+                    }
+                    if (!isset($fieldData['is_primary'])) {
+                        $errorStore->addError('is_primary', sprintf('Invalid field format passed in request. Missing "is_primary" for field #%s.', $fieldId));
+                    }
+                    if (!isset($fieldData['data'])) {
+                        $errorStore->addError('data', sprintf('Invalid field format passed in request. Missing "data" for field #%s.', $fieldId));
+                    } elseif (!is_array($fieldData['data'])) {
+                        $errorStore->addError('data', sprintf('Invalid field format passed in request. Invalid "data" format for field #%s.', $fieldId));
+                    }
+                }
+            }
+        }
     }
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
@@ -150,6 +172,9 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
 
     public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
     {
+        $services = $this->getServiceLocator();
+        $dataTypes = $services->get('Datascribe\DataTypeManager');
+
         if (!$this->isUnique($entity, ['name' => $entity->getName()])) {
             $errorStore->addError('o-module-datascribe:name', new Message(
                 'The name "%s" is already taken.', // @translate
@@ -161,6 +186,13 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
         }
         if (null === $entity->getProject()) {
             $errorStore->addError('o-module-datascribe:project', 'A project must not be null'); // @translate
+        }
+        foreach ($entity->getFields() as $field) {
+            // Validate the field data.
+            $dataType = $dataTypes->get($field->getDataType());
+            if (!$dataType->fieldDataIsValid($field->getData())) {
+                $errorStore->addError('data', sprintf('Invalid field data for field "%s".', $field->getName())); // @translate
+            }
         }
     }
 }

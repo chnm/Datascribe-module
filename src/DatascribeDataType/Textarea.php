@@ -78,6 +78,12 @@ class Textarea implements DataTypeInterface
         return $fieldData;
     }
 
+    public function fieldDataIsValid(array $fieldData) : bool
+    {
+        // Invalid data was filtered out in self::getFieldData().
+        return true;
+    }
+
     public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
         $element = new DatascribeElement\Textarea('text', [

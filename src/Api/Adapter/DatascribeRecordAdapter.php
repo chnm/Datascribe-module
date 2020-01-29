@@ -148,7 +148,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             // Validate the value data.
             $dataType = $dataTypes->get($field->getDataType());
             if (!$dataType->valueDataIsValid($field->getData(), $value->getData())) {
-                $errorStore->addError('data', sprintf('Invalid value data for field "%s".', $field->getLabel())); // @translate
+                $errorStore->addError('data', sprintf('Invalid value data for field "%s".', $field->getName())); // @translate
             }
         }
     }
