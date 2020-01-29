@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'name', 'description', 'data'];
+            return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
         }
 
-        return ['__isInitialized__', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'name', 'description', 'data'];
+        return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
     }
 
     /**
@@ -173,6 +173,50 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function setName(string $name): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
+
+        parent::setName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
+
+        return parent::getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDescription(?string $description): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescription', [$description]);
+
+        parent::setDescription($description);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDescription(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
+
+        return parent::getDescription();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -296,50 +340,6 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setName(string $name): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
-
-        parent::setName($name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
-
-        return parent::getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setDescription(?string $description): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescription', [$description]);
-
-        parent::setDescription($description);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDescription(): ?string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
-
-        return parent::getDescription();
     }
 
     /**
