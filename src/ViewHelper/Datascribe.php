@@ -101,7 +101,7 @@ class Datascribe extends AbstractHelper
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldFieldset->setAttribute('class', $dataTypeName);
 
-            $element = new Element\Hidden('o-module-datascribe:data_type');
+            $element = new Element\Hidden('data_type');
             $element->setAttribute('value', $dataTypeName);
             $fieldFieldset->add($element);
 

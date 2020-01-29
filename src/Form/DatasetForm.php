@@ -120,10 +120,6 @@ class DatasetForm extends Form
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldFieldset->setAttribute('class', $field->getDataType());
 
-            $element = new Element\Hidden('o:id');
-            $element->setAttribute('value', $field->getId());
-            $fieldFieldset->add($element);
-
             $this->addFieldElements($fieldFieldset, $dataType, $field);
         }
     }
@@ -138,7 +134,7 @@ class DatasetForm extends Form
     public function addFieldElements(Fieldset $fieldFieldset, DataTypeInterface $dataType, ?DatascribeField $field)
     {
         // Add the common "name" element.
-        $element = new Element\Text('o-module-datascribe:name');
+        $element = new Element\Text('name');
         $element->setLabel('Field name'); // @translate
         $element->setAttributes([
             'required' => true,
@@ -147,7 +143,7 @@ class DatasetForm extends Form
         $fieldFieldset->add($element);
 
         // Add the common "description" element.
-        $element = new Element\Text('o-module-datascribe:description');
+        $element = new Element\Text('description');
         $element->setLabel('Field description'); // @translate
         $element->setAttributes([
             'required' => false,
@@ -156,7 +152,7 @@ class DatasetForm extends Form
         $fieldFieldset->add($element);
 
         // Add the common "is_primary" element.
-        $element = new DatascribeElement\OptionalCheckbox('o-module-datascribe:is_primary');
+        $element = new DatascribeElement\OptionalCheckbox('is_primary');
         $element->setLabel('Field is primary'); // @translate
         $element->setAttributes([
             'required' => false,

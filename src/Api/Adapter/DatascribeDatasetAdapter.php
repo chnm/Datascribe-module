@@ -47,17 +47,18 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
     {
         $data = $request->getContent();
         if (Request::CREATE === $request->getOperation()) {
-            if (!isset($data['o-module-datascribe:project'])) {
-                $errorStore->addError('o-module-datascribe:project', 'A dataset must have a project'); // @translate
-            } elseif (!isset($data['o-module-datascribe:project']['o:id'])) {
-                $errorStore->addError('o-module-datascribe:project', 'A project must have an ID'); // @translate
+            if (!isset($data['o-module-datascribe:project'])
+                || !isset($data['o-module-datascribe:project']['o:id'])
+                || !is_numeric($data['o-module-datascribe:project']['o:id'])
+            ) {
+                $errorStore->addError('o-module-datascribe:project', 'Invalid project format passed in request.'); // @translate
             }
         }
         if (isset($data['o:item_set']) && !isset($data['o:item_set']['o:id'])) {
-            $errorStore->addError('o:item_set', 'An item set must have an ID'); // @translate
+            $errorStore->addError('o:item_set', 'Invalid item set format passed in request.'); // @translate
         }
         if (isset($data['o:owner']) && !isset($data['o:owner']['o:id'])) {
-            $errorStore->addError('o:owner', 'An owner must have an ID'); // @translate
+            $errorStore->addError('o:owner', 'Invalid owner format passed in request.'); // @translate
         }
     }
 
@@ -96,38 +97,42 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
 
     protected function hydrateFields(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
-        $dataTypes = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        $services = $this->getServiceLocator();
+        $em = $services->get('Omeka\EntityManager');
+        $dataTypes = $services->get('Datascribe\DataTypeManager');
+
         $fields = $entity->getFields();
         $fieldsToRetain = [];
         $position = 1;
 
         // Update existing fields and create new fields.
-        foreach ($request->getValue('o-module-datascribe:field', []) as $fieldData) {
-            if (isset($fieldData['o:id']) && $fields->containsKey($fieldData['o:id'])) {
-                // This field exists. Update it.
-                $field = $fields->get($fieldData['o:id']);
+        foreach ($request->getValue('o-module-datascribe:field', []) as $fieldId => $fieldData) {
+            $field = $em->getReference('Datascribe\Entity\DatascribeField', $fieldId);
+            if ($fields->containsKey($fieldId)) {
+                // This is an existing field.
+                $field = $fields->get($fieldId);
                 $fieldsToRetain[] = $field->getId();
-            } elseif (isset($fieldData['o-module-datascribe:data_type']) && $dataTypes->has($fieldData['o-module-datascribe:data_type'])) {
-                // This is a new field. Create it.
+            } elseif (isset($fieldData['data_type']) && $dataTypes->has($fieldData['data_type'])) {
+                // This is a new field.
                 $field = new DatascribeField;
                 $field->setDataset($entity);
-                $field->setDataType($fieldData['o-module-datascribe:data_type']);
+                $field->setDataType($fieldData['data_type']);
                 $fields->add($field);
             } else {
-                // This field is in an invalid format. Ignore it.
+                // This field is in an invalid format.
                 continue;
             }
 
             $name =
-                (isset($fieldData['o-module-datascribe:name']) && preg_match('/^.+$/', $fieldData['o-module-datascribe:name']))
-                ? $fieldData['o-module-datascribe:name'] : null;
+                (isset($fieldData['name']) && preg_match('/^.+$/', $fieldData['name']))
+                ? $fieldData['name'] : null;
             $description =
-                (isset($fieldData['o-module-datascribe:description']) && preg_match('/^.+$/', $fieldData['o-module-datascribe:description']))
-                ? $fieldData['o-module-datascribe:description'] : null;
+                (isset($fieldData['description']) && preg_match('/^.+$/', $fieldData['description']))
+                ? $fieldData['description'] : null;
 
             $field->setName($name);
             $field->setDescription($description);
-            $field->setIsPrimary($fieldData['o-module-datascribe:is_primary'] ?? false);
+            $field->setIsPrimary($fieldData['is_primary'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
             if (!($dataType instanceof Fallback)) {
