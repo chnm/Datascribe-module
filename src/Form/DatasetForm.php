@@ -110,7 +110,7 @@ class DatasetForm extends Form
         foreach ($dataset->fields() as $field) {
             $dataType = $manager->get($field->getDataType());
 
-            $fieldFieldset = new Fieldset($field->getPosition());
+            $fieldFieldset = new Fieldset($field->getId());
             $fieldsFieldset->add($fieldFieldset);
             $fieldFieldset->setLabel(sprintf(
                 '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
