@@ -3,6 +3,7 @@ namespace Datascribe\Form;
 
 use Datascribe\DatascribeDataType\DataTypeInterface;
 use Datascribe\Entity\DatascribeField;
+use Datascribe\Form\Element as DatascribeElement;
 use Omeka\Form\Element\ItemSetSelect;
 use Zend\Form\Element;
 use Zend\Form\Form;
@@ -155,7 +156,7 @@ class DatasetForm extends Form
         $fieldFieldset->add($element);
 
         // Add the common "is_primary" element.
-        $element = new Element\Checkbox('o-module-datascribe:is_primary');
+        $element = new DatascribeElement\OptionalCheckbox('o-module-datascribe:is_primary');
         $element->setLabel('Field is primary'); // @translate
         $element->setAttributes([
             'required' => false,
