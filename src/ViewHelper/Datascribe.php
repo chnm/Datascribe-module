@@ -5,6 +5,7 @@ use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\Api\Representation\DatascribeRecordRepresentation;
 use Datascribe\DatascribeDataType\Fallback;
 use Datascribe\Entity\DatascribeField;
+use Datascribe\Form\DatasetForm;
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
@@ -83,9 +84,10 @@ class Datascribe extends AbstractHelper
     /**
      * Get field templates for every data type.
      *
+     * @param DatasetForm $form
      * @return string
      */
-    public function dataTypeTemplates() : string
+    public function dataTypeTemplates(DatasetForm $form) : string
     {
         $view = $this->getView();
         $templates = [];
@@ -103,39 +105,12 @@ class Datascribe extends AbstractHelper
             $element->setAttribute('value', $dataTypeName);
             $fieldFieldset->add($element);
 
-            // Add the common "name" element.
-            $element = new Element\Text('o-module-datascribe:name');
-            $element->setLabel('Field name'); // @translate
-            $element->setAttributes([
-                'required' => true,
-            ]);
-            $fieldFieldset->add($element);
+            $form->addFieldElements($fieldFieldset, $dataType, null);
 
-            // Add the common "description" element.
-            $element = new Element\Text('o-module-datascribe:description');
-            $element->setLabel('Field description'); // @translate
-            $element->setAttributes([
-                'required' => false,
-            ]);
-            $fieldFieldset->add($element);
-
-            // Add the common "is_primary" element.
-            $element = new Element\Checkbox('o-module-datascribe:is_primary');
-            $element->setLabel('Field is primary'); // @translate
-            $element->setAttributes([
-                'required' => false,
-            ]);
-            $fieldFieldset->add($element);
-
-            // Add the custom "data" elements.
-            $fieldDataFieldset = new Fieldset('data');
-            $fieldFieldset->add($fieldDataFieldset);
-            $dataType->addFieldDataElements($fieldDataFieldset, []);
-
-            $form = new Form;
-            $form->add(new Fieldset('o-module-datascribe:field'));
-            $form->get('o-module-datascribe:field')->add($fieldFieldset);
-            $form->prepare();
+            $mockForm = new Form;
+            $mockForm->add(new Fieldset('o-module-datascribe:field'));
+            $mockForm->get('o-module-datascribe:field')->add($fieldFieldset);
+            $mockForm->prepare();
 
             $templates[] = sprintf(
                 '<span class="data-type-template" data-name="%s" data-template="%s"></span>',
