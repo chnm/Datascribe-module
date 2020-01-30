@@ -52,6 +52,11 @@ class Textarea implements DataTypeInterface
         $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
+
+        $element = new Element\Text('textarea_label');
+        $element->setLabel('Textarea label'); // @translate
+        $element->setAttribute('value', $fieldData['textarea_label'] ?? null);
+        $fieldset->add($element);
     }
 
     public function getFieldData(array $fieldFormData) : array
@@ -75,6 +80,9 @@ class Textarea implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
             ? $fieldFormData['default_value'] : null;
+        $fieldData['textarea_label'] =
+            (isset($fieldFormData['textarea_label']) && preg_match('/^.+$/', $fieldFormData['textarea_label']))
+            ? $fieldFormData['textarea_label'] : null;
         return $fieldData;
     }
 
@@ -89,7 +97,7 @@ class Textarea implements DataTypeInterface
         $element = new DatascribeElement\Textarea('text', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldName);
+        $element->setLabel($fieldData['textarea_label'] ?? 'Text'); // @translate
         $value = null;
         if (isset($valueData['text'])) {
             $value = $valueData['text'];

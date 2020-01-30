@@ -46,6 +46,11 @@ class Text implements DataTypeInterface
         $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
+
+        $element = new Element\Text('text_input_label');
+        $element->setLabel('Text input label'); // @translate
+        $element->setAttribute('value', $fieldData['text_input_label'] ?? null);
+        $fieldset->add($element);
     }
 
     public function getFieldData(array $fieldFormData) : array
@@ -66,6 +71,9 @@ class Text implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
             ? $fieldFormData['default_value'] : null;
+        $fieldData['text_input_label'] =
+            (isset($fieldFormData['text_input_label']) && preg_match('/^.+$/', $fieldFormData['text_input_label']))
+            ? $fieldFormData['text_input_label'] : null;
         return $fieldData;
     }
 
@@ -80,7 +88,7 @@ class Text implements DataTypeInterface
         $element = new DatascribeElement\Text('text', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldName);
+        $element->setLabel($fieldData['text_input_label'] ?? 'Text'); // @translate
         $value = null;
         if (isset($valueData['text'])) {
             $value = $valueData['text'];

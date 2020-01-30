@@ -50,6 +50,11 @@ class Number implements DataTypeInterface
         $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
+
+        $element = new Element\Text('number_input_label');
+        $element->setLabel('Number input label'); // @translate
+        $element->setAttribute('value', $fieldData['number_input_label'] ?? null);
+        $fieldset->add($element);
     }
 
     public function getFieldData(array $fieldFormData) : array
@@ -73,6 +78,9 @@ class Number implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($fieldFormData['default_value']) && is_numeric($fieldFormData['default_value']))
             ? $fieldFormData['default_value'] : null;
+        $fieldData['number_input_label'] =
+            (isset($fieldFormData['number_input_label']) && preg_match('/^.+$/', $fieldFormData['number_input_label']))
+            ? $fieldFormData['number_input_label'] : null;
         return $fieldData;
     }
 
@@ -87,7 +95,7 @@ class Number implements DataTypeInterface
         $element = new DatascribeElement\Number('number', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldName);
+        $element->setLabel($fieldData['number_input_label'] ?? 'Number'); // @translate
         $value = null;
         if (isset($valueData['number'])) {
             $value = $valueData['number'];
