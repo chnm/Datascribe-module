@@ -118,7 +118,7 @@ class DatasetForm extends Form
                 $dataType->getLabel()
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldFieldset->setAttribute('class', $field->getDataType());
+            $fieldFieldset->setAttribute('class', $field->getDataType() . ' dataset-field');
 
             $this->addFieldElements($fieldFieldset, $dataType, $field);
         }

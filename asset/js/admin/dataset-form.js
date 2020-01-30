@@ -2,11 +2,12 @@ $(document).ready(function() {
 
 CKEDITOR.inline(document.getElementById('o-module-datascribe-guidelines'));
 
-var fields = $('#form-builder-fields');
+var fieldsData = $('#form-builder-fields');
+var fieldsContainer = $('#form-builder-fields > fieldset');
 var newFieldIndex = 1;
 
 var addFieldControls = function(field) {
-    field.prepend(fields.data('field-actions'));
+    field.prepend(fieldsData.data('field-actions'));
 }
 
 // Add field controls to existing fields.
@@ -26,20 +27,20 @@ $('#data-types').on('click', '.option', function(e) {
     var fieldLabelSpan = field.find('legend span.field-name');
     fieldLabelSpan.text(fieldLabelSpan.data('new-field-name') + ` - ${newFieldIndex++}`);
     addFieldControls(field);
-    fields.append(field);
+    fieldsContainer.append(field);
     field[0].scrollIntoView();
 });
 // Handle the field is primary controls.
 fields.on('change', 'input[name$="[is_primary]"]', function(e) {
     var thisCheckbox = $(this);
     var wasUnchecked = thisCheckbox.prop('checked');
-    fields.find('input[name$="[is_primary]"]').prop('checked', false);
+    fieldsContainer.find('input[name$="[is_primary]"]').prop('checked', false);
     if (wasUnchecked) {
         thisCheckbox.prop('checked', true);
     }
 });
 // Handle the field disable controls.
-fields.on('click', 'button.field-disable', function(e) {
+fieldsContainer.on('click', 'button.field-disable', function(e) {
     var field = $(this).closest('fieldset');
     field.find(':input').prop('disabled', true);
     field.find('button.field-disable, button.field-enable').toggleClass('active');
@@ -51,7 +52,7 @@ fields.on('click', 'button.field-disable', function(e) {
     }
 });
 // Handle the field enable controls.
-fields.on('click', 'button.field-enable', function(e) {
+fieldsContainer.on('click', 'button.field-enable', function(e) {
     var field = $(this).closest('fieldset');
     field.find(':input').prop('disabled', false);
     field.find('button.field-disable, button.field-enable, button.field-collapse, button.field-expand').toggleClass('active');
@@ -59,17 +60,17 @@ fields.on('click', 'button.field-enable', function(e) {
     field.removeClass('closed');
 });
 // Handle the field position decrement controls.
-fields.on('click', 'button.field-position-decrement', function(e) {
+fieldsContainer.on('click', 'button.field-position-decrement', function(e) {
     var field = $(this).closest('fieldset');
     field.prev().insertAfter(field);
 });
 // Handle the field position increment controls.
-fields.on('click', 'button.field-position-increment', function(e) {
+fieldsContainer.on('click', 'button.field-position-increment', function(e) {
     var field = $(this).closest('fieldset');
     field.next().insertBefore(field);
 });
 // Handle the field options expand/collapse controls.
-fields.on('click', 'button.field-collapse, button.field-expand', function() {
+fieldsContainer.on('click', 'button.field-collapse, button.field-expand', function() {
     var field = $(this).closest('fieldset');
     field.find('.field-collapse, .field-expand').toggleClass('active');
     field.toggleClass('closed')

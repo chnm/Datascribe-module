@@ -143,7 +143,7 @@
 
 /* Form Builder */
 
-#form-builder-fields fieldset {
+#form-builder-fields .dataset-field {
   position: relative;
   padding: 4px;
   background-color: rgba(0,0,0,0.04);
@@ -166,7 +166,7 @@
   margin-bottom: 8px;
 }
 
-#form-builder-fields fieldset:before {
+#form-builder-fields .dataset-field:before {
   content: "";
   position: absolute;
   top: 0;
@@ -176,7 +176,7 @@
   background-color: rgba(0,0,0,0.12);
 }
 
-#form-builder-fields fieldset.closed legend {
+#form-builder-fields .dataset-field.closed legend {
     margin-bottom: 0;
 }
 
@@ -227,10 +227,10 @@ legend .field-label {
   cursor: pointer;
 }
 
-#form-builder-fields fieldset:only-of-type .field-position-increment,
-#form-builder-fields fieldset:only-of-type .field-position-decrement,
-#form-builder-fields fieldset:first-of-type .field-position-decrement,
-#form-builder-fields fieldset:last-of-type .field-position-increment {
+#form-builder-fields .dataset-field:only-of-type .field-position-increment,
+#form-builder-fields .dataset-field:only-of-type .field-position-decrement,
+#form-builder-fields .dataset-field:first-of-type .field-position-decrement,
+#form-builder-fields .dataset-field:last-of-type .field-position-increment {
   display: none;
 }
 
@@ -252,23 +252,32 @@ legend .field-label {
 }
 
 fieldset.closed .field {
-    height: 0;
-    overflow: hidden;
-    margin: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+#form-builder-fields fieldset.deleted,
+#form-builder-fields fieldset.closed {
+  padding-bottom: 0;
 }
 
 #form-builder-fields fieldset.deleted:before {
-    background-color: #fcc;
+  background-color: #fcc;
 }
 
 #form-builder-fields fieldset.deleted button:disabled {
-    display: none;
+  display: none;
 }
 
 #form-builder-fields fieldset.deleted button {
-    color: #A91919;
+  color: #A91919;
 }
 
 #form-builder-fields fieldset.deleted .data-type-label {
-    background-color: #A9191987;
+  background-color: #A9191987;
+}
+
+#form-builder-fields fieldset fieldset {
+  margin: 0;
 }

@@ -99,7 +99,7 @@ class Datascribe extends AbstractHelper
                 $view->translate($dataType->getLabel())
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldFieldset->setAttribute('class', $dataTypeName);
+            $fieldFieldset->setAttribute('class', $dataTypeName . ' dataset-field');
 
             $element = new Element\Hidden('data_type');
             $element->setAttribute('value', $dataTypeName);
