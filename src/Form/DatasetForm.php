@@ -106,6 +106,7 @@ class DatasetForm extends Form
         $dataset = $this->getOption('dataset');
 
         $fieldsFieldset = new Fieldset('o-module-datascribe:field');
+        $fieldsFieldset->setAttribute('class', 'dataset-fields');
         $this->add($fieldsFieldset);
         foreach ($dataset->fields() as $field) {
             $dataType = $manager->get($field->getDataType());
@@ -118,7 +119,7 @@ class DatasetForm extends Form
                 $dataType->getLabel()
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldFieldset->setAttribute('class', $field->getDataType() . ' dataset-field');
+            $fieldFieldset->setAttribute('class', sprintf('dataset-field %s', $field->getDataType()));
 
             $this->addFieldElements($fieldFieldset, $dataType, $field);
         }
@@ -162,6 +163,7 @@ class DatasetForm extends Form
 
         // Add the custom "data" elements.
         $fieldDataFieldset = new Fieldset('data');
+        $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->getData() : []);
     }
