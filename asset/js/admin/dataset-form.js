@@ -10,10 +10,11 @@ var addFieldControls = function(field) {
     field.prepend(fieldsData.data('field-actions'));
 }
 
-// Add field controls to existing fields.
+// Prepare fields on initial load.
 $('#form-builder-fields > fieldset > fieldset').each(function(i) {
     var field = $(this);
-    addFieldControls(field);
+    addFieldControls(field); // add field controls
+    field.toggleClass('closed'); // fields are closed by default
 });
 
 // Hande the add field control.
