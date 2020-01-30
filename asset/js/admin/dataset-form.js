@@ -31,7 +31,7 @@ $('#data-types').on('click', '.option', function(e) {
     field[0].scrollIntoView();
 });
 // Handle the field is primary controls.
-fields.on('change', 'input[name$="[is_primary]"]', function(e) {
+fieldsContainer.on('change', 'input[name$="[is_primary]"]', function(e) {
     var thisCheckbox = $(this);
     var wasUnchecked = thisCheckbox.prop('checked');
     fieldsContainer.find('input[name$="[is_primary]"]').prop('checked', false);
