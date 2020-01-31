@@ -163,6 +163,7 @@ class DatasetForm extends Form
 
         // Add the custom "data" elements.
         $fieldDataFieldset = new Fieldset('data');
+        $fieldDataFieldset->setLabel(sprintf('%s options', $dataType->getLabel())); // @translate
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->getData() : []);

@@ -150,7 +150,7 @@
   margin-bottom: 8px;
 }
 
-#form-builder-fields legend {
+.dataset-field > legend {
   float: left;
   display: flex;
   align-items: center;
@@ -251,33 +251,42 @@ legend .field-label {
   background-color: transparent;
 }
 
-fieldset.closed .field {
+fieldset.closed .field,
+fieldset.closed .dataset-field-data legend {
   height: 0;
   overflow: hidden;
   margin: 0;
+  padding: 0;
 }
 
-#form-builder-fields fieldset.deleted,
-#form-builder-fields fieldset.closed {
+#form-builder-fields .dataset-field:not(.open) {
   padding-bottom: 0;
 }
 
-#form-builder-fields fieldset.deleted:before {
+#form-builder-fields .dataset-field.deleted:before {
   background-color: #fcc;
 }
 
-#form-builder-fields fieldset.deleted button:disabled {
+#form-builder-fields .dataset-field.deleted button:disabled {
   display: none;
 }
 
-#form-builder-fields fieldset.deleted button {
+#form-builder-fields .dataset-field.deleted button {
   color: #A91919;
 }
 
-#form-builder-fields fieldset.deleted .data-type-label {
+#form-builder-fields .dataset-field.deleted .data-type-label {
   background-color: #A9191987;
 }
 
-#form-builder-fields fieldset fieldset {
+.dataset-field.closed .dataset-field-data {
   margin: 0;
+}
+
+fieldset.open .dataset-field-data legend {
+  border-bottom: 1px solid #dfdfdf;
+  margin: 0 0 6px;
+  width: 100%;
+  padding: 6px 0;
+  font-size: 16px
 }

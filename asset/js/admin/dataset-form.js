@@ -25,6 +25,7 @@ $('#data-types').on('click', '.option', function(e) {
     var uniqueKey = Math.random().toString(36).substr(2);
     template = template.replace(/__INDEX__/g, uniqueKey);
     var field = $($.parseHTML(template));
+    field.addClass('open');
     var fieldLabelSpan = field.find('legend span.field-name');
     fieldLabelSpan.text(fieldLabelSpan.data('new-field-name') + ` - ${newFieldIndex++}`);
     addFieldControls(field);
@@ -48,7 +49,7 @@ fieldsContainer.on('click', 'button.field-disable', function(e) {
     field.find('button.field-enable').prop('disabled', false);
     field.toggleClass('deleted');
     if (!field.hasClass('closed')) {
-      field.addClass('closed');
+      field.addClass('closed').removeClass('open');
       field.find('button.field-collapse, button.field-expand').toggleClass('active');
     }
 });
@@ -58,7 +59,7 @@ fieldsContainer.on('click', 'button.field-enable', function(e) {
     field.find(':input').prop('disabled', false);
     field.find('button.field-disable, button.field-enable, button.field-collapse, button.field-expand').toggleClass('active');
     field.toggleClass('deleted');
-    field.removeClass('closed');
+    field.removeClass('closed').addClass('open');
 });
 // Handle the field position decrement controls.
 fieldsContainer.on('click', 'button.field-position-decrement', function(e) {
@@ -74,6 +75,6 @@ fieldsContainer.on('click', 'button.field-position-increment', function(e) {
 fieldsContainer.on('click', 'button.field-collapse, button.field-expand', function() {
     var field = $(this).closest('fieldset');
     field.find('.field-collapse, .field-expand').toggleClass('active');
-    field.toggleClass('closed')
+    field.toggleClass('closed open');
 });
 });
