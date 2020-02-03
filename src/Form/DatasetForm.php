@@ -98,12 +98,78 @@ class DatasetForm extends Form
     }
 
     /**
+     * Get all datasets keyed by the data set name.
+     *
+     * @return array
+     */
+    public function dataTypes() : array
+    {
+        $manager = $this->getOption('data_type_manager');
+        $dataTypes = [];
+        $dataTypeNames = $manager->getRegisteredNames();
+        natcasesort($dataTypeNames);
+        foreach ($dataTypeNames as $dataTypeName) {
+            $dataType = $manager->get($dataTypeName);
+            if (!($dataType instanceof Fallback)) {
+                $dataTypes[$dataTypeName] = $dataType;
+            }
+        }
+        return $dataTypes;
+    }
+
+    /**
+     * Get field templates for every data type.
+     */
+    public function dataTypeTemplates() : string
+    {
+        $manager = $this->getOption('view_helper_manager');
+        $escapeHtml = $manager->get('escapeHtml');
+        $translate = $manager->get('translate');
+        $formCollection = $manager->get('formCollection');
+
+        $templates = [];
+        foreach ($this->dataTypes() as $dataTypeName => $dataType) {
+            $fieldFieldset = new Fieldset('__INDEX__');
+            $fieldFieldset->setLabel(sprintf(
+                '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
+                $translate('New field'),
+                $translate($dataType->getLabel())
+            ));
+            $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
+            $fieldFieldset->setAttribute('class', sprintf('dataset-field %s', $dataTypeName));
+
+            $element = new Element\Hidden('data_type');
+            $element->setAttribute('value', $dataTypeName);
+            $fieldFieldset->add($element);
+
+            $this->addFieldElements($fieldFieldset, $dataType, null);
+
+            // Mock the form so prepare() can build the name attributes.
+            $mockForm = new Form;
+            $mockForm->add(new Fieldset('o-module-datascribe:field'));
+            $mockForm->get('o-module-datascribe:field')->add($fieldFieldset);
+            $mockForm->prepare();
+
+            $templates[] = sprintf(
+                '<span class="data-type-template" data-name="%s" data-template="%s"></span>',
+                $escapeHtml($dataTypeName),
+                $escapeHtml($formCollection($fieldFieldset))
+            );
+        }
+
+        return implode("\n", $templates);
+    }
+
+    /**
      * Add all elements for all fields.
      */
     public function addFieldsElements()
     {
         $manager = $this->getOption('data_type_manager');
         $dataset = $this->getOption('dataset');
+
+        $viewHelperManager = $this->getOption('view_helper_manager');
+        $translate = $viewHelperManager->get('translate');
 
         $fieldsFieldset = new Fieldset('o-module-datascribe:field');
         $fieldsFieldset->setAttribute('class', 'dataset-fields');
@@ -116,7 +182,7 @@ class DatasetForm extends Form
             $fieldFieldset->setLabel(sprintf(
                 '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
                 $field->getName(),
-                $dataType->getLabel()
+                $translate($dataType->getLabel())
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
             $fieldFieldset->setAttribute('class', sprintf('dataset-field %s', $field->getDataType()));
@@ -163,7 +229,7 @@ class DatasetForm extends Form
 
         // Add the custom "data" elements.
         $fieldDataFieldset = new Fieldset('data');
-        $fieldDataFieldset->setLabel(sprintf('%s options', $dataType->getLabel())); // @translate
+        $fieldDataFieldset->setLabel('Options'); // @translate
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->getData() : []);

@@ -48,7 +48,7 @@ $form->prepare();
     </div>
     <div id="data-types" class="sidebar always-open">
         <h3><?php echo $this->translate('Add a field to the form'); ?></h3>
-        <?php foreach ($this->datascribe()->dataTypes() as $dataTypeName => $dataType): ?>
+        <?php foreach ($form->dataTypes() as $dataTypeName => $dataType): ?>
         <button class="option" data-name="<?php echo $this->escapeHtml($dataTypeName); ?>"><?php echo $this->escapeHtml($this->translate($dataType->getLabel())); ?></button>
         <?php endforeach; ?>
     </div>
@@ -58,4 +58,4 @@ $form->prepare();
 
 <?php echo $this->deleteConfirm($dataset, 'dataset'); ?>
 
-<?php echo $this->datascribe()->dataTypeTemplates($form);?>
+<?php echo $form->dataTypeTemplates();?>

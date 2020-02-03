@@ -27,7 +27,7 @@ $('#data-types').on('click', '.option', function(e) {
     var field = $($.parseHTML(template));
     field.addClass('open');
     var fieldLabelSpan = field.find('legend span.field-name');
-    fieldLabelSpan.text(fieldLabelSpan.data('new-field-name') + ` - ${newFieldIndex++}`);
+    fieldLabelSpan.text(fieldLabelSpan.text() + ` - ${newFieldIndex++}`);
     addFieldControls(field);
     fieldsContainer.append(field);
     field[0].scrollIntoView();

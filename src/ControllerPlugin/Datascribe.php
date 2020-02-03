@@ -5,6 +5,7 @@ use Datascribe\DatascribeDataType\Manager;
 use Omeka\Api\Exception\NotFoundException;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\HelperPluginManager;
 
 /**
  * Controller plugin used for DataScribe-specific functionality.
@@ -32,6 +33,16 @@ class Datascribe extends AbstractPlugin
     public function getDataTypeManager() : Manager
     {
         return $this->services->get('Datascribe\DataTypeManager');
+    }
+
+    /**
+     * Get the Zend Framework view helper manager.
+     *
+     * @return HelperPluginManager
+     */
+    public function getViewHelperManager() : HelperPluginManager
+    {
+        return $this->services->get('ViewHelperManager');
     }
 
     /**
