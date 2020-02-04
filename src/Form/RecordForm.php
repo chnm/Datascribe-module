@@ -70,11 +70,11 @@ class RecordForm extends Form
         $valuesFieldset = new Fieldset('o-module-datascribe:value');
         $this->add($valuesFieldset);
         foreach ($dataset->fields() as $field) {
-            $dataType = $manager->get($field->getDataType());
+            $dataType = $manager->get($field->dataType());
 
-            $valueFieldset = new Fieldset($field->getId());
-            $valueFieldset->setOption('datascribe_field_name', $field->getName());
-            $valueFieldset->setOption('datascribe_field_description', $field->getDescription());
+            $valueFieldset = new Fieldset($field->id());
+            $valueFieldset->setOption('datascribe_field_name', $field->name());
+            $valueFieldset->setOption('datascribe_field_description', $field->description());
             $valuesFieldset->add($valueFieldset);
             $valueDataFieldset = new Fieldset('data');
             $valueFieldset->add($valueDataFieldset);
@@ -82,19 +82,19 @@ class RecordForm extends Form
             $value = null;
             $valueData = [];
             if ($record) {
-                $values = $record->getValues();
-                if ($values->containsKey($field->getId())) {
-                    $value = $values->get($field->getId());
-                    $valueData = $value->getData();
+                $values = $record->values();
+                if (isset($values[$field->id()])) {
+                    $value = $values[$field->id()];
+                    $valueData = $value->data();
                 }
             }
 
             // Add the custom "data" elements.
             $dataType->addValueDataElements(
                 $valueDataFieldset,
-                $field->getName(),
-                $field->getDescription(),
-                $field->getData(),
+                $field->name(),
+                $field->description(),
+                $field->data(),
                 $valueData
             );
 

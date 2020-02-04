@@ -99,6 +99,10 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
 
     public function fields()
     {
-        return $this->resource->getFields();
+        $fields = [];
+        foreach ($this->resource->getFields() as $fieldEntity) {
+            $fields[] = new DatascribeFieldRepresentation($fieldEntity, $this->getServiceLocator());
+        }
+        return $fields;
     }
 }

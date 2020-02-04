@@ -82,6 +82,10 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
 
     public function values()
     {
-        return $this->resource->getValues();
+        $values = [];
+        foreach ($this->resource->getValues() as $fieldId => $valueEntity) {
+            $values[$fieldId] = new DatascribeValueRepresentation($valueEntity, $this->getServiceLocator());
+        }
+        return $values;
     }
 }

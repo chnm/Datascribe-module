@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
+use Datascribe\Api\Representation\DatascribeFieldRepresentation;
 use Datascribe\DatascribeDataType\DataTypeInterface;
 use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\Element as DatascribeElement;
@@ -175,17 +176,17 @@ class DatasetForm extends Form
         $fieldsFieldset->setAttribute('class', 'dataset-fields');
         $this->add($fieldsFieldset);
         foreach ($dataset->fields() as $field) {
-            $dataType = $manager->get($field->getDataType());
+            $dataType = $manager->get($field->dataType());
 
-            $fieldFieldset = new Fieldset($field->getId());
+            $fieldFieldset = new Fieldset($field->id());
             $fieldsFieldset->add($fieldFieldset);
             $fieldFieldset->setLabel(sprintf(
                 '<span class="field-name">%s</span><span class="data-type-label">%s</span>',
-                $field->getName(),
+                $field->name(),
                 $translate($dataType->getLabel())
             ));
             $fieldFieldset->setLabelOptions(['disable_html_escape' => true]);
-            $fieldFieldset->setAttribute('class', sprintf('dataset-field %s', $field->getDataType()));
+            $fieldFieldset->setAttribute('class', sprintf('dataset-field %s', $field->dataType()));
 
             $this->addFieldElements($fieldFieldset, $dataType, $field);
         }
@@ -196,16 +197,16 @@ class DatasetForm extends Form
      *
      * @param Fieldset $fieldFieldset
      * @param DataTypeInterface $dataType
-     * @param ?DatascribeField $field
+     * @param ?DatascribeFieldRepresentation $field
      */
-    public function addFieldElements(Fieldset $fieldFieldset, DataTypeInterface $dataType, ?DatascribeField $field)
+    public function addFieldElements(Fieldset $fieldFieldset, DataTypeInterface $dataType, ?DatascribeFieldRepresentation $field)
     {
         // Add the common "name" element.
         $element = new Element\Text('name');
         $element->setLabel('Field name'); // @translate
         $element->setAttributes([
             'required' => true,
-            'value' => $field ? $field->getName() : null,
+            'value' => $field ? $field->name() : null,
         ]);
         $fieldFieldset->add($element);
 
@@ -214,7 +215,7 @@ class DatasetForm extends Form
         $element->setLabel('Field description'); // @translate
         $element->setAttributes([
             'required' => false,
-            'value' => $field ? $field->getDescription() : null,
+            'value' => $field ? $field->description() : null,
         ]);
         $fieldFieldset->add($element);
 
@@ -223,7 +224,7 @@ class DatasetForm extends Form
         $element->setLabel('Field is primary'); // @translate
         $element->setAttributes([
             'required' => false,
-            'value' => $field ? $field->getIsPrimary() : null,
+            'value' => $field ? $field->isPrimary() : null,
         ]);
         $fieldFieldset->add($element);
 
@@ -232,6 +233,6 @@ class DatasetForm extends Form
         $fieldDataFieldset->setLabel('Options'); // @translate
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
-        $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->getData() : []);
+        $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->data() : []);
     }
 }
