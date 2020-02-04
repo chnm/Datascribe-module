@@ -133,5 +133,6 @@ class Textarea implements DataTypeInterface
 
     public function getValue(array $valueData) : string
     {
+        return $valueData['text'];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Representation;
 
+use Doctrine\Common\Collections\Criteria;
 use Omeka\Api\Representation\AbstractEntityRepresentation;
 
 class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
@@ -97,10 +98,31 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
         return $this->resource->getCreated();
     }
 
-    public function fields()
+    public function fields(array $options = [])
     {
+        // Set default options.
+        if (!isset($options['primary_first'])) {
+            $options['primary_first'] = false;
+        }
+        if (!isset($options['exclude_primary'])) {
+            $options['exclude_primary'] = false;
+        }
+
+        // Filter/sort fields.
+        if (true === $options['primary_first']) {
+            $criteria = Criteria::create()
+                ->orderBy(['isPrimary' => Criteria::DESC, 'position' => Criteria::ASC]);
+        } elseif (true === $options['exclude_primary']) {
+            $criteria = Criteria::create()
+                ->where(Criteria::expr()->eq('isPrimary', false));
+        } else {
+            $criteria = Criteria::create();
+        }
+        $fieldCollection = $this->resource->getFields()->matching($criteria);
+
+        // Set field representations.
         $fields = [];
-        foreach ($this->resource->getFields() as $fieldEntity) {
+        foreach ($fieldCollection as $fieldEntity) {
             $fields[] = new DatascribeFieldRepresentation($fieldEntity, $this->getServiceLocator());
         }
         return $fields;

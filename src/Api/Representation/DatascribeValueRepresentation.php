@@ -64,4 +64,11 @@ class DatascribeValueRepresentation extends AbstractRepresentation
     {
         return $this->value->getIsIllegible();
     }
+
+    public function value()
+    {
+        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        $dataType = $manager->get($this->field()->dataType());
+        return $dataType->getValue($this->data());
+    }
 }

@@ -20,4 +20,9 @@ return [
         'text' => 'Items', // @translate
         'params' => ['project-id', 'dataset-id'],
     ],
+    'admin/datascribe-record' => [
+        'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project', 'admin/datascribe-dataset', 'admin/datascribe-item'],
+        'text' => 'Records', // @translate
+        'params' => ['project-id', 'dataset-id', 'item-id'],
+    ],
 ];

@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Representation;
 
+use Doctrine\Common\Collections\Criteria;
 use Omeka\Api\Representation\AbstractEntityRepresentation;
 
 class DatascribeRecordRepresentation extends AbstractEntityRepresentation
@@ -87,5 +88,27 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
             $values[$fieldId] = new DatascribeValueRepresentation($valueEntity, $this->getServiceLocator());
         }
         return $values;
+    }
+
+    public function primaryValue()
+    {
+        // Get the primary field.
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('isPrimary', true))
+            ->setMaxResults(1);
+        $dataset = $this->resource->getItem()->getDataset();
+        $primaryFieldEntity = $dataset->getFields()->matching($criteria)->first();
+        if (!$primaryFieldEntity) {
+            return null; // no primary field
+        }
+        // Get the primary value.
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('field', $primaryFieldEntity))
+            ->setMaxResults(1);
+        $primaryValueEntity = $this->resource->getValues()->matching($criteria)->first();
+        if (!$primaryValueEntity) {
+            return null; // no primary value
+        }
+        return new DatascribeValueRepresentation($primaryValueEntity, $this->getServiceLocator());
     }
 }

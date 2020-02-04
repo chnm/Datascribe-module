@@ -131,5 +131,6 @@ class Number implements DataTypeInterface
 
     public function getValue(array $valueData) : string
     {
+        return $valueData['number'];
     }
 }
