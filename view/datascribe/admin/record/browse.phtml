@@ -1,8 +1,18 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record browse');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
-$filters = [];
+$filters = [
+    [
+        'label' => $this->translate('Needs review'),
+        'value' => 'needs_review'
+    ],
+    [
+        'label' => $this->translate('Needs work'),
+        'value' => 'needs_work'
+    ],
+];
 $sortBy = [
     [
         'label' => $this->translate('Created'),
@@ -12,6 +22,11 @@ $sortBy = [
 ?>
 
 <?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Browse')); ?>
+
+<div id="page-actions">
+    <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
+    <button><?php echo $this->translate('Save'); ?></button>
+</div>
 
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
@@ -51,14 +66,22 @@ $sortBy = [
                 <?php endif; ?>
                 <?php echo $this->translate('Record #'); ?>
             </th>
+            <th><?php echo $this->translate('Owner'); ?></th>
+            <th><?php echo $this->translate('Date created'); ?></th>
             <?php foreach ($dataset->fields() as $field): ?>
-            <th><?php echo $field->name(); ?></th>
+            <th><?php echo $field->name([
+                'length' => 20,
+                'trim_marker' => '<span style="color: LightGray;">...</span>',
+            ]); ?></th>
             <?php endforeach; ?>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($records as $record): ?>
-        <?php $values = $record->values(); ?>
+        <?php
+        $values = $record->values();
+        $owner = $record->owner();
+        ?>
         <tr>
             <td>
                 <?php if ($canViewBatchUpdate): ?>
@@ -80,6 +103,8 @@ $sortBy = [
                     ]); ?></li>
                 </ul>
             </td>
+            <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
+            <td><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <?php if (null === $value): ?>
@@ -110,3 +135,35 @@ $sortBy = [
 </div>
 <?php endif; ?>
 
+<div class="sidebar always-open">
+    <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <div class="meta-group">
+        <h3><?php echo $this->translate('Lock action'); ?></h3>
+        <select>
+            <option>[No change]</option>
+            <option>Unlock</option>
+            <option>Lock to me</option>
+            <option>Lock to transcriber...</option>
+            <option>Lock to reviewer...</option>
+            <option>Lock to admin...</option>
+        </select>
+    </div>
+    <div class="meta-group">
+        <h3><?php echo $this->translate('Review action'); ?></h3>
+        <select>
+            <option>[No change]</option>
+            <option>Mark as approved</option>
+            <option>Mark as not approved</option>
+            <option>Mark as not reviewed</option>
+        </select>
+    </div>
+    <div class="meta-group">
+        <h3><?php echo $this->translate('Priority action'); ?></h3>
+        <select>
+            <option>[No change]</option>
+            <option>Mark as prioritized</option>
+            <option>Mark as not prioritized</option>
+        </select>
+    </div>
+    <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
+</div>
