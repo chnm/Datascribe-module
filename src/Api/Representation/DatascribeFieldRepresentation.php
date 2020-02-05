@@ -31,9 +31,21 @@ class DatascribeFieldRepresentation extends AbstractRepresentation
         return $this->field->getId();
     }
 
-    public function name()
+    public function name(array $options = [])
     {
-        return $this->field->getName();
+        // Set default options.
+        $options['length'] = $options['length'] ?? null;
+        $options['trim_marker'] = $options['trim_marker'] ?? null;
+
+        $name = $this->field->getName();
+        $nameLength = mb_strlen($name);
+        if ($options['length']) {
+            $name = mb_substr($name, 0, (int) $options['length']);
+        }
+        if ($options['trim_marker'] && $nameLength > mb_strlen($name)) {
+            $name .= $options['trim_marker'];
+        }
+        return $name;
     }
 
     public function description()
