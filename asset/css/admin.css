@@ -141,6 +141,35 @@
   margin-left: 0;
 }
 
+.record.browse table {
+  overflow-x: scroll;
+}
+
+.record.browse td:first-child,
+.record.browse th:first-child {
+  width: 7rem;
+}
+
+.record.browse th {
+  width: 7rem;
+}
+
+.record.browse .record-number {
+  display: flex;
+}
+
+.record.browse #batch-form {
+  position: relative;
+}
+
+.tablesaw-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  padding-right: .5rem;
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
