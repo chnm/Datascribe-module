@@ -290,3 +290,56 @@ fieldset.open .dataset-field-data legend {
   padding: 6px 0;
   font-size: 16px
 }
+
+/* Sidebar */
+
+body.sidebar-open #content.expanded {
+    width: calc(81.25% - 12px);
+}
+
+.sidebar.always-open {
+    padding-left: 23px;
+}
+
+.sidebar.always-open.collapsed {
+    left: 100%;
+}
+
+button.sidebar-drawer {
+    position: fixed;
+    top: 48px;
+    left: 75%;
+    bottom: -12px;
+    width: 12px;
+    padding: 0;
+    border-radius: 0;
+    background-color: #f7f7f7;
+    box-shadow: none;
+    border-right: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
+    transition: left .5s;
+    z-index: 1;
+}
+
+button.sidebar-drawer.expand {
+    left: calc(100% - 12px);
+}
+
+button.sidebar-drawer:hover {
+    box-shadow: none;
+}
+
+button.sidebar-drawer:after {
+    color: #676767;
+    font-size: 12px;
+    text-align: center;
+    margin-left: 0;
+}
+
+button.sidebar-drawer.expand:after {
+    content: "\f104";
+}
+
+button.sidebar-drawer.collapse:after {
+    content: "\f105";
+}
