@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 12:42-0500\n"
+"POT-Creation-Date: 2020-02-04 22:39-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Set an item set here."
 msgstr ""
 
-#: src/Form/DatasetForm.php:135
+#: src/Form/DatasetForm.php:136
 msgid "New field"
 msgstr ""
 
@@ -358,6 +358,38 @@ msgstr ""
 
 #: view/datascribe/admin/project/users-form.phtml:18
 msgid "Transcriber"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:14
+msgid "DataScribe: Item"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:52
+msgid "Record #"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:65
+msgid "Select records"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:86
+msgid "null"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:91
+msgid "invalid"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:92
+msgid "empty"
+msgstr ""
+
+#: view/datascribe/admin/record/browse.phtml:109
+msgid "No records found."
+msgstr ""
+
+#: src/ViewHelper/breadcrumbs_route_map.php:25
+msgid "Records"
 msgstr ""
 
 #: src/Api/Representation/DatascribeItemRepresentation.php:235
@@ -705,45 +737,40 @@ msgstr ""
 msgid "Mark as not prioritized"
 msgstr ""
 
-#: src/Form/DatasetForm.php:52
+#: src/Form/DatasetForm.php:53
 msgid "Enter the name of this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:64
+#: src/Form/DatasetForm.php:65
 msgid "Enter the description of this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:75
+#: src/Form/DatasetForm.php:76
 msgid "Guidelines"
 msgstr ""
 
-#: src/Form/DatasetForm.php:76
+#: src/Form/DatasetForm.php:77
 msgid "Enter guidelines for transcribing this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:88
+#: src/Form/DatasetForm.php:89
 msgid ""
 "Select the item set used to synchronize dataset items. Once synchronized, "
 "this dataset will contain every item in this item set."
 msgstr ""
 
-#: src/Form/DatasetForm.php:94
+#: src/Form/DatasetForm.php:95
 msgid "Select an item set"
 msgstr ""
 
-#: src/Form/DatasetForm.php:201
+#: src/Form/DatasetForm.php:206
 msgid "Field name"
 msgstr ""
 
-#: src/Form/DatasetForm.php:210
+#: src/Form/DatasetForm.php:215
 msgid "Field description"
 msgstr ""
 
-#: src/Form/DatasetForm.php:219
+#: src/Form/DatasetForm.php:224
 msgid "Field is primary"
-msgstr ""
-
-#: src/Form/DatasetForm.php:228
-#, php-format
-msgid "%s options"
 msgstr ""

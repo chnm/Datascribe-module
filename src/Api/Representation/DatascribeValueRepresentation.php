@@ -65,10 +65,38 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return $this->value->getIsIllegible();
     }
 
-    public function value()
+    public function valueIsValid()
     {
         $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        $field = $this->field();
+        $dataType = $manager->get($field->dataType());
+        return $dataType->valueDataIsValid($field->data(), $this->data());
+    }
+
+    public function value(array $options = [])
+    {
+        // Set default options.
+        $options['length'] = $options['length'] ?? null;
+        $options['trim_marker'] = $options['trim_marker'] ?? null;
+        $options['if_invalid_return'] = $options['if_invalid_return'] ?? false;
+        $options['if_empty_return'] = $options['if_empty_return'] ?? null;
+
+        if (!$this->valueIsValid()) {
+            return $options['if_invalid_return'];
+        }
+        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
         $dataType = $manager->get($this->field()->dataType());
-        return $dataType->getValue($this->data());
+        $value = $dataType->getValue($this->data());
+        $valueLength = mb_strlen($value);
+        if (0 === $valueLength) {
+            return $options['if_empty_return'];
+        }
+        if ($options['length']) {
+            $value = mb_substr($value, 0, (int) $options['length']);
+        }
+        if ($options['trim_marker'] && $valueLength > mb_strlen($value)) {
+            $value .= $options['trim_marker'];
+        }
+        return $value;
     }
 }

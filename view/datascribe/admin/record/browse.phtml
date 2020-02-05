@@ -3,7 +3,12 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe record browse')
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
 $filters = [];
-$sortBy = [];
+$sortBy = [
+    [
+        'label' => $this->translate('Created'),
+        'value' => 'created'
+    ],
+];
 ?>
 
 <?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Browse')); ?>
@@ -61,8 +66,14 @@ $sortBy = [];
                 <?php endif; ?>
                 <?php echo number_format($record->id()); ?>
                 <ul class="actions">
+                    <?php if ($record->userIsAllowed('update')): ?>
+                    <li><?php echo $record->link('', 'edit', [
+                        'class' => 'o-icon-edit',
+                        'title' => $this->translate('Edit'),
+                    ]) ?></li>
+                    <?php endif; ?>
                     <li><?php echo $this->hyperlink('', '#', [
-                        'data-sidebar-content-url' => $item->url('show-details'),
+                        'data-sidebar-content-url' => $record->url('show-details'),
                         'class' => 'o-icon-more sidebar-content',
                         'data-sidebar-selector' => '#show-details',
                         'title' => $this->translate('Details'),
@@ -71,7 +82,16 @@ $sortBy = [];
             </td>
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
-            <td><?php echo $value ? $value->value() : '<pre>null</pre>'; ?></td>
+            <?php if (null === $value): ?>
+            <td><span style="color: LightGray;"><?php echo $this->translate('null'); ?></span></td>
+            <?php else: ?>
+            <td><?php echo $value->value([
+                'length' => 100,
+                'trim_marker' => '<span style="color: LightGray;">...</span>',
+                'if_invalid_return' => sprintf('<span style="color: Red;">%s</span>', $this->translate('invalid')),
+                'if_empty_return' => sprintf('<span style="color: LightGray;">%s</span>', $this->translate('empty')),
+            ]); ?></td>
+            <?php endif; ?>
             <?php endforeach; ?>
         </tr>
     <?php endforeach; ?>
