@@ -1,6 +1,7 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset browse');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 ?>
 
 <?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('Datasets')); ?>
@@ -92,6 +93,7 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
 <?php endif; ?>
 
 <div id="project-metadata" class="sidebar always-open">
+    <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
     <?php echo $this->partial('datascribe/admin/project/show-details') ?>
 </div>
 
