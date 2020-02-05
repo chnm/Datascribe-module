@@ -26,26 +26,6 @@ class Datascribe extends AbstractPlugin
     }
 
     /**
-     * Get the DataScribe data type manager.
-     *
-     * @return Manager
-     */
-    public function getDataTypeManager() : Manager
-    {
-        return $this->services->get('Datascribe\DataTypeManager');
-    }
-
-    /**
-     * Get the Zend Framework view helper manager.
-     *
-     * @return HelperPluginManager
-     */
-    public function getViewHelperManager() : HelperPluginManager
-    {
-        return $this->services->get('ViewHelperManager');
-    }
-
-    /**
      * Get a DataScribe representation.
      *
      * Provides a single method to get a DataScribe project, dataset, or item

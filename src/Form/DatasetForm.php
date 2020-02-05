@@ -3,15 +3,43 @@ namespace Datascribe\Form;
 
 use Datascribe\Api\Representation\DatascribeFieldRepresentation;
 use Datascribe\DatascribeDataType\DataTypeInterface;
+use Datascribe\DatascribeDataType\Manager;
 use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\Element as DatascribeElement;
 use Omeka\Form\Element\ItemSetSelect;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
+use Zend\View\HelperPluginManager;
 
 class DatasetForm extends Form
 {
+    /**
+     * @var Manager
+     */
+    protected $dataTypeManager;
+
+    /**
+     * @var HelperPluginManager
+     */
+    protected $viewHelperManager;
+
+    /**
+     * @param Manager $dataTypeManager
+     */
+    public function setDataTypeManager(Manager $dataTypeManager)
+    {
+        $this->dataTypeManager = $dataTypeManager;
+    }
+
+    /**
+     * @param HelperPluginManager $viewHelperManager
+     */
+    public function setViewHelperManager(HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+    }
+
     public function init()
     {
         $this->addCommonElements();
@@ -105,12 +133,11 @@ class DatasetForm extends Form
      */
     public function dataTypes() : array
     {
-        $manager = $this->getOption('data_type_manager');
         $dataTypes = [];
-        $dataTypeNames = $manager->getRegisteredNames();
+        $dataTypeNames = $this->dataTypeManager->getRegisteredNames();
         natcasesort($dataTypeNames);
         foreach ($dataTypeNames as $dataTypeName) {
-            $dataType = $manager->get($dataTypeName);
+            $dataType = $this->dataTypeManager->get($dataTypeName);
             if (!($dataType instanceof Fallback)) {
                 $dataTypes[$dataTypeName] = $dataType;
             }
@@ -123,10 +150,9 @@ class DatasetForm extends Form
      */
     public function dataTypeTemplates() : string
     {
-        $manager = $this->getOption('view_helper_manager');
-        $escapeHtml = $manager->get('escapeHtml');
-        $translate = $manager->get('translate');
-        $formCollection = $manager->get('formCollection');
+        $escapeHtml = $this->viewHelperManager->get('escapeHtml');
+        $translate = $this->viewHelperManager->get('translate');
+        $formCollection = $this->viewHelperManager->get('formCollection');
 
         $templates = [];
         foreach ($this->dataTypes() as $dataTypeName => $dataType) {
@@ -166,17 +192,14 @@ class DatasetForm extends Form
      */
     public function addFieldsElements()
     {
-        $manager = $this->getOption('data_type_manager');
         $dataset = $this->getOption('dataset');
-
-        $viewHelperManager = $this->getOption('view_helper_manager');
-        $translate = $viewHelperManager->get('translate');
+        $translate = $this->viewHelperManager->get('translate');
 
         $fieldsFieldset = new Fieldset('o-module-datascribe:field');
         $fieldsFieldset->setAttribute('class', 'dataset-fields');
         $this->add($fieldsFieldset);
         foreach ($dataset->fields() as $field) {
-            $dataType = $manager->get($field->dataType());
+            $dataType = $this->dataTypeManager->get($field->dataType());
 
             $fieldFieldset = new Fieldset($field->id());
             $fieldsFieldset->add($fieldFieldset);

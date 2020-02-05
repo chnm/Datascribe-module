@@ -2,12 +2,26 @@
 namespace Datascribe\Form;
 
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
+use Datascribe\DatascribeDataType\Manager;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 
 class RecordForm extends Form
 {
+    /**
+     * @var Manager
+     */
+    protected $dataTypeManager;
+
+    /**
+     * @param Manager $dataTypeManager
+     */
+    public function setDataTypeManager(Manager $dataTypeManager)
+    {
+        $this->dataTypeManager = $dataTypeManager;
+    }
+
     public function init()
     {
         $this->addCommonElements();
@@ -63,14 +77,13 @@ class RecordForm extends Form
      */
     protected function addValueElements()
     {
-        $manager = $this->getOption('data_type_manager');
         $dataset = $this->getOption('dataset');
         $record = $this->getOption('record');
 
         $valuesFieldset = new Fieldset('o-module-datascribe:value');
         $this->add($valuesFieldset);
         foreach ($dataset->fields() as $field) {
-            $dataType = $manager->get($field->dataType());
+            $dataType = $this->dataTypeManager->get($field->dataType());
 
             $valueFieldset = new Fieldset($field->id());
             $valueFieldset->setOption('datascribe_field_name', $field->name());

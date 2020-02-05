@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Controller\Admin;
 
+use Datascribe\Form\ItemForm;
 use Datascribe\Form\RecordForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -27,8 +28,13 @@ class RecordController extends AbstractActionController
         $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
         $records = $response->getContent();
 
+        $form = $this->getForm(ItemForm::class, [
+            'item' => $item,
+        ]);
+
         $view = new ViewModel;
         $dataset = $item->dataset();
+        $view->setVariable('form', $form);
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
@@ -50,7 +56,6 @@ class RecordController extends AbstractActionController
 
         $dataset = $item->dataset();
         $form = $this->getForm(RecordForm::class, [
-            'data_type_manager' => $this->datascribe()->getDataTypeManager(),
             'dataset' => $dataset,
         ]);
         if ($this->getRequest()->isPost()) {

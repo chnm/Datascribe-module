@@ -4,7 +4,7 @@ $form->prepare();
 ?>
 
 <?php echo $this->form()->openTag($form); ?>
-<?php echo $this->formElement($form->get('recordform_csrf')); ?>
+<?php echo $this->formElement($form->get('csrf')); ?>
 <div id="page-actions">
     <button><?php echo $this->translate('Add'); ?></button>
 </div>

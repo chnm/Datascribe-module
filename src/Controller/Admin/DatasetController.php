@@ -52,8 +52,6 @@ class DatasetController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
         $form = $this->getForm(DatasetForm::class, [
-            'view_helper_manager' => $this->datascribe()->getViewHelperManager(),
-            'data_type_manager' => $this->datascribe()->getDataTypeManager(),
             'dataset' => $dataset,
         ]);
 
