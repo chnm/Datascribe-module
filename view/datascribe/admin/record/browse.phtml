@@ -68,6 +68,8 @@ $sortBy = [
             </th>
             <th><?php echo $this->translate('Owner'); ?></th>
             <th><?php echo $this->translate('Date created'); ?></th>
+            <th><?php echo $this->translate('Needs review'); ?></th>
+            <th><?php echo $this->translate('Needs work'); ?></th>
             <?php foreach ($dataset->fields() as $field): ?>
             <th><?php echo $field->name([
                 'length' => 20,
@@ -105,6 +107,8 @@ $sortBy = [
             </td>
             <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
+            <td><?php echo $record->needsReview() ? '✓' : ''; ?></td>
+            <td><?php echo $record->needsWork() ? '✓' : ''; ?></td>
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <?php if (null === $value): ?>
@@ -164,6 +168,14 @@ $sortBy = [
             <option>Mark as prioritized</option>
             <option>Mark as not prioritized</option>
         </select>
+    </div>
+    <div class="meta-group">
+        <h3><?php echo $this->translate('Transcriber notes'); ?></h3>
+        <textarea rows="8"></textarea>
+    </div>
+    <div class="meta-group">
+        <h3><?php echo $this->translate('Reviewer notes'); ?></h3>
+        <textarea rows="8"></textarea>
     </div>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
 </div>
