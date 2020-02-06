@@ -23,11 +23,6 @@ $sortBy = [
 
 <?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Browse')); ?>
 
-<div id="page-actions">
-    <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
-    <button><?php echo $this->translate('Save'); ?></button>
-</div>
-
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
 <div class="browse-controls">
@@ -139,6 +134,13 @@ $sortBy = [
 </div>
 <?php endif; ?>
 
+<?php echo $this->form()->openTag($form); ?>
+
+<div id="page-actions">
+    <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
+    <button><?php echo $this->translate('Save'); ?></button>
+</div>
+
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
     <div class="meta-group">
@@ -179,3 +181,5 @@ $sortBy = [
     </div>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
 </div>
+
+<?php echo $this->form()->closeTag(); ?>
