@@ -1,7 +1,10 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record browse');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
+$this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
+$this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
 $filters = [
     [
@@ -56,10 +59,10 @@ $sortBy = [
 </div>
 <?php endif; ?>
 
-<table class="tablesaw batch-edit" data-tablesaw-mode="stack">
+<table class="tablesaw batch-edit" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)"  data-tablesaw-minimap>
     <thead>
         <tr>
-            <th class="row-select">
+            <th scope="col" class="row-select" data-tablesaw-priority="persist">
                 <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
                 <?php endif; ?>
@@ -70,7 +73,7 @@ $sortBy = [
             <th><?php echo $this->translate('Needs review'); ?></th>
             <th><?php echo $this->translate('Needs work'); ?></th>
             <?php foreach ($dataset->fields() as $field): ?>
-            <th><?php echo $field->name([
+            <th scope="col"><?php echo $field->name([
                 'length' => 20,
                 'trim_marker' => '<span style="color: LightGray;">...</span>',
             ]); ?></th>
@@ -85,6 +88,7 @@ $sortBy = [
         ?>
         <tr>
             <td>
+                <div class="record-number">
                 <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" name="record_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
                 <?php endif; ?>
@@ -103,6 +107,7 @@ $sortBy = [
                         'title' => $this->translate('Details'),
                     ]); ?></li>
                 </ul>
+                </div>
             </td>
             <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
