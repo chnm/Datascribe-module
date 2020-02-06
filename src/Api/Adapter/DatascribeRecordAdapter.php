@@ -38,6 +38,12 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $query['datascribe_item_id']))
             );
         }
+        if (isset($query['needs_review'])) {
+            $qb->andWhere($qb->expr()->eq('omeka_root.needsReview', true));
+        }
+        if (isset($query['needs_work'])) {
+            $qb->andWhere($qb->expr()->eq('omeka_root.needsWork', true));
+        }
     }
 
     public function validateRequest(Request $request, ErrorStore $errorStore)
