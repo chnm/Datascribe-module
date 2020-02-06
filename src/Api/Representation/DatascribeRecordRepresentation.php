@@ -14,6 +14,9 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
     public function getJsonLd()
     {
         $owner = $this->owner();
+        $createdBy = $this->createdBy();
+        $modifiedBy = $this->modifiedBy();
+        $modified = $this->modified();
         return [
             'o-module-datascribe:item' => $this->item()->getReference(),
             'o-module-datascribe:transcriber_notes' => $this->transcriberNotes(),
@@ -21,7 +24,10 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:needs_review' => $this->needsReview(),
             'o-module-datascribe:needs_work' => $this->needsWork(),
             'o:created' => $this->getDateTime($this->created()),
+            'o:modified' => $modified ? $this->getDateTime($modified) : null,
             'o:owner' => $owner ? $owner->getReference() : null,
+            'o-module-datascribe:created_by' => $createdBy ? $createdBy->getReference() : null,
+            'o-module-datascribe:modified_by' => $modifiedBy ? $modifiedBy->getReference() : null,
         ];
     }
 
@@ -75,10 +81,27 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
         return $this->resource->getCreated();
     }
 
+    public function modified()
+    {
+        return $this->resource->getModified();
+    }
+
     public function owner()
     {
         return $this->getAdapter('users')
             ->getRepresentation($this->resource->getOwner());
+    }
+
+    public function createdBy()
+    {
+        return $this->getAdapter('users')
+            ->getRepresentation($this->resource->getCreatedBy());
+    }
+
+    public function modifiedBy()
+    {
+        return $this->getAdapter('users')
+            ->getRepresentation($this->resource->getModifiedBy());
     }
 
     public function values()

@@ -86,12 +86,18 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         $services = $this->getServiceLocator();
         $em = $services->get('Omeka\EntityManager');
         $dataTypes = $services->get('Datascribe\DataTypeManager');
+        $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+
+        $this->hydrateOwner($request, $entity);
         if (Request::CREATE === $request->getOperation()) {
             $itemData = $request->getValue('o-module-datascribe:item');
             $item = $this->getAdapter('datascribe_items')->findEntity($itemData['o:id']);
             $entity->setItem($item);
+            $entity->setCreatedBy($user);
+        } else {
+            $entity->setModifiedBy($user);
+            $entity->setModified(new DateTime('now'));
         }
-        $this->hydrateOwner($request, $entity);
         if ($this->shouldHydrate($request, 'o-module-datascribe:transcriber_notes')) {
             $entity->setTranscriberNotes($request->getValue('o-module-datascribe:transcriber_notes'));
         }

@@ -3,6 +3,7 @@ namespace Datascribe\Api\Adapter;
 
 use Datascribe\DatascribeDataType\Fallback;
 use Datascribe\Entity\DatascribeField;
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
@@ -86,7 +87,16 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
+        $services = $this->getServiceLocator();
+        $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+
         $this->hydrateOwner($request, $entity);
+        if (Request::CREATE === $request->getOperation()) {
+            $entity->setCreatedBy($user);
+        } else {
+            $entity->setModifiedBy($user);
+            $entity->setModified(new DateTime('now'));
+        }
         if ($this->shouldHydrate($request, 'o-module-datascribe:name')) {
             $entity->setName($request->getValue('o-module-datascribe:name'));
         }

@@ -2,6 +2,7 @@
 namespace Datascribe\Api\Adapter;
 
 use Datascribe\Entity\DatascribeUser;
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
@@ -67,6 +68,16 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity, ErrorStore $errorStore)
     {
+        $services = $this->getServiceLocator();
+        $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+
+        $this->hydrateOwner($request, $entity);
+        if (Request::CREATE === $request->getOperation()) {
+            $entity->setCreatedBy($user);
+        } else {
+            $entity->setModifiedBy($user);
+            $entity->setModified(new DateTime('now'));
+        }
         if ($this->shouldHydrate($request, 'o-module-datascribe:name')) {
             $entity->setName($request->getValue('o-module-datascribe:name'));
         }
@@ -76,7 +87,6 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
         if ($this->shouldHydrate($request, 'o:is_public')) {
             $entity->setIsPublic($request->getValue('o:is_public', true));
         }
-        $this->hydrateOwner($request, $entity);
         if ($this->shouldHydrate($request, 'o-module-datascribe:user')) {
             $oUserAdapter = $this->getAdapter('users');
             $users = $entity->getUsers();

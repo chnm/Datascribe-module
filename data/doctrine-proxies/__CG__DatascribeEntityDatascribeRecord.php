@@ -64,10 +64,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'created', 'transcriberNotes', 'reviewerNotes'];
+            return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
         }
 
-        return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'created', 'transcriberNotes', 'reviewerNotes'];
+        return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
     }
 
     /**
@@ -301,6 +301,50 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
+    public function setCreatedBy(\Omeka\Entity\User $createdBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedBy', [$createdBy]);
+
+        parent::setCreatedBy($createdBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreatedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedBy', []);
+
+        return parent::getCreatedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setModifiedBy(\Omeka\Entity\User $modifiedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setModifiedBy', [$modifiedBy]);
+
+        parent::setModifiedBy($modifiedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModifiedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModifiedBy', []);
+
+        return parent::getModifiedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setCreated(\DateTime $created): void
     {
 
@@ -323,12 +367,45 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
+    public function setModified(\DateTime $modified): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setModified', [$modified]);
+
+        parent::setModified($modified);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModified(): \DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModified', []);
+
+        return parent::getModified();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
         parent::prePersist($eventArgs);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function preUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpdate', [$eventArgs]);
+
+        parent::preUpdate($eventArgs);
     }
 
     /**

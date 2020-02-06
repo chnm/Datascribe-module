@@ -21,3 +21,17 @@
     <h4><?php echo $this->translate('Date created'); ?></h4>
     <div class="value"><?php echo $this->i18n()->dateFormat($project->created(), 'long', 'medium'); ?></div>
 </div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Created by'); ?></h4>
+    <?php $createdBy = $project->createdBy(); ?>
+    <div class="value"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('No created by'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last modified'); ?></h4>
+    <div class="value"><?php echo $this->i18n()->dateFormat($project->modified(), 'long', 'medium'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last modified by'); ?></h4>
+    <?php $modifiedBy = $project->modifiedBy(); ?>
+    <div class="value"><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : $this->translate('No modified by'); ?></div>
+</div>

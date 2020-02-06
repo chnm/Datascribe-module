@@ -38,6 +38,20 @@
     <div class="value"><?php echo $this->i18n()->dateFormat($dataset->created(), 'long', 'medium'); ?></div>
 </div>
 <div class="meta-group">
+    <h4><?php echo $this->translate('Created by'); ?></h4>
+    <?php $createdBy = $dataset->createdBy(); ?>
+    <div class="value"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('No created by'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last modified'); ?></h4>
+    <div class="value"><?php echo $this->i18n()->dateFormat($dataset->modified(), 'long', 'medium'); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last modified by'); ?></h4>
+    <?php $modifiedBy = $dataset->modifiedBy(); ?>
+    <div class="value"><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : $this->translate('No modified by'); ?></div>
+</div>
+<div class="meta-group">
     <h4><?php echo $this->translate('Last synced'); ?></h4>
     <?php $synced = $dataset->synced(); ?>
     <div class="value"><?php echo $synced ? $this->i18n()->dateFormat($dataset->synced(), 'long', 'medium') : $this->translate('Not synced'); ?></div>
