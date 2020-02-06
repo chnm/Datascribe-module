@@ -102,8 +102,14 @@ $sortBy = [
             </td>
             <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
-            <td><?php echo $record->needsReview() ? '✓' : ''; ?></td>
-            <td><?php echo $record->needsWork() ? '✓' : ''; ?></td>
+            <td>
+              <?php $needsReviewHtml = '<span class="needs-review">' . $this->translate('Needs review') . '</span>'; ?>
+              <?php echo $record->needsReview() ? $needsReviewHtml : ''; ?>
+            </td>
+            <td>
+              <?php $needsWorkHtml = '<span class="needs-work">' . $this->translate('Needs work') . '</span>'; ?>
+              <?php echo $record->needsWork() ? $needsWorkHtml : ''; ?>
+            </td>
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <?php if (null === $value): ?>

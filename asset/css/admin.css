@@ -141,6 +141,31 @@
   margin-left: 0;
 }
 
+.needs-work,
+.needs-review {
+  text-indent: -9999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #fcc;
+  color: #A91919;
+}
+
+.needs-work:before,
+.needs-review:before {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-indent: 0;
+  text-align: center;
+  transform: translateX(-50%) translateY(-50%);
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
