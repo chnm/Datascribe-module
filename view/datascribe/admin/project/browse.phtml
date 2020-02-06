@@ -35,13 +35,19 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
     <thead>
         <tr>
             <th><?php echo $this->translate('Project'); ?></th>
-            <th><?php echo $this->translate('Owner'); ?></th>
             <th><?php echo $this->translate('Date created'); ?></th>
+            <th><?php echo $this->translate('Created by'); ?></th>
+            <th><?php echo $this->translate('Last modified'); ?></th>
+            <th><?php echo $this->translate('Last modified by'); ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($projects as $project): ?>
-    <?php $owner = $project->owner(); ?>
+    <?php
+    $createdBy = $project->createdBy();
+    $modified = $project->modified();
+    $modifiedBy = $project->modifiedBy();
+    ?>
         <tr>
             <td>
                 <?php echo $project->link($project->name()); ?>
@@ -63,8 +69,10 @@ $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe
                     ]); ?></li>
                 </ul>
             </td>
-            <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($project->created()); ?></td>
+            <td><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
+            <td><?php echo $modified ? $this->i18n()->dateFormat($project->modified()) : ''; ?></td>
+            <td><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : ''; ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

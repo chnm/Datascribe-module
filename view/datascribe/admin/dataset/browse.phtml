@@ -40,13 +40,19 @@ $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
     <thead>
         <tr>
             <th><?php echo $this->translate('Dataset'); ?></th>
-            <th><?php echo $this->translate('Owner'); ?></th>
             <th><?php echo $this->translate('Date created'); ?></th>
+            <th><?php echo $this->translate('Created by'); ?></th>
+            <th><?php echo $this->translate('Last modified'); ?></th>
+            <th><?php echo $this->translate('Last modified by'); ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($datasets as $dataset): ?>
-    <?php $owner = $dataset->owner(); ?>
+    <?php
+    $createdBy = $dataset->createdBy();
+    $modified = $dataset->modified();
+    $modifiedBy = $dataset->modifiedBy();
+    ?>
         <tr>
             <td>
                 <?php echo $dataset->link($dataset->name()); ?>
@@ -68,8 +74,10 @@ $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
                     ]); ?></li>
                 </ul>
             </td>
-            <td><?php echo $owner ? $owner->link($owner->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($dataset->created()); ?></td>
+            <td><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
+            <td><?php echo $modified ? $this->i18n()->dateFormat($dataset->modified()) : ''; ?></td>
+            <td><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : ''; ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
