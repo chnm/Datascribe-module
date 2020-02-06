@@ -19,7 +19,7 @@ class RecordController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $this->setBrowseDefaults('created');
+        $this->setBrowseDefaults('id');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_item_id' => $item->id()]
