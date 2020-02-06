@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
+use Datascribe\Api\Representation\DatascribeProjectRepresentation;
 use Doctrine\ORM\EntityManager;
 use Omeka\Form\Element\UserSelect;
 use Zend\Form\Form;
@@ -19,6 +20,8 @@ class ItemSearchForm extends Form
 
     public function init()
     {
+        $project = $this->getOption('project');
+
         $this->add([
             'type' => 'select',
             'name' => 'status',
@@ -46,7 +49,7 @@ class ItemSearchForm extends Form
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('submittedBy') as $user) {
+        foreach ($this->getByUsers('submittedBy', $project) as $user) {
             $valueOptions['submitted_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -70,7 +73,7 @@ class ItemSearchForm extends Form
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('reviewedBy') as $user) {
+        foreach ($this->getByUsers('reviewedBy', $project) as $user) {
             $valueOptions['reviewed_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -94,7 +97,7 @@ class ItemSearchForm extends Form
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('lockedBy') as $user) {
+        foreach ($this->getByUsers('lockedBy', $project) as $user) {
             $valueOptions['locked_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -117,16 +120,13 @@ class ItemSearchForm extends Form
      *
      * This will only get users who are set in the $byColumn.
      *
+     * @param DatascribeProjectRepresentation $project
      * @param string $byColumn
      * @return string
      */
-    protected function getByUsers(string $byColumn)
+    protected function getByUsers(string $byColumn, DatascribeProjectRepresentation $project)
     {
         if (!in_array($byColumn, ['lockedBy', 'submittedBy', 'reviewedBy'])) {
-            return [];
-        }
-        $projectId = $this->getOption('project_id');
-        if (!$projectId) {
             return [];
         }
         $dql = "
@@ -137,7 +137,7 @@ class ItemSearchForm extends Form
             JOIN d.project p
             WHERE p = :projectId";
         $query = $this->em->createQuery($dql);
-        $query->setParameter('projectId', $projectId);
+        $query->setParameter('projectId', $project->id());
         $users = $query->getResult();
         usort($users, function ($userA, $userB) {
             return strcmp($userA->getName(), $userB->getName());

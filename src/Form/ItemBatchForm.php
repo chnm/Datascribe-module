@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
+use Datascribe\Api\Representation\DatascribeProjectRepresentation;
 use Datascribe\Entity\DatascribeUser;
 use Doctrine\ORM\EntityManager;
 use Omeka\Form\Element\UserSelect;
@@ -20,6 +21,8 @@ class ItemBatchForm extends Form
 
     public function init()
     {
+        $project = $this->getOption('project');
+
         $valueOptions = [
             'unlock' => 'Unlock',
             'lock' => 'Lock to me',
@@ -39,7 +42,7 @@ class ItemBatchForm extends Form
         foreach ($this->getAdminUsers() as $user) {
             $valueOptions['admins']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
-        foreach ($this->getProjectUsers() as $user) {
+        foreach ($this->getProjectUsers($project) as $user) {
             $oUser = $user->getUser();
             if (DatascribeUser::ROLE_REVIEWER === $user->getRole()) {
                 $valueOptions['reviewers']['options'][$user->getId()] = sprintf('%s (%s)', $oUser->getName(), $oUser->getEmail());
@@ -129,14 +132,11 @@ class ItemBatchForm extends Form
     /**
      * Get all users of the configured project.
      *
+     * @param DatascribeProjectRepresentation $project
      * @return array
      */
-    protected function getProjectUsers()
+    protected function getProjectUsers(DatascribeProjectRepresentation $project)
     {
-        $projectId = $this->getOption('project_id');
-        if (!$projectId) {
-            return [];
-        }
         $dql = "
         SELECT u
         FROM Datascribe\Entity\DatascribeUser u
@@ -145,7 +145,7 @@ class ItemBatchForm extends Form
         WHERE p = :projectId
         ORDER BY ou.name";
         $query = $this->em->createQuery($dql);
-        $query->setParameter('projectId', $projectId);
+        $query->setParameter('projectId', $project->id());
         return $query->getResult();
     }
 }

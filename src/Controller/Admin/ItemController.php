@@ -81,7 +81,7 @@ class ItemController extends AbstractActionController
         }
 
         $project = $dataset->project();
-        $form = $this->getForm(ItemSearchForm::class, ['project_id' => $project->id()]);
+        $form = $this->getForm(ItemSearchForm::class, ['project' => $project]);
         $form->setAttribute('method', 'get');
         $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
         $form->setData($this->params()->fromQuery());
@@ -116,7 +116,7 @@ class ItemController extends AbstractActionController
         }
 
         $project = $dataset->project();
-        $form = $this->getForm(ItemBatchForm::class, ['project_id' => $project->id()]);
+        $form = $this->getForm(ItemBatchForm::class, ['project' => $project]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
@@ -161,7 +161,7 @@ class ItemController extends AbstractActionController
         $count = $this->api()->search('datascribe_items', array_merge($query, ['limit' => 0]))->getTotalResults();
 
         $project = $dataset->project();
-        $form = $this->getForm(ItemBatchForm::class, ['project_id' => $project->id()]);
+        $form = $this->getForm(ItemBatchForm::class, ['project' => $project]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
