@@ -110,7 +110,7 @@ trait TraitOwnership
         $this->modified = $modified;
     }
 
-    public function getModified() : DateTime
+    public function getModified() : ?DateTime
     {
         return $this->modified;
     }

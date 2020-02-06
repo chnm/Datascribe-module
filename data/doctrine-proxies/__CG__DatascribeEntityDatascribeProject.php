@@ -356,7 +356,7 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
     /**
      * {@inheritDoc}
      */
-    public function getModified(): \DateTime
+    public function getModified(): ?\DateTime
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModified', []);
@@ -373,17 +373,6 @@ class DatascribeProject extends \Datascribe\Entity\DatascribeProject implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
         parent::prePersist($eventArgs);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function preUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpdate', [$eventArgs]);
-
-        parent::preUpdate($eventArgs);
     }
 
     /**
