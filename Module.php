@@ -149,6 +149,8 @@ SQL;
                 'prioritize_datascribe_item',
                 'submit_datascribe_item',
                 'lock_datascribe_item',
+                'edit_datascribe_item_reviewer_notes',
+                'edit_datascribe_item_transcriber_notes',
             ]
         );
 
@@ -181,6 +183,7 @@ SQL;
             [
                 'review_datascribe_item',
                 'prioritize_datascribe_item',
+                'edit_datascribe_item_reviewer_notes',
             ],
             new UserCanReviewAssertion
         );
@@ -190,6 +193,7 @@ SQL;
             [
                 'submit_datascribe_item',
                 'lock_datascribe_item',
+                'edit_datascribe_item_transcriber_notes',
             ],
             $viewerAssertion
         );

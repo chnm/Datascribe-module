@@ -260,13 +260,21 @@ $sortBy = [
     <div class="meta-group">
         <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
         <div class="value">
+            <?php if ($item->userIsAllowed('edit_datascribe_item_transcriber_notes')): ?>
             <textarea rows="8"></textarea>
+            <?php else: ?>
+            <textarea rows="8" disabled></textarea>
+            <?php endif; ?>
         </div>
     </div>
     <div class="meta-group">
         <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
         <div class="value">
+            <?php if ($item->userIsAllowed('edit_datascribe_item_reviewer_notes')): ?>
             <textarea rows="8"></textarea>
+            <?php else: ?>
+            <textarea rows="8" disabled></textarea>
+            <?php endif; ?>
         </div>
     </div>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
