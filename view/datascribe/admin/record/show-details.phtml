@@ -1,0 +1,17 @@
+<h3><?php echo $this->translate('Record metadata'); ?></h3>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Record #'); ?></h4>
+    <div class="value"><?php echo $record->link($record->id()); ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Primary value'); ?></h4>
+    <?php $primaryValue = $record->primaryValue(); ?>
+    <div class="value"><?php echo $primaryValue
+        ? $primaryValue->value([
+            'length' => 100,
+            'trim_marker' => '<span style="color: LightGray;">...</span>',
+            'if_invalid_return' => sprintf('<span style="color: Red;">%s</span>', $this->translate('invalid')),
+            'if_empty_return' => sprintf('<span style="color: LightGray;">%s</span>', $this->translate('empty')),
+        ])
+        : $this->translate('[None]'); ?></div>
+</div>

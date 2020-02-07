@@ -43,6 +43,30 @@ class RecordController extends AbstractActionController
         return $view;
     }
 
+    public function showDetailsAction()
+    {
+        $record = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id'),
+            $this->params('record-id')
+        );
+        if (!$record) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $view = new ViewModel;
+        $view->setTerminal(true);
+        $item = $record->item();
+        $dataset = $item->dataset();
+        $project = $dataset->project();
+        $view->setVariable('project', $project);
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('item', $item);
+        $view->setVariable('record', $record);
+        return $view;
+    }
+
     public function addAction()
     {
         $item = $this->datascribe()->getRepresentation(

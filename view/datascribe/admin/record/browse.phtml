@@ -206,3 +206,11 @@ $sortBy = [
 </div>
 
 <?php echo $this->form()->closeTag(); ?>
+
+<div id="show-details" class="sidebar">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $this->translate('Close'),
+    ]); ?>
+    <div class="sidebar-content"></div>
+</div>
