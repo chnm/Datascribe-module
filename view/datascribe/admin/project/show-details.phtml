@@ -6,32 +6,35 @@
 <div class="meta-group">
     <h4><?php echo $this->translate('Description'); ?></h4>
     <?php $description = $project->description(); ?>
-    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('No description'); ?></div>
+    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('[No description]'); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Visibility'); ?></h4>
     <div class="value"><?php echo ($project->isPublic()) ? $this->translate('Public') : $this->translate('Private'); ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Owner'); ?></h4>
-    <?php $owner = $project->owner(); ?>
-    <div class="value"><?php echo $owner ? $owner->link($owner->name()) : $this->translate('No owner'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Date created'); ?></h4>
-    <div class="value"><?php echo $this->i18n()->dateFormat($project->created(), 'long', 'medium'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Created by'); ?></h4>
+    <h4><?php echo $this->translate('Created'); ?></h4>
     <?php $createdBy = $project->createdBy(); ?>
-    <div class="value"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('No created by'); ?></div>
+    <div class="value"><?php echo sprintf(
+        $this->translate('%s by %s'),
+        $this->i18n()->dateFormat($project->created(), 'medium', 'medium'),
+        $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('[Unknown]')
+    ); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Last modified'); ?></h4>
-    <div class="value"><?php echo $this->i18n()->dateFormat($project->modified(), 'long', 'medium'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Last modified by'); ?></h4>
-    <?php $modifiedBy = $project->modifiedBy(); ?>
-    <div class="value"><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : $this->translate('No modified by'); ?></div>
+    <?php
+    $modified = $project->modified();
+    $modifiedBy = $project->modifiedBy();
+    ?>
+    <div class="value"><?php
+    echo $modified
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($modified, 'medium', 'medium'),
+            null === $modifiedBy
+                ? $this->translate('[Unknown]')
+                : $modifiedBy->link($modifiedBy->name())
+        ) : $this->translate('[Not modified]');
+    ?></div>
 </div>

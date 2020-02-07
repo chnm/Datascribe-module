@@ -10,7 +10,7 @@
 <div class="meta-group">
     <h4><?php echo $this->translate('Description'); ?></h4>
     <?php $description = $project->description(); ?>
-    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('No description'); ?></div>
+    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('[No description]'); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Visibility'); ?></h4>
@@ -29,35 +29,45 @@
     ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Owner'); ?></h4>
-    <?php $owner = $dataset->owner(); ?>
-    <div class="value"><?php echo $owner ? $owner->link($owner->name()) : $this->translate('No owner'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Date created'); ?></h4>
-    <div class="value"><?php echo $this->i18n()->dateFormat($dataset->created(), 'long', 'medium'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Created by'); ?></h4>
+    <h4><?php echo $this->translate('Created'); ?></h4>
     <?php $createdBy = $dataset->createdBy(); ?>
-    <div class="value"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('No created by'); ?></div>
+    <div class="value"><?php echo sprintf(
+        $this->translate('%s by %s'),
+        $this->i18n()->dateFormat($dataset->created(), 'medium', 'medium'),
+        $createdBy ? $createdBy->link($createdBy->name()) : $this->translate('[Unknown]')
+    ); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Last modified'); ?></h4>
-    <div class="value"><?php echo $this->i18n()->dateFormat($dataset->modified(), 'long', 'medium'); ?></div>
+    <?php
+    $modified = $dataset->modified();
+    $modifiedBy = $dataset->modifiedBy();
+    ?>
+    <div class="value"><?php
+    echo $modified
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($modified, 'medium', 'medium'),
+            null === $modifiedBy
+                ? $this->translate('[Unknown]')
+                : $modifiedBy->link($modifiedBy->name())
+        ) : $this->translate('[Not modified]');
+    ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Last modified by'); ?></h4>
-    <?php $modifiedBy = $dataset->modifiedBy(); ?>
-    <div class="value"><?php echo $modifiedBy ? $modifiedBy->link($modifiedBy->name()) : $this->translate('No modified by'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Last synced'); ?></h4>
-    <?php $synced = $dataset->synced(); ?>
-    <div class="value"><?php echo $synced ? $this->i18n()->dateFormat($dataset->synced(), 'long', 'medium') : $this->translate('Not synced'); ?></div>
-</div>
-<div class="meta-group">
-    <h4><?php echo $this->translate('Last synced by'); ?></h4>
-    <?php $syncedBy = $dataset->syncedBy(); ?>
-    <div class="value"><?php echo $syncedBy ? $syncedBy->link($syncedBy->name()) : $this->translate('Not synced'); ?></div>
+    <h4><?php echo $this->translate('Last syncced'); ?></h4>
+    <?php
+    $synced = $dataset->synced();
+    $syncedBy = $dataset->syncedBy();
+    ?>
+    <div class="value"><?php
+    echo $synced
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($synced, 'medium', 'medium'),
+            null === $syncedBy
+                ? $this->translate('[Unknown]')
+                : $syncedBy->link($syncedBy->name())
+        ) : $this->translate('[Not synced]');
+    ?></div>
 </div>
