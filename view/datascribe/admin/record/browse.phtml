@@ -155,49 +155,119 @@ $sortBy = [
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <h3><?php echo $this->translate('Item actions'); ?></h3>
+    <?php if ($item->userIsAllowed('submit_datascribe_item')): ?>
     <div class="meta-group">
-        <h3><?php echo $this->translate('Lock action'); ?></h3>
-        <select>
-            <option>[No change]</option>
-            <option>Unlock</option>
-            <option>Lock to me</option>
-            <option>Lock to transcriber...</option>
-            <option>Lock to reviewer...</option>
-            <option>Lock to admin...</option>
-        </select>
+        <h4><?php echo $this->translate('Submit action'); ?></h4>
+        <div class="value">
+            <?php if ($item->submitted()): ?>
+            <?php $submittedBy = $item->submittedBy(); ?>
+            <?php echo sprintf(
+                $this->translate('Last submitted by %s on %s'),
+                $submittedBy ? $submittedBy->link($submittedBy->name()) : $this->translate('[Unknown]'),
+                $this->i18n()->dateFormat($item->submitted(), 'medium', 'medium')
+            ); ?>
+            <?php else: ?>
+            <?php echo $this->translate('Not submitted'); ?>
+            <?php endif; ?>
+        </div>
+        <div class="value">
+            <select>
+                <option>[No change]</option>
+                <option>Submit for review</option>
+                <option>Mark as not submitted</option>
+            </select>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($item->userIsAllowed('review_datascribe_item')): ?>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Review action'); ?></h4>
+        <div class="value">
+            <?php if ($item->reviewed()): ?>
+            <?php $reviewedBy = $item->reviewedBy(); ?>
+            <?php echo sprintf(
+                $this->translate('Last reviewed by %s on %s'),
+                $reviewedBy ? $reviewedBy->link($reviewedBy->name()) : $this->translate('[Unknown]'),
+                $this->i18n()->dateFormat($item->reviewed(), 'medium', 'medium')
+            ); ?>
+            <?php else: ?>
+            <?php echo $this->translate('Not reviewed'); ?>
+            <?php endif; ?>
+        </div>
+        <div class="value">
+            <select>
+                <option>[No change]</option>
+                <option>Mark as approved</option>
+                <option>Mark as not approved</option>
+                <option>Mark as not reviewed</option>
+            </select>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($item->userIsAllowed('lock_datascribe_item')): ?>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Lock action'); ?></h4>
+        <div class="value">
+            <?php if ($item->locked()): ?>
+            <?php $lockedBy = $item->lockedBy(); ?>
+            <?php echo sprintf(
+                $this->translate('Last locked by %s on %s'),
+                $lockedBy ? $lockedBy->link($lockedBy->name()) : $this->translate('[Unknown]'),
+                $this->i18n()->dateFormat($item->locked(), 'medium', 'medium')
+            ); ?>
+            <?php else: ?>
+            <?php echo $this->translate('Unlocked'); ?>
+            <?php endif; ?>
+        </div>
+        <div class="value">
+            <select>
+                <option>[No change]</option>
+                <option>Unlock</option>
+                <option>Lock to me</option>
+                <option>Lock to transcriber ...</option>
+                <option>Lock to reviewer ...</option>
+                <option>Lock to admin ...</option>
+            </select>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($item->userIsAllowed('prioritize_datascribe_item')): ?>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Priority action'); ?></h4>
+        <div class="value">
+            <?php if ($item->prioritized()): ?>
+            <?php $prioritizedBy = $item->prioritizedBy(); ?>
+            <?php echo sprintf(
+                $this->translate('Last prioritized by %s on %s'),
+                $prioritizedBy ? $prioritizedBy->link($prioritizedBy->name()) : $this->translate('[Unknown]'),
+                $this->i18n()->dateFormat($item->prioritized(), 'medium', 'medium')
+            ); ?>
+            <?php else: ?>
+            <?php echo $this->translate('Not prioritized'); ?>
+            <?php endif; ?>
+        </div>
+        <div class="value">
+            <select>
+                <option>[No change]</option>
+                <option>Mark as prioritized</option>
+                <option>Mark as not prioritized</option>
+            </select>
+        </div>
+    </div>
+    <?php endif; ?>
+    <h3><?php echo $this->translate('Item notes'); ?></h3>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
+        <div class="value">
+            <textarea rows="8"></textarea>
+        </div>
     </div>
     <div class="meta-group">
-        <h3><?php echo $this->translate('Submit action'); ?></h3>
-        <select>
-            <option>[No change]</option>
-            <option>Submit for review</option>
-            <option>Mark as not submitted</option>
-        </select>
-    </div>
-    <div class="meta-group">
-        <h3><?php echo $this->translate('Review action'); ?></h3>
-        <select>
-            <option>[No change]</option>
-            <option>Mark as approved</option>
-            <option>Mark as not approved</option>
-            <option>Mark as not reviewed</option>
-        </select>
-    </div>
-    <div class="meta-group">
-        <h3><?php echo $this->translate('Priority action'); ?></h3>
-        <select>
-            <option>[No change]</option>
-            <option>Mark as prioritized</option>
-            <option>Mark as not prioritized</option>
-        </select>
-    </div>
-    <div class="meta-group">
-        <h3><?php echo $this->translate('Transcriber notes'); ?></h3>
-        <textarea rows="8"></textarea>
-    </div>
-    <div class="meta-group">
-        <h3><?php echo $this->translate('Reviewer notes'); ?></h3>
-        <textarea rows="8"></textarea>
+        <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
+        <div class="value">
+            <textarea rows="8"></textarea>
+        </div>
     </div>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
 </div>

@@ -126,6 +126,11 @@ SQL;
             'Datascribe\Controller\Admin\Item',
             ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all']
         );
+        $acl->allow(
+            null,
+            'Datascribe\Controller\Admin\Record',
+            ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all']
+        );
 
         // Set API adapter privileges.
         $acl->allow(
@@ -134,8 +139,17 @@ SQL;
                 'Datascribe\Api\Adapter\DatascribeProjectAdapter',
                 'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
                 'Datascribe\Api\Adapter\DatascribeItemAdapter',
+                'Datascribe\Api\Adapter\DatascribeRecordAdapter',
             ],
-            ['search', 'read', 'view_datascribe_item_batch_update']
+            [
+                'search',
+                'read',
+                'view_datascribe_item_batch_update',
+                'review_datascribe_item',
+                'prioritize_datascribe_item',
+                'submit_datascribe_item',
+                'lock_datascribe_item',
+            ]
         );
 
         // Set entity privileges.
@@ -160,6 +174,24 @@ SQL;
             'Datascribe\Entity\DatascribeDataset',
             'view_datascribe_item_batch_update',
             new UserCanReviewAssertion
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Entity\DatascribeItem',
+            [
+                'review_datascribe_item',
+                'prioritize_datascribe_item',
+            ],
+            new UserCanReviewAssertion
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Entity\DatascribeItem',
+            [
+                'submit_datascribe_item',
+                'lock_datascribe_item',
+            ],
+            $viewerAssertion
         );
     }
 
