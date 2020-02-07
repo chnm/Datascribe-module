@@ -28,17 +28,29 @@ class Datascribe extends AbstractPlugin
     /**
      * Get a DataScribe representation.
      *
-     * Provides a single method to get a DataScribe project, dataset, or item
-     * representation. Used primarily to ensure that the route is valid.
+     * Provides a single method to get a DataScribe project, dataset, item, or
+     * record representation. Used primarily to ensure that the route is valid.
      *
      * @param int $projectId
      * @param int|null $datasetId
      * @param int|null $itemId
-     * @return DatascribeProjectRepresentation|DatascribeDatasetRepresentation|DatascribeItemRepresentation
+     * @return DatascribeProjectRepresentation|DatascribeDatasetRepresentation|DatascribeItemRepresentation|DatascribeRecordRepresentation
      */
-    public function getRepresentation(int $projectId, ?int $datasetId = null, ?int $itemId = null)
+    public function getRepresentation(int $projectId, ?int $datasetId = null, ?int $itemId = null, ?int $recordId = null)
     {
         $controller = $this->getController();
+        if ($recordId) {
+            try {
+                $record = $controller->api()->read('datascribe_records', $recordId)->getContent();
+            } catch (NotFoundException $e) {
+                return false;
+            }
+            $item = $record->item();
+            $dataset = $item->dataset();
+            $project = $dataset->project();
+            return (($itemId === $item->id()) && ($datasetId === $dataset->id()) && ($projectId === $project->id()))
+                ? $record : false;
+        }
         if ($itemId) {
             try {
                 $item = $controller->api()->read('datascribe_items', $itemId)->getContent();
