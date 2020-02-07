@@ -199,6 +199,10 @@
   padding-right: .5rem;
 }
 
+.primary-field {
+  background-color: rgba(0,0,0,.04);
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
@@ -235,7 +239,7 @@
 }
 
 #form-builder-fields .dataset-field.closed legend {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 legend .data-type-label {
