@@ -90,13 +90,13 @@ $sortBy = [
                 <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" name="record_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
                 <?php endif; ?>
-                <span class="record-number"><?php echo number_format($record->id()); ?></span>
                 <?php $needsReview = $record->needsReview() ? $this->translate('Needs review') : ''; ?>
                 <?php $needsWork = $record->needsWork() ? $this->translate('Needs work') : ''; ?>
                 <?php if (($needsReview !== '') || ($needsWork !== '')): ?>
                 <?php $alertString = $needsReview . ' ' . $needsWork; ?>
                 <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
                 <?php endif; ?>
+                <span class="record-number"><?php echo number_format($record->id()); ?></span>
                 <ul class="actions">
                     <?php if ($record->userIsAllowed('update')): ?>
                     <li><?php echo $record->link('', 'edit', [
