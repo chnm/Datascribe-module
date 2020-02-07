@@ -186,6 +186,10 @@
   position: relative;
 }
 
+.last.record-meta {
+  border-right: 1px solid #dfdfdf;
+}
+
 .tablesaw-bar {
   position: absolute;
   top: 0;
