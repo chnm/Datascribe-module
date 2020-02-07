@@ -141,22 +141,17 @@
   margin-left: 0;
 }
 
-.needs-work,
-.needs-review {
+.alert {
   text-indent: -9999px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  text-align: center;
-  background-color: #fcc;
+  display: inline-block;
+  position: relative;
+  width: 1rem;
+  margin-left: .5rem;
   color: #A91919;
 }
 
-.needs-work:before,
-.needs-review:before {
-  content: "\f00c";
+.alert:before {
+  content: "\f06a";
   font-family: "Font Awesome 5 Free";
   position: absolute;
   top: 50%;
@@ -172,15 +167,19 @@
 
 .record.browse td:first-child,
 .record.browse th:first-child {
-  width: 7rem;
+  min-width: 7rem;
 }
 
 .record.browse th {
   width: 7rem;
 }
 
-.record.browse .record-number {
+.record.browse .record-number-cell {
   display: flex;
+}
+
+.record-number-cell input[type="checkbox"] {
+  margin-right: 1rem;
 }
 
 .record.browse #batch-form {

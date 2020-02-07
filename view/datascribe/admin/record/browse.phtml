@@ -70,8 +70,6 @@ $sortBy = [
             </th>
             <th><?php echo $this->translate('Created by'); ?></th>
             <th><?php echo $this->translate('Created'); ?></th>
-            <th><?php echo $this->translate('Needs review'); ?></th>
-            <th><?php echo $this->translate('Needs work'); ?></th>
             <?php foreach ($dataset->fields() as $field): ?>
             <th scope="col"><?php echo $field->name([
                 'length' => 20,
@@ -88,11 +86,17 @@ $sortBy = [
         ?>
         <tr>
             <td>
-                <div class="record-number">
+                <div class="record-number-cell">
                 <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" name="record_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
                 <?php endif; ?>
-                <?php echo number_format($record->id()); ?>
+                <span class="record-number"><?php echo number_format($record->id()); ?></span>
+                <?php $needsReview = $record->needsReview() ? $this->translate('Needs review') : ''; ?>
+                <?php $needsWork = $record->needsWork() ? $this->translate('Needs work') : ''; ?>
+                <?php if (($needsReview !== '') || ($needsWork !== '')): ?>
+                <?php $alertString = $needsReview . ' ' . $needsWork; ?>
+                <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
+                <?php endif; ?>
                 <ul class="actions">
                     <?php if ($record->userIsAllowed('update')): ?>
                     <li><?php echo $record->link('', 'edit', [
@@ -111,14 +115,7 @@ $sortBy = [
             </td>
             <td><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
             <td><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
-            <td>
-              <?php $needsReviewHtml = '<span class="needs-review">' . $this->translate('Needs review') . '</span>'; ?>
-              <?php echo $record->needsReview() ? $needsReviewHtml : ''; ?>
-            </td>
-            <td>
-              <?php $needsWorkHtml = '<span class="needs-work">' . $this->translate('Needs work') . '</span>'; ?>
-              <?php echo $record->needsWork() ? $needsWorkHtml : ''; ?>
-            </td>
+
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <?php if (null === $value): ?>
