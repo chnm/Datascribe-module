@@ -292,6 +292,7 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
     {
         $services = $this->getServiceLocator();
         $currentUser = $services->get('Omeka\AuthenticationService')->getIdentity();
+        $acl = $services->get('Omeka\Acl');
 
         // Handle a priority action.
         $priorityAction = $request->getValue('priority_action');
@@ -319,28 +320,38 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
         // Handle a submit action.
         $submitAction = $request->getValue('submit_action');
-        if ('not_submitted' === $submitAction) {
+        if ('not_submitted' === $submitAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_not_submitted')) {
             $entity->setSubmitted(null);
             $entity->setSubmittedBy(null);
-        } elseif ('submitted' === $submitAction) {
+        } elseif ('submitted' === $submitAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_submitted')) {
             $entity->setSubmitted(new DateTime('now'));
             $entity->setSubmittedBy($currentUser);
         }
 
         // Handle a review action.
         $reviewAction = $request->getValue('review_action');
-        if ('not_reviewed' === $reviewAction) {
+        if ('not_reviewed' === $reviewAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_not_reviewed')) {
             $entity->setReviewed(null);
             $entity->setReviewedBy(null);
             $entity->setIsApproved(null);
-        } elseif ('not_approved' === $reviewAction) {
+        } elseif ('not_approved' === $reviewAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_not_approved')) {
             $entity->setReviewed(new DateTime('now'));
             $entity->setReviewedBy($currentUser);
             $entity->setIsApproved(false);
-        } elseif ('approved' === $reviewAction) {
+        } elseif ('approved' === $reviewAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_approved')) {
             $entity->setReviewed(new DateTime('now'));
             $entity->setReviewedBy($currentUser);
             $entity->setIsApproved(true);
+        }
+
+        // Handle transcriber notes.
+        if ($this->shouldHydrate($request, 'o-module-datascribe:transcriber_notes') && $acl->userIsAllowed($entity, 'datascribe_edit_transcriber_notes')) {
+            $entity->setTranscriberNotes($request->getValue('o-module-datascribe:transcriber_notes'));
+        }
+
+        // Handle reviewer notes.
+        if ($this->shouldHydrate($request, 'o-module-datascribe:reviewer_notes') && $acl->userIsAllowed($entity, 'datascribe_edit_reviewer_notes')) {
+            $entity->setReviewerNotes($request->getValue('o-module-datascribe:reviewer_notes'));
         }
     }
 

@@ -37,7 +37,7 @@ trait TraitNotes
         if (is_string($reviewerNotes) && '' === trim($reviewerNotes)) {
             $reviewerNotes = null;
         }
-        $this->transcriberNotes = $reviewerNotes;
+        $this->reviewerNotes = $reviewerNotes;
     }
 
     public function getReviewerNotes() : ?string

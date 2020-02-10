@@ -2,7 +2,7 @@
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item browse');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
-$canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
+$canViewBatchUpdate = $dataset->userIsAllowed('datascribe_view_item_batch_update');
 $filters = [
     [
         'label' => $this->translate('All unlocked and new items'),

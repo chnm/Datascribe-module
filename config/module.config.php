@@ -63,6 +63,7 @@ return [
             'Datascribe\Form\DatasetForm' => Service\Form\DatasetFormFactory::class,
             'Datascribe\Form\RecordForm' => Service\Form\RecordFormFactory::class,
             'Datascribe\Form\ItemBatchForm' => Service\Form\ItemBatchFormFactory::class,
+            'Datascribe\Form\ItemForm' => Service\Form\ItemFormFactory::class,
             'Datascribe\Form\ItemSearchForm' => Service\Form\ItemSearchFormFactory::class,
         ],
     ],

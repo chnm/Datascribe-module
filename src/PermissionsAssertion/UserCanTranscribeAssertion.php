@@ -29,10 +29,40 @@ class UserCanTranscribeAssertion implements AssertionInterface
         } elseif ($resource instanceof DatascribeItem) {
             $project = $resource->getDataset()->getProject();
         } else {
+            // The resource is not valid.
             return false;
         }
-        // The $reviewers collection is indexed by user_id.
+        // The users collection is indexed by user_id.
         $projectUser = $project->getUsers()->get($role->getId());
-        return $projectUser ? (DatascribeUser::ROLE_TRANSCRIBER === $projectUser->getRole()) : false;
+        if (!$projectUser) {
+            // The user is not assigned to this project.
+            return false;
+        }
+        if (DatascribeUser::ROLE_TRANSCRIBER !== $projectUser->getRole()) {
+            // The user is not a transcriber for this project.
+            return false;
+        }
+        // Handle item-specific permission checks.
+        if ($resource instanceof DatascribeItem) {
+            if ('datascribe_mark_item_submitted' === $privilege) {
+                // - The item must be locked to the user
+                // - The item must not already be submitted for review
+                // - The item must not be approved
+                return (
+                    $role === $resource->getLockedBy()
+                    && $resource->getReviewed() >= $resource->getSubmitted()
+                    && true !== $resource->getIsApproved()
+                );
+            }
+            if ('datascribe_mark_item_not_submitted' === $privilege) {
+                // - The item must be locked to the user
+                // - The item must already be submitted for review
+                return (
+                    $role === $resource->getLockedBy()
+                    && $resource->getReviewed() < $resource->getSubmitted()
+                );
+            }
+        }
+        return true;
     }
 }

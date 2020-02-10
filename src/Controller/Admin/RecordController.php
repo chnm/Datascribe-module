@@ -31,6 +31,22 @@ class RecordController extends AbstractActionController
         $form = $this->getForm(ItemForm::class, [
             'item' => $item,
         ]);
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->params()->fromPost();
+            echo '<pre>';print_r($postData);echo '</pre>';
+            $form->setData($postData);
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                echo '<pre>';print_r($formData);echo '</pre>';
+                $response = $this->api($form)->update('datascribe_items', $item->id(), $formData);
+                if ($response) {
+                    $this->messenger()->addSuccess('Item successfully updated.'); // @translate
+                    return $this->redirect()->toUrl($response->getContent()->url());
+                }
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
 
         $view = new ViewModel;
         $dataset = $item->dataset();

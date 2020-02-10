@@ -144,13 +144,23 @@ SQL;
             [
                 'search',
                 'read',
-                'view_datascribe_item_batch_update',
-                'review_datascribe_item',
-                'prioritize_datascribe_item',
-                'submit_datascribe_item',
-                'lock_datascribe_item',
-                'edit_datascribe_item_reviewer_notes',
-                'edit_datascribe_item_transcriber_notes',
+                'update',
+                'datascribe_view_item_batch_update',
+            ]
+        );
+        $acl->allow(
+            null,
+            [
+                'Datascribe\Api\Adapter\DatascribeItemAdapter',
+            ],
+            [
+                'datascribe_mark_item_submitted',
+                'datascribe_mark_item_not_submitted',
+                'datascribe_mark_item_approved',
+                'datascribe_mark_item_not_reviewed',
+                'datascribe_mark_item_not_approved',
+                'datascribe_edit_transcriber_notes',
+                'datascribe_edit_reviewer_notes',
             ]
         );
 
@@ -174,16 +184,18 @@ SQL;
         $acl->allow(
             null,
             'Datascribe\Entity\DatascribeDataset',
-            'view_datascribe_item_batch_update',
+            'datascribe_view_item_batch_update',
             new UserCanReviewAssertion
         );
         $acl->allow(
             null,
             'Datascribe\Entity\DatascribeItem',
             [
-                'review_datascribe_item',
-                'prioritize_datascribe_item',
-                'edit_datascribe_item_reviewer_notes',
+                'datascribe_mark_item_approved',
+                'datascribe_mark_item_not_reviewed',
+                'datascribe_mark_item_not_approved',
+                'datascribe_edit_transcriber_notes',
+                'datascribe_edit_reviewer_notes',
             ],
             new UserCanReviewAssertion
         );
@@ -191,9 +203,10 @@ SQL;
             null,
             'Datascribe\Entity\DatascribeItem',
             [
-                'submit_datascribe_item',
-                'lock_datascribe_item',
-                'edit_datascribe_item_transcriber_notes',
+                'update',
+                'datascribe_mark_item_submitted',
+                'datascribe_mark_item_not_submitted',
+                'datascribe_edit_transcriber_notes',
             ],
             $viewerAssertion
         );

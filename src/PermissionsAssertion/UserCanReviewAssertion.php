@@ -29,10 +29,19 @@ class UserCanReviewAssertion implements AssertionInterface
         } elseif ($resource instanceof DatascribeItem) {
             $project = $resource->getDataset()->getProject();
         } else {
+            // The resource is not valid.
             return false;
         }
-        // The $reviewers collection is indexed by user_id.
+        // The users collection is indexed by user_id.
         $projectUser = $project->getUsers()->get($role->getId());
-        return $projectUser ? (DatascribeUser::ROLE_REVIEWER === $projectUser->getRole()) : false;
+        if (!$projectUser) {
+            // The user is not assigned to this project.
+            return false;
+        }
+        if (DatascribeUser::ROLE_REVIEWER !== $projectUser->getRole()) {
+            // The user is not a reviewer for this project.
+            return false;
+        }
+        return true;
     }
 }

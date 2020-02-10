@@ -5,7 +5,7 @@ $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
-$canViewBatchUpdate = $dataset->userIsAllowed('view_datascribe_item_batch_update');
+$canViewBatchUpdate = $dataset->userIsAllowed('datascribe_view_item_batch_update');
 $filters = [
     [
         'label' => $this->translate('Needs review'),
@@ -149,6 +149,7 @@ $sortBy = [
 <?php endif; ?>
 
 <?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formElement($form->get('csrf')); ?>
 
 <div id="page-actions">
     <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
@@ -157,8 +158,11 @@ $sortBy = [
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <h3><?php echo $this->translate('Status'); ?></h3>
+    <div class="meta-group">
+        <div class="value"><?php echo $this->translate($item->statusLabel()); ?></div>
+    </div>
     <h3><?php echo $this->translate('Item actions'); ?></h3>
-    <?php if ($item->userIsAllowed('submit_datascribe_item')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Submit action'); ?></h4>
         <div class="value">
@@ -173,16 +177,8 @@ $sortBy = [
             <?php echo $this->translate('Not submitted'); ?>
             <?php endif; ?>
         </div>
-        <div class="value">
-            <select>
-                <option>[No change]</option>
-                <option>Submit for review</option>
-                <option>Mark as not submitted</option>
-            </select>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('submit_action')); ?></div>
     </div>
-    <?php endif; ?>
-    <?php if ($item->userIsAllowed('review_datascribe_item')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Review action'); ?></h4>
         <div class="value">
@@ -197,17 +193,8 @@ $sortBy = [
             <?php echo $this->translate('Not reviewed'); ?>
             <?php endif; ?>
         </div>
-        <div class="value">
-            <select>
-                <option>[No change]</option>
-                <option>Mark as approved</option>
-                <option>Mark as not approved</option>
-                <option>Mark as not reviewed</option>
-            </select>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('review_action')); ?></div>
     </div>
-    <?php endif; ?>
-    <?php if ($item->userIsAllowed('lock_datascribe_item')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Lock action'); ?></h4>
         <div class="value">
@@ -233,8 +220,6 @@ $sortBy = [
             </select>
         </div>
     </div>
-    <?php endif; ?>
-    <?php if ($item->userIsAllowed('prioritize_datascribe_item')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Priority action'); ?></h4>
         <div class="value">
@@ -257,27 +242,14 @@ $sortBy = [
             </select>
         </div>
     </div>
-    <?php endif; ?>
     <h3><?php echo $this->translate('Item notes'); ?></h3>
     <div class="meta-group">
         <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
-        <div class="value">
-            <?php if ($item->userIsAllowed('edit_datascribe_item_transcriber_notes')): ?>
-            <textarea rows="8"></textarea>
-            <?php else: ?>
-            <textarea rows="8" disabled></textarea>
-            <?php endif; ?>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
     </div>
     <div class="meta-group">
         <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
-        <div class="value">
-            <?php if ($item->userIsAllowed('edit_datascribe_item_reviewer_notes')): ?>
-            <textarea rows="8"></textarea>
-            <?php else: ?>
-            <textarea rows="8" disabled></textarea>
-            <?php endif; ?>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
     </div>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
 </div>
