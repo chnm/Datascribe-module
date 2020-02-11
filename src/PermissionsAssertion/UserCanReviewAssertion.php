@@ -80,6 +80,14 @@ class UserCanReviewAssertion implements AssertionInterface
                 // - The item must not already be locked by self
                 return $role !== $resource->getLockedBy();
             }
+            if ('datascribe_mark_item_prioritized' === $privilege) {
+                // - The item must not already be marked as prioritized
+                return null === $resource->getPrioritizedBy();
+            }
+            if ('datascribe_mark_item_not_prioritized' === $privilege) {
+                // - The item must already be marked as prioritized
+                return $resource->getPrioritizedBy();
+            }
         }
         return true;
     }

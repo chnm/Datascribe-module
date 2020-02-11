@@ -76,18 +76,20 @@ class ItemForm extends AbstractItemForm
         $element->setAttribute('class', 'chosen-select');
         $this->add($element);
 
-        // Once an item is marked as approved, transcribers can no longer perform
-        // lock/unlock or submit/unsubmit actions, nor can they add new records
-        // to the item or edit existing records. Work can continue on the item only
-        // by admin/reviewer.
-
-        // Render only what's relevent to current user's role and depending on the
-        // current state of the item.
-
-        // lock_action
-        // - Unlock (unlock): if admin/reviewer -OR- locked to current user
-        // - Lock to me (lock): if admin/reviewer -OR- unlocked
-        // - Lock to... (ID#): if admin/reviewer
+        // priority_action select
+        $element = new Element\Select('priority_action');
+        $valueOptions = [
+            '' => '[No change]', // @translate
+        ];
+        if ($item->userIsAllowed('datascribe_mark_item_prioritized')) {
+            $valueOptions['prioritized'] = 'Mark as prioritized'; // @translate
+        }
+        if ($item->userIsAllowed('datascribe_mark_item_not_prioritized')) {
+            $valueOptions['not_prioritized'] = 'Mark as not prioritized'; // @translate
+        }
+        $element->setValueOptions($valueOptions);
+        $element->setAttribute('class', 'chosen-select');
+        $this->add($element);
 
         // priority_action
         // - Mark as prioritized (prioritized): if admin/reviewer -AND- not already marked as prioritized

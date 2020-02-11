@@ -225,13 +225,7 @@ $sortBy = [
             <?php echo $this->translate('Not prioritized'); ?>
             <?php endif; ?>
         </div>
-        <div class="value">
-            <select>
-                <option>[No change]</option>
-                <option>Mark as prioritized</option>
-                <option>Mark as not prioritized</option>
-            </select>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('priority_action')); ?></div>
     </div>
     <h3><?php echo $this->translate('Item notes'); ?></h3>
     <div class="meta-group">

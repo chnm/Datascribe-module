@@ -168,6 +168,8 @@ SQL;
                 'datascribe_unlock_item',
                 'datascribe_lock_item_to_self',
                 'datascribe_lock_item_to_other',
+                'datascribe_mark_item_prioritized',
+                'datascribe_mark_item_not_prioritized',
             ]
         );
 
@@ -205,6 +207,8 @@ SQL;
                 'datascribe_edit_transcriber_notes',
                 'datascribe_edit_reviewer_notes',
                 'datascribe_lock_item_to_other',
+                'datascribe_mark_item_prioritized',
+                'datascribe_mark_item_not_prioritized',
             ],
             new UserCanReviewAssertion
         );

@@ -296,10 +296,10 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
         // Handle a priority action.
         $priorityAction = $request->getValue('priority_action');
-        if ('not_prioritized' === $priorityAction) {
+        if ('not_prioritized' === $priorityAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_not_prioritized')) {
             $entity->setPrioritized(null);
             $entity->setPrioritizedBy(null);
-        } elseif ('prioritized' === $priorityAction) {
+        } elseif ('prioritized' === $priorityAction && $acl->userIsAllowed($entity, 'datascribe_mark_item_prioritized')) {
             $entity->setPrioritized(new DateTime('now'));
             $entity->setPrioritizedBy($currentUser);
         }
