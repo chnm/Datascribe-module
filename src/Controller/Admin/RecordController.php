@@ -33,11 +33,9 @@ class RecordController extends AbstractActionController
         ]);
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
-            echo '<pre>';print_r($postData);echo '</pre>';
             $form->setData($postData);
             if ($form->isValid()) {
                 $formData = $form->getData();
-                echo '<pre>';print_r($formData);echo '</pre>';
                 $response = $this->api($form)->update('datascribe_items', $item->id(), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Item successfully updated.'); // @translate
