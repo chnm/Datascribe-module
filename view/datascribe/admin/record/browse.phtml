@@ -5,7 +5,7 @@ $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
-$canViewBatchUpdate = $dataset->userIsAllowed('datascribe_view_item_batch_update');
+$canViewBatchUpdate = $item->userIsAllowed('datascribe_view_record_batch_update');
 $filters = [
     [
         'label' => $this->translate('Needs review'),

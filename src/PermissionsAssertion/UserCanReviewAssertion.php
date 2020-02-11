@@ -42,6 +42,37 @@ class UserCanReviewAssertion implements AssertionInterface
             // The user is not a reviewer for this project.
             return false;
         }
+        // Handle item-specific permission checks.
+        if ($resource instanceof DatascribeItem) {
+            if ('datascribe_mark_item_submitted' === $privilege) {
+                // - The item must not already be submitted for review
+                // - AND the item must not be approved
+                return (
+                    $resource->getReviewed() >= $resource->getSubmitted()
+                    && true !== $resource->getIsApproved()
+                );
+            }
+            if ('datascribe_mark_item_not_submitted' === $privilege) {
+                // - The item must already be submitted for review
+                return ($resource->getReviewed() < $resource->getSubmitted());
+            }
+            if ('datascribe_mark_item_not_reviewed' === $privilege) {
+                // - The item must be reviewed
+                return $resource->getReviewed();
+            }
+            if ('datascribe_mark_item_not_approved' === $privilege) {
+                // - The item must be submitted
+                // - AND the item must be approved
+                return (
+                    $resource->getSubmitted()
+                    && true === $resource->getIsApproved()
+                );
+            }
+            if ('datascribe_mark_item_approved' === $privilege) {
+                // - The item must not be approved.
+                return (true !== $resource->getIsApproved());
+            }
+        }
         return true;
     }
 }

@@ -145,15 +145,18 @@ SQL;
                 'search',
                 'read',
                 'update',
-                'datascribe_view_item_batch_update',
             ]
         );
         $acl->allow(
             null,
+            'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
+            'datascribe_view_item_batch_update'
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Api\Adapter\DatascribeItemAdapter',
             [
-                'Datascribe\Api\Adapter\DatascribeItemAdapter',
-            ],
-            [
+                'datascribe_view_record_batch_update',
                 'datascribe_mark_item_submitted',
                 'datascribe_mark_item_not_submitted',
                 'datascribe_mark_item_approved',
@@ -204,6 +207,7 @@ SQL;
             'Datascribe\Entity\DatascribeItem',
             [
                 'update',
+                'datascribe_view_record_batch_update',
                 'datascribe_mark_item_submitted',
                 'datascribe_mark_item_not_submitted',
                 'datascribe_edit_transcriber_notes',

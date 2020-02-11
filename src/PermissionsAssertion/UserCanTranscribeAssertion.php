@@ -45,9 +45,9 @@ class UserCanTranscribeAssertion implements AssertionInterface
         // Handle item-specific permission checks.
         if ($resource instanceof DatascribeItem) {
             if ('datascribe_mark_item_submitted' === $privilege) {
-                // - The item must be locked to the user
-                // - The item must not already be submitted for review
-                // - The item must not be approved
+                // - The item must be locked to the transcriber
+                // - AND the item must not already be submitted for review
+                // - AND the item must not be approved
                 return (
                     $role === $resource->getLockedBy()
                     && $resource->getReviewed() >= $resource->getSubmitted()
@@ -55,8 +55,8 @@ class UserCanTranscribeAssertion implements AssertionInterface
                 );
             }
             if ('datascribe_mark_item_not_submitted' === $privilege) {
-                // - The item must be locked to the user
-                // - The item must already be submitted for review
+                // - The item must be locked to the transcriber
+                // - AND the item must already be submitted for review
                 return (
                     $role === $resource->getLockedBy()
                     && $resource->getReviewed() < $resource->getSubmitted()
