@@ -51,7 +51,7 @@ class ItemForm extends Form
         // submit_action select
         $element = new Element\Select('submit_action');
         $valueOptions = [
-            '[No change]', // @translate
+            '' => '[No change]', // @translate
         ];
         if ($item->userIsAllowed('datascribe_mark_item_submitted')) {
             $valueOptions['submitted'] = 'Submit for review'; // @translate
@@ -66,7 +66,7 @@ class ItemForm extends Form
         // review_action select
         $element = new Element\Select('review_action');
         $valueOptions = [
-            '[No change]', // @translate
+            '' => '[No change]', // @translate
         ];
         if ($item->userIsAllowed('datascribe_mark_item_approved')) {
             $valueOptions['approved'] = 'Mark as approved'; // @translate
@@ -98,5 +98,14 @@ class ItemForm extends Form
         // - Mark as prioritized (prioritized): if admin/reviewer -AND- not already marked as prioritized
         // - Mark as not prioritized (not_prioritized): if admin/reviewer -AND- not already not marked as prioritized
 
+        $inputFilter = $this->getInputFilter();
+        $inputFilter->add([
+            'name' => 'submit_action',
+            'allow_empty' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'review_action',
+            'allow_empty' => true,
+        ]);
     }
 }
