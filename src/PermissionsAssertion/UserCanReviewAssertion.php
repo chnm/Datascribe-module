@@ -45,50 +45,95 @@ class UserCanReviewAssertion implements AssertionInterface
         // Handle item-specific permission checks.
         if ($resource instanceof DatascribeItem) {
             if ('datascribe_mark_item_submitted' === $privilege) {
-                // - The item must not already be submitted for review
-                // - AND the item must not be approved
-                return (
-                    $resource->getReviewed() >= $resource->getSubmitted()
-                    && true !== $resource->getIsApproved()
-                );
+                return $this->canMarkItemSubmitted($resource);
             }
             if ('datascribe_mark_item_not_submitted' === $privilege) {
-                // - The item must already be submitted for review
-                return ($resource->getReviewed() < $resource->getSubmitted());
+                return $this->canMarkItemNotSubmitted($resource);
             }
             if ('datascribe_mark_item_not_reviewed' === $privilege) {
-                // - The item must be reviewed
-                return $resource->getReviewed();
+                return $this->canMarkItemNotReviewed($resource);
             }
             if ('datascribe_mark_item_not_approved' === $privilege) {
-                // - The item must be submitted
-                // - AND the item must be approved
-                return (
-                    $resource->getSubmitted()
-                    && true === $resource->getIsApproved()
-                );
+                return $this->canMarkItemNotApproved($resource);
             }
             if ('datascribe_mark_item_approved' === $privilege) {
-                // - The item must not be approved.
-                return (true !== $resource->getIsApproved());
+                return $this->canMarkItemApproved($resource);
             }
             if ('datascribe_unlock_item' === $privilege) {
-                // - The item must already be locked
-                return $resource->getLockedBy();
+                return $this->canUnlockItem($resource);
             }
             if ('datascribe_lock_item_to_self' === $privilege) {
-                // - The item must not already be locked by self
-                return $role !== $resource->getLockedBy();
+                return $this->canLockItemToSelf($resource, $role);
             }
             if ('datascribe_mark_item_prioritized' === $privilege) {
-                // - The item must not already be marked as prioritized
-                return null === $resource->getPrioritizedBy();
+                return $this->canMarkItemPrioritized($resource);
             }
             if ('datascribe_mark_item_not_prioritized' === $privilege) {
-                // - The item must already be marked as prioritized
-                return $resource->getPrioritizedBy();
+                return $this->canMarkItemNotPrioritized($resource);
             }
         }
         return true;
+    }
+
+    public function canMarkItemSubmitted($item)
+    {
+        // - The item must not already be submitted for review
+        // - AND the item must not be approved
+        return (
+            $item->getReviewed() >= $item->getSubmitted()
+            && true !== $item->getIsApproved()
+        );
+    }
+
+    public function canMarkItemNotSubmitted($item)
+    {
+        // - The item must already be submitted for review
+        return ($item->getReviewed() < $item->getSubmitted());
+    }
+
+    public function canMarkItemNotReviewed($item)
+    {
+        // - The item must be reviewed
+        return $item->getReviewed();
+    }
+
+    public function canMarkItemNotApproved($item)
+    {
+        // - The item must be submitted
+        // - AND the item must not already be not approved
+        return (
+            $item->getSubmitted()
+            && false !== $item->getIsApproved()
+        );
+    }
+
+    public function canMarkItemApproved($item)
+    {
+        // - The item must not be approved.
+        return (true !== $item->getIsApproved());
+    }
+
+    public function canUnlockItem($item)
+    {
+        // - The item must already be locked
+        return $item->getLocked();
+    }
+
+    public function canLockItemToSelf($item, $user)
+    {
+        // - The item must not already be locked by self
+        return ($user !== $item->getLockedBy());
+    }
+
+    public function canMarkItemPrioritized($item)
+    {
+        // - The item must not already be marked as prioritized
+        return (null === $item->getPrioritized());
+    }
+
+    public function canMarkItemNotPrioritized($item)
+    {
+        // - The item must already be marked as prioritized
+        return $item->getPrioritized();
     }
 }

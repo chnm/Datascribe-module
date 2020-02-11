@@ -45,32 +45,52 @@ class UserCanTranscribeAssertion implements AssertionInterface
         // Handle item-specific permission checks.
         if ($resource instanceof DatascribeItem) {
             if ('datascribe_mark_item_submitted' === $privilege) {
-                // - The item must be locked to the transcriber
-                // - AND the item must not already be submitted for review
-                // - AND the item must not be approved
-                return (
-                    $role === $resource->getLockedBy()
-                    && $resource->getReviewed() >= $resource->getSubmitted()
-                    && true !== $resource->getIsApproved()
-                );
+                return $this->canMarkItemSubmitted($resource, $role);
             }
             if ('datascribe_mark_item_not_submitted' === $privilege) {
-                // - The item must be locked to the transcriber
-                // - AND the item must already be submitted for review
-                return (
-                    $role === $resource->getLockedBy()
-                    && $resource->getReviewed() < $resource->getSubmitted()
-                );
+                return $this->canMarkItemNotSubmitted($resource, $role);
             }
             if ('datascribe_unlock_item' === $privilege) {
-                // - The item must be locked to the transcriber
-                return $role === $resource->getLockedBy();
+                return $this->canUnlockItem($resource, $role);
             }
             if ('datascribe_lock_item_to_self' === $privilege) {
-                // - The item must not already be locked
-                return null === $resource->getLockedBy();
+                return $this->canLockItemToSelf($resource);
             }
         }
         return true;
+    }
+
+    public function canMarkItemSubmitted($item, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must not already be submitted for review
+        // - AND the item must not be approved
+        return (
+            $user === $item->getLockedBy()
+            && $item->getReviewed() >= $item->getSubmitted()
+            && true !== $item->getIsApproved()
+        );
+    }
+
+    public function canMarkItemNotSubmitted($item, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must already be submitted for review
+        return (
+            $user === $item->getLockedBy()
+            && $item->getReviewed() < $item->getSubmitted()
+        );
+    }
+
+    public function canUnlockItem($item, $user)
+    {
+        // - The item must be locked to the transcriber
+        return ($user === $item->getLockedBy());
+    }
+
+    public function canLockItemToSelf($item)
+    {
+        // - The item must not already be locked
+        return (null === $item->getLocked());
     }
 }

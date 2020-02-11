@@ -91,10 +91,6 @@ class ItemForm extends AbstractItemForm
         $element->setAttribute('class', 'chosen-select');
         $this->add($element);
 
-        // priority_action
-        // - Mark as prioritized (prioritized): if admin/reviewer -AND- not already marked as prioritized
-        // - Mark as not prioritized (not_prioritized): if admin/reviewer -AND- not already not marked as prioritized
-
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
             'name' => 'submit_action',
