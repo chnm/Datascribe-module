@@ -164,6 +164,24 @@ $sortBy = [
     </div>
     <h3><?php echo $this->translate('Item actions'); ?></h3>
     <div class="meta-group">
+        <h4><?php echo $this->translate('Lock action'); ?></h4>
+        <div class="value">
+            <?php if ($item->locked()): ?>
+            <?php $lockedBy = $item->lockedBy(); ?>
+            <?php echo sprintf(
+                $this->translate('Last locked to %s on %s'),
+                $lockedBy ? $lockedBy->link($lockedBy->name()) : $this->translate('[Unknown]'),
+                $this->i18n()->dateFormat($item->locked(), 'medium', 'medium')
+            ); ?>
+            <?php else: ?>
+            <?php echo $this->translate('Unlocked'); ?>
+            <?php endif; ?>
+        </div>
+        <?php if ($item->userIsAllowed('datascribe_edit_lock_action')): ?>
+        <div class="value"><?php echo $this->formElement($form->get('lock_action')); ?></div>
+        <?php endif; ?>
+    </div>
+    <div class="meta-group">
         <h4><?php echo $this->translate('Submit action'); ?></h4>
         <div class="value">
             <?php if ($item->submitted()): ?>
@@ -177,7 +195,9 @@ $sortBy = [
             <?php echo $this->translate('Not submitted'); ?>
             <?php endif; ?>
         </div>
+        <?php if ($item->userIsAllowed('datascribe_edit_submit_action')): ?>
         <div class="value"><?php echo $this->formElement($form->get('submit_action')); ?></div>
+        <?php endif; ?>
     </div>
     <div class="meta-group">
         <h4><?php echo $this->translate('Review action'); ?></h4>
@@ -193,23 +213,9 @@ $sortBy = [
             <?php echo $this->translate('Not reviewed'); ?>
             <?php endif; ?>
         </div>
+        <?php if ($item->userIsAllowed('datascribe_edit_review_action')): ?>
         <div class="value"><?php echo $this->formElement($form->get('review_action')); ?></div>
-    </div>
-    <div class="meta-group">
-        <h4><?php echo $this->translate('Lock action'); ?></h4>
-        <div class="value">
-            <?php if ($item->locked()): ?>
-            <?php $lockedBy = $item->lockedBy(); ?>
-            <?php echo sprintf(
-                $this->translate('Last locked to %s on %s'),
-                $lockedBy ? $lockedBy->link($lockedBy->name()) : $this->translate('[Unknown]'),
-                $this->i18n()->dateFormat($item->locked(), 'medium', 'medium')
-            ); ?>
-            <?php else: ?>
-            <?php echo $this->translate('Unlocked'); ?>
-            <?php endif; ?>
-        </div>
-        <div class="value"><?php echo $this->formElement($form->get('lock_action')); ?></div>
+        <?php endif; ?>
     </div>
     <div class="meta-group">
         <h4><?php echo $this->translate('Priority action'); ?></h4>
@@ -225,7 +231,9 @@ $sortBy = [
             <?php echo $this->translate('Not prioritized'); ?>
             <?php endif; ?>
         </div>
+        <?php if ($item->userIsAllowed('datascribe_edit_priority_action')): ?>
         <div class="value"><?php echo $this->formElement($form->get('priority_action')); ?></div>
+        <?php endif; ?>
     </div>
     <h3><?php echo $this->translate('Item notes'); ?></h3>
     <div class="meta-group">

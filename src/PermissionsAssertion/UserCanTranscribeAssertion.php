@@ -56,6 +56,18 @@ class UserCanTranscribeAssertion implements AssertionInterface
             if ('datascribe_lock_item_to_self' === $privilege) {
                 return $this->canLockItemToSelf($resource);
             }
+            if ('datascribe_edit_submit_action' === $privilege) {
+                return (
+                    $this->canMarkItemSubmitted($resource, $role)
+                    || $this->canMarkItemNotSubmitted($resource, $role)
+                );
+            }
+            if ('datascribe_edit_lock_action' === $privilege) {
+                return (
+                    $this->canUnlockItem($resource, $role)
+                    || $this->canLockItemToSelf($resource)
+                );
+            }
         }
         return true;
     }
@@ -76,21 +88,31 @@ class UserCanTranscribeAssertion implements AssertionInterface
     {
         // - The item must be locked to the transcriber
         // - AND the item must already be submitted for review
+        // - AND the item must not be approved
         return (
             $user === $item->getLockedBy()
             && $item->getReviewed() < $item->getSubmitted()
+            && true !== $item->getIsApproved()
         );
     }
 
     public function canUnlockItem($item, $user)
     {
         // - The item must be locked to the transcriber
-        return ($user === $item->getLockedBy());
+        // - AND the item must not be approved
+        return (
+            $user === $item->getLockedBy()
+            && true !== $item->getIsApproved()
+        );
     }
 
     public function canLockItemToSelf($item)
     {
         // - The item must not already be locked
-        return (null === $item->getLocked());
+        // - AND the item must not be approved
+        return (
+            null === $item->getLocked()
+            && true !== $item->getIsApproved()
+        );
     }
 }

@@ -71,6 +71,31 @@ class UserCanReviewAssertion implements AssertionInterface
             if ('datascribe_mark_item_not_prioritized' === $privilege) {
                 return $this->canMarkItemNotPrioritized($resource);
             }
+            if ('datascribe_edit_submit_action' === $privilege) {
+                return (
+                    $this->canMarkItemSubmitted($resource)
+                    || $this->canMarkItemNotSubmitted($resource)
+                );
+            }
+            if ('datascribe_edit_review_action' === $privilege) {
+                return (
+                    $this->canMarkItemNotReviewed($resource)
+                    || $this->canMarkItemNotApproved($resource)
+                    || $this->canMarkItemApproved($resource)
+                );
+            }
+            if ('datascribe_edit_lock_action' === $privilege) {
+                return (
+                    $this->canUnlockItem($resource)
+                    || $this->canLockItemToSelf($resource, $role)
+                );
+            }
+            if ('datascribe_edit_priority_action' === $privilege) {
+                return (
+                    $this->canMarkItemPrioritized($resource)
+                    || $this->canMarkItemNotPrioritized($resource)
+                );
+            }
         }
         return true;
     }
@@ -99,12 +124,8 @@ class UserCanReviewAssertion implements AssertionInterface
 
     public function canMarkItemNotApproved($item)
     {
-        // - The item must be submitted
-        // - AND the item must not already be not approved
-        return (
-            $item->getSubmitted()
-            && false !== $item->getIsApproved()
-        );
+        // - The item must not already be not approved
+        return (false !== $item->getIsApproved());
     }
 
     public function canMarkItemApproved($item)

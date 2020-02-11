@@ -170,6 +170,10 @@ SQL;
                 'datascribe_lock_item_to_other',
                 'datascribe_mark_item_prioritized',
                 'datascribe_mark_item_not_prioritized',
+                'datascribe_edit_submit_action',
+                'datascribe_edit_review_action',
+                'datascribe_edit_lock_action',
+                'datascribe_edit_priority_action',
             ]
         );
 
@@ -209,6 +213,8 @@ SQL;
                 'datascribe_lock_item_to_other',
                 'datascribe_mark_item_prioritized',
                 'datascribe_mark_item_not_prioritized',
+                'datascribe_edit_review_action',
+                'datascribe_edit_priority_action',
             ],
             new UserCanReviewAssertion
         );
@@ -223,6 +229,8 @@ SQL;
                 'datascribe_edit_transcriber_notes',
                 'datascribe_unlock_item',
                 'datascribe_lock_item_to_self',
+                'datascribe_edit_submit_action',
+                'datascribe_edit_lock_action',
             ],
             $viewerAssertion
         );
