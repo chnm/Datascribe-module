@@ -108,5 +108,9 @@ class ItemForm extends AbstractItemForm
             'name' => 'lock_action',
             'allow_empty' => true,
         ]);
+        $inputFilter->add([
+            'name' => 'priority_action',
+            'allow_empty' => true,
+        ]);
     }
 }
