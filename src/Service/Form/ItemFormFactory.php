@@ -11,7 +11,6 @@ class ItemFormFactory implements FactoryInterface
     {
         $form = new ItemForm(null, $options);
         $form->setEntityManager($services->get('Omeka\EntityManager'));
-        $form->setUser($services->get('Omeka\AuthenticationService')->getIdentity());
         return $form;
     }
 }

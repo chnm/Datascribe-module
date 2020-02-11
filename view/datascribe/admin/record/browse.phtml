@@ -201,7 +201,7 @@ $sortBy = [
             <?php if ($item->locked()): ?>
             <?php $lockedBy = $item->lockedBy(); ?>
             <?php echo sprintf(
-                $this->translate('Last locked by %s on %s'),
+                $this->translate('Last locked to %s on %s'),
                 $lockedBy ? $lockedBy->link($lockedBy->name()) : $this->translate('[Unknown]'),
                 $this->i18n()->dateFormat($item->locked(), 'medium', 'medium')
             ); ?>
@@ -209,16 +209,7 @@ $sortBy = [
             <?php echo $this->translate('Unlocked'); ?>
             <?php endif; ?>
         </div>
-        <div class="value">
-            <select>
-                <option>[No change]</option>
-                <option>Unlock</option>
-                <option>Lock to me</option>
-                <option>Lock to transcriber ...</option>
-                <option>Lock to reviewer ...</option>
-                <option>Lock to admin ...</option>
-            </select>
-        </div>
+        <div class="value"><?php echo $this->formElement($form->get('lock_action')); ?></div>
     </div>
     <div class="meta-group">
         <h4><?php echo $this->translate('Priority action'); ?></h4>

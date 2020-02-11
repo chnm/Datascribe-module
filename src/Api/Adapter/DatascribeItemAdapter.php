@@ -306,13 +306,13 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
         // Handle a lock action.
         $lockAction = $request->getValue('lock_action');
-        if ('unlock' === $lockAction) {
+        if ('unlock' === $lockAction && $acl->userIsAllowed($entity, 'datascribe_unlock_item')) {
             $entity->setLocked(null);
             $entity->setLockedBy(null);
-        } elseif ('lock' === $lockAction) {
+        } elseif ('lock' === $lockAction && $acl->userIsAllowed($entity, 'datascribe_lock_item_to_self')) {
             $entity->setLocked(new DateTime('now'));
             $entity->setLockedBy($currentUser);
-        } elseif (is_numeric($lockAction)) {
+        } elseif (is_numeric($lockAction) && $acl->userIsAllowed($entity, 'datascribe_lock_item_to_other')) {
             $user = $this->getAdapter('users')->findEntity($lockAction);
             $entity->setLocked(new DateTime('now'));
             $entity->setLockedBy($user);

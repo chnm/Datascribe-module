@@ -72,6 +72,14 @@ class UserCanReviewAssertion implements AssertionInterface
                 // - The item must not be approved.
                 return (true !== $resource->getIsApproved());
             }
+            if ('datascribe_unlock_item' === $privilege) {
+                // - The item must already be locked
+                return $resource->getLockedBy();
+            }
+            if ('datascribe_lock_item_to_self' === $privilege) {
+                // - The item must not already be locked by self
+                return $role !== $resource->getLockedBy();
+            }
         }
         return true;
     }

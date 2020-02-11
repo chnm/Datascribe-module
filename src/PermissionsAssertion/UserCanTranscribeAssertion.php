@@ -62,6 +62,14 @@ class UserCanTranscribeAssertion implements AssertionInterface
                     && $resource->getReviewed() < $resource->getSubmitted()
                 );
             }
+            if ('datascribe_unlock_item' === $privilege) {
+                // - The item must be locked to the transcriber
+                return $role === $resource->getLockedBy();
+            }
+            if ('datascribe_lock_item_to_self' === $privilege) {
+                // - The item must not already be locked
+                return null === $resource->getLockedBy();
+            }
         }
         return true;
     }

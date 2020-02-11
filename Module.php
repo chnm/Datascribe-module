@@ -165,6 +165,9 @@ SQL;
                 'datascribe_mark_item_not_approved',
                 'datascribe_edit_transcriber_notes',
                 'datascribe_edit_reviewer_notes',
+                'datascribe_unlock_item',
+                'datascribe_lock_item_to_self',
+                'datascribe_lock_item_to_other',
             ]
         );
 
@@ -201,6 +204,7 @@ SQL;
                 'datascribe_mark_item_not_approved',
                 'datascribe_edit_transcriber_notes',
                 'datascribe_edit_reviewer_notes',
+                'datascribe_lock_item_to_other',
             ],
             new UserCanReviewAssertion
         );
@@ -213,6 +217,8 @@ SQL;
                 'datascribe_mark_item_submitted',
                 'datascribe_mark_item_not_submitted',
                 'datascribe_edit_transcriber_notes',
+                'datascribe_unlock_item',
+                'datascribe_lock_item_to_self',
             ],
             $viewerAssertion
         );

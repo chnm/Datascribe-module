@@ -1,33 +1,10 @@
 <?php
 namespace Datascribe\Form;
 
-use Doctrine\ORM\EntityManager;
-use Omeka\Entity\User;
 use Zend\Form\Element;
-use Zend\Form\Form;
 
-class ItemForm extends Form
+class ItemForm extends AbstractItemForm
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var User
-     */
-    protected $user;
-
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-    }
-
     public function init()
     {
         $item = $this->getOption('item');
@@ -81,6 +58,24 @@ class ItemForm extends Form
         $element->setAttribute('class', 'chosen-select');
         $this->add($element);
 
+        // lock_action select
+        $element = new Element\Select('lock_action');
+        $valueOptions = [
+            '' => '[No change]', // @translate
+        ];
+        if ($item->userIsAllowed('datascribe_unlock_item')) {
+            $valueOptions['unlock'] = 'Unlock'; // @translate
+        }
+        if ($item->userIsAllowed('datascribe_lock_item_to_self')) {
+            $valueOptions['lock'] = 'Lock to me'; // @translate
+        }
+        if ($item->userIsAllowed('datascribe_lock_item_to_other')) {
+            $valueOptions = $this->getLockToOtherValueOptions($valueOptions);
+        }
+        $element->setValueOptions($valueOptions);
+        $element->setAttribute('class', 'chosen-select');
+        $this->add($element);
+
         // Once an item is marked as approved, transcribers can no longer perform
         // lock/unlock or submit/unsubmit actions, nor can they add new records
         // to the item or edit existing records. Work can continue on the item only
@@ -105,6 +100,10 @@ class ItemForm extends Form
         ]);
         $inputFilter->add([
             'name' => 'review_action',
+            'allow_empty' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'lock_action',
             'allow_empty' => true,
         ]);
     }

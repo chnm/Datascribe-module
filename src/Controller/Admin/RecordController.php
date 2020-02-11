@@ -18,6 +18,8 @@ class RecordController extends AbstractActionController
         if (!$item) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
+        $dataset = $item->dataset();
+        $project = $dataset->project();
 
         $this->setBrowseDefaults('id');
         $query = array_merge(
@@ -29,8 +31,10 @@ class RecordController extends AbstractActionController
         $records = $response->getContent();
 
         $form = $this->getForm(ItemForm::class, [
+            'project' => $project,
             'item' => $item,
         ]);
+
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
             $form->setData($postData);
@@ -47,9 +51,8 @@ class RecordController extends AbstractActionController
         }
 
         $view = new ViewModel;
-        $dataset = $item->dataset();
         $view->setVariable('form', $form);
-        $view->setVariable('project', $dataset->project());
+        $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
         $view->setVariable('oItem', $item->item());
