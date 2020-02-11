@@ -129,7 +129,7 @@ SQL;
         $acl->allow(
             null,
             'Datascribe\Controller\Admin\Record',
-            ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all']
+            ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all', 'add', 'edit']
         );
 
         // Set API adapter privileges.
@@ -174,6 +174,7 @@ SQL;
                 'datascribe_edit_review_action',
                 'datascribe_edit_lock_action',
                 'datascribe_edit_priority_action',
+                'datascribe_add_record',
             ]
         );
 
@@ -231,6 +232,15 @@ SQL;
                 'datascribe_lock_item_to_self',
                 'datascribe_edit_submit_action',
                 'datascribe_edit_lock_action',
+                'datascribe_add_record',
+            ],
+            $viewerAssertion
+        );
+        $acl->allow(
+            null,
+            'Datascribe\Entity\DatascribeRecord',
+            [
+                'update'
             ],
             $viewerAssertion
         );

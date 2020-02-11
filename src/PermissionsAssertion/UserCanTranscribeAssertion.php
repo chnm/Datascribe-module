@@ -4,6 +4,7 @@ namespace Datascribe\PermissionsAssertion;
 use Datascribe\Entity\DatascribeDataset;
 use Datascribe\Entity\DatascribeItem;
 use Datascribe\Entity\DatascribeProject;
+use Datascribe\Entity\DatascribeRecord;
 use Datascribe\Entity\DatascribeUser;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Assertion\AssertionInterface;
@@ -28,6 +29,8 @@ class UserCanTranscribeAssertion implements AssertionInterface
             $project = $resource->getProject();
         } elseif ($resource instanceof DatascribeItem) {
             $project = $resource->getDataset()->getProject();
+        } elseif ($resource instanceof DatascribeRecord) {
+            $project = $resource->getItem()->getDataset()->getProject();
         } else {
             // The resource is not valid.
             return false;
@@ -44,6 +47,9 @@ class UserCanTranscribeAssertion implements AssertionInterface
         }
         // Handle item-specific permission checks.
         if ($resource instanceof DatascribeItem) {
+            if ('datascribe_add_record' === $privilege) {
+                return $this->canAddRecord($resource, $role);
+            }
             if ('datascribe_mark_item_submitted' === $privilege) {
                 return $this->canMarkItemSubmitted($resource, $role);
             }
@@ -69,7 +75,33 @@ class UserCanTranscribeAssertion implements AssertionInterface
                 );
             }
         }
+        if ($resource instanceof DatascribeRecord) {
+            if ('update' === $privilege) {
+                return $this->canUpdateRecord($resource, $role);
+            }
+        }
         return true;
+    }
+
+    public function canUpdateRecord($record, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must not be approved
+        $item = $record->getItem();
+        return (
+            $user === $item->getLockedBy()
+            && true !== $item->getIsApproved()
+        );
+    }
+
+    public function canAddRecord($item, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must not be approved
+        return (
+            $user === $item->getLockedBy()
+            && true !== $item->getIsApproved()
+        );
     }
 
     public function canMarkItemSubmitted($item, $user)

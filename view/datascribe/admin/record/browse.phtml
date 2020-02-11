@@ -152,7 +152,9 @@ $sortBy = [
 <?php echo $this->formElement($form->get('csrf')); ?>
 
 <div id="page-actions">
+    <?php if ($item->userIsAllowed('datascribe_add_record')): ?>
     <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
+    <?php endif; ?>
     <button><?php echo $this->translate('Save'); ?></button>
 </div>
 
