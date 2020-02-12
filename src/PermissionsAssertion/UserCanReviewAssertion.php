@@ -4,6 +4,7 @@ namespace Datascribe\PermissionsAssertion;
 use Datascribe\Entity\DatascribeDataset;
 use Datascribe\Entity\DatascribeItem;
 use Datascribe\Entity\DatascribeProject;
+use Datascribe\Entity\DatascribeRecord;
 use Datascribe\Entity\DatascribeUser;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Assertion\AssertionInterface;
@@ -28,6 +29,8 @@ class UserCanReviewAssertion implements AssertionInterface
             $project = $resource->getProject();
         } elseif ($resource instanceof DatascribeItem) {
             $project = $resource->getDataset()->getProject();
+        } elseif ($resource instanceof DatascribeRecord) {
+            $project = $resource->getItem()->getDataset()->getProject();
         } else {
             // The resource is not valid.
             return false;
