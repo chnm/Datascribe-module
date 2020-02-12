@@ -75,6 +75,7 @@ class UserCanTranscribeAssertion implements AssertionInterface
                 );
             }
         }
+        // Handle record-specific permission checks.
         if ($resource instanceof DatascribeRecord) {
             if ('update' === $privilege) {
                 return $this->canUpdateRecord($resource, $role);

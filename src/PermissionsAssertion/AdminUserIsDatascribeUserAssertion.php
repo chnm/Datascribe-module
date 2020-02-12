@@ -1,0 +1,26 @@
+<?php
+namespace Datascribe\PermissionsAssertion;
+
+use Datascribe\Entity\DatascribeItem;
+use Datascribe\Entity\DatascribeRecord;
+use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Assertion\AssertionInterface;
+use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Zend\Permissions\Acl\Role\RoleInterface;
+
+class AdminUserIsDatascribeUserAssertion implements AssertionInterface
+{
+    public function assert(Acl $acl, RoleInterface $role = null,
+        ResourceInterface $resource = null, $privilege = null
+    ) {
+        if ($resource instanceof DatascribeItem) {
+            $project = $resource->getDataset()->getProject();
+        } elseif ($resource instanceof DatascribeRecord) {
+            $project = $resource->getItem()->getDataset()->getProject();
+        } else {
+            return false;
+        }
+        $projectUser = $project->getUsers()->get($role->getId());
+        return (bool) $projectUser;
+    }
+}

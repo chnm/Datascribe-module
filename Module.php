@@ -1,9 +1,11 @@
 <?php
 namespace Datascribe;
 
+use Datascribe\PermissionsAssertion\AdminUserIsDatascribeUserAssertion;
 use Datascribe\PermissionsAssertion\UserCanReviewAssertion;
 use Datascribe\PermissionsAssertion\UserCanTranscribeAssertion;
 use Omeka\Module\AbstractModule;
+use Omeka\Permissions\Acl;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Mvc\MvcEvent;
@@ -185,8 +187,30 @@ SQL;
             new UserCanTranscribeAssertion
         ]);
         $viewerAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
-        $acl->allow(
+        // If an Omeka admin user is also a DataScribe user, deny all privileges
+        // that are specific to DataScribe items and records, so their access
+        // relies on DataScribe reviewer or transcriber privileges.
+        $acl->deny(
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+            ],
+            [
+                'Datascribe\Entity\DatascribeItem',
+                'Datascribe\Entity\DatascribeRecord',
+            ],
             null,
+            new AdminUserIsDatascribeUserAssertion
+        );
+        $acl->allow(
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
             [
                 'Datascribe\Entity\DatascribeProject',
                 'Datascribe\Entity\DatascribeDataset',
@@ -197,13 +221,27 @@ SQL;
             $viewerAssertion
         );
         $acl->allow(
-            null,
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
             'Datascribe\Entity\DatascribeDataset',
             'datascribe_view_item_batch_update',
             new UserCanReviewAssertion
         );
         $acl->allow(
-            null,
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
             'Datascribe\Entity\DatascribeItem',
             [
                 'batch_update',
@@ -221,7 +259,14 @@ SQL;
             new UserCanReviewAssertion
         );
         $acl->allow(
-            null,
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
             'Datascribe\Entity\DatascribeItem',
             [
                 'update',
@@ -238,7 +283,14 @@ SQL;
             $viewerAssertion
         );
         $acl->allow(
-            null,
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
             'Datascribe\Entity\DatascribeRecord',
             [
                 'update'
