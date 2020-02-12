@@ -1,5 +1,5 @@
 <?php
-$this->htmlElement('body')->appendAttribute('class', 'datascribe record add');
+$this->htmlElement('body')->appendAttribute('class', 'datascribe record edit');
 $form->prepare();
 ?>
 
@@ -7,7 +7,7 @@ $form->prepare();
 <?php echo $this->formElement($form->get('csrf')); ?>
 <div id="page-actions">
     <?php echo $this->cancelButton(); ?>
-    <button><?php echo $this->translate('Add'); ?></button>
+    <button><?php echo $this->translate('Save'); ?></button>
 </div>
 <?php echo $this->formRow($form->get('o-module-datascribe:needs_review')); ?>
 <?php echo $this->formRow($form->get('o-module-datascribe:needs_work')); ?>

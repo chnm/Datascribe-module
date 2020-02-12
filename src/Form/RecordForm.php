@@ -116,7 +116,7 @@ class RecordForm extends Form
             $element->setLabel('Is missing'); // @translate
             $element->setAttributes([
                 'required' => false,
-                'value' => $value ? $value->getIsMissing() : null,
+                'value' => $value ? $value->isMissing() : null,
             ]);
             $valueFieldset->add($element);
 
@@ -125,7 +125,7 @@ class RecordForm extends Form
             $element->setLabel('Is illegible'); // @translate
             $element->setAttributes([
                 'required' => false,
-                'value' => $value ? $value->getIsIllegible() : null,
+                'value' => $value ? $value->isIllegible() : null,
             ]);
             $valueFieldset->add($element);
         }

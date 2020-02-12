@@ -18,6 +18,8 @@ class RecordController extends AbstractActionController
         if (!$item) {
             return $this->redirect()->toRoute('admin/datascribe');
         }
+
+        $oItem = $item->item();
         $dataset = $item->dataset();
         $project = $dataset->project();
 
@@ -55,7 +57,7 @@ class RecordController extends AbstractActionController
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
-        $view->setVariable('oItem', $item->item());
+        $view->setVariable('oItem', $oItem);
         $view->setVariable('records', $records);
         return $view;
     }
@@ -72,11 +74,12 @@ class RecordController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $view = new ViewModel;
-        $view->setTerminal(true);
         $item = $record->item();
         $dataset = $item->dataset();
         $project = $dataset->project();
+
+        $view = new ViewModel;
+        $view->setTerminal(true);
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
@@ -95,10 +98,14 @@ class RecordController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
+        $oItem = $item->item();
         $dataset = $item->dataset();
+        $project = $dataset->project();
+
         $form = $this->getForm(RecordForm::class, [
             'dataset' => $dataset,
         ]);
+
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
             $form->setData($postData);
@@ -117,15 +124,43 @@ class RecordController extends AbstractActionController
 
         $view = new ViewModel;
         $view->setVariable('form', $form);
-        $view->setVariable('project', $dataset->project());
+        $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
-        $view->setVariable('oItem', $item->item());
+        $view->setVariable('oItem', $oItem);
         return $view;
     }
 
     public function editAction()
     {
+        $record = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id'),
+            $this->params('record-id')
+        );
+        if (!$record) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $item = $record->item();
+        $oItem = $item->item();
+        $dataset = $item->dataset();
+        $project = $dataset->project();
+
+        $form = $this->getForm(RecordForm::class, [
+            'dataset' => $dataset,
+            'record' => $record,
+        ]);
+
+        $view = new ViewModel;
+        $view->setVariable('form', $form);
+        $view->setVariable('project', $project);
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('item', $item);
+        $view->setVariable('oItem', $oItem);
+        $view->setVariable('record', $record);
+        return $view;
     }
 
     public function showAction()

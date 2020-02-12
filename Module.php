@@ -191,6 +191,7 @@ SQL;
                 'Datascribe\Entity\DatascribeProject',
                 'Datascribe\Entity\DatascribeDataset',
                 'Datascribe\Entity\DatascribeItem',
+                'Datascribe\Entity\DatascribeRecord',
             ],
             'read',
             $viewerAssertion
