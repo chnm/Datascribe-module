@@ -16,6 +16,7 @@ $primaryValueText = $primaryValue
 <?php echo $this->formElement($form->get('csrf')); ?>
 <div id="page-actions">
     <?php echo $this->cancelButton(); ?>
+    <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
     <button><?php echo $this->translate('Save'); ?></button>
 </div>
 <?php echo $this->formRow($form->get('o-module-datascribe:needs_review')); ?>
@@ -34,3 +35,5 @@ $primaryValueText = $primaryValue
 <?php endforeach; ?>
 
 <?php echo $this->form()->closeTag(); ?>
+
+<?php echo $this->deleteConfirm($record, 'record'); ?>

@@ -150,7 +150,7 @@ SQL;
         $acl->allow(
             null,
             'Datascribe\Controller\Admin\Record',
-            ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all', 'add', 'edit']
+            ['browse', 'show-details', 'search', 'show', 'batch-edit', 'batch-edit-all', 'add', 'edit', 'delete']
         );
 
         // Set API adapter privileges.
@@ -209,6 +209,7 @@ SQL;
                 'read',
                 'create',
                 'update',
+                'delete',
             ]
         );
 
@@ -337,7 +338,8 @@ SQL;
             ],
             'Datascribe\Entity\DatascribeRecord',
             [
-                'update'
+                'update',
+                'delete'
             ],
             $userCanAssertion
         );

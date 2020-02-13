@@ -80,11 +80,25 @@ class TranscriberCanAssertion implements AssertionInterface
             if ('update' === $privilege) {
                 return $this->canUpdateRecord($resource, $role);
             }
+            if ('delete' === $privilege) {
+                return $this->canDeleteRecord($resource, $role);
+            }
         }
         return true;
     }
 
     public function canUpdateRecord($record, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must not be approved
+        $item = $record->getItem();
+        return (
+            $user === $item->getLockedBy()
+            && true !== $item->getIsApproved()
+        );
+    }
+
+    public function canDeleteRecord($record, $user)
     {
         // - The item must be locked to the transcriber
         // - AND the item must not be approved

@@ -3,6 +3,7 @@ namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\ItemForm;
 use Datascribe\Form\RecordForm;
+use Omeka\Form\ConfirmForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -161,6 +162,23 @@ class RecordController extends AbstractActionController
         $view->setVariable('oItem', $oItem);
         $view->setVariable('record', $record);
         return $view;
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $form = $this->getForm(ConfirmForm::class);
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $response = $this->api($form)->delete('datascribe_records', $this->params('record-id'));
+                if ($response) {
+                    $this->messenger()->addSuccess('Record successfully deleted'); // @translate
+                }
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+        return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
     }
 
     public function showAction()
