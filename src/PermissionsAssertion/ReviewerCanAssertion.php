@@ -12,9 +12,9 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
 use Zend\Permissions\Acl\Role\RoleInterface;
 
 /**
- * Assert that an Omeka user can review a DataScribe item.
+ * Assert that a DataScribe reviewer can do something.
  */
-class UserCanReviewAssertion implements AssertionInterface
+class ReviewerCanAssertion implements AssertionInterface
 {
     public function assert(Acl $acl, RoleInterface $role = null,
         ResourceInterface $resource = null, $privilege = null

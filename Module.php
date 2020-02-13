@@ -4,9 +4,9 @@ namespace Datascribe;
 use Datascribe\Api\Adapter\DatascribeDatasetAdapter;
 use Datascribe\Api\Adapter\DatascribeProjectAdapter;
 use Datascribe\Entity\DatascribeUser;
-use Datascribe\PermissionsAssertion\AdminUserIsDatascribeUserAssertion;
-use Datascribe\PermissionsAssertion\UserCanReviewAssertion;
-use Datascribe\PermissionsAssertion\UserCanTranscribeAssertion;
+use Datascribe\PermissionsAssertion\IsDatascribeUserAssertion;
+use Datascribe\PermissionsAssertion\ReviewerCanAssertion;
+use Datascribe\PermissionsAssertion\TranscriberCanAssertion;
 use Omeka\Api\Exception\PermissionDeniedException;
 use Omeka\Module\AbstractModule;
 use Omeka\Permissions\Acl;
@@ -213,12 +213,12 @@ SQL;
         );
 
         // Set entity privileges.
-        $viewerAssertion = new AssertionAggregate;
-        $viewerAssertion->addAssertions([
-            new UserCanReviewAssertion,
-            new UserCanTranscribeAssertion
+        $userCanAssertion = new AssertionAggregate;
+        $userCanAssertion->addAssertions([
+            new ReviewerCanAssertion,
+            new TranscriberCanAssertion
         ]);
-        $viewerAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
+        $userCanAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
         // If an Omeka admin user is also a DataScribe project user, deny all
         // privileges specific to DataScribe items and records. Their access
         // will rely on their respective reviewer or transcriber privileges.
@@ -232,7 +232,7 @@ SQL;
                 'Datascribe\Entity\DatascribeRecord',
             ],
             null,
-            new AdminUserIsDatascribeUserAssertion
+            new IsDatascribeUserAssertion
         );
         $acl->allow(
             [
@@ -262,7 +262,7 @@ SQL;
             ],
             'Datascribe\Entity\DatascribeDataset',
             'datascribe_view_item_batch_update',
-            new UserCanReviewAssertion
+            new ReviewerCanAssertion
         );
         $acl->allow(
             [
@@ -286,7 +286,7 @@ SQL;
                 'datascribe_edit_review_action',
                 'datascribe_edit_priority_action',
             ],
-            new UserCanReviewAssertion
+            new ReviewerCanAssertion
         );
         $acl->allow(
             [
@@ -310,7 +310,7 @@ SQL;
                 'datascribe_edit_lock_action',
                 'datascribe_add_record',
             ],
-            $viewerAssertion
+            $userCanAssertion
         );
         // Note that we allow general create privilege for records because we
         // rely on special handling in self::assertCreateRecordPrivilege().
@@ -339,7 +339,7 @@ SQL;
             [
                 'update'
             ],
-            $viewerAssertion
+            $userCanAssertion
         );
     }
 
