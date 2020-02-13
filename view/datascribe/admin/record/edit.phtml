@@ -1,7 +1,16 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record edit');
 $form->prepare();
+$primaryValue = $record->primaryValue();
+$primaryValueText = $primaryValue
+        ? $primaryValue->value([
+            'length' => 25,
+            'if_invalid_return' => sprintf('[%s]', $this->translate('[Record]')),
+            'if_empty_return' => sprintf('[%s]', $this->translate('[Record]')),
+        ])
+        : $this->translate('[Record]');
 ?>
+<?php echo $this->pageTitle($primaryValueText, 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('csrf')); ?>
