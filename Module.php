@@ -1,6 +1,8 @@
 <?php
 namespace Datascribe;
 
+use Datascribe\Api\Adapter\DatascribeDatasetAdapter;
+use Datascribe\Api\Adapter\DatascribeProjectAdapter;
 use Datascribe\PermissionsAssertion\AdminUserIsDatascribeUserAssertion;
 use Datascribe\PermissionsAssertion\UserCanReviewAssertion;
 use Datascribe\PermissionsAssertion\UserCanTranscribeAssertion;
@@ -91,12 +93,22 @@ SQL;
         $sharedEventManager->attach(
             'Datascribe\Api\Adapter\DatascribeProjectAdapter',
             'api.search.query',
-            [$this, 'filterProjects']
+            [$this, 'filterForVisibility']
         );
         $sharedEventManager->attach(
             'Datascribe\Api\Adapter\DatascribeProjectAdapter',
             'api.find.query',
-            [$this, 'filterProjects']
+            [$this, 'filterForVisibility']
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
+            'api.search.query',
+            [$this, 'filterForVisibility']
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
+            'api.find.query',
+            [$this, 'filterForVisibility']
         );
     }
 
@@ -311,11 +323,11 @@ SQL;
     }
 
     /**
-     * Filter projects for visibility.
+     * Filter for visibility (projects and datasets).
      *
      * @param Event $event
      */
-    public function filterProjects(Event $event)
+    public function filterForVisibility(Event $event)
     {
         $qb = $event->getParam('queryBuilder');
 
@@ -332,13 +344,25 @@ SQL;
                 return;
             }
             $adapter = $event->getTarget();
-            $projectAlias = $adapter->createAlias();
-            $qb->leftJoin('omeka_root.users', $projectAlias);
+            if ($adapter instanceof DatascribeDatasetAdapter) {
+                // Filter datasets
+                $projectAlias = $adapter->createAlias();
+                $qb->leftJoin('omeka_root.project', $projectAlias);
+                $userAlias = $adapter->createAlias();
+                $qb->leftJoin("$projectAlias.users", $userAlias);
+            } elseif ($adapter instanceof DatascribeProjectAdapter) {
+                // Filter projects
+                $userAlias = $adapter->createAlias();
+                $qb->leftJoin('omeka_root.users', $userAlias);
+            } else {
+                // Not a filterable adapter.
+                return;
+            }
             $expression = $qb->expr()->orX(
                 $expression,
                 // Users can view projects that they belong to.
                 $qb->expr()->eq(
-                    "$projectAlias.user",
+                    "$userAlias.user",
                     $adapter->createNamedParameter($qb, $identity)
                 )
             );
