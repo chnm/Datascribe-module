@@ -3,9 +3,11 @@ namespace Datascribe;
 
 use Datascribe\Api\Adapter\DatascribeDatasetAdapter;
 use Datascribe\Api\Adapter\DatascribeProjectAdapter;
+use Datascribe\Entity\DatascribeUser;
 use Datascribe\PermissionsAssertion\AdminUserIsDatascribeUserAssertion;
 use Datascribe\PermissionsAssertion\UserCanReviewAssertion;
 use Datascribe\PermissionsAssertion\UserCanTranscribeAssertion;
+use Omeka\Api\Exception\PermissionDeniedException;
 use Omeka\Module\AbstractModule;
 use Omeka\Permissions\Acl;
 use Zend\EventManager\Event;
@@ -110,6 +112,11 @@ SQL;
             'api.find.query',
             [$this, 'filterForVisibility']
         );
+        $sharedEventManager->attach(
+            'Datascribe\Entity\DatascribeRecord',
+            'entity.persist.pre',
+            [$this, 'assertCreateRecordPrivilege']
+        );
     }
 
     /**
@@ -200,6 +207,7 @@ SQL;
             [
                 'search',
                 'read',
+                'create',
                 'update',
             ]
         );
@@ -271,7 +279,6 @@ SQL;
                 'datascribe_mark_item_approved',
                 'datascribe_mark_item_not_reviewed',
                 'datascribe_mark_item_not_approved',
-                'datascribe_edit_transcriber_notes',
                 'datascribe_edit_reviewer_notes',
                 'datascribe_lock_item_to_other',
                 'datascribe_mark_item_prioritized',
@@ -304,6 +311,20 @@ SQL;
                 'datascribe_add_record',
             ],
             $viewerAssertion
+        );
+        // Note that we allow general create privilege for records because we
+        // rely on special handling in self::assertCreateRecordPrivilege().
+        $acl->allow(
+            [
+                Acl::ROLE_GLOBAL_ADMIN,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_RESEARCHER,
+            ],
+            'Datascribe\Entity\DatascribeRecord',
+            'create'
         );
         $acl->allow(
             [
@@ -368,5 +389,44 @@ SQL;
             );
         }
         $qb->andWhere($expression);
+    }
+
+    /**
+     * Assert that the current user has permission to create a DataScribe item.
+     *
+     * Asserting create privilege for a record is a special case that cannot be
+     * done using the ACL becuase the ACL checks permissions before the record
+     * is hydrated, so there would be no way for the existing ACL assertions to
+     * tell if the current user has permissions to transcribe the project.
+     *
+     * @throws PermissionDeniedException
+     * @param Event $event
+     */
+    public function assertCreateRecordPrivilege(Event $event) {
+        $services = $this->getServiceLocator();
+        $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+        $userIsAdmin = in_array($user->getRole(), [Acl::ROLE_GLOBAL_ADMIN, Acl::ROLE_SITE_ADMIN]);
+        $errorMessage = 'Permission denied for the current user to create the Datascribe\Entity\DatascribeRecord resource.';
+
+        $record = $event->getTarget();
+        $item = $record->getItem();
+        $dataset = $item->getDataset();
+        $project = $dataset->getProject();
+
+        $projectUser = $project->getUsers()->get($user->getId());
+        if ($projectUser) {
+            if (DatascribeUser::ROLE_TRANSCRIBER === $projectUser->getRole()) {
+                // - The item must be locked to the transcriber
+                // - AND the item must not be approved
+                $itemIsNotLockedByUser = ($user !== $item->getLockedBy());
+                $itemIsApproved = (true === $item->getIsApproved());
+                if ($itemIsNotLockedByUser || $itemIsApproved) {
+                    throw new PermissionDeniedException($errorMessage);
+                }
+            }
+        } elseif (!$userIsAdmin) {
+            // The user is not assigned to this project and is not an admin.
+            throw new PermissionDeniedException($errorMessage);
+        }
     }
 }
