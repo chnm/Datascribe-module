@@ -137,12 +137,7 @@ SQL;
         // Set API adapter privileges.
         $acl->allow(
             null,
-            [
-                'Datascribe\Api\Adapter\DatascribeProjectAdapter',
-                'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
-                'Datascribe\Api\Adapter\DatascribeItemAdapter',
-                'Datascribe\Api\Adapter\DatascribeRecordAdapter',
-            ],
+            'Datascribe\Api\Adapter\DatascribeProjectAdapter',
             [
                 'search',
                 'read',
@@ -152,12 +147,20 @@ SQL;
         $acl->allow(
             null,
             'Datascribe\Api\Adapter\DatascribeDatasetAdapter',
-            'datascribe_view_item_batch_update'
+            [
+                'search',
+                'read',
+                'update',
+                'datascribe_view_item_batch_update',
+            ]
         );
         $acl->allow(
             null,
             'Datascribe\Api\Adapter\DatascribeItemAdapter',
             [
+                'search',
+                'read',
+                'update',
                 'batch_update',
                 'datascribe_view_record_batch_update',
                 'datascribe_mark_item_submitted',
@@ -179,6 +182,15 @@ SQL;
                 'datascribe_add_record',
             ]
         );
+        $acl->allow(
+            null,
+            'Datascribe\Api\Adapter\DatascribeRecordAdapter',
+            [
+                'search',
+                'read',
+                'update',
+            ]
+        );
 
         // Set entity privileges.
         $viewerAssertion = new AssertionAggregate;
@@ -187,9 +199,9 @@ SQL;
             new UserCanTranscribeAssertion
         ]);
         $viewerAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
-        // If an Omeka admin user is also a DataScribe user, deny all privileges
-        // that are specific to DataScribe items and records, so their access
-        // relies on DataScribe reviewer or transcriber privileges.
+        // If an Omeka admin user is also a DataScribe project user, deny all
+        // privileges specific to DataScribe items and records. Their access
+        // will rely on their respective reviewer or transcriber privileges.
         $acl->deny(
             [
                 Acl::ROLE_GLOBAL_ADMIN,
@@ -217,8 +229,7 @@ SQL;
                 'Datascribe\Entity\DatascribeItem',
                 'Datascribe\Entity\DatascribeRecord',
             ],
-            'read',
-            $viewerAssertion
+            'read'
         );
         $acl->allow(
             [
