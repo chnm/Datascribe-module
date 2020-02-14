@@ -88,6 +88,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         $em = $services->get('Omeka\EntityManager');
         $dataTypes = $services->get('Datascribe\DataTypeManager');
         $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+        $acl = $services->get('Omeka\Acl');
 
         $this->hydrateOwner($request, $entity);
         if (Request::CREATE === $request->getOperation()) {
@@ -99,16 +100,16 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             $entity->setModifiedBy($user);
             $entity->setModified(new DateTime('now'));
         }
-        if ($this->shouldHydrate($request, 'o-module-datascribe:transcriber_notes')) {
+        if ($this->shouldHydrate($request, 'o-module-datascribe:transcriber_notes') && $acl->userIsAllowed($entity->getItem(), 'datascribe_edit_transcriber_notes')) {
             $entity->setTranscriberNotes($request->getValue('o-module-datascribe:transcriber_notes'));
         }
-        if ($this->shouldHydrate($request, 'o-module-datascribe:reviewer_notes')) {
+        if ($this->shouldHydrate($request, 'o-module-datascribe:reviewer_notes') && $acl->userIsAllowed($entity->getItem(), 'datascribe_edit_reviewer_notes')) {
             $entity->setReviewerNotes($request->getValue('o-module-datascribe:reviewer_notes'));
         }
-        if ($this->shouldHydrate($request, 'o-module-datascribe:needs_review')) {
+        if ($this->shouldHydrate($request, 'o-module-datascribe:needs_review') && $acl->userIsAllowed($entity->getItem(), 'datascribe_flag_record_needs_review')) {
             $entity->setNeedsReview($request->getValue('o-module-datascribe:needs_review'));
         }
-        if ($this->shouldHydrate($request, 'o-module-datascribe:needs_work')) {
+        if ($this->shouldHydrate($request, 'o-module-datascribe:needs_work') && $acl->userIsAllowed($entity->getItem(), 'datascribe_flag_record_needs_work')) {
             $entity->setNeedsWork($request->getValue('o-module-datascribe:needs_work'));
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:value')) {

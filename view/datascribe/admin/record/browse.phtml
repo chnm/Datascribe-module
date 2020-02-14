@@ -159,7 +159,7 @@ $sortBy = [
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
-    <h3><?php echo $this->translate('Status'); ?></h3>
+    <h3><?php echo $this->translate('Item status'); ?></h3>
     <div class="meta-group">
         <div class="value"><?php echo $this->translate($item->statusLabel()); ?></div>
     </div>
@@ -237,14 +237,18 @@ $sortBy = [
         <?php endif; ?>
     </div>
     <h3><?php echo $this->translate('Item notes'); ?></h3>
+    <?php if ($form->has('o-module-datascribe:transcriber_notes')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
     </div>
+    <?php endif; ?>
+    <?php if ($form->has('o-module-datascribe:reviewer_notes')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
     </div>
+    <?php endif; ?>
     <?php echo $this->partial('datascribe/admin/item/show-details'); ?>
 </div>
 

@@ -199,6 +199,8 @@ SQL;
                 'datascribe_edit_lock_action',
                 'datascribe_edit_priority_action',
                 'datascribe_add_record',
+                'datascribe_flag_record_needs_review',
+                'datascribe_flag_record_needs_work',
             ]
         );
         $acl->allow(
@@ -286,6 +288,7 @@ SQL;
                 'datascribe_mark_item_not_prioritized',
                 'datascribe_edit_review_action',
                 'datascribe_edit_priority_action',
+                'datascribe_flag_record_needs_work',
             ],
             new ReviewerCanAssertion
         );
@@ -310,6 +313,7 @@ SQL;
                 'datascribe_edit_submit_action',
                 'datascribe_edit_lock_action',
                 'datascribe_add_record',
+                'datascribe_flag_record_needs_review',
             ],
             $userCanAssertion
         );

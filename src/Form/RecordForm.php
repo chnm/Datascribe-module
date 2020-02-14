@@ -33,43 +33,44 @@ class RecordForm extends Form
      */
     protected function addCommonElements()
     {
+        $item = $this->getOption('item');
         $record = $this->getOption('record');
 
         // Add "needs_review" element.
-        $element = new Element\Checkbox('o-module-datascribe:needs_review');
-        $element->setLabel('Needs review'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $record ? $record->needsReview() : null,
-        ]);
-        $this->add($element);
+        if ($item->userIsAllowed('datascribe_flag_record_needs_review')) {
+            $element = new Element\Checkbox('o-module-datascribe:needs_review');
+            $element->setLabel('Needs review'); // @translate
+            $element->setAttribute('required', false);
+            $element->setValue($record ? $record->needsReview() : null);
+            $this->add($element);
+        }
 
         // Add "needs_work" element.
-        $element = new Element\Checkbox('o-module-datascribe:needs_work');
-        $element->setLabel('Needs work'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $record ? $record->needsWork() : null,
-        ]);
-        $this->add($element);
+        if ($item->userIsAllowed('datascribe_flag_record_needs_work')) {
+            $element = new Element\Checkbox('o-module-datascribe:needs_work');
+            $element->setLabel('Needs work'); // @translate
+            $element->setAttribute('required', false);
+            $element->setValue($record ? $record->needsWork() : null);
+            $this->add($element);
+        }
 
         // Add "transcriber_notes" element.
-        $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
-        $element->setLabel('Transcriber notes'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $record ? $record->transcriberNotes() : null,
-        ]);
-        $this->add($element);
+        if ($item->userIsAllowed('datascribe_edit_transcriber_notes')) {
+            $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
+            $element->setLabel('Transcriber notes'); // @translate
+            $element->setAttribute('required', false);
+            $element->setValue($record ? $record->transcriberNotes() : null);
+            $this->add($element);
+        }
 
         // Add "reviewer_notes" element.
-        $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
-        $element->setLabel('Reviewer notes'); // @translate
-        $element->setAttributes([
-            'required' => false,
-            'value' => $record ? $record->reviewerNotes() : null,
-        ]);
-        $this->add($element);
+        if ($item->userIsAllowed('datascribe_edit_reviewer_notes')) {
+            $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
+            $element->setLabel('Reviewer notes'); // @translate
+            $element->setAttribute('required', false);
+            $element->setValue($record ? $record->reviewerNotes() : null);
+            $this->add($element);
+        }
     }
 
     /**
@@ -77,12 +78,12 @@ class RecordForm extends Form
      */
     protected function addValueElements()
     {
-        $dataset = $this->getOption('dataset');
+        $item = $this->getOption('item');
         $record = $this->getOption('record');
 
         $valuesFieldset = new Fieldset('o-module-datascribe:value');
         $this->add($valuesFieldset);
-        foreach ($dataset->fields() as $field) {
+        foreach ($item->dataset()->fields() as $field) {
             $dataType = $this->dataTypeManager->get($field->dataType());
 
             $valueFieldset = new Fieldset($field->id());
@@ -127,19 +128,15 @@ class RecordForm extends Form
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');
             $element->setLabel('Is missing'); // @translate
-            $element->setAttributes([
-                'required' => false,
-                'value' => $value ? $value->isMissing() : null,
-            ]);
+            $element->setAttribute('required', false);
+            $element->setValue($value ? $value->isMissing() : null);
             $valueFieldset->add($element);
 
             // Add the common "is_illegible" element.
             $element = new Element\Checkbox('is_illegible');
             $element->setLabel('Is illegible'); // @translate
-            $element->setAttributes([
-                'required' => false,
-                'value' => $value ? $value->isIllegible() : null,
-            ]);
+            $element->setAttribute('required', false);
+            $element->setValue($value ? $value->isIllegible() : null);
             $valueFieldset->add($element);
         }
     }

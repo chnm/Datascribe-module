@@ -104,7 +104,7 @@ class RecordController extends AbstractActionController
         $project = $dataset->project();
 
         $form = $this->getForm(RecordForm::class, [
-            'dataset' => $dataset,
+            'item' => $item,
         ]);
 
         if ($this->getRequest()->isPost()) {
@@ -150,7 +150,7 @@ class RecordController extends AbstractActionController
         $project = $dataset->project();
 
         $form = $this->getForm(RecordForm::class, [
-            'dataset' => $dataset,
+            'item' => $item,
             'record' => $record,
         ]);
 

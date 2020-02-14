@@ -10,20 +10,18 @@ class ItemForm extends AbstractItemForm
         $item = $this->getOption('item');
 
         // transcriber_notes textarea
-        $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
-        $element->setValue($item->transcriberNotes());
-        if (!$item->userIsAllowed('datascribe_edit_transcriber_notes')) {
-            $element->setAttribute('disabled', true);
+        if ($item->userIsAllowed('datascribe_edit_transcriber_notes')) {
+            $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
+            $element->setValue($item->transcriberNotes());
+            $this->add($element);
         }
-        $this->add($element);
 
         // reviewer_notes textarea
-        $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
-        $element->setValue($item->reviewerNotes());
-        if (!$item->userIsAllowed('datascribe_edit_reviewer_notes')) {
-            $element->setAttribute('disabled', true);
+        if ($item->userIsAllowed('datascribe_edit_reviewer_notes')) {
+            $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
+            $element->setValue($item->reviewerNotes());
+            $this->add($element);
         }
-        $this->add($element);
 
         // submit_action select
         $element = new Element\Select('submit_action');
