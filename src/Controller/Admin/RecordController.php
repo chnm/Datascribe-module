@@ -154,6 +154,21 @@ class RecordController extends AbstractActionController
             'record' => $record,
         ]);
 
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->params()->fromPost();
+            $form->setData($postData);
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
+                if ($response) {
+                    $this->messenger()->addSuccess('Record successfully edited.'); // @translate
+                    return $this->redirect()->toUrl($response->getContent()->url());
+                }
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+
         $view = new ViewModel;
         $view->setVariable('form', $form);
         $view->setVariable('project', $project);
