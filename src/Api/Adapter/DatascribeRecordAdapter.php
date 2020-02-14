@@ -2,6 +2,7 @@
 namespace Datascribe\Api\Adapter;
 
 use Datascribe\Entity\DatascribeValue;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
