@@ -1,5 +1,9 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record add');
+$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
+$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
+$this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $form->prepare();
 ?>
 
@@ -11,10 +15,6 @@ $form->prepare();
     <?php echo $this->cancelButton(); ?>
     <button><?php echo $this->translate('Add'); ?></button>
 </div>
-<?php echo $this->formRow($form->get('o-module-datascribe:needs_review')); ?>
-<?php echo $this->formRow($form->get('o-module-datascribe:needs_work')); ?>
-<?php echo $this->formRow($form->get('o-module-datascribe:transcriber_notes')); ?>
-<?php echo $this->formRow($form->get('o-module-datascribe:reviewer_notes')); ?>
 
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
 <fieldset>
@@ -25,5 +25,27 @@ $form->prepare();
     <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
 </fieldset>
 <?php endforeach; ?>
+
+<div class="sidebar always-open">
+    <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <h3><?php echo $this->translate('Record flags'); ?></h3>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Needs review'); ?></h4>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_review')); ?></div>
+    </div>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Needs work'); ?></h4>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_work')); ?></div>
+    </div>
+    <h3><?php echo $this->translate('Record notes'); ?></h3>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
+    </div>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
+        <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
+    </div>
+</div>
 
 <?php echo $this->form()->closeTag(); ?>
