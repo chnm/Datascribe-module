@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Omeka\Entity\User;
 use Zend\Form\Form;
 
-abstract class AbstractItemForm extends Form
+abstract class AbstractForm extends Form
 {
     /**
      * @var EntityManager
@@ -22,6 +22,36 @@ abstract class AbstractItemForm extends Form
     public function setEntityManager(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * Get project users for the value options.
+     *
+     * This will only get users who are set in the $byColumn.
+     *
+     * @param DatascribeProjectRepresentation $project
+     * @param string $byColumn
+     * @return string
+     */
+    protected function getByUsers(string $byColumn, DatascribeProjectRepresentation $project)
+    {
+        if (!in_array($byColumn, ['lockedBy', 'submittedBy', 'reviewedBy'])) {
+            return [];
+        }
+        $dql = "
+            SELECT u
+            FROM Omeka\Entity\User u
+            JOIN Datascribe\Entity\DatascribeItem i WITH i.$byColumn = u
+            JOIN i.dataset d
+            JOIN d.project p
+            WHERE p = :projectId";
+        $query = $this->em->createQuery($dql);
+        $query->setParameter('projectId', $project->id());
+        $users = $query->getResult();
+        usort($users, function ($userA, $userB) {
+            return strcmp($userA->getName(), $userB->getName());
+        });
+        return $users;
     }
 
     protected function getLockToOtherValueOptions(array $valueOptions)

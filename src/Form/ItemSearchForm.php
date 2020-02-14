@@ -4,20 +4,9 @@ namespace Datascribe\Form;
 use Datascribe\Api\Representation\DatascribeProjectRepresentation;
 use Doctrine\ORM\EntityManager;
 use Omeka\Form\Element\UserSelect;
-use Zend\Form\Form;
 
-class ItemSearchForm extends Form
+class ItemSearchForm extends AbstractForm
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     public function init()
     {
         $project = $this->getOption('project');
@@ -113,35 +102,5 @@ class ItemSearchForm extends Form
                 'data-placeholder' => 'Select status', // @translate
             ],
         ]);
-    }
-
-    /**
-     * Get project users for the value options.
-     *
-     * This will only get users who are set in the $byColumn.
-     *
-     * @param DatascribeProjectRepresentation $project
-     * @param string $byColumn
-     * @return string
-     */
-    protected function getByUsers(string $byColumn, DatascribeProjectRepresentation $project)
-    {
-        if (!in_array($byColumn, ['lockedBy', 'submittedBy', 'reviewedBy'])) {
-            return [];
-        }
-        $dql = "
-            SELECT u
-            FROM Omeka\Entity\User u
-            JOIN Datascribe\Entity\DatascribeItem i WITH i.$byColumn = u
-            JOIN i.dataset d
-            JOIN d.project p
-            WHERE p = :projectId";
-        $query = $this->em->createQuery($dql);
-        $query->setParameter('projectId', $project->id());
-        $users = $query->getResult();
-        usort($users, function ($userA, $userB) {
-            return strcmp($userA->getName(), $userB->getName());
-        });
-        return $users;
     }
 }

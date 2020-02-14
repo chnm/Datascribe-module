@@ -3,7 +3,7 @@ namespace Datascribe\Form;
 
 use Datascribe\Entity\DatascribeUser;
 
-class ItemBatchForm extends AbstractItemForm
+class ItemBatchForm extends AbstractForm
 {
     public function init()
     {

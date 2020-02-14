@@ -3,7 +3,7 @@ namespace Datascribe\Form;
 
 use Zend\Form\Element;
 
-class ItemForm extends AbstractItemForm
+class ItemForm extends AbstractForm
 {
     public function init()
     {
