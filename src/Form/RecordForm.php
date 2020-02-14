@@ -94,11 +94,15 @@ class RecordForm extends Form
 
             $value = null;
             $valueData = [];
+            $valueDataIsValid = true;
             if ($record) {
                 $values = $record->values();
                 if (isset($values[$field->id()])) {
                     $value = $values[$field->id()];
                     $valueData = $value->data();
+                    if (!$dataType->valueDataIsValid($field->data(), $value->data())) {
+                        $valueDataIsValid = false;
+                    }
                 }
             }
 
@@ -108,8 +112,17 @@ class RecordForm extends Form
                 $field->name(),
                 $field->description(),
                 $field->data(),
-                $valueData
+                $valueDataIsValid ? $valueData : []
             );
+
+            if (!$valueDataIsValid) {
+                // Add a disabled textarea containing the invalid data in JSON.
+                $element = new Element\Textarea('invalid_data');
+                $element->setLabel('Invalid data'); // @translate
+                $element->setAttribute('disabled', true);
+                $element->setValue(json_encode($valueData, JSON_PRETTY_PRINT));
+                $valueFieldset->add($element);
+            }
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');

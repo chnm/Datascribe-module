@@ -28,6 +28,9 @@ $primaryValueText = $primaryValue
 <fieldset>
     <?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
     <?php echo sprintf('<p>%s</p>', $fieldset->getOption('datascribe_field_description')); ?>
+    <?php if ($fieldset->has('invalid_data')): ?>
+    <?php echo $this->formRow($fieldset->get('invalid_data')); ?>
+    <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>
     <?php echo $this->formRow($fieldset->get('is_missing')); ?>
     <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
