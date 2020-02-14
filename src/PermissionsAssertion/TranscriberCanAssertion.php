@@ -74,6 +74,9 @@ class TranscriberCanAssertion implements AssertionInterface
                     || $this->canLockItemToSelf($resource)
                 );
             }
+            if ('datascribe_edit_transcriber_notes' === $privilege) {
+                return $this->canEditTranscriberNotes($resource, $role);
+            }
         }
         // Handle record-specific permission checks.
         if ($resource instanceof DatascribeRecord) {
@@ -159,6 +162,16 @@ class TranscriberCanAssertion implements AssertionInterface
         // - AND the item must not be approved
         return (
             null === $item->getLocked()
+            && true !== $item->getIsApproved()
+        );
+    }
+
+    public function canEditTranscriberNotes($item, $user)
+    {
+        // - The item must be locked to the transcriber
+        // - AND the item must not be approved
+        return (
+            $user === $item->getLockedBy()
             && true !== $item->getIsApproved()
         );
     }
