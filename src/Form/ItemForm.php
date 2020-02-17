@@ -8,6 +8,7 @@ class ItemForm extends AbstractForm
     public function init()
     {
         $item = $this->getOption('item');
+        $project = $this->getOption('project');
 
         // transcriber_notes textarea
         if ($item->userIsAllowed('datascribe_edit_transcriber_notes')) {
@@ -68,7 +69,7 @@ class ItemForm extends AbstractForm
             $valueOptions['lock'] = 'Lock to me'; // @translate
         }
         if ($item->userIsAllowed('datascribe_lock_item_to_other')) {
-            $valueOptions = $this->getLockToOtherValueOptions($valueOptions);
+            $valueOptions = $this->getLockToOtherValueOptions($valueOptions, $project);
         }
         $element->setValueOptions($valueOptions);
         $element->setAttribute('class', 'chosen-select');

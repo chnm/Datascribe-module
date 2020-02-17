@@ -1,6 +1,8 @@
 <?php
 namespace Datascribe\Form;
 
+use Datascribe\Api\Representation\DatascribeItemRepresentation;
+use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\Api\Representation\DatascribeProjectRepresentation;
 use Datascribe\Entity\DatascribeUser;
 use Doctrine\ORM\EntityManager;
@@ -25,15 +27,13 @@ abstract class AbstractForm extends Form
     }
 
     /**
-     * Get project users for the value options.
+     * Get users who have done something to items in a dataset.
      *
-     * This will only get users who are set in the $byColumn.
-     *
-     * @param DatascribeProjectRepresentation $project
      * @param string $byColumn
+     * @param DatascribeDatasetRepresentation $dataset
      * @return string
      */
-    protected function getByUsers(string $byColumn, DatascribeProjectRepresentation $project)
+    protected function getByUsersForItems(string $byColumn, DatascribeDatasetRepresentation $dataset)
     {
         if (!in_array($byColumn, ['lockedBy', 'submittedBy', 'reviewedBy'])) {
             return [];
@@ -43,10 +43,9 @@ abstract class AbstractForm extends Form
             FROM Omeka\Entity\User u
             JOIN Datascribe\Entity\DatascribeItem i WITH i.$byColumn = u
             JOIN i.dataset d
-            JOIN d.project p
-            WHERE p = :projectId";
+            WHERE d = :datasetId";
         $query = $this->em->createQuery($dql);
-        $query->setParameter('projectId', $project->id());
+        $query->setParameter('datasetId', $dataset->id());
         $users = $query->getResult();
         usort($users, function ($userA, $userB) {
             return strcmp($userA->getName(), $userB->getName());
@@ -54,7 +53,38 @@ abstract class AbstractForm extends Form
         return $users;
     }
 
-    protected function getLockToOtherValueOptions(array $valueOptions)
+    /**
+     * Get users who have done something to records in an items.
+     *
+     * @param string $byColumn
+     * @param DatascribeItemRepresentation $item
+     * @return string
+     */
+    protected function getByUsersForRecords(string $byColumn, DatascribeItemRepresentation $item)
+    {
+        if (!in_array($byColumn, ['createdBy', 'modifiedBy'])) {
+            return [];
+        }
+        $dql = "
+            SELECT u
+            FROM Omeka\Entity\User u
+            JOIN Datascribe\Entity\DatascribeRecord r WITH r.$byColumn = u
+            JOIN r.item i
+            WHERE i = :itemId";
+        $query = $this->em->createQuery($dql);
+        $query->setParameter('itemId', $item->id());
+        $users = $query->getResult();
+        usort($users, function ($userA, $userB) {
+            return strcmp($userA->getName(), $userB->getName());
+        });
+        return $users;
+    }
+
+    /**
+     * @param array $valueOptions
+     * @param DatascribeProjectRepresentation $project
+     */
+    protected function getLockToOtherValueOptions(array $valueOptions, DatascribeProjectRepresentation $project)
     {
         $valueOptions['transcribers'] = [
             'label' => 'Lock to transcriber', // @translate
@@ -71,7 +101,7 @@ abstract class AbstractForm extends Form
         foreach ($this->getAdminUsers() as $user) {
             $valueOptions['admins']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
-        foreach ($this->getProjectUsers() as $user) {
+        foreach ($this->getProjectUsers($project) as $user) {
             $oUser = $user->getUser();
             if (DatascribeUser::ROLE_REVIEWER === $user->getRole()) {
                 $valueOptions['reviewers']['options'][$oUser->getId()] = sprintf('%s (%s)', $oUser->getName(), $oUser->getEmail());
@@ -101,12 +131,12 @@ abstract class AbstractForm extends Form
 
     /**
      * Get all users of the configured project.
-     * 
+     *
+     * @param DatascribeProjectRepresentation $project
      * @return array
      */
-    protected function getProjectUsers()
+    protected function getProjectUsers(DatascribeProjectRepresentation $project)
     {
-        $project = $this->getOption('project');
         $dql = "
         SELECT u
         FROM Datascribe\Entity\DatascribeUser u

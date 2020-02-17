@@ -12,7 +12,7 @@ class ItemBatchForm extends AbstractForm
         $valueOptions = $this->getLockToOtherValueOptions([
             'unlock' => 'Unlock', // @translate
             'lock' => 'Lock to me', // @translate
-        ]);
+        ], $project);
         $this->add([
             'type' => 'select',
             'name' => 'lock_action',

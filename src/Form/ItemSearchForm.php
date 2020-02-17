@@ -9,7 +9,7 @@ class ItemSearchForm extends AbstractForm
 {
     public function init()
     {
-        $project = $this->getOption('project');
+        $dataset = $this->getOption('dataset');
 
         $this->add([
             'type' => 'select',
@@ -38,7 +38,7 @@ class ItemSearchForm extends AbstractForm
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('submittedBy', $project) as $user) {
+        foreach ($this->getByUsersForItems('submittedBy', $dataset) as $user) {
             $valueOptions['submitted_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -62,7 +62,7 @@ class ItemSearchForm extends AbstractForm
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('reviewedBy', $project) as $user) {
+        foreach ($this->getByUsersForItems('reviewedBy', $dataset) as $user) {
             $valueOptions['reviewed_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -86,7 +86,7 @@ class ItemSearchForm extends AbstractForm
                 'options' => [],
             ],
         ];
-        foreach ($this->getByUsers('lockedBy', $project) as $user) {
+        foreach ($this->getByUsersForItems('lockedBy', $dataset) as $user) {
             $valueOptions['locked_by']['options'][$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([

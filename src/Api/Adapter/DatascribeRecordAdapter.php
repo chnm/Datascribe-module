@@ -40,10 +40,30 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             );
         }
         if (isset($query['needs_review'])) {
-            $qb->andWhere($qb->expr()->eq('omeka_root.needsReview', true));
+            if (in_array($query['needs_review'], [true, 1, '1'], true)) {
+                $qb->andWhere($qb->expr()->eq('omeka_root.needsReview', 1));
+            } elseif (in_array($query['needs_review'], [false, 0, '0'], true)) {
+                $qb->andWhere($qb->expr()->eq('omeka_root.needsReview', 0));
+            }
         }
         if (isset($query['needs_work'])) {
-            $qb->andWhere($qb->expr()->eq('omeka_root.needsWork', true));
+            if (in_array($query['needs_work'], [true, 1, '1'], true)) {
+                $qb->andWhere($qb->expr()->eq('omeka_root.needsWork', 1));
+            } elseif (in_array($query['needs_work'], [false, 0, '0'], true)) {
+                $qb->andWhere($qb->expr()->eq('omeka_root.needsWork', 0));
+            }
+        }
+        if (isset($query['created_by']) && is_numeric($query['created_by'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.createdBy',
+                $this->createNamedParameter($qb, $query['created_by'])
+            ));
+        }
+        if (isset($query['modified_by']) && is_numeric($query['modified_by'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'omeka_root.modifiedBy',
+                $this->createNamedParameter($qb, $query['modified_by'])
+            ));
         }
     }
 

@@ -1,0 +1,17 @@
+<?php
+$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
+$this->headLink()->prependStylesheet($this->assetUrl('css/advanced-search.css', 'Omeka'));
+$this->headScript()->appendFile($this->assetUrl('js/advanced-search.js', 'Omeka'));
+$this->htmlElement('body')->appendAttribute('class', 'datascribe record search');
+?>
+
+<?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Search')); ?>
+
+<?php echo $this->form()->openTag($form); ?>
+    <div id="page-actions">
+        <?php echo $this->hyperlink($this->translate('Reset'), $this->url(null, [], true), ['class' => 'button']); ?>
+        <?php echo $this->cancelButton(); ?>
+        <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
+    </div>
+    <?php echo $this->formCollection($form, false); ?>
+<?php echo $this->form()->closeTag(); ?>

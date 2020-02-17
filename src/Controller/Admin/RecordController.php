@@ -3,6 +3,7 @@ namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\ItemForm;
 use Datascribe\Form\RecordForm;
+use Datascribe\Form\RecordSearchForm;
 use Omeka\Form\ConfirmForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -24,7 +25,7 @@ class RecordController extends AbstractActionController
         $dataset = $item->dataset();
         $project = $dataset->project();
 
-        $this->setBrowseDefaults('id');
+        $this->setBrowseDefaults('id', 'asc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_item_id' => $item->id()]
@@ -85,6 +86,29 @@ class RecordController extends AbstractActionController
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
         $view->setVariable('record', $record);
+        return $view;
+    }
+
+    public function searchAction()
+    {
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $form = $this->getForm(RecordSearchForm::class, ['item' => $item]);
+        $form->setAttribute('method', 'get');
+        $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
+        $form->setData($this->params()->fromQuery());
+
+        $view = new ViewModel;
+        $view->setVariable('item', $item);
+        $view->setVariable('form', $form);
+        $view->setVariable('query', $this->params()->fromQuery());
         return $view;
     }
 

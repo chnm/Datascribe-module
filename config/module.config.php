@@ -65,6 +65,7 @@ return [
             'Datascribe\Form\ItemBatchForm' => Service\Form\ItemBatchFormFactory::class,
             'Datascribe\Form\ItemForm' => Service\Form\ItemFormFactory::class,
             'Datascribe\Form\ItemSearchForm' => Service\Form\ItemSearchFormFactory::class,
+            'Datascribe\Form\RecordSearchForm' => Service\Form\RecordSearchFormFactory::class,
         ],
     ],
     'view_helpers' => [

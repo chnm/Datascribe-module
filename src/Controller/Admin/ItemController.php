@@ -80,13 +80,13 @@ class ItemController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $project = $dataset->project();
-        $form = $this->getForm(ItemSearchForm::class, ['project' => $project]);
+        $form = $this->getForm(ItemSearchForm::class, ['dataset' => $dataset]);
         $form->setAttribute('method', 'get');
         $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
         $form->setData($this->params()->fromQuery());
 
         $view = new ViewModel;
+        $project = $dataset->project();
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
         $view->setVariable('form', $form);
