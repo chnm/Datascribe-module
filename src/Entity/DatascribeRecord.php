@@ -28,7 +28,8 @@ class DatascribeRecord extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={"default":0}
      * )
      */
     protected $needsReview;
@@ -36,7 +37,8 @@ class DatascribeRecord extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={"default":0}
      * )
      */
     protected $needsWork;
@@ -67,22 +69,22 @@ class DatascribeRecord extends AbstractEntity
         return $this->item;
     }
 
-    public function setNeedsReview(?bool $needsReview) : void
+    public function setNeedsReview(bool $needsReview) : void
     {
         $this->needsReview = $needsReview;
     }
 
-    public function getNeedsReview() : ?bool
+    public function getNeedsReview() : bool
     {
         return $this->needsReview;
     }
 
-    public function setNeedsWork(?bool $needsWork) : void
+    public function setNeedsWork(bool $needsWork) : void
     {
         $this->needsWork = $needsWork;
     }
 
-    public function getNeedsWork() : ?bool
+    public function getNeedsWork() : bool
     {
         return $this->needsWork;
     }

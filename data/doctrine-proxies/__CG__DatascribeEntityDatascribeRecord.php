@@ -198,7 +198,7 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setNeedsReview(?bool $needsReview): void
+    public function setNeedsReview(bool $needsReview): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsReview', [$needsReview]);
@@ -209,7 +209,7 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function getNeedsReview(): ?bool
+    public function getNeedsReview(): bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsReview', []);
@@ -220,7 +220,7 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function setNeedsWork(?bool $needsWork): void
+    public function setNeedsWork(bool $needsWork): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNeedsWork', [$needsWork]);
@@ -231,7 +231,7 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     /**
      * {@inheritDoc}
      */
-    public function getNeedsWork(): ?bool
+    public function getNeedsWork(): bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsWork', []);

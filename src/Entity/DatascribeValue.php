@@ -43,7 +43,8 @@ class DatascribeValue extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={"default":0}
      * )
      */
     protected $isInvalid;
@@ -51,7 +52,8 @@ class DatascribeValue extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={"default":0}
      * )
      */
     protected $isMissing;
@@ -59,7 +61,8 @@ class DatascribeValue extends AbstractEntity
     /**
      * @Column(
      *     type="boolean",
-     *     nullable=true
+     *     nullable=false,
+     *     options={"default":0}
      * )
      */
     protected $isIllegible;
@@ -84,32 +87,32 @@ class DatascribeValue extends AbstractEntity
         return $this->record;
     }
 
-    public function setIsInvalid(?bool $isInvalid) : void
+    public function setIsInvalid(bool $isInvalid) : void
     {
         $this->isInvalid = $isInvalid;
     }
 
-    public function getIsInvalid() : ?bool
+    public function getIsInvalid() : bool
     {
         return $this->isInvalid;
     }
 
-    public function setIsMissing(?bool $isMissing) : void
+    public function setIsMissing(bool $isMissing) : void
     {
         $this->isMissing = $isMissing;
     }
 
-    public function getIsMissing() : ?bool
+    public function getIsMissing() : bool
     {
         return $this->isMissing;
     }
 
-    public function setIsIllegible(?bool $isIllegible) : void
+    public function setIsIllegible(bool $isIllegible) : void
     {
         $this->isIllegible = $isIllegible;
     }
 
-    public function getIsIllegible() : ?bool
+    public function getIsIllegible() : bool
     {
         return $this->isIllegible;
     }

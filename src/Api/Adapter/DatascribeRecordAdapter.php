@@ -127,8 +127,9 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     $value->setRecord($entity);
                     $values->set($fieldId, $value);
                 }
-                $value->setIsMissing($valueData['is_missing']);
-                $value->setIsIllegible($valueData['is_illegible']);
+                $value->setIsMissing((bool) $valueData['is_missing']);
+                $value->setIsIllegible((bool) $valueData['is_illegible']);
+                $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
                 $value->setData($dataType->getValueData($valueData['data']));
                 $valuesToRetain->add($value);

@@ -220,7 +220,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setIsInvalid(?bool $isInvalid): void
+    public function setIsInvalid(bool $isInvalid): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsInvalid', [$isInvalid]);
@@ -231,7 +231,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function getIsInvalid(): ?bool
+    public function getIsInvalid(): bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsInvalid', []);
@@ -242,7 +242,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setIsMissing(?bool $isMissing): void
+    public function setIsMissing(bool $isMissing): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsMissing', [$isMissing]);
@@ -253,7 +253,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function getIsMissing(): ?bool
+    public function getIsMissing(): bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsMissing', []);
@@ -264,7 +264,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setIsIllegible(?bool $isIllegible): void
+    public function setIsIllegible(bool $isIllegible): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsIllegible', [$isIllegible]);
@@ -275,7 +275,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function getIsIllegible(): ?bool
+    public function getIsIllegible(): bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIllegible', []);
