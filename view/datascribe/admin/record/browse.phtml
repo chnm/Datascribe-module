@@ -130,7 +130,7 @@ $sortBy = [
             <?php $value = $values[$field->id()] ?? null; ?>
             <td<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>>
                 <?php if (null === $value): ?>
-                <span style="color: LightGray;"><?php echo $this->translate('null'); ?></span>
+                <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
                 <?php else: ?>
                 <?php echo $value->value([
                     'length' => 100,
