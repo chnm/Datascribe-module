@@ -25,7 +25,7 @@ class RecordController extends AbstractActionController
         $dataset = $item->dataset();
         $project = $dataset->project();
 
-        $this->setBrowseDefaults('id', 'asc');
+        $this->setBrowseDefaults('id');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_item_id' => $item->id()]
@@ -140,7 +140,7 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully created.'); // @translate
-                    return $this->redirect()->toUrl($response->getContent()->url());
+                    return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
@@ -186,7 +186,7 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully edited.'); // @translate
-                    return $this->redirect()->toUrl($response->getContent()->url());
+                    return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
