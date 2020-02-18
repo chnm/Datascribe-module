@@ -140,7 +140,7 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully created.'); // @translate
-                    return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+                    return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
@@ -186,7 +186,7 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully edited.'); // @translate
-                    return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+                    return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
