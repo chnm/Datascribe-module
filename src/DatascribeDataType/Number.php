@@ -92,13 +92,13 @@ class Number implements DataTypeInterface
 
     public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
-        $element = new DatascribeElement\Number('number', [
+        $element = new DatascribeElement\Number('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel($fieldData['number_input_label'] ?? 'Number'); // @translate
         $value = null;
-        if (isset($valueData['number'])) {
-            $value = $valueData['number'];
+        if (isset($valueData['value'])) {
+            $value = $valueData['value'];
         } elseif (isset($fieldData['default_value'])) {
             $value = $fieldData['default_value'];
         }
@@ -109,21 +109,21 @@ class Number implements DataTypeInterface
     public function getValueData(array $valueFormData) : array
     {
         $valueData = [];
-        $valueData['number'] = $valueFormData['number'] ?? null;
+        $valueData['value'] = $valueFormData['value'] ?? null;
         return $valueData;
     }
 
     public function valueDataIsValid(array $fieldData, array $valueData) : bool
     {
-        $element = new DatascribeElement\Text('number', [
+        $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $validatorChain = new ValidatorChain;
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return isset($valueData['number'])
-            ? $validatorChain->isValid($valueData['number']) : false;
+        return isset($valueData['value'])
+            ? $validatorChain->isValid($valueData['value']) : false;
     }
 
     public function getHtml(array $valueData) : string
@@ -132,6 +132,6 @@ class Number implements DataTypeInterface
 
     public function getValue(array $valueData) : string
     {
-        return $valueData['number'];
+        return $valueData['value'];
     }
 }

@@ -94,13 +94,13 @@ class Textarea implements DataTypeInterface
 
     public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
     {
-        $element = new DatascribeElement\Textarea('text', [
+        $element = new DatascribeElement\Textarea('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel($fieldData['textarea_label'] ?? 'Text'); // @translate
         $value = null;
-        if (isset($valueData['text'])) {
-            $value = $valueData['text'];
+        if (isset($valueData['value'])) {
+            $value = $valueData['value'];
         } elseif (isset($fieldData['default_value'])) {
             $value = $fieldData['default_value'];
         }
@@ -111,21 +111,21 @@ class Textarea implements DataTypeInterface
     public function getValueData(array $valueFormData) : array
     {
         $valueData = [];
-        $valueData['text'] = $valueFormData['text'] ?? null;
+        $valueData['value'] = $valueFormData['value'] ?? null;
         return $valueData;
     }
 
     public function valueDataIsValid(array $fieldData, array $valueData) : bool
     {
-        $element = new DatascribeElement\Text('text', [
+        $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $validatorChain = new ValidatorChain;
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return isset($valueData['text'])
-            ? $validatorChain->isValid($valueData['text']) : false;
+        return isset($valueData['value'])
+            ? $validatorChain->isValid($valueData['value']) : false;
     }
 
     public function getHtml(array $valueData) : string
@@ -134,6 +134,6 @@ class Textarea implements DataTypeInterface
 
     public function getValue(array $valueData) : string
     {
-        return $valueData['text'];
+        return $valueData['value'];
     }
 }
