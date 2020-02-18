@@ -124,7 +124,8 @@ class Textarea implements DataTypeInterface
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return $validatorChain->isValid($valueData['text']);
+        return isset($valueData['text'])
+            ? $validatorChain->isValid($valueData['text']) : false;
     }
 
     public function getHtml(array $valueData) : string

@@ -122,7 +122,8 @@ class Number implements DataTypeInterface
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return $validatorChain->isValid($valueData['number']);
+        return isset($valueData['number'])
+            ? $validatorChain->isValid($valueData['number']) : false;
     }
 
     public function getHtml(array $valueData) : string
