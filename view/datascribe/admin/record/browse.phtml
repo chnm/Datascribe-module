@@ -134,9 +134,9 @@ $sortBy = [
                 <?php else: ?>
                 <?php echo $value->value([
                     'length' => 100,
-                    'trim_marker' => '<span style="color: LightGray;">...</span>',
-                    'if_invalid_return' => sprintf('<span style="color: Red;">%s</span>', $this->translate('invalid')),
-                    'if_empty_return' => sprintf('<span style="color: LightGray;">%s</span>', $this->translate('empty')),
+                    'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                    'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),
+                    'if_empty_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('empty')),
                 ]); ?>
                 <?php endif; ?>
             </td>
