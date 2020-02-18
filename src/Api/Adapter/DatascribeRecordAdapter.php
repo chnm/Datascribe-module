@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\Entity\DatascribeRecord;
 use Datascribe\Entity\DatascribeValue;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -64,6 +65,19 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 'omeka_root.modifiedBy',
                 $this->createNamedParameter($qb, $query['modified_by'])
             ));
+        }
+        if (isset($query['has_invalid_values'])) {
+            $alias = $this->createAlias();
+            $subQb = $this->getEntityManager()->createQueryBuilder()
+                ->select($alias)
+                ->from('Datascribe\Entity\DatascribeValue', $alias)
+                ->andWhere("$alias.record = omeka_root.id")
+                ->andWhere($qb->expr()->eq("$alias.isInvalid", true));
+            if (in_array($query['has_invalid_values'], [true, 1, '1'], true)) {
+                $qb->andWhere($qb->expr()->exists($subQb->getDQL()));
+            } elseif (in_array($query['has_invalid_values'], [false, 0, '0'], true)) {
+                $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
+            }
         }
     }
 
@@ -186,5 +200,19 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $errorStore->addError('data', sprintf('Invalid value data for field "%s".', $field->getName())); // @translate
             }
         }
+    }
+
+    public function getInvalidValueCount(DatascribeRecord $record)
+    {
+        $services = $this->getServiceLocator();
+        $em = $services->get('Omeka\EntityManager');
+        $dql = '
+            SELECT COUNT(v.id)
+            FROM Datascribe\Entity\DatascribeValue v
+            WHERE v.record = :recordId
+            AND v.isInvalid = true';
+        $query = $em->createQuery($dql);
+        $query->setParameter('recordId', $record->getId());
+        return $query->getSingleScalarResult();
     }
 }

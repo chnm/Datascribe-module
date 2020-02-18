@@ -134,4 +134,9 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
         }
         return new DatascribeValueRepresentation($primaryValueEntity, $this->getServiceLocator());
     }
+
+    public function hasInvalidValues()
+    {
+        return (bool) $this->getAdapter()->getInvalidValueCount($this->resource);
+    }
 }

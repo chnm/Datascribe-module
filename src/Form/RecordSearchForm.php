@@ -41,6 +41,23 @@ class RecordSearchForm extends AbstractForm
             ],
         ]);
 
+        $this->add([
+            'type' => 'select',
+            'name' => 'has_invalid_values',
+            'options' => [
+                'label' => 'Has invalid values?', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    '1' => 'Yes', // @translate
+                    '0' => 'No', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Select one', // @translate
+            ],
+        ]);
+
         $valueOptions = [];
         foreach ($this->getByUsersForRecords('createdBy', $item) as $user) {
             $valueOptions[$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
