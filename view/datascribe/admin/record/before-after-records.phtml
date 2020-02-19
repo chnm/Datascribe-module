@@ -1,0 +1,36 @@
+<table class="tablesaw">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Record #'); ?></th>
+            <?php foreach ($dataset->fields() as $field): ?>
+            <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
+                'length' => 20,
+                'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+            ]); ?></th>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($records as $record): ?>
+        <?php $values = $record->values(); ?>
+        <tr>
+            <td><?php echo $record->id(); ?></td>
+            <?php foreach ($dataset->fields() as $field): ?>
+            <?php $value = $values[$field->id()] ?? null; ?>
+            <td<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>>
+                <?php if (null === $value): ?>
+                <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
+                <?php else: ?>
+                <?php echo $value->value([
+                    'length' => 100,
+                    'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                    'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),
+                    'if_empty_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('empty')),
+                ]); ?>
+                <?php endif; ?>
+            </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

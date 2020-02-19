@@ -9,8 +9,11 @@ $form->prepare();
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('New record')); ?>
 
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore]); ?>
+
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('csrf')); ?>
+
 <div id="page-actions">
     <?php echo $this->cancelButton(); ?>
     <button><?php echo $this->translate('Add'); ?></button>

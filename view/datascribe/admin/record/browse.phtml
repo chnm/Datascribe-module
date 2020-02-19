@@ -77,7 +77,7 @@ $sortBy = [
             <?php foreach ($dataset->fields() as $field): ?>
             <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
                 'length' => 20,
-                'trim_marker' => '<span style="color: LightGray;">...</span>',
+                'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
             ]); ?></th>
             <?php endforeach; ?>
         </tr>

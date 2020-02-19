@@ -6,18 +6,21 @@ $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $form->prepare();
 $primaryValue = $record->primaryValue();
-$primaryValueText = $primaryValue
-        ? $primaryValue->value([
-            'length' => 25,
-            'if_invalid_return' => sprintf('[%s]', $this->translate('[Record]')),
-            'if_empty_return' => sprintf('[%s]', $this->translate('[Record]')),
-        ])
-        : $this->translate('[Record]');
+$pageTitle = $primaryValue
+        ? sprintf(
+            $this->translate('Record #%s: %s'),
+            $record->id(),
+            $primaryValue->value(['length' => 25, 'if_invalid_return' => null, 'if_empty_return' => null])
+        )
+        : sprintf($this->translate('Record #%s'), $record->id());
 ?>
-<?php echo $this->pageTitle($primaryValueText, 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
+<?php echo $this->pageTitle($pageTitle, 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
+
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore]); ?>
 
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('csrf')); ?>
+
 <div id="page-actions">
     <?php echo $this->cancelButton(); ?>
     <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
@@ -68,5 +71,7 @@ $primaryValueText = $primaryValue
 </div>
 
 <?php echo $this->form()->closeTag(); ?>
+
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter]); ?>
 
 <?php echo $this->deleteConfirm($record, 'record'); ?>
