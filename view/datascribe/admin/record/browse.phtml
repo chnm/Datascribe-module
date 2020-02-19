@@ -95,7 +95,7 @@ $sortBy = [
             <td>
                 <div class="record-number-cell">
                 <?php if ($canViewBatchUpdate): ?>
-                <input type="checkbox" name="record_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
+                <input type="checkbox" name="record_ids[]" value="<?php echo $record->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
                 <?php endif; ?>
                 <?php if ($hasInvalidValues || $needsReview || $needsWork): ?>
                 <?php $alertString = sprintf(

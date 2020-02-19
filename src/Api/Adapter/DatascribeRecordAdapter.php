@@ -225,4 +225,21 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         $query->setParameter('recordId', $record->getId());
         return $query->getSingleScalarResult();
     }
+
+    public function preprocessBatchUpdate(array $data, Request $request)
+    {
+        $data = parent::preprocessBatchUpdate($data, $request);
+        $rawData = $request->getContent();
+        if (in_array($rawData['needs_review_action'], [true, 1, '1'], true)) {
+            $data['o-module-datascribe:needs_review'] = 1;
+        } elseif (in_array($rawData['needs_review_action'], [false, 0, '0'], true)) {
+            $data['o-module-datascribe:needs_review'] = 0;
+        }
+        if (in_array($rawData['needs_work_action'], [true, 1, '1'], true)) {
+            $data['o-module-datascribe:needs_work'] = 1;
+        } elseif (in_array($rawData['needs_work_action'], [false, 0, '0'], true)) {
+            $data['o-module-datascribe:needs_work'] = 0;
+        }
+        return $data;
+    }
 }

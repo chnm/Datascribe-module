@@ -2,6 +2,7 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\ItemForm;
+use Datascribe\Form\RecordBatchForm;
 use Datascribe\Form\RecordForm;
 use Datascribe\Form\RecordSearchForm;
 use Omeka\Form\ConfirmForm;
@@ -239,6 +240,108 @@ class RecordController extends AbstractActionController
             }
         }
         return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+    }
+
+    public function batchEditAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        }
+
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $dataset = $item->dataset();
+        $project = $dataset->project();
+
+        $recordIds = $this->params()->fromPost('record_ids', []);
+
+        $records = [];
+        foreach ($recordIds as $recordId) {
+            $records[] = $this->api()->read('datascribe_records', $recordId)->getContent();
+        }
+
+        $form = $this->getForm(RecordBatchForm::class);
+
+        if ($this->params()->fromPost('batch_edit')) {
+            $form->setData($this->params()->fromPost());
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $this->api($form)->batchUpdate('datascribe_records', $recordIds, $formData);
+                $this->messenger()->addSuccess('Records successfully edited.'); // @translate
+                return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+
+        $view = new ViewModel;
+        $view->setVariable('project', $project);
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('item', $item);
+        $view->setVariable('records', $records);
+        $view->setVariable('form', $form);
+        return $view;
+    }
+
+    public function batchEditAllAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        }
+
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $dataset = $item->dataset();
+        $project = $dataset->project();
+
+        $query = json_decode($this->params()->fromPost('query', []), true);
+        unset(
+            $query['submit'], $query['page'], $query['per_page'],
+            $query['limit'], $query['offset'], $query['sort_by'],
+            $query['sort_order']
+        );
+        $count = $this->api()->search('datascribe_records', array_merge($query, ['limit' => 0]))->getTotalResults();
+
+        $form = $this->getForm(RecordBatchForm::class);
+
+        if ($this->params()->fromPost('batch_edit')) {
+            $form->setData($this->params()->fromPost());
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $job = $this->jobDispatcher()->dispatch('Omeka\Job\BatchUpdate', [
+                    'resource' => 'datascribe_records',
+                    'query' => $query,
+                    'data' => $formData,
+                ]);
+                $this->messenger()->addSuccess('Editing records. This may take a while.'); // @translate
+                return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            } else {
+                $this->messenger()->addFormErrors($form);
+            }
+        }
+
+        $view = new ViewModel;
+        $view->setVariable('project', $project);
+        $view->setVariable('dataset', $dataset);
+        $view->setVariable('item', $item);
+        $view->setVariable('count', $count);
+        $view->setVariable('query', $query);
+        $view->setVariable('form', $form);
+        return $view;
     }
 
     public function showAction()
