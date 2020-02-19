@@ -139,4 +139,20 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
     {
         return (bool) $this->getAdapter()->getInvalidValueCount($this->resource);
     }
+
+    public function displayTitle()
+    {
+        $translator = $this->getTranslator();
+        $primaryValue = $this->primaryValue();
+        if ($primaryValue) {
+            $displayTitle = sprintf(
+                $translator->translate('Record #%s: %s'),
+                $this->id(),
+                $primaryValue->value(['length' => 25, 'if_invalid_return' => null, 'if_empty_return' => null])
+            );
+        } else {
+            $displayTitle = sprintf($translator->translate('Record #%s'), $this->id());
+        }
+        return $displayTitle;
+    }
 }

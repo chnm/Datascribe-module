@@ -5,16 +5,8 @@ $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $form->prepare();
-$primaryValue = $record->primaryValue();
-$pageTitle = $primaryValue
-        ? sprintf(
-            $this->translate('Record #%s: %s'),
-            $record->id(),
-            $primaryValue->value(['length' => 25, 'if_invalid_return' => null, 'if_empty_return' => null])
-        )
-        : sprintf($this->translate('Record #%s'), $record->id());
 ?>
-<?php echo $this->pageTitle($pageTitle, 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
+<?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
 <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore]); ?>
 
