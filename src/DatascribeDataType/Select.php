@@ -28,9 +28,9 @@ class Select implements DataTypeInterface
         $element->setValue($fieldData['default_value'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('text_input_label');
-        $element->setLabel('Text input label'); // @translate
-        $element->setValue($fieldData['text_input_label'] ?? null);
+        $element = new Element\Text('select_label');
+        $element->setLabel('Select label'); // @translate
+        $element->setValue($fieldData['select_label'] ?? null);
         $fieldset->add($element);
     }
 
@@ -49,9 +49,9 @@ class Select implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
             ? $fieldFormData['default_value'] : null;
-        $fieldData['text_input_label'] =
-            (isset($fieldFormData['text_input_label']) && preg_match('/^.+$/', $fieldFormData['text_input_label']))
-            ? $fieldFormData['text_input_label'] : null;
+        $fieldData['select_label'] =
+            (isset($fieldFormData['select_label']) && preg_match('/^.+$/', $fieldFormData['select_label']))
+            ? $fieldFormData['select_label'] : null;
         return $fieldData;
     }
 
@@ -66,7 +66,7 @@ class Select implements DataTypeInterface
         $element = new DatascribeElement\Select('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['text_input_label'] ?? 'Select'); // @translate
+        $element->setLabel($fieldData['select_label'] ?? 'Select'); // @translate
         $value = null;
         if (isset($valueData['value'])) {
             $value = $valueData['value'];
