@@ -9,7 +9,10 @@ $form->prepare();
 ?>
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore]); ?>
+<div class="before-after-tables">
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => $this->translate('Before')]); ?>
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter, 'beforeAfter' => $this->translate('After')]); ?>
+</div>
 
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('csrf')); ?>

@@ -234,6 +234,44 @@
   width: 7rem;
 }
 
+/* Record Add/Edit */
+
+.record.edit div[role="main"] {
+  overflow: visible;
+}
+
+.before-after-tables {
+  position: sticky;
+  top: 60px;
+  background-color: #fff;
+  z-index: 1;
+  border-bottom: 1px solid #dfdfdf;
+  padding: 0 0 6px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.before-after-tables:before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: -12px;
+  right: -12px;
+  height: 48px;
+  background-color: #fff;
+}
+
+.before-after-tables .tablesaw-swipe-wrapper {
+  width: calc(50% - 6px);
+}
+
+.tablesaw-swipe-wrapper > h3 {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 16px;
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
