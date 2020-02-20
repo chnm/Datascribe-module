@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Api\Representation;
 
-use Datascribe\DatascribeDataType\Fallback;
+use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeValue;
 use Omeka\Api\Representation\AbstractRepresentation;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -101,7 +101,7 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         }
         $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
         $dataType = $manager->get($this->field()->dataType());
-        if ($dataType instanceof Fallback) {
+        if ($dataType instanceof Unknown) {
             return $options['if_unknown_return'];
         }
         $value = $dataType->getValue($this->data());

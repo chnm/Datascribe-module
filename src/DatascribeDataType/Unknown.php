@@ -5,7 +5,7 @@ use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
-class Fallback implements DataTypeInterface
+class Unknown implements DataTypeInterface
 {
     public function __construct(string $name)
     {

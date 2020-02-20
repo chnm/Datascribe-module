@@ -4,6 +4,7 @@ namespace Datascribe\Form;
 use Datascribe\Api\Representation\DatascribeFieldRepresentation;
 use Datascribe\DatascribeDataType\DataTypeInterface;
 use Datascribe\DatascribeDataType\Manager;
+use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\Element as DatascribeElement;
 use Omeka\Form\Element\ItemSetSelect;
@@ -138,7 +139,7 @@ class DatasetForm extends Form
         natcasesort($dataTypeNames);
         foreach ($dataTypeNames as $dataTypeName) {
             $dataType = $this->dataTypeManager->get($dataTypeName);
-            if (!($dataType instanceof Fallback)) {
+            if (!($dataType instanceof Unknown)) {
                 $dataTypes[$dataTypeName] = $dataType;
             }
         }

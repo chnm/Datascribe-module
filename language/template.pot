@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-20 09:33-0500\n"
+"POT-Creation-Date: 2020-02-20 10:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Set an item set here."
 msgstr ""
 
-#: src/Form/DatasetForm.php:162
+#: src/Form/DatasetForm.php:163
 msgid "New field"
 msgstr ""
 
@@ -765,16 +765,15 @@ msgstr ""
 msgid "[No selection]"
 msgstr ""
 
-#: src/DatascribeDataType/Fallback.php:23
-#: src/DatascribeDataType/Fallback.php:57
+#: src/DatascribeDataType/Unknown.php:23 src/DatascribeDataType/Unknown.php:57
 msgid "Unknown data type"
 msgstr ""
 
-#: src/DatascribeDataType/Fallback.php:29
+#: src/DatascribeDataType/Unknown.php:29
 msgid "Field data"
 msgstr ""
 
-#: src/DatascribeDataType/Fallback.php:63
+#: src/DatascribeDataType/Unknown.php:63
 msgid "Value data"
 msgstr ""
 
@@ -989,41 +988,41 @@ msgstr ""
 msgid "Mark as not submitted"
 msgstr ""
 
-#: src/Form/DatasetForm.php:81
+#: src/Form/DatasetForm.php:82
 msgid "Enter the name of this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:93
+#: src/Form/DatasetForm.php:94
 msgid "Enter the description of this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:104
+#: src/Form/DatasetForm.php:105
 msgid "Guidelines"
 msgstr ""
 
-#: src/Form/DatasetForm.php:105
+#: src/Form/DatasetForm.php:106
 msgid "Enter guidelines for transcribing this dataset."
 msgstr ""
 
-#: src/Form/DatasetForm.php:117
+#: src/Form/DatasetForm.php:118
 msgid ""
 "Select the item set used to synchronize dataset items. Once synchronized, "
 "this dataset will contain every item in this item set."
 msgstr ""
 
-#: src/Form/DatasetForm.php:123
+#: src/Form/DatasetForm.php:124
 msgid "Select an item set"
 msgstr ""
 
-#: src/Form/DatasetForm.php:229
+#: src/Form/DatasetForm.php:230
 msgid "Field name"
 msgstr ""
 
-#: src/Form/DatasetForm.php:238
+#: src/Form/DatasetForm.php:239
 msgid "Field description"
 msgstr ""
 
-#: src/Form/DatasetForm.php:247
+#: src/Form/DatasetForm.php:248
 msgid "Field is primary"
 msgstr ""
 

@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
-use Datascribe\DatascribeDataType\Fallback;
+use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeField;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
@@ -167,7 +167,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $field->setIsPrimary($fieldData['is_primary'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
-            if (!($dataType instanceof Fallback)) {
+            if (!($dataType instanceof Unknown)) {
                 $field->setData($dataType->getFieldData($fieldData['data']));
             }
         }
