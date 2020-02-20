@@ -67,6 +67,8 @@ class Select implements DataTypeInterface
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel($fieldData['select_label'] ?? 'Select'); // @translate
+        $element->setAttribute('class', 'chosen-select');
+        $element->setAttribute('data-placeholder', '[No selection]'); // @translate
         $value = null;
         if (isset($valueData['value'])) {
             $value = $valueData['value'];
