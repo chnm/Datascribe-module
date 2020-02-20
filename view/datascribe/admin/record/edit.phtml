@@ -12,8 +12,10 @@ $form->prepare();
 ?>
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
-<div class="add-edit-header">
-  <div class="media-viewer">
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => $this->translate('Before')]); ?>
+
+<div class="current-row">
+<div class="media-viewer">
       <?php $media = $oItem->media(); ?>
       <?php $mediaCount = count($media); ?>
       <?php if (count($media) > 1): ?>
@@ -50,11 +52,6 @@ $form->prepare();
         </div>
       </div>
       <?php endif; ?>
-</div>
-  <div class="before-after-tables">
-  <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => $this->translate('Before')]); ?>
-  <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter, 'beforeAfter' => $this->translate('After')]); ?>
-  </div>
 </div>
 
 <?php echo $this->form()->openTag($form); ?>
@@ -110,5 +107,9 @@ $form->prepare();
 </div>
 
 <?php echo $this->form()->closeTag(); ?>
+
+</div>
+
+<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter, 'beforeAfter' => $this->translate('After')]); ?>
 
 <?php echo $this->deleteConfirm($record, 'record'); ?>

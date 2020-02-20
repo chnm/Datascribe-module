@@ -248,29 +248,9 @@
   overflow: visible;
 }
 
-.add-edit-header {
+.before.tablesaw-swipe-wrapper {
   position: sticky;
-  top: 60px;
-  background-color: #fff;
-  z-index: 1;
-  border-bottom: 1px solid #dfdfdf;
-  padding: 0 0 6px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.add-edit-header:before {
-  content: "";
-  position: absolute;
-  top: -24px;
-  left: -12px;
-  right: -12px;
-  height: 48px;
-  background-color: #fff;
-}
-
-.add-edit-header > div {
-  width: calc(50% - 6px);
+  top: 0;
 }
 
 .tablesaw-swipe-wrapper > h3 {
@@ -278,6 +258,31 @@
   top: 8px;
   left: 8px;
   font-size: 16px;
+}
+
+.edit .current-row {
+  overflow-y: scroll;
+  height: calc(100vh - 360px);
+  margin-bottom: 12px;
+}
+
+.add .current-row {
+  overflow-y: scroll;
+  height: calc(100vh - 180px);
+}
+
+.current-row .media-viewer {
+  width: calc(40% - 6px);
+  float: left;
+  margin-right: 12px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+}
+
+.current-row form {
+  width: calc(60% - 6px);
+  float: right;
 }
 
 /* Form Builder */
@@ -488,13 +493,6 @@ button.sidebar-drawer.collapse:after {
 .media-viewer,
 .records-list {
   width: 50%;
-}
-
-.media-viewer {
-  margin-right: 12px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 60px;
 }
 
 .media-select {
