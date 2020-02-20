@@ -161,14 +161,6 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-.record.browse table {
-  overflow-x: scroll;
-}
-
-.record.browse th {
-  width: 7rem;
-}
-
 .record.browse .record-number-cell {
   display: flex;
   flex-wrap: wrap;
@@ -196,11 +188,50 @@
   top: 0;
   right: 0;
   width: 50%;
-  padding-right: .5rem;
+  padding: 2px .5rem 0 0;
 }
 
 .primary-field {
   background-color: rgba(0,0,0,.04);
+}
+
+.tablesaw-swipe-wrapper {
+  position: relative;
+  padding-top: 2.5rem;
+}
+
+.tablesaw-swipe-wrapper > .tablesaw-bar:before {
+  content: "";
+  background-color:rgba(0,0,0,0.04);  
+  position: absolute;
+  top: 0;
+  bottom: 3px;
+  left: -100%;
+  right: 0;
+  border: 1px solid #dfdfdf;
+  border-width: 1px 1px 0 1px;
+  border-radius: 3px 3px 0 0;
+  padding: 5px;
+}
+
+.batch-inputs ~ .tablesaw-swipe-wrapper {
+  margin-top: -2.5rem;
+}
+
+.batch-inputs ~ .tablesaw-swipe-wrapper .tablesaw-bar {
+  margin-top: 4px;
+}
+.batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar:before {
+  content: none;.
+} 
+
+.tablesaw-swipe-wrapper > .tablesaw-bar + .tablesaw {
+  border-radius: 0;
+}
+
+.tablesaw-swipe-wrapper th,
+.record.browse th {
+  width: 7rem;
 }
 
 /* Form Builder */

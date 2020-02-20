@@ -3,6 +3,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe record edit');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('js/admin/record-browse.js', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $form->prepare();
 ?>
@@ -63,7 +64,5 @@ $form->prepare();
 </div>
 
 <?php echo $this->form()->closeTag(); ?>
-
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter]); ?>
 
 <?php echo $this->deleteConfirm($record, 'record'); ?>
