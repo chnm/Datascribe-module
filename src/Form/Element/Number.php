@@ -16,7 +16,7 @@ class Number extends ZendNumber implements InputProviderInterface
         $attributes = [];
         $attributes['min'] = $fieldData['min'] ?? null;
         $attributes['max'] = $fieldData['max'] ?? null;
-        $attributes['step'] = $fieldData['step'] ?? null;
+        $attributes['step'] = $fieldData['step'] ?? 'any';
         $attributes['placeholder'] = $fieldData['placeholder'] ?? null;
         $attributes['style'] = 'width: 100%;';
 
