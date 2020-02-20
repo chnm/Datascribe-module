@@ -239,7 +239,7 @@ class RecordController extends AbstractActionController
                 $this->messenger()->addFormErrors($form);
             }
         }
-        return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
     }
 
     public function batchEditAction()
