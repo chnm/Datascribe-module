@@ -73,6 +73,7 @@ return [
         'invokables' => [
             'datascribeFormText' => Form\ViewHelper\DatascribeFormText::class,
             'datascribeFormTextarea' => Form\ViewHelper\DatascribeFormTextarea::class,
+            'datascribeFormNumber' => Form\ViewHelper\DatascribeFormNumber::class,
         ],
         'factories' => [
             'datascribe' => Service\ViewHelper\DatascribeFactory::class,

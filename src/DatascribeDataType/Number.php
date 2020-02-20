@@ -55,6 +55,12 @@ class Number implements DataTypeInterface
         $element->setLabel('Number input label'); // @translate
         $element->setAttribute('value', $fieldData['number_input_label'] ?? null);
         $fieldset->add($element);
+
+        $element = new Element\Textarea('datalist');
+        $element->setLabel('Datalist'); // @translate
+        $element->setAttribute('rows', 10);
+        $element->setValue(implode("\n", $fieldData['datalist'] ?? []));
+        $fieldset->add($element);
     }
 
     public function getFieldData(array $fieldFormData) : array
@@ -81,6 +87,15 @@ class Number implements DataTypeInterface
         $fieldData['number_input_label'] =
             (isset($fieldFormData['number_input_label']) && preg_match('/^.+$/', $fieldFormData['number_input_label']))
             ? $fieldFormData['number_input_label'] : null;
+        if (isset($fieldFormData['datalist']) && preg_match('/^.+$/s', $fieldFormData['datalist'])) {
+            $options = explode("\n", $fieldFormData['datalist']);
+            $options = array_map('trim', $options);
+            $options = array_filter($options);
+            $options = array_unique($options);
+            $fieldData['datalist'] = $options;
+        } else {
+            $fieldData['datalist'] = [];
+        }
         return $fieldData;
     }
 

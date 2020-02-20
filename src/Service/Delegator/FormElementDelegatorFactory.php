@@ -13,6 +13,7 @@ class FormElementDelegatorFactory implements DelegatorFactoryInterface
         $formElement = $callback();
         $formElement->addClass(DatascribeElement\Text::class, 'datascribeFormText');
         $formElement->addClass(DatascribeElement\Textarea::class, 'datascribeFormTextarea');
+        $formElement->addClass(DatascribeElement\Number::class, 'datascribeFormNumber');
         return $formElement;
     }
 }
