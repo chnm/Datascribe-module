@@ -63,7 +63,8 @@ $form->prepare();
 
 <div id="page-actions">
     <?php echo $this->cancelButton(); ?>
-    <button><?php echo $this->translate('Add'); ?></button>
+    <input type="submit" name="submit-return" value="<?php echo $this->escapeHtml($this->translate('Add and return')); ?>">
+    <input type="submit" name="submit-add" value="<?php echo $this->escapeHtml($this->translate('Add and add another')); ?>">
 </div>
 
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
