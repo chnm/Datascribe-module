@@ -120,7 +120,10 @@ class RecordForm extends Form
                 // Add a disabled textarea containing the invalid data in JSON.
                 $element = new Element\Textarea('invalid_data');
                 $element->setLabel('Invalid data'); // @translate
-                $element->setAttribute('disabled', true);
+                $element->setAttributes([
+                    'disabled' => true,
+                    'rows' => 8,
+                ]);
                 $element->setValue(json_encode($valueData, JSON_PRETTY_PRINT));
                 $valueFieldset->add($element);
             }

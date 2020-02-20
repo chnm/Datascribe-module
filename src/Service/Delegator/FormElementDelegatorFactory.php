@@ -11,7 +11,7 @@ class FormElementDelegatorFactory implements DelegatorFactoryInterface
         callable $callback, array $options = null
     ) {
         $formElement = $callback();
-        //~ $formElement->addClass(DatascribeElement\Text::class, 'formText');
+        $formElement->addClass(DatascribeElement\Text::class, 'datascribeFormText');
         $formElement->addClass(DatascribeElement\Textarea::class, 'datascribeFormTextarea');
         return $formElement;
     }
