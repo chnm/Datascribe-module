@@ -215,12 +215,18 @@
   padding: 5px;
 }
 
+.batch-inputs > * {
+  position: relative;
+  z-index: 1;
+}
+
 .batch-inputs ~ .tablesaw-swipe-wrapper {
   margin-top: -2.5rem;
 }
 
 .batch-inputs ~ .tablesaw-swipe-wrapper .tablesaw-bar {
   margin-top: 4px;
+  width: 50%;
 }
 .batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar:before {
   content: none;.
