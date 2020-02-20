@@ -3,13 +3,60 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe record add');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('js/admin/record-browse.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('vendor/jquery-panzoom/jquery.panzoom.min.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('vendor/featherlight/featherlight.min.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
+
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $form->prepare();
 ?>
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('New record')); ?>
 
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore]); ?>
+<div class="add-edit-header">
+  <div class="media-viewer">
+      <?php $media = $oItem->media(); ?>
+      <?php $mediaCount = count($media); ?>
+      <?php if (count($media) > 1): ?>
+      <div class="media-select">
+          <select name="active-media" id="active-media">
+              <?php $i = 0; ?>
+              <?php foreach ($media as $file): ?> 
+              <option name="media-<?php echo $i; ?>" value="<?php echo $file->originalUrl(); ?>"><?php echo $file->displayTitle(); ?></option>
+              <?php $i++; ?>
+              <?php endforeach; ?>
+          </select>
+          <nav class="media pagination">
+            <input type="number" min="1" max="<?php echo $mediaCount; ?>" aria-label="<?php echo $this->translate('Media'); ?>" name="active-media" value="1">
+            <span class="media-count"><?php echo sprintf($this->translate('of %s'), $mediaCount); ?></span>
+            <button type="button" aria-label="<?php echo $this->translate('Previous'); ?>" class="previous o-icon-prev button inactive" disabled="disabled"></button>
+            <button type="button" aria-label="<?php echo $this->translate('Next'); ?>" class="next o-icon-next button"></button>
+          </nav>
+      </div>
+      <?php endif; ?>
+      <?php if ($mediaCount > 0): ?>
+      <?php $primaryMedia = $oItem->primaryMedia(); ?>
+      <div class="media-container">
+        <div class="panzoom-container image">
+            <div class="zoom-controls">
+                <button class="zoom-in" aria-label="<?php echo $this->translate('Zoom in'); ?>" title="<?php echo $this->translate('Zoom in'); ?>"></button>
+                <button class="zoom-out" aria-label="<?php echo $this->translate('Zoom out'); ?>" title="<?php echo $this->translate('Zoom out'); ?>"></button>
+                <button class="rotate-right" aria-label="<?php echo $this->translate('Rotate right'); ?>" title="<?php echo $this->translate('Rotate right'); ?>"></button>
+                <button class="rotate-left" aria-label="<?php echo $this->translate('Rotate left'); ?>" title="<?php echo $this->translate('Rotate left'); ?>"></button>
+                <button class="reset"><?php echo $this->translate('Reset'); ?></button>
+            </div>
+            <div class="media-render">
+              <img src="<?php echo $this->escapeHtml($primaryMedia->originalUrl()); ?>" title="<?php echo $primaryMedia->displayTitle(); ?>">
+            </div>
+        </div>
+      </div>
+      <?php endif; ?>
+</div>
+  <div class="before-after-tables">
+  <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => null]); ?>
+</div>
+</div>
 
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('csrf')); ?>

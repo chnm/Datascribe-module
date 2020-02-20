@@ -198,6 +198,7 @@
 .tablesaw-swipe-wrapper {
   position: relative;
   padding-top: 2.5rem;
+  width: 100%;
 }
 
 .tablesaw-swipe-wrapper > .tablesaw-bar:before {
@@ -236,11 +237,12 @@
 
 /* Record Add/Edit */
 
+.record.add div[role="main"], 
 .record.edit div[role="main"] {
   overflow: visible;
 }
 
-.before-after-tables {
+.add-edit-header {
   position: sticky;
   top: 60px;
   background-color: #fff;
@@ -249,10 +251,9 @@
   padding: 0 0 6px 0;
   display: flex;
   justify-content: space-between;
-  height: 132px;
 }
 
-.before-after-tables:before {
+.add-edit-header:before {
   content: "";
   position: absolute;
   top: -24px;
@@ -262,7 +263,7 @@
   background-color: #fff;
 }
 
-.before-after-tables .tablesaw-swipe-wrapper {
+.add-edit-header > div {
   width: calc(50% - 6px);
 }
 
@@ -271,19 +272,6 @@
   top: 8px;
   left: 8px;
   font-size: 16px;
-}
-
-.record.edit .media-viewer {
-  float: left;
-  width: calc(40% - 6px);
-  margin-top: 12px;
-  position: sticky;
-  top: 206px;
-}
-
-.record.edit .media-viewer + form {
-  float: right;
-  width: calc(60% - 6px);
 }
 
 /* Form Builder */
