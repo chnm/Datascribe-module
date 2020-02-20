@@ -67,8 +67,9 @@ $form->prepare();
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
 <fieldset>
     <?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
-    <?php echo sprintf('<p>%s</p>', $fieldset->getOption('datascribe_field_description')); ?>
-    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+    <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
+    <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
+    <?php endif; ?>    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
     <?php echo $this->formRow($fieldset->get('is_missing')); ?>
     <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
 </fieldset>

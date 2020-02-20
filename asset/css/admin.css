@@ -285,6 +285,19 @@
   float: right;
 }
 
+.current-row fieldset {
+  margin: 0;
+}
+
+.current-row legend {
+  padding: 6px 0;
+}
+
+.expanded .current-row .media-viewer,
+.expanded .current-row form {
+  width: calc(50% - 6px);
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
