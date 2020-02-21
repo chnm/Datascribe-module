@@ -6,6 +6,7 @@ $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dis
 $this->headScript()->appendFile($this->assetUrl('js/datascribe.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/record-browse.js', 'Datascribe'));
+$this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
 $canViewBatchActions = $item->userIsAllowed('datascribe_view_record_batch_actions');
 $filters = [
     [
