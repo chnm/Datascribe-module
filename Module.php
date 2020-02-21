@@ -181,7 +181,7 @@ SQL;
                 'read',
                 'update',
                 'batch_update',
-                'datascribe_view_record_batch_update',
+                'datascribe_view_record_batch_actions',
                 'datascribe_mark_item_submitted',
                 'datascribe_mark_item_not_submitted',
                 'datascribe_mark_item_approved',
@@ -279,7 +279,7 @@ SQL;
             'Datascribe\Entity\DatascribeItem',
             [
                 'batch_update',
-                'datascribe_view_record_batch_update',
+                'datascribe_view_record_batch_actions',
                 'datascribe_mark_item_approved',
                 'datascribe_mark_item_not_reviewed',
                 'datascribe_mark_item_not_approved',

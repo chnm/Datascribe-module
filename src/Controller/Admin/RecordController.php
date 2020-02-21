@@ -55,6 +55,17 @@ class RecordController extends AbstractActionController
             }
         }
 
+        $formDeleteSelected = $this->getForm(ConfirmForm::class);
+        $formDeleteSelected->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete'], true));
+        $formDeleteSelected->setButtonLabel('Confirm Delete'); // @translate
+        $formDeleteSelected->setAttribute('id', 'confirm-delete-selected');
+
+        $formDeleteAll = $this->getForm(ConfirmForm::class);
+        $formDeleteAll->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete-all'], true));
+        $formDeleteAll->setButtonLabel('Confirm Delete'); // @translate
+        $formDeleteAll->setAttribute('id', 'confirm-delete-all');
+        $formDeleteAll->get('submit')->setAttribute('disabled', true);
+
         $view = new ViewModel;
         $view->setVariable('form', $form);
         $view->setVariable('project', $project);
@@ -62,6 +73,8 @@ class RecordController extends AbstractActionController
         $view->setVariable('item', $item);
         $view->setVariable('oItem', $oItem);
         $view->setVariable('records', $records);
+        $view->setVariable('formDeleteSelected', $formDeleteSelected);
+        $view->setVariable('formDeleteAll', $formDeleteAll);
         return $view;
     }
 
@@ -231,17 +244,29 @@ class RecordController extends AbstractActionController
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isPost()) {
-            $form = $this->getForm(ConfirmForm::class);
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-                $response = $this->api($form)->delete('datascribe_records', $this->params('record-id'));
-                if ($response) {
-                    $this->messenger()->addSuccess('Record successfully deleted'); // @translate
-                }
-            } else {
-                $this->messenger()->addFormErrors($form);
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $record = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id'),
+            $this->params('record-id')
+        );
+        if (!$record) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $form = $this->getForm(ConfirmForm::class);
+        $form->setData($this->getRequest()->getPost());
+        if ($form->isValid()) {
+            $response = $this->api($form)->delete('datascribe_records', $record->id());
+            if ($response) {
+                $this->messenger()->addSuccess('Record successfully deleted'); // @translate
             }
+        } else {
+            $this->messenger()->addFormErrors($form);
         }
         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
     }
@@ -249,7 +274,7 @@ class RecordController extends AbstractActionController
     public function batchEditAction()
     {
         if (!$this->getRequest()->isPost()) {
-            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            return $this->redirect()->toRoute('admin/datascribe');
         }
 
         $item = $this->datascribe()->getRepresentation(
@@ -297,7 +322,7 @@ class RecordController extends AbstractActionController
     public function batchEditAllAction()
     {
         if (!$this->getRequest()->isPost()) {
-            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+            return $this->redirect()->toRoute('admin/datascribe');
         }
 
         $item = $this->datascribe()->getRepresentation(
@@ -346,6 +371,78 @@ class RecordController extends AbstractActionController
         $view->setVariable('query', $query);
         $view->setVariable('form', $form);
         return $view;
+    }
+
+    public function batchDeleteAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $recordIds = $this->params()->fromPost('record_ids', []);
+        if (!$recordIds) {
+            $this->messenger()->addError('You must select at least one record to batch delete.'); // @translate
+            return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+        }
+
+        $form = $this->getForm(ConfirmForm::class);
+        $form->setData($this->getRequest()->getPost());
+        if ($form->isValid()) {
+            $response = $this->api($form)->batchDelete('datascribe_records', $recordIds, [], ['continueOnError' => true]);
+            if ($response) {
+                $this->messenger()->addSuccess('Records successfully deleted'); // @translate
+            }
+        } else {
+            $this->messenger()->addFormErrors($form);
+        }
+        return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
+    }
+
+    public function batchDeleteAllAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        // Derive the query, removing limiting and sorting params.
+        $query = json_decode($this->params()->fromPost('query', []), true);
+        $query['datascribe_item_id'] = $item->id();
+        unset(
+            $query['submit'], $query['page'], $query['per_page'],
+            $query['limit'], $query['offset'], $query['sort_by'],
+            $query['sort_order']
+        );
+
+        $form = $this->getForm(ConfirmForm::class);
+        $form->setData($this->getRequest()->getPost());
+        if ($form->isValid()) {
+            $job = $this->jobDispatcher()->dispatch('Omeka\Job\BatchDelete', [
+                'resource' => 'datascribe_records',
+                'query' => $query,
+            ]);
+            $this->messenger()->addSuccess('Deleting records. This may take a while.'); // @translate
+        } else {
+            $this->messenger()->addFormErrors($form);
+        }
+        return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
     }
 
     public function showAction()
