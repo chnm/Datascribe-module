@@ -51,7 +51,7 @@ class Unknown implements DataTypeInterface
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
+    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
     {
         $element = new Element\Text('data_type');
         $element->setLabel('Unknown data type'); // @translate

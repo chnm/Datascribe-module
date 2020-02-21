@@ -92,7 +92,7 @@ class Textarea implements DataTypeInterface
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
+    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
     {
         $element = new DatascribeElement\Textarea('value', [
             'datascribe_field_data' => $fieldData,

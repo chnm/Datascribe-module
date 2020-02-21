@@ -38,15 +38,13 @@ interface DataTypeInterface
     public function fieldDataIsValid(array $fieldData) : bool;
 
     /**
-     * Get the form element used for the value data.
+     * Add the form elements used for the value data.
      *
      * @param Fieldset $fieldset
-     * @param string $fieldName
-     * @param ?string $fieldDescription
      * @param array $fieldData
      * @param array $valueData
      */
-    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void;
+    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void;
 
     /**
      * Get structured data from value form data (for storing).

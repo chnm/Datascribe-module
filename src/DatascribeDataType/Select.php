@@ -61,7 +61,7 @@ class Select implements DataTypeInterface
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, string $fieldName, ?string $fieldDescription, array $fieldData, array $valueData) : void
+    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
     {
         $element = new DatascribeElement\Select('value', [
             'datascribe_field_data' => $fieldData,

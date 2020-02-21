@@ -110,8 +110,6 @@ class RecordForm extends Form
             // Add the custom "data" elements.
             $dataType->addValueDataElements(
                 $valueDataFieldset,
-                $field->name(),
-                $field->description(),
                 $field->data(),
                 $valueDataIsValid ? $valueData : []
             );
