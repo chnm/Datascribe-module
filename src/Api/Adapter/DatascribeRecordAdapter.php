@@ -140,6 +140,8 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             $item = $this->getAdapter('datascribe_items')->findEntity($itemData['o:id']);
             $entity->setItem($item);
             $entity->setCreatedBy($user);
+            $entity->setNeedsReview(false);
+            $entity->setNeedsWork(false);
         } else {
             $entity->setModifiedBy($user);
             $entity->setModified(new DateTime('now'));
