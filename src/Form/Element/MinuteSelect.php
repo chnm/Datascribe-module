@@ -8,6 +8,7 @@ use Zend\Validator;
 class MinuteSelect extends ZendSelect implements InputProviderInterface
 {
     const MINUTES = [
+        0 => '00',
         1 => '01',
         2 => '02',
         3 => '03',
