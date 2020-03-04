@@ -13,7 +13,7 @@ class Datetime implements DataTypeInterface
         return 'DateTime'; // @translate
     }
 
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new DatascribeElement\OptionalNumber('min_year');
         $element->setLabel('Minimum year'); // @translate
@@ -77,54 +77,56 @@ class Datetime implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getFieldData(array $fieldFormData) : array
+    public function getFieldDataFromUserData(array $userData) : array
     {
         $fieldData = [];
         $fieldData['min_year'] =
-            (isset($fieldFormData['min_year']) && preg_match('/^-?\d+$/', $fieldFormData['min_year']))
-            ? $fieldFormData['min_year'] : null;
+            (isset($userData['min_year']) && preg_match('/^-?\d+$/', $userData['min_year']))
+            ? $userData['min_year'] : null;
         $fieldData['max_year'] =
-            (isset($fieldFormData['max_year']) && preg_match('/^-?\d+$/', $fieldFormData['max_year']))
-            ? $fieldFormData['max_year'] : null;
+            (isset($userData['max_year']) && preg_match('/^-?\d+$/', $userData['max_year']))
+            ? $userData['max_year'] : null;
         $fieldData['default_year'] =
-            (isset($fieldFormData['default_year']) && preg_match('/^-?\d+$/', $fieldFormData['default_year']))
-            ? $fieldFormData['default_year'] : null;
+            (isset($userData['default_year']) && preg_match('/^-?\d+$/', $userData['default_year']))
+            ? $userData['default_year'] : null;
         $fieldData['default_month'] =
-            (isset($fieldFormData['default_month']) && in_array($fieldFormData['default_month'], range(1, 12)))
-            ? $fieldFormData['default_month'] : null;
+            (isset($userData['default_month']) && in_array($userData['default_month'], range(1, 12)))
+            ? $userData['default_month'] : null;
         $fieldData['default_day'] =
-            (isset($fieldFormData['default_day']) && in_array($fieldFormData['default_day'], range(1, 31)))
-            ? $fieldFormData['default_day'] : null;
+            (isset($userData['default_day']) && in_array($userData['default_day'], range(1, 31)))
+            ? $userData['default_day'] : null;
         $fieldData['default_hour'] =
-            (isset($fieldFormData['default_hour']) && in_array($fieldFormData['default_hour'], range(0, 23)))
-            ? $fieldFormData['default_hour'] : null;
+            (isset($userData['default_hour']) && in_array($userData['default_hour'], range(0, 23)))
+            ? $userData['default_hour'] : null;
         $fieldData['default_minute'] =
-            (isset($fieldFormData['default_minute']) && in_array($fieldFormData['default_minute'], range(0, 59)))
-            ? $fieldFormData['default_minute'] : null;
+            (isset($userData['default_minute']) && in_array($userData['default_minute'], range(0, 59)))
+            ? $userData['default_minute'] : null;
         $fieldData['default_second'] =
-            (isset($fieldFormData['default_second']) && in_array($fieldFormData['default_second'], range(0, 59)))
-            ? $fieldFormData['default_second'] : null;
+            (isset($userData['default_second']) && in_array($userData['default_second'], range(0, 59)))
+            ? $userData['default_second'] : null;
         return $fieldData;
     }
 
     public function fieldDataIsValid(array $fieldData) : bool
     {
-        // Invalid data was filtered out in self::getFieldData().
+        // Invalid data was filtered out in self::getFieldDataFromUserData().
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
+        $dateTime = $this->getDateTimeArray($valueText);
+
         // Year
         $element = new DatascribeElement\YearSelect('year', [
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel('Year'); // @translate
         $value = null;
-        if (isset($valueData['year'])) {
-            $value = $valueData['year'];
-        } elseif (isset($fieldData['default_year'])) {
+        if (is_null($valueText) && isset($fieldData['default_year'])) {
             $value = $fieldData['default_year'];
+        } elseif (is_numeric($dateTime['year'])) {
+            $value = $dateTime['year'];
         }
         $element->setValue($value);
         $fieldset->add($element);
@@ -135,10 +137,10 @@ class Datetime implements DataTypeInterface
         ]);
         $element->setLabel('Month'); // @translate
         $value = null;
-        if (isset($valueData['month'])) {
-            $value = $valueData['month'];
-        } elseif (isset($fieldData['default_month'])) {
+        if (is_null($valueText) && isset($fieldData['default_month'])) {
             $value = $fieldData['default_month'];
+        } elseif (is_numeric($dateTime['month'])) {
+            $value = $dateTime['month'];
         }
         $element->setValue($value);
         $fieldset->add($element);
@@ -149,10 +151,10 @@ class Datetime implements DataTypeInterface
         ]);
         $element->setLabel('Day'); // @translate
         $value = null;
-        if (isset($valueData['day'])) {
-            $value = $valueData['day'];
-        } elseif (isset($fieldData['default_day'])) {
+        if (is_null($valueText) && isset($fieldData['default_day'])) {
             $value = $fieldData['default_day'];
+        } elseif (is_numeric($dateTime['day'])) {
+            $value = $dateTime['day'];
         }
         $element->setValue($value);
         $fieldset->add($element);
@@ -163,10 +165,10 @@ class Datetime implements DataTypeInterface
         ]);
         $element->setLabel('Hour'); // @translate
         $value = null;
-        if (isset($valueData['hour'])) {
-            $value = $valueData['hour'];
-        } elseif (isset($fieldData['default_hour'])) {
+        if (is_null($valueText) && isset($fieldData['default_hour'])) {
             $value = $fieldData['default_hour'];
+        } elseif (is_numeric($dateTime['hour'])) {
+            $value = $dateTime['hour'];
         }
         $element->setValue($value);
         $fieldset->add($element);
@@ -177,10 +179,10 @@ class Datetime implements DataTypeInterface
         ]);
         $element->setLabel('Minute'); // @translate
         $value = null;
-        if (isset($valueData['minute'])) {
-            $value = $valueData['minute'];
-        } elseif (isset($fieldData['default_minute'])) {
+        if (is_null($valueText) && isset($fieldData['default_minute'])) {
             $value = $fieldData['default_minute'];
+        } elseif (is_numeric($dateTime['minute'])) {
+            $value = $dateTime['minute'];
         }
         $element->setValue($value);
         $fieldset->add($element);
@@ -191,35 +193,38 @@ class Datetime implements DataTypeInterface
         ]);
         $element->setLabel('Second'); // @translate
         $value = null;
-        if (isset($valueData['second'])) {
-            $value = $valueData['second'];
-        } elseif (isset($fieldData['default_second'])) {
+        if (is_null($valueText) && isset($fieldData['default_second'])) {
             $value = $fieldData['default_second'];
+        } elseif (is_numeric($dateTime['second'])) {
+            $value = $dateTime['second'];
         }
         $element->setValue($value);
         $fieldset->add($element);
     }
 
-    public function getValueData(array $valueFormData) : array
+    public function getValueTextFromUserData(array $userData) : string
     {
-        $valueData = [];
-        $valueData['year'] = $valueFormData['year'] ?? null;
-        $valueData['month'] = $valueFormData['month'] ?? null;
-        $valueData['day'] = $valueFormData['day'] ?? null;
-        $valueData['hour'] = $valueFormData['hour'] ?? null;
-        $valueData['minute'] = $valueFormData['minute'] ?? null;
-        $valueData['second'] = $valueFormData['second'] ?? null;
+        $dateTime = [
+            'year' => $userData['year'] ?? null,
+            'month' => $userData['month'] ?? null,
+            'day' => $userData['day'] ?? null,
+            'hour' => $userData['hour'] ?? null,
+            'minute' => $userData['minute'] ?? null,
+            'second' => $userData['second'] ?? null,
+        ];
 
         // Make empty strings null so validation works.
-        $valueData = array_map(function($value) {
+        $dateTime = array_map(function($value) {
             return (is_string($value) && ('' === trim($value))) ? null : $value;
-        }, $valueData);
+        }, $dateTime);
 
-        return $valueData;
+        return $this->getDateTimeString($dateTime);
     }
 
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
+        $dateTime = $this->getDateTimeArray($valueText);
+
         $isValid = function($element, $value) {
             if (null === $value) {
                 return false;
@@ -238,100 +243,131 @@ class Datetime implements DataTypeInterface
         $minuteSelect = new DatascribeElement\MinuteSelect('minute', ['datascribe_field_data' => $fieldData]);
         $secondSelect = new DatascribeElement\SecondSelect('second', ['datascribe_field_data' => $fieldData]);
 
-        $return = true;
-        if (isset($valueData['second'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
-                && $isValid($monthSelect, $valueData['month'])
-                && $isValid($daySelect, $valueData['day'])
-                && $isValid($hourSelect, $valueData['hour'])
-                && $isValid($minuteSelect, $valueData['minute'])
-                && $isValid($secondSelect, $valueData['second'])
-            );
-        } elseif (isset($valueData['minute'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
-                && $isValid($monthSelect, $valueData['month'])
-                && $isValid($daySelect, $valueData['day'])
-                && $isValid($hourSelect, $valueData['hour'])
-                && $isValid($minuteSelect, $valueData['minute'])
-            );
-        } elseif (isset($valueData['hour'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
-                && $isValid($monthSelect, $valueData['month'])
-                && $isValid($daySelect, $valueData['day'])
-                && $isValid($hourSelect, $valueData['hour'])
-            );
-        } elseif (isset($valueData['day'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
-                && $isValid($monthSelect, $valueData['month'])
-                && $isValid($daySelect, $valueData['day'])
-            );
-        } elseif (isset($valueData['month'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
-                && $isValid($monthSelect, $valueData['month'])
-            );
-        } elseif (isset($valueData['year'])) {
-            $return = (
-                $isValid($yearSelect, $valueData['year'])
+        if (is_numeric($dateTime['second'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+                && $isValid($monthSelect, $dateTime['month'])
+                && $isValid($daySelect, $dateTime['day'])
+                && $isValid($hourSelect, $dateTime['hour'])
+                && $isValid($minuteSelect, $dateTime['minute'])
+                && $isValid($secondSelect, $dateTime['second'])
             );
         }
-        return $return;
-    }
-
-    public function getHtml(array $valueData) : string
-    {
-    }
-
-    public function getValue(array $valueData) : string
-    {
-        if (isset($valueData['year'])) {
-            $minusSign = '';
-            $year = $valueData['year'];
-            $yearArray = explode('-', $year);
-            if (1 !== count($yearArray)) {
-                $minusSign = '-';
-                $year = (int) $yearArray[1];
-            }
+        if (is_numeric($dateTime['minute'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+                && $isValid($monthSelect, $dateTime['month'])
+                && $isValid($daySelect, $dateTime['day'])
+                && $isValid($hourSelect, $dateTime['hour'])
+                && $isValid($minuteSelect, $dateTime['minute'])
+            );
         }
-        $return = '';
-        if (isset($valueData['year']) && isset($valueData['month']) && isset($valueData['day']) && isset($valueData['hour']) && isset($valueData['minute']) && isset($valueData['second'])) {
-            $return = sprintf(
+        if (is_numeric($dateTime['hour'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+                && $isValid($monthSelect, $dateTime['month'])
+                && $isValid($daySelect, $dateTime['day'])
+                && $isValid($hourSelect, $dateTime['hour'])
+            );
+        }
+        if (is_numeric($dateTime['day'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+                && $isValid($monthSelect, $dateTime['month'])
+                && $isValid($daySelect, $dateTime['day'])
+            );
+        }
+        if (is_numeric($dateTime['month'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+                && $isValid($monthSelect, $dateTime['month'])
+            );
+        }
+        if (is_numeric($dateTime['year'])) {
+            return (
+                $isValid($yearSelect, $dateTime['year'])
+            );
+        }
+        return true;
+    }
+
+    /**
+     * Get an array of date/time data given an ISO 8601 string.
+     *
+     * @param ?string $dateTimeString
+     * @return array
+     */
+    protected function getDateTimeArray(?string $dateTimeString)
+    {
+        $regexDate = '(-)?(\d{4})(-(\d{2})(-(\d{2}))?)?';
+        $regexTime = '(\d{2})(:(\d{2})(:(\d{2}))?)?';
+        $regexDateTime = sprintf('^%s(T%s)?$', $regexDate, $regexTime);
+        preg_match(sprintf('/%s/', $regexDateTime), $dateTimeString, $matches);
+        $year = sprintf('%s%s', $matches[1] ?? '', $matches[2] ?? '');
+        return [
+            'year' => $year ? (int) $year : null,
+            'month' => isset($matches[4]) ? (int) $matches[4] : null,
+            'day' => isset($matches[6]) ? (int) $matches[6] : null,
+            'hour' => isset($matches[8]) ? (int) $matches[8] : null,
+            'minute' => isset($matches[10]) ? (int) $matches[10] : null,
+            'second' => isset($matches[12]) ? (int) $matches[12] : null,
+        ];
+    }
+
+    /**
+     * Get an ISO 8601 string given an array of date/time data.
+     *
+     * @param array $dateTimeArray
+     * @return string
+     */
+    protected function getDateTimeString(array $dateTimeArray)
+    {
+        if (isset($dateTimeArray['year'])) {
+            preg_match('/^(-)?(\d+)$/', $dateTimeArray['year'], $matches);
+            $year = [
+                $matches[1] ?? null,
+                $matches[2]
+            ];
+        }
+        if (isset($dateTimeArray['year']) && isset($dateTimeArray['month']) && isset($dateTimeArray['day']) && isset($dateTimeArray['hour']) && isset($dateTimeArray['minute']) && isset($dateTimeArray['second'])) {
+            return sprintf(
                 '%s%04d-%02d-%02dT%02d:%02d:%02d',
-                $minusSign, $year, $valueData['month'], $valueData['day'],
-                $valueData['hour'], $valueData['minute'], $valueData['second']
-            );
-        } elseif (isset($valueData['year']) && isset($valueData['month']) && isset($valueData['day']) && isset($valueData['hour']) && isset($valueData['minute'])) {
-            $return = sprintf(
-                '%s%04d-%02d-%02dT%02d:%02d',
-                $minusSign, $year, $valueData['month'], $valueData['day'],
-                $valueData['hour'], $valueData['minute']
-            );
-        } elseif (isset($valueData['year']) && isset($valueData['month']) && isset($valueData['day']) && isset($valueData['hour'])) {
-            $return = sprintf(
-                '%s%04d-%02d-%02dT%02d',
-                $minusSign, $year, $valueData['month'], $valueData['day'],
-                $valueData['hour']
-            );
-        } elseif (isset($valueData['year']) && isset($valueData['month']) && isset($valueData['day'])) {
-            $return = sprintf(
-                '%s%04d-%02d-%02d',
-                $minusSign, $year, $valueData['month'], $valueData['day']
-            );
-        } elseif (isset($valueData['year']) && isset($valueData['month'])) {
-            $return = sprintf(
-                '%s%04d-%02d',
-                $minusSign, $year, $valueData['month']
-            );
-        } elseif (isset($valueData['year'])) {
-            $return = sprintf(
-                '%s%04d',
-                $minusSign, $year
+                $year[0], $year[1], $dateTimeArray['month'], $dateTimeArray['day'],
+                $dateTimeArray['hour'], $dateTimeArray['minute'], $dateTimeArray['second']
             );
         }
-        return $return;
+        if (isset($dateTimeArray['year']) && isset($dateTimeArray['month']) && isset($dateTimeArray['day']) && isset($dateTimeArray['hour']) && isset($dateTimeArray['minute'])) {
+            return sprintf(
+                '%s%04d-%02d-%02dT%02d:%02d',
+                $year[0], $year[1], $dateTimeArray['month'], $dateTimeArray['day'],
+                $dateTimeArray['hour'], $dateTimeArray['minute']
+            );
+        }
+        if (isset($dateTimeArray['year']) && isset($dateTimeArray['month']) && isset($dateTimeArray['day']) && isset($dateTimeArray['hour'])) {
+            return sprintf(
+                '%s%04d-%02d-%02dT%02d',
+                $year[0], $year[1], $dateTimeArray['month'], $dateTimeArray['day'],
+                $dateTimeArray['hour']
+            );
+        }
+        if (isset($dateTimeArray['year']) && isset($dateTimeArray['month']) && isset($dateTimeArray['day'])) {
+            return sprintf(
+                '%s%04d-%02d-%02d',
+                $year[0], $year[1], $dateTimeArray['month'], $dateTimeArray['day']
+            );
+        }
+        if (isset($dateTimeArray['year']) && isset($dateTimeArray['month'])) {
+            return sprintf(
+                '%s%04d-%02d',
+                $year[0], $year[1], $dateTimeArray['month']
+            );
+        }
+        if (isset($dateTimeArray['year'])) {
+            return sprintf(
+                '%s%04d',
+                $year[0], $year[1]
+            );
+        }
+        return false;
     }
 }

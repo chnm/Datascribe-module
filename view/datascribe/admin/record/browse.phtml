@@ -84,7 +84,7 @@ $sortBy = [
             <?php foreach ($dataset->fields() as $field): ?>
             <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
                 'length' => 20,
-                'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                'trim_marker' => '...',
             ]); ?></th>
             <?php endforeach; ?>
         </tr>
@@ -140,8 +140,8 @@ $sortBy = [
                 <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
                 <?php else: ?>
                 <?php echo $value->displayText([
-                    'length' => 100,
-                    'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                    'length' => 50,
+                    'trim_marker' => '...',
                     'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),
                     'if_empty_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('empty')),
                     'if_unknown_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('unknown')),

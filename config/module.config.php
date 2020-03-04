@@ -7,8 +7,8 @@ return [
             'text' => DatascribeDataType\Text::class,
             'textarea' => DatascribeDataType\Textarea::class,
             'number' => DatascribeDataType\Number::class,
-            //~ 'select' => DatascribeDataType\Select::class,
-            //~ 'datetime' => DatascribeDataType\Datetime::class,
+            'select' => DatascribeDataType\Select::class,
+            'datetime' => DatascribeDataType\Datetime::class,
         ],
     ],
     'translator' => [
