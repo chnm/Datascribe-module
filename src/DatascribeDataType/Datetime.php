@@ -202,7 +202,7 @@ class Datetime implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getValueTextFromUserData(array $userData) : string
+    public function getValueTextFromUserData(array $userData) : ?string
     {
         $dateTime = [
             'year' => $userData['year'] ?? null,

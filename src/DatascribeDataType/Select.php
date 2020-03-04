@@ -79,7 +79,7 @@ class Select implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getValueTextFromUserData(array $userData) : string
+    public function getValueTextFromUserData(array $userData) : ?string
     {
         return $userData['value'] ?? null;
     }

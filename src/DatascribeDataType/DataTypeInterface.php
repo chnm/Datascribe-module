@@ -50,9 +50,9 @@ interface DataTypeInterface
      * Get value text from user data (for storing).
      *
      * @param array $userData
-     * @return string
+     * @return ?string
      */
-    public function getValueTextFromUserData(array $userData) : string;
+    public function getValueTextFromUserData(array $userData) : ?string;
 
     /**
      * Is the value text valid?
