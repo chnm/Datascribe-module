@@ -32,11 +32,6 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return $this->value->getId();
     }
 
-    public function data()
-    {
-        return $this->value->getData();
-    }
-
     public function field()
     {
         return new DatascribeFieldRepresentation(
@@ -66,28 +61,33 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return $this->value->getIsIllegible();
     }
 
-    public function valueIsValid()
+    public function text()
+    {
+        return $this->value->getText();
+    }
+
+    public function textIsValid()
     {
         $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
         $field = $this->field();
         $dataType = $manager->get($field->dataType());
-        return $dataType->valueDataIsValid($field->data(), $this->data());
+        return $dataType->valueTextIsValid($field->data(), $this->text());
     }
 
     /**
-     * Return this value.
+     * Return this value's text formatted for display.
      *
      * The options are:
-     * - length: the maximum length of the value (default is null)
-     * - trim_marker: a string that follows a value that exceeds the maximum length (defualt is null)
-     * - if_invalid_return: return this if the value is invalid (default is false)
-     * - if_unknown_return: return this if the value is unknown (default is false)
-     * - if_empty_return: return this if the value is empty (default is null)
+     * - length: the maximum length of the text (default is null)
+     * - trim_marker: a string that follows text that exceeds the maximum length (defualt is null)
+     * - if_invalid_return: return this if the text is invalid (default is false)
+     * - if_unknown_return: return this if the text is unknown (default is false)
+     * - if_empty_return: return this if the text is empty (default is null)
      *
      * @param array $options
      * @return mixed
      */
-    public function value(array $options = [])
+    public function displayText(array $options = [])
     {
         // Set default options.
         $options['length'] = $options['length'] ?? null;
@@ -96,7 +96,7 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         $options['if_unknown_return'] = $options['if_unknown_return'] ?? false;
         $options['if_empty_return'] = $options['if_empty_return'] ?? null;
 
-        if (!$this->valueIsValid()) {
+        if (!$this->textIsValid()) {
             return $options['if_invalid_return'];
         }
         $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
@@ -104,17 +104,17 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         if ($dataType instanceof Unknown) {
             return $options['if_unknown_return'];
         }
-        $value = $dataType->getValue($this->data());
-        $valueLength = mb_strlen($value);
-        if (0 === $valueLength) {
+        $text = $this->text();
+        $textLength = mb_strlen($text);
+        if (0 === $textLength) {
             return $options['if_empty_return'];
         }
         if ($options['length']) {
-            $value = mb_substr($value, 0, (int) $options['length']);
+            $text = mb_substr($text, 0, (int) $options['length']);
         }
-        if ($options['trim_marker'] && $valueLength > mb_strlen($value)) {
-            $value .= $options['trim_marker'];
+        if ($options['trim_marker'] && $textLength > mb_strlen($text)) {
+            $text .= $options['trim_marker'];
         }
-        return $value;
+        return $text;
     }
 }

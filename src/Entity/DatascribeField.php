@@ -10,7 +10,6 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeField extends AbstractEntity
 {
     use TraitId;
-    use TraitData;
 
     /**
      * @Column(
@@ -67,6 +66,14 @@ class DatascribeField extends AbstractEntity
      * )
      */
     protected $dataType;
+
+    /**
+     * @Column(
+     *     type="json",
+     *     nullable=false
+     * )
+     */
+    protected $data;
 
     /**
      * @OneToMany(
@@ -143,6 +150,16 @@ class DatascribeField extends AbstractEntity
     public function getDataType() : ?string
     {
         return $this->dataType;
+    }
+
+    public function setData(array $data) : void
+    {
+        $this->data = $data;
+    }
+
+    public function getData() : array
+    {
+        return $this->data;
     }
 
     public function getValues()

@@ -16,7 +16,6 @@ use Omeka\Entity\AbstractEntity;
 class DatascribeValue extends AbstractEntity
 {
     use TraitId;
-    use TraitData;
 
     /**
      * @ManyToOne(
@@ -67,6 +66,14 @@ class DatascribeValue extends AbstractEntity
      */
     protected $isIllegible;
 
+    /**
+     * @Column(
+     *     type="text",
+     *     nullable=true
+     * )
+     */
+    protected $text;
+
     public function setField(DatascribeField $field) : void
     {
         $this->field = $field;
@@ -115,5 +122,15 @@ class DatascribeValue extends AbstractEntity
     public function getIsIllegible() : bool
     {
         return $this->isIllegible;
+    }
+
+    public function setText(?string $text) : void
+    {
+        $this->text = $text;
+    }
+
+    public function getText() : ?string
+    {
+        return $this->text;
     }
 }

@@ -168,7 +168,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
             if (!($dataType instanceof Unknown)) {
-                $field->setData($dataType->getFieldData($fieldData['data']));
+                $field->setData($dataType->getFieldDataFromUserData($fieldData['data']));
             }
         }
 

@@ -70,8 +70,8 @@ $form->prepare();
     <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
     <?php endif; ?>
-    <?php if ($fieldset->has('invalid_data')): ?>
-    <?php echo $this->formRow($fieldset->get('invalid_data')); ?>
+    <?php if ($fieldset->has('invalid_value_text')): ?>
+    <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
     <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>
     <?php echo $this->formRow($fieldset->get('is_missing')); ?>

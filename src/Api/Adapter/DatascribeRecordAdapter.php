@@ -177,7 +177,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $value->setIsIllegible((bool) $valueData['is_illegible']);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
-                $value->setData($dataType->getValueData($valueData['data']));
+                $value->setText($dataType->getValueTextFromUserData($valueData['data']));
                 $valuesToRetain->add($value);
             }
             // Remove values not passed in the request.
@@ -208,8 +208,8 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
 
             // Validate the value data.
             $dataType = $dataTypes->get($field->getDataType());
-            if (!$dataType->valueDataIsValid($field->getData(), $value->getData())) {
-                $errorStore->addError('data', sprintf('Invalid value data for field "%s".', $field->getName())); // @translate
+            if (!$dataType->valueTextIsValid($field->getData(), $value->getText())) {
+                $errorStore->addError('data', sprintf('Invalid value text for field "%s".', $field->getName())); // @translate
             }
         }
     }

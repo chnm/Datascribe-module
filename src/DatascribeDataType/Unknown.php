@@ -17,7 +17,7 @@ class Unknown implements DataTypeInterface
         return '[Unknown]'; // @translate
     }
 
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Text('data_type');
         $element->setLabel('Unknown data type'); // @translate
@@ -39,9 +39,9 @@ class Unknown implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getFieldData(array $fieldFormData) : array
+    public function getFieldDataFromUserData(array $userData) : array
     {
-        $fieldData = $fieldFormData['field_data'] ?? null;
+        $fieldData = $userData['field_data'] ?? null;
         $fieldData = json_decode($fieldData, true);
         return is_array($fieldData) ? $fieldData : [];
     }
@@ -51,7 +51,7 @@ class Unknown implements DataTypeInterface
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
         $element = new Element\Text('data_type');
         $element->setLabel('Unknown data type'); // @translate
@@ -59,39 +59,27 @@ class Unknown implements DataTypeInterface
         $element->setAttribute('disabled', true);
         $fieldset->add($element);
 
-        $element = new Element\Textarea('value_data_disabled');
-        $element->setLabel('Value data'); // @translate
-        $element->setValue(json_encode($valueData, JSON_PRETTY_PRINT));
+        $element = new Element\Textarea('value_text_disabled');
+        $element->setLabel('Value text'); // @translate
+        $element->setValue($valueText);
         $element->setAttributes([
             'disabled' => true,
             'rows' => 8,
         ]);
         $fieldset->add($element);
 
-        $element = new Element\Hidden('value_data');
-        $element->setValue(json_encode($valueData));
+        $element = new Element\Hidden('value_text');
+        $element->setValue($valueText);
         $fieldset->add($element);
     }
 
-    public function getValueData(array $valueFormData) : array
+    public function getValueTextFromUserData(array $userData) : string
     {
-        $valueData = $valueFormData['value_data'] ?? null;
-        $valueData = json_decode($valueData, true);
-        return is_array($valueData) ? $valueData : [];
+        return $userData['value_text'] ?? null;
     }
 
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
         return true;
-    }
-
-    public function getHtml(array $valueData) : string
-    {
-        return '';
-    }
-
-    public function getValue(array $valueData) : string
-    {
-        return '';
     }
 }

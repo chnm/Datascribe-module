@@ -26,7 +26,7 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
                 <?php if (null === $value): ?>
                 <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
                 <?php else: ?>
-                <?php echo $value->value([
+                <?php echo $value->displayText([
                     'length' => 100,
                     'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
                     'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),

@@ -14,7 +14,7 @@ class Text implements DataTypeInterface
         return 'Text'; // @translate
     }
 
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new DatascribeElement\OptionalNumber('minlength');
         $element->setLabel('Minimum length'); // @translate
@@ -59,29 +59,29 @@ class Text implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getFieldData(array $fieldFormData) : array
+    public function getFieldDataFromUserData(array $userData) : array
     {
         $fieldData = [];
         $fieldData['minlength'] =
-            (isset($fieldFormData['minlength']) && preg_match('/^\d+$/', $fieldFormData['minlength']))
-            ? $fieldFormData['minlength'] : null;
+            (isset($userData['minlength']) && preg_match('/^\d+$/', $userData['minlength']))
+            ? $userData['minlength'] : null;
         $fieldData['maxlength'] =
-            (isset($fieldFormData['maxlength']) && preg_match('/^\d+$/', $fieldFormData['maxlength']))
-            ? $fieldFormData['maxlength'] : null;
+            (isset($userData['maxlength']) && preg_match('/^\d+$/', $userData['maxlength']))
+            ? $userData['maxlength'] : null;
         $fieldData['placeholder'] =
-            (isset($fieldFormData['placeholder']) && preg_match('/^.+$/', $fieldFormData['placeholder']))
-            ? $fieldFormData['placeholder'] : null;
+            (isset($userData['placeholder']) && preg_match('/^.+$/', $userData['placeholder']))
+            ? $userData['placeholder'] : null;
         $fieldData['pattern'] =
-            (isset($fieldFormData['pattern']) && preg_match('/^.+$/', $fieldFormData['pattern']))
-            ? $fieldFormData['pattern'] : null;
+            (isset($userData['pattern']) && preg_match('/^.+$/', $userData['pattern']))
+            ? $userData['pattern'] : null;
         $fieldData['default_value'] =
-            (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
-            ? $fieldFormData['default_value'] : null;
+            (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
+            ? $userData['default_value'] : null;
         $fieldData['text_input_label'] =
-            (isset($fieldFormData['text_input_label']) && preg_match('/^.+$/', $fieldFormData['text_input_label']))
-            ? $fieldFormData['text_input_label'] : null;
-        if (isset($fieldFormData['datalist']) && preg_match('/^.+$/s', $fieldFormData['datalist'])) {
-            $options = explode("\n", $fieldFormData['datalist']);
+            (isset($userData['text_input_label']) && preg_match('/^.+$/', $userData['text_input_label']))
+            ? $userData['text_input_label'] : null;
+        if (isset($userData['datalist']) && preg_match('/^.+$/s', $userData['datalist'])) {
+            $options = explode("\n", $userData['datalist']);
             $options = array_map('trim', $options);
             $options = array_filter($options);
             $options = array_unique($options);
@@ -98,15 +98,15 @@ class Text implements DataTypeInterface
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
         $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel($fieldData['text_input_label'] ?? 'Text'); // @translate
         $value = null;
-        if (isset($valueData['value'])) {
-            $value = $valueData['value'];
+        if (isset($valueText)) {
+            $value = $valueText;
         } elseif (isset($fieldData['default_value'])) {
             $value = $fieldData['default_value'];
         }
@@ -114,14 +114,12 @@ class Text implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getValueData(array $valueFormData) : array
+    public function getValueTextFromUserData(array $userData) : string
     {
-        $valueData = [];
-        $valueData['value'] = $valueFormData['value'] ?? null;
-        return $valueData;
+        return $userData['value'] ?? null;
     }
 
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
         $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
@@ -130,16 +128,6 @@ class Text implements DataTypeInterface
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return isset($valueData['value'])
-            ? $validatorChain->isValid($valueData['value']) : false;
-    }
-
-    public function getHtml(array $valueData) : string
-    {
-    }
-
-    public function getValue(array $valueData) : string
-    {
-        return $valueData['value'];
+        return isset($valueText) ? $validatorChain->isValid($valueText) : false;
     }
 }

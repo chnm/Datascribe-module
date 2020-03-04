@@ -19,15 +19,15 @@ interface DataTypeInterface
      * @param Fieldset $fieldset
      * @param array $fieldData
      */
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void;
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void;
 
     /**
-     * Get structured data from field form data (for storing).
+     * Get field data from user data (for storing).
      *
-     * @param array $fieldFormData
+     * @param array $userData
      * @return array
      */
-    public function getFieldData(array $fieldFormData) : array;
+    public function getFieldDataFromUserData(array $userData) : array;
 
     /**
      * Is the field data valid?
@@ -38,44 +38,28 @@ interface DataTypeInterface
     public function fieldDataIsValid(array $fieldData) : bool;
 
     /**
-     * Add the form elements used for the value data.
+     * Add the form elements used for the value.
      *
      * @param Fieldset $fieldset
      * @param array $fieldData
-     * @param array $valueData
+     * @param string $valueText
      */
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void;
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void;
 
     /**
-     * Get structured data from value form data (for storing).
+     * Get value text from user data (for storing).
      *
-     * @param array $valueFormData
-     * @return array
+     * @param array $userData
+     * @return string
      */
-    public function getValueData(array $valueFormData) : array;
+    public function getValueTextFromUserData(array $userData) : string;
 
     /**
-     * Is the value data valid?
+     * Is the value text valid?
      *
      * @param array $fieldData
-     * @param array $valueData
+     * @param string $valueText
      * @return bool
      */
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool;
-
-    /**
-     * Get the HTML value from value data (for rendering to page).
-     *
-     * @param array $valueData
-     * @return string
-     */
-    public function getHtml(array $valueData) : string;
-
-    /**
-     * Get the raw value from value data (for export).
-     *
-     * @param array $valueData
-     * @return string
-     */
-    public function getValue(array $valueData) : string;
+    public function valueTextIsValid(array $fieldData, string $valueText) : bool;
 }
