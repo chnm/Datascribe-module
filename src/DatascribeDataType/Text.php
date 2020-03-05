@@ -94,7 +94,7 @@ class Text implements DataTypeInterface
 
     public function fieldDataIsValid(array $fieldData) : bool
     {
-        // Invalid data was filtered out in self::getFieldData().
+        // Invalid data was filtered out in self::getFieldDataFromUserData().
         return true;
     }
 
