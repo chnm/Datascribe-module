@@ -31,9 +31,6 @@ class Checkbox implements DataTypeInterface
 
         $element = new Element\Checkbox('checked_by_default');
         $element->setLabel('Checked by default'); // @translate
-        $element->setUseHiddenElement(true);
-        $element->setCheckedValue('1');
-        $element->setUncheckedValue('0');
         $element->setValue($fieldData['checked_by_default'] ?? '0');
         $fieldset->add($element);
 
