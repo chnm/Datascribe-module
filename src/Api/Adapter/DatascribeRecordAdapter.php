@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeRecord;
 use Datascribe\Entity\DatascribeValue;
 use DateTime;
@@ -177,7 +178,10 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $value->setIsIllegible((bool) $valueData['is_illegible']);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
-                $value->setText($dataType->getValueTextFromUserData($valueData['data']));
+                if (!($dataType instanceof Unknown)) {
+                    // Set value text only when the data type is known.
+                    $value->setText($dataType->getValueTextFromUserData($valueData['data']));
+                }
                 $valuesToRetain->add($value);
             }
             // Remove values not passed in the request.

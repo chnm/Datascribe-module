@@ -25,7 +25,7 @@ class Unknown implements DataTypeInterface
         $element->setAttribute('disabled', true);
         $fieldset->add($element);
 
-        $element = new Element\Textarea('field_data_disabled');
+        $element = new Element\Textarea('field_data');
         $element->setLabel('Field data'); // @translate
         $element->setValue(json_encode($fieldData, JSON_PRETTY_PRINT));
         $element->setAttributes([
@@ -34,16 +34,14 @@ class Unknown implements DataTypeInterface
         ]);
         $fieldset->add($element);
 
-        $element = new Element\Hidden('field_data');
-        $element->setValue(json_encode($fieldData));
-        $fieldset->add($element);
+        // We need to add an unused element here so the "data" fieldset appears
+        // in POST data. Otherwise the API request will not validate.
+        $fieldset->add(new Element\Hidden('unknown'));
     }
 
     public function getFieldDataFromUserData(array $userData) : array
     {
-        $fieldData = $userData['field_data'] ?? null;
-        $fieldData = json_decode($fieldData, true);
-        return is_array($fieldData) ? $fieldData : [];
+        return [];
     }
 
     public function fieldDataIsValid(array $fieldData) : bool
@@ -59,7 +57,7 @@ class Unknown implements DataTypeInterface
         $element->setAttribute('disabled', true);
         $fieldset->add($element);
 
-        $element = new Element\Textarea('value_text_disabled');
+        $element = new Element\Textarea('value_text');
         $element->setLabel('Value text'); // @translate
         $element->setValue($valueText);
         $element->setAttributes([
@@ -67,15 +65,11 @@ class Unknown implements DataTypeInterface
             'rows' => 8,
         ]);
         $fieldset->add($element);
-
-        $element = new Element\Hidden('value_text');
-        $element->setValue($valueText);
-        $fieldset->add($element);
     }
 
     public function getValueTextFromUserData(array $userData) : ?string
     {
-        return $userData['value_text'] ?? null;
+        return null;
     }
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool

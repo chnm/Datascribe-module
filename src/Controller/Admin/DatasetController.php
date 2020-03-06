@@ -60,7 +60,8 @@ class DatasetController extends AbstractActionController
             $form->setData($postData);
             if ($form->isValid()) {
                 // Note that the form cannot validate new fields. Instead we
-                // rely on browser and API validation.
+                // rely on browser and API validation, and we pass POST data to
+                // the API instead of parsed form data.
                 $postData['o:item_set'] = ['o:id' => $postData['o:item_set']];
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $postData);
                 if ($response) {
