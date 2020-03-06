@@ -178,9 +178,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $value->setIsIllegible((bool) $valueData['is_illegible']);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
-                if (isset($valueData['set_null']) && $valueData['set_null']) {
-                    $value->setText(null);
-                } elseif (!($dataType instanceof Unknown)) {
+                if (!($dataType instanceof Unknown)) {
                     // Set value text only when the data type is known.
                     $value->setText($dataType->getValueTextFromUserData($valueData['data']));
                 }

@@ -127,12 +127,6 @@ class RecordForm extends Form
                 $valueFieldset->add($element);
             }
 
-            // Add the common "set_null" element.
-            $element = new Element\Checkbox('set_null');
-            $element->setLabel('Set null'); // @translate
-            $element->setAttribute('required', false);
-            $valueFieldset->add($element);
-
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');
             $element->setLabel('Is missing'); // @translate
