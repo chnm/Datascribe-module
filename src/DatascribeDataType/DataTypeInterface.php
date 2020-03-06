@@ -9,6 +9,7 @@ interface DataTypeInterface
     /**
      * Get the label of this data type.
      *
+     * @see Datascribe\Form\DatasetForm
      * @return string
      */
     public function getLabel() : string;
@@ -16,6 +17,7 @@ interface DataTypeInterface
     /**
      * Add the form elements used for the field data.
      *
+     * @see Datascribe\Form\DatasetForm
      * @param Fieldset $fieldset
      * @param array $fieldData
      */
@@ -24,6 +26,7 @@ interface DataTypeInterface
     /**
      * Get field data from user data (for storing).
      *
+     * @see Datascribe\Api\Adapter\DatascribeDatasetAdapter
      * @param array $userData
      * @return array
      */
@@ -32,6 +35,7 @@ interface DataTypeInterface
     /**
      * Is the field data valid?
      *
+     * @see Datascribe\Api\Adapter\DatascribeDatasetAdapter
      * @param array $fieldData
      * @return bool
      */
@@ -40,6 +44,7 @@ interface DataTypeInterface
     /**
      * Add the form elements used for the value.
      *
+     * @see Datascribe\Form\RecordForm
      * @param Fieldset $fieldset
      * @param array $fieldData
      * @param string $valueText
@@ -49,6 +54,7 @@ interface DataTypeInterface
     /**
      * Get value text from user data (for storing).
      *
+     * @see Datascribe\Api\Adapter\DatascribeRecordAdapter
      * @param array $userData
      * @return ?string
      */
@@ -57,6 +63,9 @@ interface DataTypeInterface
     /**
      * Is the value text valid?
      *
+     * @see Datascribe\Form\RecordForm
+     * @see Datascribe\Api\Adapter\DatascribeRecordAdapter
+     * @see Datascribe\Api\Representation\DatascribeValueRepresentation
      * @param array $fieldData
      * @param string $valueText
      * @return bool
