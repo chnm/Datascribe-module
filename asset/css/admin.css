@@ -241,6 +241,22 @@
   width: 7rem;
 }
 
+.meta-group.checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.meta-group.checkbox .value {
+  margin-left: 1rem;
+  width: auto;
+}
+
+.meta-group.checkbox h4 {
+  border-bottom: 0;
+  width: auto;
+}
+
 /* Record Add/Edit */
 
 .record.add div[role="main"], 

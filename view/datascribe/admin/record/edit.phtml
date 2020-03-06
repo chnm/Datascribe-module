@@ -83,13 +83,13 @@ $form->prepare();
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
     <h3><?php echo $this->translate('Record actions'); ?></h3>
     <?php if ($form->has('o-module-datascribe:needs_review')): ?>
-    <div class="meta-group">
+    <div class="meta-group checkbox">
         <h4><?php echo $this->translate('Needs review'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_review')); ?></div>
     </div>
     <?php endif; ?>
     <?php if ($form->has('o-module-datascribe:needs_work')): ?>
-    <div class="meta-group">
+    <div class="meta-group checkbox">
         <h4><?php echo $this->translate('Needs work'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_work')); ?></div>
     </div>
