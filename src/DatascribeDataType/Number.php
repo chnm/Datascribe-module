@@ -123,7 +123,11 @@ class Number implements DataTypeInterface
 
     public function getValueTextFromUserData(array $userData) : ?string
     {
-        return $userData['value'] ?? null;
+        $text = null;
+        if (isset($userData['value']) && is_numeric($userData['value'])) {
+            $text = $userData['value'];
+        }
+        return $text;
     }
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool

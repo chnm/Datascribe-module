@@ -110,7 +110,11 @@ class Textarea implements DataTypeInterface
 
     public function getValueTextFromUserData(array $userData) : ?string
     {
-        return $userData['value'] ?? null;
+        $text = null;
+        if (isset($userData['value']) && is_string($userData['value']) && ('' !== $userData['value'])) {
+            $text = $userData['value'];
+        }
+        return $text;
     }
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool

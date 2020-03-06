@@ -87,9 +87,9 @@ class Time extends AbstractDatetime
      * Get an ISO 8601 string given an array of time data.
      *
      * @param array $array
-     * @return string
+     * @return ?string
      */
-    protected function getTimeString(array $array)
+    protected function getTimeString(array $array) : ?string
     {
         if (isset($array['hour']) && isset($array['minute']) && isset($array['second'])) {
             return sprintf('%02d:%02d:%02d', $array['hour'], $array['minute'], $array['second']);
@@ -100,6 +100,6 @@ class Time extends AbstractDatetime
         if (isset($array['hour'])) {
             return sprintf('%02d', $array['hour']);
         }
-        return false;
+        return null;
     }
 }

@@ -129,9 +129,9 @@ class Datetime extends AbstractDatetime
      * Get an ISO 8601 string given an array of date/time data.
      *
      * @param array $array
-     * @return string
+     * @return ?string
      */
-    protected function getDateTimeString(array $array)
+    protected function getDateTimeString(array $array) : ?string
     {
         if (isset($array['year'])) {
             preg_match('/^(-)?(\d+)$/', $array['year'], $matches);
@@ -183,6 +183,6 @@ class Datetime extends AbstractDatetime
                 $year[0], $year[1]
             );
         }
-        return false;
+        return null;
     }
 }

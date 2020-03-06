@@ -88,9 +88,9 @@ class Date extends AbstractDatetime
      * Get an ISO 8601 string given an array of date data.
      *
      * @param array $array
-     * @return string
+     * @return ?string
      */
-    protected function getDateString(array $array)
+    protected function getDateString(array $array) : ?string
     {
         if (isset($array['year'])) {
             preg_match('/^(-)?(\d+)$/', $array['year'], $matches);
@@ -105,6 +105,6 @@ class Date extends AbstractDatetime
         if (isset($array['year'])) {
             return sprintf('%s%04d', $year[0], $year[1]);
         }
-        return false;
+        return null;
     }
 }
