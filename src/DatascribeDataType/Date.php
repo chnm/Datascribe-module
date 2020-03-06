@@ -34,7 +34,7 @@ class Date extends AbstractDatetime
             'month' => $userData['month'] ?? null,
             'day' => $userData['day'] ?? null,
         ];
-        return $this->getDateString($this->emptyStringToNull($array));
+        return $this->getDateString($this->emptyValuesToNull($array));
     }
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool

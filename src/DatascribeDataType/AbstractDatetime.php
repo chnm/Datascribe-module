@@ -2,6 +2,7 @@
 namespace Datascribe\DatascribeDataType;
 
 use Datascribe\Form\Element as DatascribeElement;
+use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Validator\ValidatorChain;
 
@@ -12,11 +13,10 @@ abstract class AbstractDatetime implements DataTypeInterface
 
     public function fieldDataIsValid(array $fieldData) : bool
     {
-        // Invalid data has already been filtered out.
         return true;
     }
 
-    protected function emptyStringToNull(array $array)
+    protected function emptyValuesToNull(array $array) : array
     {
         // Make empty strings null so validation works.
         return array_map(function($value) {
@@ -24,7 +24,7 @@ abstract class AbstractDatetime implements DataTypeInterface
         }, $array);
     }
 
-    protected function isValid($element, $text)
+    protected function isValid(Element $element, string $text) : bool
     {
         if (null === $text) {
             return false;
@@ -45,6 +45,8 @@ abstract class AbstractDatetime implements DataTypeInterface
         ]);
         $element->setAttributes([
             'step' => 1,
+            'min' => -9999,
+            'max' => 9999,
         ]);
         $fieldset->add($element);
 
@@ -53,6 +55,8 @@ abstract class AbstractDatetime implements DataTypeInterface
         $element->setValue($fieldData['max_year'] ?? null);
         $element->setAttributes([
             'step' => 1,
+            'min' => -9999,
+            'max' => 9999,
         ]);
         $fieldset->add($element);
 
@@ -61,6 +65,8 @@ abstract class AbstractDatetime implements DataTypeInterface
         $element->setValue($fieldData['default_year'] ?? null);
         $element->setAttributes([
             'step' => 1,
+            'min' => -9999,
+            'max' => 9999,
         ]);
         $fieldset->add($element);
 
@@ -107,19 +113,19 @@ abstract class AbstractDatetime implements DataTypeInterface
     {
         $fieldData = [];
         $fieldData['min_year'] =
-            (isset($userData['min_year']) && preg_match('/^-?\d+$/', $userData['min_year']))
+            (isset($userData['min_year']) && is_numeric($userData['min_year']) && in_array($userData['min_year'], range(-9999, 9999)))
             ? $userData['min_year'] : null;
         $fieldData['max_year'] =
-            (isset($userData['max_year']) && preg_match('/^-?\d+$/', $userData['max_year']))
+            (isset($userData['max_year']) && is_numeric($userData['max_year']) && in_array($userData['max_year'], range(-9999, 9999)))
             ? $userData['max_year'] : null;
         $fieldData['default_year'] =
-            (isset($userData['default_year']) && preg_match('/^-?\d+$/', $userData['default_year']))
+            (isset($userData['default_year']) && is_numeric($userData['default_year']) && in_array($userData['default_year'], range(-9999, 9999)))
             ? $userData['default_year'] : null;
         $fieldData['default_month'] =
-            (isset($userData['default_month']) && in_array($userData['default_month'], range(1, 12)))
+            (isset($userData['default_month']) && is_numeric($userData['default_month']) && in_array($userData['default_month'], range(1, 12)))
             ? $userData['default_month'] : null;
         $fieldData['default_day'] =
-            (isset($userData['default_day']) && in_array($userData['default_day'], range(1, 31)))
+            (isset($userData['default_day']) && is_numeric($userData['default_day']) && in_array($userData['default_day'], range(1, 31)))
             ? $userData['default_day'] : null;
         return $fieldData;
     }
@@ -128,13 +134,13 @@ abstract class AbstractDatetime implements DataTypeInterface
     {
         $fieldData = [];
         $fieldData['default_hour'] =
-            (isset($userData['default_hour']) && in_array($userData['default_hour'], range(0, 23)))
+            (isset($userData['default_hour']) && is_numeric($userData['default_hour']) && in_array($userData['default_hour'], range(0, 23)))
             ? $userData['default_hour'] : null;
         $fieldData['default_minute'] =
-            (isset($userData['default_minute']) && in_array($userData['default_minute'], range(0, 59)))
+            (isset($userData['default_minute']) && is_numeric($userData['default_minute']) && in_array($userData['default_minute'], range(0, 59)))
             ? $userData['default_minute'] : null;
         $fieldData['default_second'] =
-            (isset($userData['default_second']) && in_array($userData['default_second'], range(0, 59)))
+            (isset($userData['default_second']) && is_numeric($userData['default_second']) && in_array($userData['default_second'], range(0, 59)))
             ? $userData['default_second'] : null;
         return $fieldData;
     }

@@ -42,7 +42,7 @@ class Datetime extends AbstractDatetime
             'minute' => $userData['minute'] ?? null,
             'second' => $userData['second'] ?? null,
         ];
-        return $this->getDateTimeString($this->emptyStringToNull($array));
+        return $this->getDateTimeString($this->emptyValuesToNull($array));
     }
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
