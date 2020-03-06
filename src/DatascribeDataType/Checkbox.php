@@ -29,7 +29,7 @@ class Checkbox implements DataTypeInterface
         $element->setAttribute('value', $fieldData['unchecked_value'] ?? self::DEFAULT_UNCHECKED_VALUE);
         $fieldset->add($element);
 
-        $element = new Element\Checkbox('checked_by_default');
+        $element = new DatascribeElement\OptionalCheckbox('checked_by_default');
         $element->setLabel('Checked by default'); // @translate
         $element->setValue($fieldData['checked_by_default'] ?? '0');
         $fieldset->add($element);
