@@ -11,6 +11,7 @@ return [
             'datetime' => DatascribeDataType\Datetime::class,
             'date' => DatascribeDataType\Date::class,
             'time' => DatascribeDataType\Time::class,
+            'checkbox' => DatascribeDataType\Checkbox::class,
         ],
     ],
     'translator' => [
