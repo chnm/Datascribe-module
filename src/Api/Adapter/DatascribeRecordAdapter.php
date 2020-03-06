@@ -178,7 +178,9 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $value->setIsIllegible((bool) $valueData['is_illegible']);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
-                if (!($dataType instanceof Unknown)) {
+                if (isset($valueData['set_null']) && $valueData['set_null']) {
+                    $value->setText(null);
+                } elseif (!($dataType instanceof Unknown)) {
                     // Set value text only when the data type is known.
                     $value->setText($dataType->getValueTextFromUserData($valueData['data']));
                 }
@@ -210,10 +212,12 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $errorStore->addError('data', 'Invalid field. Field not in dataset.'); // @translate
             }
 
-            // Validate the value data.
-            $dataType = $dataTypes->get($field->getDataType());
-            if (!$dataType->valueTextIsValid($field->getData(), $value->getText())) {
-                $errorStore->addError('data', sprintf('Invalid value text for field "%s".', $field->getName())); // @translate
+            // Validate the value text. Note that null values are always valid.
+            if (null !== $value->getText()) {
+                $dataType = $dataTypes->get($field->getDataType());
+                if (!$dataType->valueTextIsValid($field->getData(), $value->getText())) {
+                    $errorStore->addError('data', sprintf('Invalid value text for field "%s".', $field->getName())); // @translate
+                }
             }
         }
     }

@@ -101,7 +101,8 @@ class RecordForm extends Form
                 if (isset($values[$field->id()])) {
                     $value = $values[$field->id()];
                     $valueText = $value->text();
-                    if (!$dataType->valueTextIsValid($field->data(), $valueText)) {
+                    // Note that null values are always valid.
+                    if (null !== $valueText && !$dataType->valueTextIsValid($field->data(), $valueText)) {
                         $valueTextIsValid = false;
                     }
                 }
@@ -125,6 +126,12 @@ class RecordForm extends Form
                 $element->setValue($valueText);
                 $valueFieldset->add($element);
             }
+
+            // Add the common "set_null" element.
+            $element = new Element\Checkbox('set_null');
+            $element->setLabel('Set null'); // @translate
+            $element->setAttribute('required', false);
+            $valueFieldset->add($element);
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');

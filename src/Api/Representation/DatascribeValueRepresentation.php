@@ -68,10 +68,15 @@ class DatascribeValueRepresentation extends AbstractRepresentation
 
     public function textIsValid()
     {
+        $text = $this->text();
+        if (null === $text) {
+            // Note that null values are always valid.
+            return true;
+        }
         $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
         $field = $this->field();
         $dataType = $manager->get($field->dataType());
-        return $dataType->valueTextIsValid($field->data(), $this->text());
+        return $dataType->valueTextIsValid($field->data(), $text);
     }
 
     /**
@@ -82,7 +87,8 @@ class DatascribeValueRepresentation extends AbstractRepresentation
      * - trim_marker: a string that follows text that exceeds the maximum length (defualt is null)
      * - if_invalid_return: return this if the text is invalid (default is false)
      * - if_unknown_return: return this if the text is unknown (default is false)
-     * - if_empty_return: return this if the text is empty (default is null)
+     * - if_empty_return: return this if the text is empty (default is an empty string)
+     * - if_null_return: return this if the text is null (default is null)
      *
      * @param array $options
      * @return mixed
@@ -94,8 +100,12 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         $options['trim_marker'] = $options['trim_marker'] ?? null;
         $options['if_invalid_return'] = $options['if_invalid_return'] ?? false;
         $options['if_unknown_return'] = $options['if_unknown_return'] ?? false;
-        $options['if_empty_return'] = $options['if_empty_return'] ?? null;
+        $options['if_empty_return'] = $options['if_empty_return'] ?? '';
+        $options['if_null_return'] = $options['if_null_return'] ?? null;
 
+        if (null === $this->text()) {
+            return $options['if_null_return'];
+        }
         if (!$this->textIsValid()) {
             return $options['if_invalid_return'];
         }
