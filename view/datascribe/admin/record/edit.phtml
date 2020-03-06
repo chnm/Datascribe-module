@@ -59,7 +59,7 @@ $form->prepare();
 <?php echo $this->formElement($form->get('csrf')); ?>
 
 <div id="page-actions">
-    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
+    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
     <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
     <button><?php echo $this->translate('Save'); ?></button>
 </div>
