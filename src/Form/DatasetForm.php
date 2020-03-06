@@ -257,6 +257,6 @@ class DatasetForm extends Form
         $fieldDataFieldset->setLabel('Options'); // @translate
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
-        $dataType->addFieldDataElements($fieldDataFieldset, $field ? $field->data() : []);
+        $dataType->addFieldElements($fieldDataFieldset, $field ? $field->data() : []);
     }
 }

@@ -94,35 +94,36 @@ class RecordForm extends Form
             $valueFieldset->add($valueDataFieldset);
 
             $value = null;
-            $valueData = [];
-            $valueDataIsValid = true;
+            $valueText = null;
+            $valueTextIsValid = true;
             if ($record) {
                 $values = $record->values();
                 if (isset($values[$field->id()])) {
                     $value = $values[$field->id()];
-                    $valueData = $value->data();
-                    if (!$dataType->valueDataIsValid($field->data(), $value->data())) {
-                        $valueDataIsValid = false;
+                    $valueText = $value->text();
+                    // Note that null values are always valid.
+                    if (null !== $valueText && !$dataType->valueTextIsValid($field->data(), $valueText)) {
+                        $valueTextIsValid = false;
                     }
                 }
             }
 
-            // Add the custom "data" elements.
-            $dataType->addValueDataElements(
+            // Add the custom value elements.
+            $dataType->addValueElements(
                 $valueDataFieldset,
                 $field->data(),
-                $valueDataIsValid ? $valueData : []
+                $valueTextIsValid ? $valueText : null
             );
 
-            if (!$valueDataIsValid) {
-                // Add a disabled textarea containing the invalid data in JSON.
-                $element = new Element\Textarea('invalid_data');
-                $element->setLabel('Invalid data'); // @translate
+            if (!$valueTextIsValid) {
+                // Add a disabled textarea containing the invalid text.
+                $element = new Element\Textarea('invalid_value_text');
+                $element->setLabel('Invalid value'); // @translate
                 $element->setAttributes([
                     'disabled' => true,
                     'rows' => 8,
                 ]);
-                $element->setValue(json_encode($valueData, JSON_PRETTY_PRINT));
+                $element->setValue($valueText);
                 $valueFieldset->add($element);
             }
 

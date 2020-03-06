@@ -148,7 +148,7 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
             $displayTitle = sprintf(
                 $translator->translate('Record #%s: %s'),
                 $this->id(),
-                $primaryValue->value(['length' => 25, 'if_invalid_return' => null, 'if_empty_return' => null])
+                $primaryValue->displayText(['length' => 25, 'if_invalid_return' => null, 'if_empty_return' => null])
             );
         } else {
             $displayTitle = sprintf($translator->translate('Record #%s'), $this->id());

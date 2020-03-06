@@ -1,6 +1,7 @@
 <?php
 $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
 ?>
+<?php if ($records): ?>
 <div class="tablesaw-swipe-wrapper <?php echo ($beforeAfter) ? strtolower($beforeAfter): ''; ?>">
 <?php echo ($beforeAfter) ? sprintf('<h3>%s</h3>', $beforeAfter) : ''; ?>
 <table class="tablesaw before-after-records" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)" data-tablesaw-minimap>
@@ -10,7 +11,7 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
             <?php foreach ($dataset->fields() as $field): ?>
             <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
                 'length' => 20,
-                'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                'trim_marker' => '...',
             ]); ?></th>
             <?php endforeach; ?>
         </tr>
@@ -26,11 +27,12 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
                 <?php if (null === $value): ?>
                 <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
                 <?php else: ?>
-                <?php echo $value->value([
-                    'length' => 100,
-                    'trim_marker' => '<span style="color: #e6e6e6;">...</span>',
+                <?php echo $value->displayText([
+                    'length' => 50,
+                    'trim_marker' => '...',
                     'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),
                     'if_empty_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('empty')),
+                    'if_null_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('null')),
                     'if_unknown_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('unknown')),
                 ]); ?>
                 <?php endif; ?>
@@ -41,3 +43,4 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
     </tbody>
 </table>
 </div>
+<?php endif; ?>

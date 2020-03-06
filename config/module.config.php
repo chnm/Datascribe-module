@@ -9,6 +9,9 @@ return [
             'number' => DatascribeDataType\Number::class,
             'select' => DatascribeDataType\Select::class,
             'datetime' => DatascribeDataType\Datetime::class,
+            'date' => DatascribeDataType\Date::class,
+            'time' => DatascribeDataType\Time::class,
+            'checkbox' => DatascribeDataType\Checkbox::class,
         ],
     ],
     'translator' => [

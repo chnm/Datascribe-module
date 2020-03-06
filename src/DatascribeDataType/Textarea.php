@@ -14,7 +14,7 @@ class Textarea implements DataTypeInterface
         return 'Textarea'; // @translate
     }
 
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new DatascribeElement\OptionalNumber('rows');
         $element->setLabel('Rows'); // @translate
@@ -59,48 +59,48 @@ class Textarea implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getFieldData(array $fieldFormData) : array
+    public function getFieldDataFromUserData(array $userData) : array
     {
         $fieldData = [];
         $fieldData['rows'] =
-            (isset($fieldFormData['rows']) && preg_match('/^\d+$/', $fieldFormData['rows']))
-            ? $fieldFormData['rows'] : null;
+            (isset($userData['rows']) && preg_match('/^\d+$/', $userData['rows']))
+            ? $userData['rows'] : null;
         $fieldData['minlength'] =
-            (isset($fieldFormData['minlength']) && preg_match('/^\d+$/', $fieldFormData['minlength']))
-            ? $fieldFormData['minlength'] : null;
+            (isset($userData['minlength']) && preg_match('/^\d+$/', $userData['minlength']))
+            ? $userData['minlength'] : null;
         $fieldData['maxlength'] =
-            (isset($fieldFormData['maxlength']) && preg_match('/^\d+$/', $fieldFormData['maxlength']))
-            ? $fieldFormData['maxlength'] : null;
+            (isset($userData['maxlength']) && preg_match('/^\d+$/', $userData['maxlength']))
+            ? $userData['maxlength'] : null;
         $fieldData['placeholder'] =
-            (isset($fieldFormData['placeholder']) && preg_match('/^.+$/', $fieldFormData['placeholder']))
-            ? $fieldFormData['placeholder'] : null;
+            (isset($userData['placeholder']) && preg_match('/^.+$/', $userData['placeholder']))
+            ? $userData['placeholder'] : null;
         $fieldData['pattern'] =
-            (isset($fieldFormData['pattern']) && preg_match('/^.+$/', $fieldFormData['pattern']))
-            ? $fieldFormData['pattern'] : null;
+            (isset($userData['pattern']) && preg_match('/^.+$/', $userData['pattern']))
+            ? $userData['pattern'] : null;
         $fieldData['default_value'] =
-            (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
-            ? $fieldFormData['default_value'] : null;
+            (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
+            ? $userData['default_value'] : null;
         $fieldData['textarea_label'] =
-            (isset($fieldFormData['textarea_label']) && preg_match('/^.+$/', $fieldFormData['textarea_label']))
-            ? $fieldFormData['textarea_label'] : null;
+            (isset($userData['textarea_label']) && preg_match('/^.+$/', $userData['textarea_label']))
+            ? $userData['textarea_label'] : null;
         return $fieldData;
     }
 
     public function fieldDataIsValid(array $fieldData) : bool
     {
-        // Invalid data was filtered out in self::getFieldData().
+        // Invalid data was filtered out in self::getFieldDataFromUserData().
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
         $element = new DatascribeElement\Textarea('value', [
             'datascribe_field_data' => $fieldData,
         ]);
         $element->setLabel($fieldData['textarea_label'] ?? 'Text'); // @translate
         $value = null;
-        if (isset($valueData['value'])) {
-            $value = $valueData['value'];
+        if (isset($valueText)) {
+            $value = $valueText;
         } elseif (isset($fieldData['default_value'])) {
             $value = $fieldData['default_value'];
         }
@@ -108,14 +108,16 @@ class Textarea implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getValueData(array $valueFormData) : array
+    public function getValueTextFromUserData(array $userData) : ?string
     {
-        $valueData = [];
-        $valueData['value'] = $valueFormData['value'] ?? null;
-        return $valueData;
+        $text = null;
+        if (isset($userData['value']) && is_string($userData['value']) && ('' !== $userData['value'])) {
+            $text = $userData['value'];
+        }
+        return $text;
     }
 
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
         $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
@@ -124,16 +126,6 @@ class Textarea implements DataTypeInterface
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return isset($valueData['value'])
-            ? $validatorChain->isValid($valueData['value']) : false;
-    }
-
-    public function getHtml(array $valueData) : string
-    {
-    }
-
-    public function getValue(array $valueData) : string
-    {
-        return $valueData['value'];
+        return isset($valueText) ? $validatorChain->isValid($valueText) : false;
     }
 }

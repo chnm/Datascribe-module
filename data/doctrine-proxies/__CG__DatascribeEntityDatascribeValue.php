@@ -64,10 +64,10 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'id', 'data'];
+            return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'text', 'id'];
         }
 
-        return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'id', 'data'];
+        return ['__isInitialized__', 'field', 'record', 'isInvalid', 'isMissing', 'isIllegible', 'text', 'id'];
     }
 
     /**
@@ -286,6 +286,28 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
+    public function setText(?string $text): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setText', [$text]);
+
+        parent::setText($text);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getText(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getText', []);
+
+        return parent::getText();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getResourceId()
     {
 
@@ -307,28 +329,6 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setData(array $data): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setData', [$data]);
-
-        parent::setData($data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getData(): array
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData', []);
-
-        return parent::getData();
     }
 
 }

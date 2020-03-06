@@ -14,7 +14,7 @@ class Select implements DataTypeInterface
         return 'Select'; // @translate
     }
 
-    public function addFieldDataElements(Fieldset $fieldset, array $fieldData) : void
+    public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
         $element = new Element\Textarea('options');
         $element->setLabel('Options'); // @translate
@@ -34,11 +34,11 @@ class Select implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getFieldData(array $fieldFormData) : array
+    public function getFieldDataFromUserData(array $userData) : array
     {
         $fieldData = [];
-        if (isset($fieldFormData['options']) && preg_match('/^.+$/s', $fieldFormData['options'])) {
-            $options = explode("\n", $fieldFormData['options']);
+        if (isset($userData['options']) && preg_match('/^.+$/s', $userData['options'])) {
+            $options = explode("\n", $userData['options']);
             $options = array_map('trim', $options);
             $options = array_filter($options);
             $options = array_unique($options);
@@ -47,21 +47,21 @@ class Select implements DataTypeInterface
             $fieldData['options'] = [];
         }
         $fieldData['default_value'] =
-            (isset($fieldFormData['default_value']) && preg_match('/^.+$/', $fieldFormData['default_value']))
-            ? $fieldFormData['default_value'] : null;
+            (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
+            ? $userData['default_value'] : null;
         $fieldData['select_label'] =
-            (isset($fieldFormData['select_label']) && preg_match('/^.+$/', $fieldFormData['select_label']))
-            ? $fieldFormData['select_label'] : null;
+            (isset($userData['select_label']) && preg_match('/^.+$/', $userData['select_label']))
+            ? $userData['select_label'] : null;
         return $fieldData;
     }
 
     public function fieldDataIsValid(array $fieldData) : bool
     {
-        // Invalid data was filtered out in self::getFieldData().
+        // Invalid data was filtered out in self::getFieldDataFromUserData().
         return true;
     }
 
-    public function addValueDataElements(Fieldset $fieldset, array $fieldData, array $valueData) : void
+    public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
         $element = new DatascribeElement\Select('value', [
             'datascribe_field_data' => $fieldData,
@@ -70,8 +70,8 @@ class Select implements DataTypeInterface
         $element->setAttribute('class', 'chosen-select');
         $element->setAttribute('data-placeholder', '[No selection]'); // @translate
         $value = null;
-        if (isset($valueData['value'])) {
-            $value = $valueData['value'];
+        if (isset($valueText)) {
+            $value = $valueText;
         } elseif (isset($fieldData['default_value'])) {
             $value = $fieldData['default_value'];
         }
@@ -79,14 +79,16 @@ class Select implements DataTypeInterface
         $fieldset->add($element);
     }
 
-    public function getValueData(array $valueFormData) : array
+    public function getValueTextFromUserData(array $userData) : ?string
     {
-        $valueData = [];
-        $valueData['value'] = $valueFormData['value'] ?? null;
-        return $valueData;
+        $text = null;
+        if (isset($userData['value']) && is_string($userData['value']) && ('' !== $userData['value'])) {
+            $text = $userData['value'];
+        }
+        return $text;
     }
 
-    public function valueDataIsValid(array $fieldData, array $valueData) : bool
+    public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
         $element = new DatascribeElement\Select('value', [
             'datascribe_field_data' => $fieldData,
@@ -95,16 +97,6 @@ class Select implements DataTypeInterface
         foreach ($element->getValidators() as $validator) {
             $validatorChain->attach($validator);
         }
-        return isset($valueData['value'])
-            ? $validatorChain->isValid($valueData['value']) : false;
-    }
-
-    public function getHtml(array $valueData) : string
-    {
-    }
-
-    public function getValue(array $valueData) : string
-    {
-        return $valueData['value'];
+        return isset($valueText) ? $validatorChain->isValid($valueText) : false;
     }
 }

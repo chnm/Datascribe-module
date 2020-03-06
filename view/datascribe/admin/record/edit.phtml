@@ -59,7 +59,7 @@ $form->prepare();
 <?php echo $this->formElement($form->get('csrf')); ?>
 
 <div id="page-actions">
-    <?php echo $this->cancelButton(); ?>
+    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
     <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
     <button><?php echo $this->translate('Save'); ?></button>
 </div>
@@ -70,8 +70,8 @@ $form->prepare();
     <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
     <?php endif; ?>
-    <?php if ($fieldset->has('invalid_data')): ?>
-    <?php echo $this->formRow($fieldset->get('invalid_data')); ?>
+    <?php if ($fieldset->has('invalid_value_text')): ?>
+    <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
     <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>
     <?php echo $this->formRow($fieldset->get('is_missing')); ?>

@@ -15,7 +15,7 @@ $form->prepare();
         'title' => $this->translate('Make public'),
     ]); ?>
     <input type="hidden" name="o:is_public" value="0">
-    <?php echo $this->cancelButton(); ?>
+    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
     <button><?php echo $this->translate('Add'); ?></button>
 </div>
 

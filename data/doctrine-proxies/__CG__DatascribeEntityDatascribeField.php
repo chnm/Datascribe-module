@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
+            return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'data', 'values', 'id'];
         }
 
-        return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'values', 'id', 'data'];
+        return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'data', 'values', 'id'];
     }
 
     /**
@@ -308,6 +308,28 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     /**
      * {@inheritDoc}
      */
+    public function setData(array $data): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setData', [$data]);
+
+        parent::setData($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getData(): array
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData', []);
+
+        return parent::getData();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getValues()
     {
 
@@ -340,28 +362,6 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setData(array $data): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setData', [$data]);
-
-        parent::setData($data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getData(): array
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData', []);
-
-        return parent::getData();
     }
 
 }

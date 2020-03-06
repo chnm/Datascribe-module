@@ -36,7 +36,8 @@ class Select extends ZendSelect implements InputProviderInterface
     {
         return [
             'name' => $this->getName(),
-            'required' => null,
+            'required' => false,
+            'allow_empty' => true,
             'validators' => $this->getValidators(),
             'filters' => [],
         ];

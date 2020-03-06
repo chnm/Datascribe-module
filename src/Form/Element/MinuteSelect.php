@@ -85,7 +85,7 @@ class MinuteSelect extends ZendSelect implements InputProviderInterface
         $fieldData = $this->getOption('datascribe_field_data');
 
         $validators = [];
-        $validators[] = new Validator\Between(['min' => 1, 'max' => 59, 'inclusive' => true]);
+        $validators[] = new Validator\Between(['min' => 0, 'max' => 59, 'inclusive' => true]);
         $validators[] = new Validator\Regex(['pattern' => '/\d+/']);
 
         return $validators;
