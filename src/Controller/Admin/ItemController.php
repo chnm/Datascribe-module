@@ -2,6 +2,7 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetSyncForm;
+use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\ItemBatchForm;
 use Datascribe\Form\ItemSearchForm;
 use Omeka\Stdlib\Message;
@@ -46,6 +47,7 @@ class ItemController extends AbstractActionController
         $view->setVariable('dataset', $dataset);
         $view->setVariable('items', $items);
         $view->setVariable('syncForm', $this->getForm(DatasetSyncForm::class, ['dataset' => $dataset]));
+        $view->setVariable('validateForm', $this->getForm(DatasetValidateForm::class, ['dataset' => $dataset]));
         return $view;
     }
 

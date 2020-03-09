@@ -3,7 +3,9 @@ namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetForm;
 use Datascribe\Form\DatasetSyncForm;
+use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Job\SyncDataset;
+use Datascribe\Job\ValidateDataset;
 use Omeka\Form\ConfirmForm;
 use Omeka\Stdlib\Message;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -155,10 +157,41 @@ class DatasetController extends AbstractActionController
                     SyncDataset::class,
                     ['datascribe_dataset_id' => $this->params('dataset-id')]
                 );
-                $this->messenger()->addSuccess('Syncing dataset. This may take a while.'); // @translate
-                return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+                $message = new Message(
+                    'Syncing dataset. This may take a while. %s', // @translate
+                    sprintf(
+                        '<a href="%s">%s</a>',
+                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
+                        $this->translate('See this job for sync progress.')
+                    ));
+                $message->setEscapeHtml(false);
+                $this->messenger()->addSuccess($message);
             }
         }
-        return $this->redirect()->toRoute('admin/datascribe-dataset', ['action' => 'browse'], true);
+        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+    }
+
+    public function validateAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $form = $this->getForm(DatasetValidateForm::class);
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $job = $this->jobDispatcher()->dispatch(
+                    ValidateDataset::class,
+                    ['datascribe_dataset_id' => $this->params('dataset-id')]
+                );
+                $message = new Message(
+                    'Validating dataset. This may take a while. %s', // @translate
+                    sprintf(
+                        '<a href="%s">%s</a>',
+                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
+                        $this->translate('See this job for validate progress.')
+                    ));
+                $message->setEscapeHtml(false);
+                $this->messenger()->addSuccess($message);
+            }
+        }
+        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
     }
 }

@@ -82,6 +82,7 @@ if ($dataset->userIsAllowed('update')):
         <ul class="collapsible">
             <li><?php echo $dataset->link($this->translate('Edit dataset'), 'edit'); ?></li>
             <li><a href="#" class="sidebar-content" data-sidebar-selector="#sync-dataset"><?php echo $this->translate('Sync dataset'); ?></a></li>
+            <li><a href="#" class="sidebar-content" data-sidebar-selector="#validate-dataset"><?php echo $this->translate('Validate dataset'); ?></a></li>
         </ul>
     </div>
 </div>
@@ -216,5 +217,15 @@ if ($dataset->userIsAllowed('update')):
     <?php
     $syncForm->setAttribute('action', $this->url('admin/datascribe-dataset-id', ['action' => 'sync'], true));
     echo $this->form($syncForm);
+    ?>
+</div>
+
+<div id="validate-dataset" class="sidebar">
+    <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
+    <h3><?php echo $this->translate('Validate dataset'); ?></h3>
+    <p><?php echo $this->translate('Validate this dataset against the rules currently set in the form builder. Once validated, invalid values will be marked as invalid.'); ?></p>
+   <?php
+    $validateForm->setAttribute('action', $this->url('admin/datascribe-dataset-id', ['action' => 'validate'], true));
+    echo $this->form($validateForm);
     ?>
 </div>
