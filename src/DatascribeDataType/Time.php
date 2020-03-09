@@ -63,7 +63,7 @@ class Time extends AbstractDatetime
                 $this->isValid($hourSelect, $array['hour'])
             );
         }
-        return true;
+        return false;
     }
 
     /**
