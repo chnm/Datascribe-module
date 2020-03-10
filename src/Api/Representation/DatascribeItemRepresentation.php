@@ -246,4 +246,20 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
                 return '[Unknown]'; // @translate
         }
     }
+
+    public function hasInvalidValues()
+    {
+        return (bool) $this->getAdapter()->getInvalidValueCount($this->resource);
+    }
+
+    public function hasNeedsReviewRecords()
+    {
+        return (bool) $this->getAdapter()->getNeedsReviewCount($this->resource);
+    }
+
+    public function hasNeedsWorkRecords()
+    {
+        return (bool) $this->getAdapter()->getNeedsWorkCount($this->resource);
+    }
+
 }

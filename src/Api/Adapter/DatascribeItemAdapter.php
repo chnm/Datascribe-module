@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Adapter;
 
+use Datascribe\Entity\DatascribeItem;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
@@ -194,6 +195,21 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         } elseif (isset($query['all_approved'])) {
             $this->buildStatusQuery($qb, 'approved');
         }
+        if (isset($query['has_invalid_values'])) {
+            $aliasRecord = $this->createAlias();
+            $aliasValue = $this->createAlias();
+            $subQb = $this->getEntityManager()->createQueryBuilder()
+                ->select($aliasRecord)
+                ->from('Datascribe\Entity\DatascribeRecord', $aliasRecord)
+                ->innerJoin("$aliasRecord.values", $aliasValue)
+                ->andWhere("$aliasRecord.item = omeka_root.id")
+                ->andWhere($qb->expr()->eq("$aliasValue.isInvalid", true));
+            if (in_array($query['has_invalid_values'], [true, 1, '1'], true)) {
+                $qb->andWhere($qb->expr()->exists($subQb->getDQL()));
+            } elseif (in_array($query['has_invalid_values'], [false, 0, '0'], true)) {
+                $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
+            }
+        }
     }
 
     protected function buildStatusQuery(QueryBuilder $qb, $status)
@@ -374,5 +390,20 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
         $data['submit_action'] =  $rawData['submit_action'] ?? null;
         $data['review_action'] =  $rawData['review_action'] ?? null;
         return $data;
+    }
+
+    public function getInvalidValueCount(DatascribeItem $item)
+    {
+        $services = $this->getServiceLocator();
+        $em = $services->get('Omeka\EntityManager');
+        $dql = '
+            SELECT COUNT(v.id)
+            FROM Datascribe\Entity\DatascribeRecord r
+            JOIN r.values v
+            WHERE r.item = :itemId
+            AND v.isInvalid = true';
+        $query = $em->createQuery($dql);
+        $query->setParameter('itemId', $item->getId());
+        return $query->getSingleScalarResult();
     }
 }

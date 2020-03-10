@@ -32,6 +32,10 @@ $filters = [
         'label' => $this->translate('My items that are approved'),
         'value' => 'my_approved'
     ],
+    [
+        'label' => $this->translate('Items with values marked as invalid'),
+        'value' => 'has_invalid_values'
+    ],
 ];
 if ($canViewBatchUpdate) {
     $filters = array_merge([
@@ -154,6 +158,10 @@ if ($dataset->userIsAllowed('update')):
             <td>
                 <?php if ($canViewBatchUpdate): ?>
                 <input type="checkbox" name="item_ids[]" value="<?php echo $item->id(); ?>" aria-label="<?php echo $this->translate('Select items'); ?>">
+                <?php endif; ?>
+                <?php if ($item->hasInvalidValues()): ?>
+                <?php $alertString = $this->translate('Has invalid values'); ?>
+                <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
                 <?php endif; ?>
                 <?php echo $item->linkPretty(); ?>
                 <ul class="actions">
