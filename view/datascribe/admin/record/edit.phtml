@@ -71,10 +71,10 @@ $form->prepare();
     <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
     <?php endif; ?>
-    <?php if (!$value->textIsValid()): ?>
+    <?php if ($value && !$value->textIsValid()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form.')); ?>
     <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
-    <?php elseif ($value->isInvalid()): ?>
+    <?php elseif ($value && $value->isInvalid()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value was marked as invalid during dataset validation, but it does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
     <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>
