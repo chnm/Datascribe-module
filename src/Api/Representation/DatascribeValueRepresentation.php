@@ -66,6 +66,17 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return $this->value->getText();
     }
 
+    public function dataType()
+    {
+        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
+        return $manager->get($this->field()->dataType());
+    }
+
+    public function dataTypeIsUnknown()
+    {
+        return ($this->dataType() instanceof Unknown);
+    }
+
     public function textIsValid()
     {
         $text = $this->text();
@@ -73,10 +84,7 @@ class DatascribeValueRepresentation extends AbstractRepresentation
             // Note that null values are always valid.
             return true;
         }
-        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
-        $field = $this->field();
-        $dataType = $manager->get($field->dataType());
-        return $dataType->valueTextIsValid($field->data(), $text);
+        return $this->dataType()->valueTextIsValid($this->field()->data(), $text);
     }
 
     /**
@@ -109,9 +117,7 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         if (!$this->textIsValid()) {
             return $options['if_invalid_return'];
         }
-        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
-        $dataType = $manager->get($this->field()->dataType());
-        if ($dataType instanceof Unknown) {
+        if ($this->dataTypeIsUnknown()) {
             return $options['if_unknown_return'];
         }
         $text = $this->text();

@@ -74,6 +74,8 @@ class Unknown implements DataTypeInterface
 
     public function valueTextIsValid(array $fieldData, ?string $valueText) : bool
     {
+        // Note that we assume all "Unknown" text is valid so it persists until
+        // an administrator corrects or deletes the field.
         return true;
     }
 }
