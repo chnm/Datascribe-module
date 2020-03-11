@@ -27,21 +27,9 @@ class Number extends ZendNumber implements InputProviderInterface
     {
         $fieldData = $this->getOption('datascribe_field_data');
 
-        $validators = [];
+        $validators = parent::getValidators();
         if (isset($fieldData['pattern'])) {
             $validator = new Validator\Regex(['pattern' => sprintf('/%s/', $fieldData['pattern'])]);
-            $validators[] = $validator;
-        }
-        if (isset($fieldData['min'])) {
-            $validator = new Validator\GreaterThan(['min' => $fieldData['min'], 'inclusive' => true]);
-            $validators[] = $validator;
-        }
-        if (isset($fieldData['max'])) {
-            $validator = new Validator\LessThan(['max' => $fieldData['max'], 'inclusive' => true]);
-            $validators[] = $validator;
-        }
-        if (isset($fieldData['step'])) {
-            $validator = new Validator\Step(['step' => $fieldData['step']]);
             $validators[] = $validator;
         }
         return $validators;
