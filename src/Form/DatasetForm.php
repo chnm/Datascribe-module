@@ -252,6 +252,15 @@ class DatasetForm extends Form
         ]);
         $fieldFieldset->add($element);
 
+        // Add the common "is_required" element.
+        $element = new DatascribeElement\OptionalCheckbox('is_required');
+        $element->setLabel('Field is required'); // @translate
+        $element->setAttributes([
+            'required' => false,
+            'value' => $field ? $field->isRequired() : null,
+        ]);
+        $fieldFieldset->add($element);
+
         // Add the custom "data" elements.
         $fieldDataFieldset = new Fieldset('data');
         $fieldDataFieldset->setLabel('Options'); // @translate

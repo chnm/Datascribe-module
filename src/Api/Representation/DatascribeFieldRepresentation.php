@@ -69,6 +69,11 @@ class DatascribeFieldRepresentation extends AbstractRepresentation
         return $this->field->getIsPrimary();
     }
 
+    public function isRequired()
+    {
+        return $this->field->getIsRequired();
+    }
+
     public function dataType()
     {
         return $this->field->getDataType();

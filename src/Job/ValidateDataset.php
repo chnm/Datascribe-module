@@ -42,8 +42,8 @@ class ValidateDataset extends AbstractJob
                 $field = $value->getField();
                 $dataType = $dataTypes->get($field->getDataType());
                 if (null === $value->getText()) {
-                    // Note that null values are always valid.
-                    $value->setIsInvalid(false);
+                    // A null value is invalid only if the field is required.
+                    $value->setIsInvalid($value->getField()->getIsRequired());
                 } else {
                     $isValid = $dataType->valueTextIsValid($field->getData(), $value->getText());
                     $value->setIsInvalid(!$isValid);

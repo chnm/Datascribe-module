@@ -64,10 +64,10 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'data', 'values', 'id'];
+            return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'isRequired', 'dataType', 'data', 'values', 'id'];
         }
 
-        return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'dataType', 'data', 'values', 'id'];
+        return ['__isInitialized__', 'name', 'description', 'dataset', 'position', 'isPrimary', 'isRequired', 'dataType', 'data', 'values', 'id'];
     }
 
     /**
@@ -281,6 +281,28 @@ class DatascribeField extends \Datascribe\Entity\DatascribeField implements \Doc
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPrimary', []);
 
         return parent::getIsPrimary();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsRequired(bool $isRequired): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsRequired', [$isRequired]);
+
+        parent::setIsRequired($isRequired);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsRequired(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsRequired', []);
+
+        return parent::getIsRequired();
     }
 
     /**

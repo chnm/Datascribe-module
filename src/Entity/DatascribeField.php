@@ -60,6 +60,17 @@ class DatascribeField extends AbstractEntity
 
     /**
      * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default": false
+     *     }
+     * )
+     */
+    protected $isRequired;
+
+    /**
+     * @Column(
      *     type="string",
      *     length=255,
      *     nullable=false
@@ -140,6 +151,16 @@ class DatascribeField extends AbstractEntity
     public function getIsPrimary() : ?bool
     {
         return $this->isPrimary;
+    }
+
+    public function setIsRequired(bool $isRequired) : void
+    {
+        $this->isRequired = $isRequired;
+    }
+
+    public function getIsRequired() : ?bool
+    {
+        return $this->isRequired;
     }
 
     public function setDataType(?string $dataType) : void

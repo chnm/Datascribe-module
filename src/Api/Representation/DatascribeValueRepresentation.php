@@ -77,12 +77,17 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return ($this->dataType() instanceof Unknown);
     }
 
+    public function fieldIsRequired()
+    {
+        return $this->field()->isRequired();
+    }
+
     public function textIsValid()
     {
         $text = $this->text();
         if (null === $text) {
-            // Note that null values are always valid.
-            return true;
+            // A null value is invalid only if the field is required.
+            return !$this->fieldIsRequired();
         }
         return $this->dataType()->valueTextIsValid($this->field()->data(), $text);
     }
@@ -111,11 +116,11 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         $options['if_empty_return'] = $options['if_empty_return'] ?? '';
         $options['if_null_return'] = $options['if_null_return'] ?? null;
 
-        if (null === $this->text()) {
-            return $options['if_null_return'];
-        }
         if (!$this->textIsValid()) {
             return $options['if_invalid_return'];
+        }
+        if (null === $this->text()) {
+            return $options['if_null_return'];
         }
         if ($this->dataTypeIsUnknown()) {
             return $options['if_unknown_return'];
