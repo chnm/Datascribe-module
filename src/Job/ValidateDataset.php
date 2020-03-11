@@ -2,6 +2,7 @@
 namespace Datascribe\Job;
 
 use Datascribe\Entity\DatascribeDataset;
+use Datascribe\Entity\DatascribeValue;
 use Omeka\Job\AbstractJob;
 use Omeka\Job\Exception;
 
@@ -26,18 +27,17 @@ class ValidateDataset extends AbstractJob
         $maxResults = 100;
         $offset = 0;
         $dql = '
-        SELECT value
-        FROM Datascribe\Entity\DatascribeValue value
-        JOIN value.record record
-        JOIN record.item item
-        JOIN item.dataset dataset
-        WHERE dataset.id = :datasetId';
+            SELECT value
+            FROM Datascribe\Entity\DatascribeValue value
+            JOIN value.record record
+            JOIN record.item item
+            JOIN item.dataset dataset
+            WHERE dataset.id = :datasetId';
+        $query = $em->createQuery($dql)
+            ->setParameter('datasetId', $dataset->getId())
+            ->setMaxResults($maxResults);
         do {
-            $query = $em->createQuery($dql)
-                ->setMaxResults($maxResults)
-                ->setFirstResult($offset);
-            $query->setParameter('datasetId', $dataset->getId());
-            $result = $query->getResult();
+            $result = $query->setFirstResult($offset)->getResult();
             foreach ($result as $value) {
                 $field = $value->getField();
                 $dataType = $dataTypes->get($field->getDataType());
