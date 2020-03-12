@@ -200,7 +200,7 @@ class DatasetForm extends Form
         $fieldsFieldset->setAttribute('class', 'dataset-fields');
         $this->add($fieldsFieldset);
         foreach ($dataset->fields() as $field) {
-            $dataType = $this->dataTypeManager->get($field->dataType());
+            $dataType = $field->dataTypeService();
 
             $fieldFieldset = new Fieldset($field->id());
             $fieldsFieldset->add($fieldFieldset);

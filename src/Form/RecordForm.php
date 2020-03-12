@@ -84,11 +84,8 @@ class RecordForm extends Form
         $valuesFieldset = new Fieldset('o-module-datascribe:value');
         $this->add($valuesFieldset);
         foreach ($item->dataset()->fields() as $field) {
-            $dataType = $this->dataTypeManager->get($field->dataType());
-
             $valueFieldset = new Fieldset($field->id());
-            $valueFieldset->setOption('datascribe_field_name', $field->name());
-            $valueFieldset->setOption('datascribe_field_description', $field->description());
+            $valueFieldset->setOption('datascribe_field', $field);
             $valuesFieldset->add($valueFieldset);
             $valueDataFieldset = new Fieldset('data');
             $valueFieldset->add($valueDataFieldset);
@@ -100,7 +97,7 @@ class RecordForm extends Form
                 $values = $record->values();
                 if (isset($values[$field->id()])) {
                     $value = $values[$field->id()];
-                    $valueFieldset->setOption('value', $value);
+                    $valueFieldset->setOption('datascribe_value', $value);
                     $valueText = $value->text();
                     if (!$value->textIsValid()) {
                         $valueTextIsValid = false;
@@ -118,7 +115,7 @@ class RecordForm extends Form
             }
 
             // Add the custom value elements.
-            $dataType->addValueElements(
+            $field->dataTypeService()->addValueElements(
                 $valueDataFieldset,
                 $field->data(),
                 $valueTextIsValid ? $valueText : null

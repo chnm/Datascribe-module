@@ -1,7 +1,6 @@
 <?php
 namespace Datascribe\Api\Representation;
 
-use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeValue;
 use Omeka\Api\Representation\AbstractRepresentation;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -66,30 +65,16 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         return $this->value->getText();
     }
 
-    public function dataType()
-    {
-        $manager = $this->getServiceLocator()->get('Datascribe\DataTypeManager');
-        return $manager->get($this->field()->dataType());
-    }
-
-    public function dataTypeIsUnknown()
-    {
-        return ($this->dataType() instanceof Unknown);
-    }
-
-    public function fieldIsRequired()
-    {
-        return $this->field()->isRequired();
-    }
-
     public function textIsValid()
     {
         $text = $this->text();
         if (null === $text) {
             // A null value is invalid only if the field is required.
-            return !$this->fieldIsRequired();
+            return !$this->field()->isRequired();
         }
-        return $this->dataType()->valueTextIsValid($this->field()->data(), $text);
+        return $this->field()
+            ->dataTypeService()
+            ->valueTextIsValid($this->field()->data(), $text);
     }
 
     /**
@@ -98,10 +83,10 @@ class DatascribeValueRepresentation extends AbstractRepresentation
      * The options are:
      * - length: the maximum length of the text (default is null)
      * - trim_marker: a string that follows text that exceeds the maximum length (defualt is null)
-     * - if_invalid_return: return this if the text is invalid (default is false)
      * - if_unknown_return: return this if the text is unknown (default is false)
-     * - if_empty_return: return this if the text is empty (default is an empty string)
+     * - if_invalid_return: return this if the text is invalid (default is false)
      * - if_null_return: return this if the text is null (default is null)
+     * - if_empty_return: return this if the text is empty (default is an empty string)
      *
      * @param array $options
      * @return mixed
@@ -111,19 +96,19 @@ class DatascribeValueRepresentation extends AbstractRepresentation
         // Set default options.
         $options['length'] = $options['length'] ?? null;
         $options['trim_marker'] = $options['trim_marker'] ?? null;
-        $options['if_invalid_return'] = $options['if_invalid_return'] ?? false;
         $options['if_unknown_return'] = $options['if_unknown_return'] ?? false;
-        $options['if_empty_return'] = $options['if_empty_return'] ?? '';
+        $options['if_invalid_return'] = $options['if_invalid_return'] ?? false;
         $options['if_null_return'] = $options['if_null_return'] ?? null;
+        $options['if_empty_return'] = $options['if_empty_return'] ?? '';
 
+        if ($this->field()->dataTypeIsUnknown()) {
+            return $options['if_unknown_return'];
+        }
         if (!$this->textIsValid()) {
             return $options['if_invalid_return'];
         }
         if (null === $this->text()) {
             return $options['if_null_return'];
-        }
-        if ($this->dataTypeIsUnknown()) {
-            return $options['if_unknown_return'];
         }
         $text = $this->text();
         $textLength = mb_strlen($text);

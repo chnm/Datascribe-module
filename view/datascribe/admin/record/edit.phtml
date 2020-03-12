@@ -65,16 +65,19 @@ $form->prepare();
 </div>
 
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
-<?php $value = $fieldset->getOption('value'); ?>
+<?php
+$field = $fieldset->getOption('datascribe_field');
+$value = $fieldset->getOption('datascribe_value');
+?>
 <fieldset>
-    <?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
-    <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
+    <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
+    <?php if ($fieldDescription = $field->description()): ?>
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
     <?php endif; ?>
-    <?php if ($value->fieldIsRequired()): ?>
+    <?php if ($field->isRequired()): ?>
     <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This value is required and will be marked as invalid if not completed.')); ?>
     <?php endif; ?>
-    <?php if ($value && $value->dataTypeIsUnknown()): ?>
+    <?php if ($field->dataTypeIsUnknown()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value\'s data type is unknown and cannot be edited.')); ?>
     <?php elseif ($value && !$value->textIsValid()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form.')); ?>

@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Api\Representation;
 
+use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeField;
 use Omeka\Api\Representation\AbstractRepresentation;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -77,6 +78,18 @@ class DatascribeFieldRepresentation extends AbstractRepresentation
     public function dataType()
     {
         return $this->field->getDataType();
+    }
+
+    public function dataTypeService()
+    {
+        return $this->getServiceLocator()
+            ->get('Datascribe\DataTypeManager')
+            ->get($this->dataType());
+    }
+
+    public function dataTypeIsUnknown()
+    {
+        return ($this->dataTypeService() instanceof Unknown);
     }
 
     public function data()
