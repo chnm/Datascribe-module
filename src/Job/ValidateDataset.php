@@ -22,8 +22,46 @@ class ValidateDataset extends AbstractJob
         if (null === $dataset) {
             throw new Exception\RuntimeException('Cannot find dataset');
         }
-        $dataTypes = $services->get('Datascribe\DataTypeManager');
 
+        // When a user adds a field to a dataset, any records existing before
+        // that time will have uncreated values for that field. Here we create
+        // those uncreated values.
+        $sql = '
+            SELECT field.id AS field_id, record.id AS record_id
+            FROM datascribe_dataset dataset
+            INNER JOIN datascribe_item item ON item.dataset_id = dataset.id
+            INNER JOIN datascribe_record record ON record.item_id = item.id
+            INNER JOIN datascribe_field field ON field.dataset_id = dataset.id
+            LEFT JOIN datascribe_value `value` ON (`value`.record_id = record.id AND `value`.field_id = field.id)
+            WHERE dataset.id = :datasetId
+            AND value.id IS NULL
+            LIMIT :limit';
+        $conn = $services->get('Omeka\Connection');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('datasetId', $dataset->getId(), \PDO::PARAM_INT);
+        $stmt->bindValue('limit', 100, \PDO::PARAM_INT);
+        do {
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+            foreach ($results as $result) {
+                $field = $em->find('Datascribe\Entity\DatascribeField', $result['field_id']);
+                $record = $em->find('Datascribe\Entity\DatascribeRecord', $result['record_id']);
+                $value = new DatascribeValue;
+                $value->setField($field);
+                $value->setRecord($record);
+                $value->setIsInvalid(false);
+                $value->setIsMissing(false);
+                $value->setIsIllegible(false);
+                $value->setText(null);
+                $em->persist($value);
+            }
+            // Execute all updates and detach all objects after each batch.
+            $em->flush();
+            $em->clear();
+        } while ($results);
+
+        // Here we validate this dataset against the rules currently set in the
+        // form builder. Once validated, we mark invalid values as invalid.
         $maxResults = 100;
         $offset = 0;
         $dql = '
@@ -36,6 +74,7 @@ class ValidateDataset extends AbstractJob
         $query = $em->createQuery($dql)
             ->setParameter('datasetId', $dataset->getId())
             ->setMaxResults($maxResults);
+        $dataTypes = $services->get('Datascribe\DataTypeManager');
         do {
             $result = $query->setFirstResult($offset)->getResult();
             foreach ($result as $value) {
