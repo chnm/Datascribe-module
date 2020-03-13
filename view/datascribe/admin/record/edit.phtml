@@ -84,7 +84,7 @@ $value = $fieldset->getOption('datascribe_value');
     <?php elseif ($value && $value->isInvalid()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is marked as invalid but does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
     <?php endif; ?>
-    <?php if ($form->has('invalid_value_text')): ?>
+    <?php if ($fieldset->has('invalid_value_text')): ?>
     <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
     <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>

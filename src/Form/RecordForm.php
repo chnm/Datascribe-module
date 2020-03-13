@@ -101,15 +101,6 @@ class RecordForm extends Form
                     $valueText = $value->text();
                     if (!$value->textIsValid()) {
                         $valueTextIsValid = false;
-                        // Add a disabled textarea containing the invalid text.
-                        $element = new Element\Textarea('invalid_value_text');
-                        $element->setLabel('Invalid value'); // @translate
-                        $element->setAttributes([
-                            'disabled' => true,
-                            'rows' => 8,
-                        ]);
-                        $element->setValue($valueText);
-                        $valueFieldset->add($element);
                     }
                 }
             }
@@ -120,6 +111,18 @@ class RecordForm extends Form
                 $field->data(),
                 $valueTextIsValid ? $valueText : null
             );
+
+            if (!$valueTextIsValid && (null !== $valueText)) {
+                // Add a disabled textarea containing the invalid text.
+                $element = new Element\Textarea('invalid_value_text');
+                $element->setLabel('Invalid value'); // @translate
+                $element->setAttributes([
+                    'disabled' => true,
+                    'rows' => 8,
+                ]);
+                $element->setValue($valueText);
+                $valueFieldset->add($element);
+            }
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');
