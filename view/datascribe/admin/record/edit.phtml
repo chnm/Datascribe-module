@@ -75,7 +75,7 @@ $value = $fieldset->getOption('datascribe_value');
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
     <?php endif; ?>
     <?php if ($field->isRequired()): ?>
-    <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not entered.')); ?>
+    <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
     <?php endif; ?>
     <?php if ($field->dataTypeIsUnknown()): ?>
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>

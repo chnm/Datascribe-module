@@ -231,7 +231,7 @@ if ($dataset->userIsAllowed('update')):
 <div id="validate-dataset" class="sidebar">
     <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
     <h3><?php echo $this->translate('Validate dataset'); ?></h3>
-    <p><?php echo $this->translate('Validate this dataset against the rules currently set in the form builder. Once validated, invalid values will be marked as invalid. You should validate periodically, any time fields are added to the form and before exporting the dataset.'); ?></p>
+    <p><?php echo $this->translate('Validate this dataset against the rules currently set in the form builder. Once validated, invalid values will be marked as invalid. You should validate periodically, after fields are added to the form, after field validation rules change, and before exporting the dataset.'); ?></p>
    <?php
     $validateForm->setAttribute('action', $this->url('admin/datascribe-dataset-id', ['action' => 'validate'], true));
     echo $this->form($validateForm);
