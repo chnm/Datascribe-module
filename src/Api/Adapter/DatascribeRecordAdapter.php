@@ -174,13 +174,16 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     $value->setRecord($entity);
                     $values->set($fieldId, $value);
                 }
-                $value->setIsMissing((bool) $valueData['is_missing']);
-                $value->setIsIllegible((bool) $valueData['is_illegible']);
+                $isMissing = (bool) $valueData['is_missing'];
+                $isIllegible = (bool) $valueData['is_illegible'];
+                $value->setIsMissing($isMissing);
+                $value->setIsIllegible($isIllegible);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
                 $valueText = $dataType->getValueTextFromUserData($valueData['data']);
-                if ($field->getIsRequired() && (null === $valueText)) {
-                    // Mark a null value invalid only if the field is required.
+                if ((null === $valueText) && $field->getIsRequired() && !$isMissing && !$isIllegible) {
+                    // Null text is invalid if the field is required and the
+                    // value is not missing and not illegible.
                     $value->setIsInvalid(true);
                 }
                 if (!($dataType instanceof Unknown)) {

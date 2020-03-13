@@ -68,13 +68,13 @@ class DatascribeValueRepresentation extends AbstractRepresentation
     public function textIsValid()
     {
         $text = $this->text();
+        $field = $this->field();
         if (null === $text) {
-            // A null value is invalid only if the field is required.
-            return !$this->field()->isRequired();
+            // Null text is invalid if the field is required and the value is
+            // not missing and not illegible.
+            return !($field->isRequired() && !$this->isMissing() && !$this->isIllegible());
         }
-        return $this->field()
-            ->dataTypeService()
-            ->valueTextIsValid($this->field()->data(), $text);
+        return $field->dataTypeService()->valueTextIsValid($field->data(), $text);
     }
 
     /**
