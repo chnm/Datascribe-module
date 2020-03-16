@@ -24,7 +24,11 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
             <?php foreach ($dataset->fields() as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <td<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>>
-                <?php if (null === $value): ?>
+                <?php if ($field->dataTypeIsUnknown()): ?>
+                <span style="color: #ffcccc;"><?php echo $this->translate('unknown'); ?></span>
+                <?php elseif ($field->isRequired() && (null === $value)): ?>
+                <span style="color: #ffcccc;"><?php echo $this->translate('invalid'); ?></span>
+                <?php elseif (null === $value): ?>
                 <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
                 <?php else: ?>
                 <?php echo $value->displayText([

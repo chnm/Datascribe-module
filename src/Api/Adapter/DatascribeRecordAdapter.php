@@ -174,13 +174,21 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     $value->setRecord($entity);
                     $values->set($fieldId, $value);
                 }
-                $value->setIsMissing((bool) $valueData['is_missing']);
-                $value->setIsIllegible((bool) $valueData['is_illegible']);
+                $isMissing = (bool) $valueData['is_missing'];
+                $isIllegible = (bool) $valueData['is_illegible'];
+                $value->setIsMissing($isMissing);
+                $value->setIsIllegible($isIllegible);
                 $value->setIsInvalid(false);
                 $dataType = $dataTypes->get($field->getDataType());
+                $valueText = $dataType->getValueTextFromUserData($valueData['data']);
+                if ((null === $valueText) && $field->getIsRequired() && !$isMissing && !$isIllegible) {
+                    // Null text is invalid if the field is required and the
+                    // value is not missing and not illegible.
+                    $value->setIsInvalid(true);
+                }
                 if (!($dataType instanceof Unknown)) {
                     // Set value text only when the data type is known.
-                    $value->setText($dataType->getValueTextFromUserData($valueData['data']));
+                    $value->setText($valueText);
                 }
                 $valuesToRetain->add($value);
             }
@@ -210,7 +218,7 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $errorStore->addError('data', 'Invalid field. Field not in dataset.'); // @translate
             }
 
-            // Validate the value text. Note that null values are always valid.
+            // Validate the value text. Null values should never raise an error.
             if (null !== $value->getText()) {
                 $dataType = $dataTypes->get($field->getDataType());
                 if (!$dataType->valueTextIsValid($field->getData(), $value->getText())) {

@@ -64,11 +64,19 @@ $form->prepare();
 </div>
 
 <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
+<?php $field = $fieldset->getOption('datascribe_field'); ?>
 <fieldset>
-    <?php echo sprintf('<legend>%s</legend>', $fieldset->getOption('datascribe_field_name')); ?>
-    <?php if ($fieldDescription = $fieldset->getOption('datascribe_field_description')): ?>
+    <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
+    <?php if ($fieldDescription = $field->description()): ?>
     <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
-    <?php endif; ?>    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+    <?php endif; ?>
+    <?php if ($field->isRequired()): ?>
+    <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
+    <?php endif; ?>
+    <?php if ($field->dataTypeIsUnknown()): ?>
+    <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be added.')); ?>
+    <?php endif; ?>
+    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
     <?php echo $this->formRow($fieldset->get('is_missing')); ?>
     <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
 </fieldset>

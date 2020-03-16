@@ -75,6 +75,9 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
                     if (!isset($fieldData['is_primary'])) {
                         $errorStore->addError('is_primary', sprintf('Invalid field format passed in request. Missing "is_primary" for field #%s.', $fieldId));
                     }
+                    if (!isset($fieldData['is_required'])) {
+                        $errorStore->addError('is_required', sprintf('Invalid field format passed in request. Missing "is_required" for field #%s.', $fieldId));
+                    }
                     if (!isset($fieldData['data'])) {
                         $errorStore->addError('data', sprintf('Invalid field format passed in request. Missing "data" for field #%s.', $fieldId));
                     } elseif (!is_array($fieldData['data'])) {
@@ -165,6 +168,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $field->setName($name);
             $field->setDescription($description);
             $field->setIsPrimary($fieldData['is_primary'] ?? false);
+            $field->setIsRequired($fieldData['is_required'] ?? false);
             $field->setPosition($position++);
             $dataType = $dataTypes->get($field->getDataType());
             if (!($dataType instanceof Unknown)) {

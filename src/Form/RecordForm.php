@@ -84,11 +84,8 @@ class RecordForm extends Form
         $valuesFieldset = new Fieldset('o-module-datascribe:value');
         $this->add($valuesFieldset);
         foreach ($item->dataset()->fields() as $field) {
-            $dataType = $this->dataTypeManager->get($field->dataType());
-
             $valueFieldset = new Fieldset($field->id());
-            $valueFieldset->setOption('datascribe_field_name', $field->name());
-            $valueFieldset->setOption('datascribe_field_description', $field->description());
+            $valueFieldset->setOption('datascribe_field', $field);
             $valuesFieldset->add($valueFieldset);
             $valueDataFieldset = new Fieldset('data');
             $valueFieldset->add($valueDataFieldset);
@@ -100,29 +97,32 @@ class RecordForm extends Form
                 $values = $record->values();
                 if (isset($values[$field->id()])) {
                     $value = $values[$field->id()];
-                    $valueFieldset->setOption('value', $value);
+                    $valueFieldset->setOption('datascribe_value', $value);
                     $valueText = $value->text();
                     if (!$value->textIsValid()) {
                         $valueTextIsValid = false;
-                        // Add a disabled textarea containing the invalid text.
-                        $element = new Element\Textarea('invalid_value_text');
-                        $element->setLabel('Invalid value'); // @translate
-                        $element->setAttributes([
-                            'disabled' => true,
-                            'rows' => 8,
-                        ]);
-                        $element->setValue($valueText);
-                        $valueFieldset->add($element);
                     }
                 }
             }
 
             // Add the custom value elements.
-            $dataType->addValueElements(
+            $field->dataTypeService()->addValueElements(
                 $valueDataFieldset,
                 $field->data(),
                 $valueTextIsValid ? $valueText : null
             );
+
+            if (!$valueTextIsValid && (null !== $valueText)) {
+                // Add a disabled textarea containing the invalid text.
+                $element = new Element\Textarea('invalid_value_text');
+                $element->setLabel('Invalid value'); // @translate
+                $element->setAttributes([
+                    'disabled' => true,
+                    'rows' => 8,
+                ]);
+                $element->setValue($valueText);
+                $valueFieldset->add($element);
+            }
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');
