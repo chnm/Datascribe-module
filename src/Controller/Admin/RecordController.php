@@ -345,7 +345,7 @@ class RecordController extends AbstractActionController
         );
         $count = $this->api()->search('datascribe_records', array_merge($query, ['limit' => 0]))->getTotalResults();
 
-        $form = $this->getForm(RecordBatchForm::class);
+        $form = $this->getForm(RecordBatchForm::class, ['item' => $item]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
