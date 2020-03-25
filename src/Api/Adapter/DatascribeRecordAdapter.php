@@ -111,15 +111,16 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $errorStore->addError('o-module-datascribe:value', 'Invalid values format passed in request.'); // @translate
             } else {
                 foreach ($data['o-module-datascribe:value'] as $fieldId => $valueData) {
-                    if (!isset($valueData['is_missing'])) {
+                    if (!$request->getOption('isPartial', false) && !isset($valueData['is_missing'])) {
                         $errorStore->addError('is_missing', sprintf('Invalid value format passed in request. Missing "is_missing" for field #%s.', $fieldId));
                     }
-                    if (!isset($valueData['is_illegible'])) {
+                    if (!$request->getOption('isPartial', false) && !isset($valueData['is_illegible'])) {
                         $errorStore->addError('is_illegible', sprintf('Invalid value format passed in request. Missing "is_illegible" for field #%s.', $fieldId));
                     }
-                    if (!isset($valueData['data'])) {
+                    if (!$request->getOption('isPartial', false) && !isset($valueData['data'])) {
                         $errorStore->addError('data', sprintf('Invalid value format passed in request. Missing "data" for field #%s.', $fieldId));
-                    } elseif (!is_array($valueData['data'])) {
+                    }
+                    if (isset($valueData['data']) && !is_array($valueData['data'])) {
                         $errorStore->addError('data', sprintf('Invalid value format passed in request. Invalid "data" format for field #%s.', $fieldId));
                     }
                 }
@@ -164,6 +165,8 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             $valuesToRetain = new ArrayCollection;
             foreach ($request->getValue('o-module-datascribe:value') as $fieldId => $valueData) {
                 $field = $em->getReference('Datascribe\Entity\DatascribeField', $fieldId);
+                $dataType = $dataTypes->get($field->getDataType());
+                // Get an existing value or create a new value.
                 if ($values->containsKey($fieldId)) {
                     // This is an existing value.
                     $value = $values->get($field->getId());
@@ -174,28 +177,42 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     $value->setRecord($entity);
                     $values->set($fieldId, $value);
                 }
-                $isMissing = (bool) $valueData['is_missing'];
-                $isIllegible = (bool) $valueData['is_illegible'];
-                $value->setIsMissing($isMissing);
-                $value->setIsIllegible($isIllegible);
-                $value->setIsInvalid(false);
-                $dataType = $dataTypes->get($field->getDataType());
-                $valueText = $dataType->getValueTextFromUserData($valueData['data']);
-                if ((null === $valueText) && $field->getIsRequired() && !$isMissing && !$isIllegible) {
-                    // Null text is invalid if the field is required and the
-                    // value is not missing and not illegible.
-                    $value->setIsInvalid(true);
+                // Set is_missing.
+                $isMissing = $value->getIsMissing();
+                if (isset($valueData['is_missing'])) {
+                    $isMissing = (bool) $valueData['is_missing'];
+                    $value->setIsMissing($isMissing);
+                }
+                // Set is_illegible.
+                $isIllegible = $value->getIsIllegible();
+                if (isset($valueData['is_illegible'])) {
+                    $isIllegible = (bool) $valueData['is_illegible'];
+                    $value->setIsIllegible($isIllegible);
+                }
+                // Set value text.
+                $valueText = $value->getText();
+                if (isset($valueData['data'])) {
+                    $valueText = $dataType->getValueTextFromUserData($valueData['data']);
                 }
                 if (!($dataType instanceof Unknown)) {
                     // Set value text only when the data type is known.
                     $value->setText($valueText);
                 }
+                // Set is_invalid.
+                $value->setIsInvalid(false);
+                if ((null === $valueText) && $field->getIsRequired() && !$isMissing && !$isIllegible) {
+                    // Null text is invalid if the field is required and the
+                    // value is not missing and not illegible.
+                    $value->setIsInvalid(true);
+                }
                 $valuesToRetain->add($value);
             }
             // Remove values not passed in the request.
-            foreach ($values as $value) {
-                if (!$valuesToRetain->contains($value)) {
-                    $values->removeElement($value);
+            if (!$request->getOption('isPartial', false)) {
+                foreach ($values as $value) {
+                    if (!$valuesToRetain->contains($value)) {
+                        $values->removeElement($value);
+                    }
                 }
             }
         }
@@ -255,6 +272,21 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
             $data['o-module-datascribe:needs_work'] = 1;
         } elseif (in_array($rawData['needs_work_action'], [false, 0, '0'], true)) {
             $data['o-module-datascribe:needs_work'] = 0;
+        }
+        foreach ($rawData['values'] as $fieldId => $valueData) {
+            if (in_array($valueData['is_missing_action'], [true, 1, '1'], true)) {
+                $data['o-module-datascribe:value'][$fieldId]['is_missing'] = 1;
+            } elseif (in_array($valueData['is_missing_action'], [false, 0, '0'], true)) {
+                $data['o-module-datascribe:value'][$fieldId]['is_missing'] = 0;
+            }
+            if (in_array($valueData['is_illegible_action'], [true, 1, '1'], true)) {
+                $data['o-module-datascribe:value'][$fieldId]['is_illegible'] = 1;
+            } elseif (in_array($valueData['is_illegible_action'], [false, 0, '0'], true)) {
+                $data['o-module-datascribe:value'][$fieldId]['is_illegible'] = 0;
+            }
+            if (in_array($valueData['edit_values'], [true, 1, '1'], true)) {
+                $data['o-module-datascribe:value'][$fieldId]['data'] = $valueData['data'];
+            }
         }
         return $data;
     }

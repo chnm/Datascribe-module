@@ -296,7 +296,7 @@ class RecordController extends AbstractActionController
             $records[] = $this->api()->read('datascribe_records', $recordId)->getContent();
         }
 
-        $form = $this->getForm(RecordBatchForm::class);
+        $form = $this->getForm(RecordBatchForm::class, ['item' => $item]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());

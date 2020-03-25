@@ -68,13 +68,6 @@ class RecordBatchForm extends AbstractForm
             $valueFieldset = new Fieldset($field->id());
             $valueFieldset->setLabel($field->name());
             $valuesFieldset->add($valueFieldset);
-            $valueDataFieldset = new Fieldset('data');
-            $valueFieldset->add($valueDataFieldset);
-
-            // Add the custom value elements.
-            $field->dataTypeService()->addValueElements($valueDataFieldset, $field->data(), null);
-
-            // Add the common "is_missing" element.
             $valueFieldset->add([
                 'type' => 'select',
                 'name' => 'is_missing_action',
@@ -82,8 +75,8 @@ class RecordBatchForm extends AbstractForm
                     'label' => 'Is missing action', // @translate
                     'empty_option' => '',
                     'value_options' => [
-                        'is_missing' => 'Mark as missing', // @translate
-                        'not_is_missing' => 'Mark as not missing', // @translate
+                        '1' => 'Mark as missing', // @translate
+                        '0' => 'Mark as not missing', // @translate
                     ],
                 ],
                 'attributes' => [
@@ -91,8 +84,6 @@ class RecordBatchForm extends AbstractForm
                     'data-placeholder' => '[No change]', // @translate
                 ],
             ]);
-
-            // Add the common "is_illegible" element.
             $valueFieldset->add([
                 'type' => 'select',
                 'name' => 'is_illegible_action',
@@ -100,14 +91,42 @@ class RecordBatchForm extends AbstractForm
                     'label' => 'Is illegible action', // @translate
                     'empty_option' => '',
                     'value_options' => [
-                        'is_illegible' => 'Mark as illegible', // @translate
-                        'not_is_illegible' => 'Mark as not illegible', // @translate
+                        '1' => 'Mark as illegible', // @translate
+                        '0' => 'Mark as not illegible', // @translate
                     ],
                 ],
                 'attributes' => [
                     'class' => 'chosen-select',
                     'data-placeholder' => '[No change]', // @translate
                 ],
+            ]);
+            $valueFieldset->add([
+                'type' => 'checkbox',
+                'name' => 'edit_values',
+                'options' => [
+                    'label' => 'Edit values?', // @transcribe
+                ],
+            ]);
+            $valueDataFieldset = new Fieldset('data');
+            $valueFieldset->add($valueDataFieldset);
+            $field->dataTypeService()->addValueElements(
+                $valueDataFieldset,
+                $field->data(),
+                null
+            );
+        }
+
+        $inputFilter = $this->getInputFilter();
+        $values = $inputFilter->get('values');
+        foreach ($item->dataset()->fields() as $field) {
+            $value = $values->get($field->id());
+            $value->add([
+                'name' => 'is_missing_action',
+                'allow_empty' => true,
+            ]);
+            $value->add([
+                'name' => 'is_illegible_action',
+                'allow_empty' => true,
             ]);
         }
     }
