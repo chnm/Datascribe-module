@@ -155,6 +155,7 @@ class ItemController extends AbstractActionController
         }
 
         $query = json_decode($this->params()->fromPost('query', []), true);
+        $query['datascribe_dataset_id'] = $dataset->id();
         unset(
             $query['submit'], $query['page'], $query['per_page'],
             $query['limit'], $query['offset'], $query['sort_by'],

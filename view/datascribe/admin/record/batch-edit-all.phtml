@@ -2,6 +2,7 @@
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record batch-edit');
 $this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
+$form->prepare();
 ?>
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Batch edit all records')); ?>
@@ -11,11 +12,11 @@ $this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 <input type="hidden" name="query" value="<?php echo $this->escapeHtml(json_encode($query)); ?>">
 
 <div id="page-actions">
-    <?php echo $this->cancelButton(); ?>
+    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
     <input type="submit" name="batch_edit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
 </div>
 
-<?php echo $this->formCollection($form, false); ?>
+<?php echo $this->formCollection($form); ?>
 
 <?php echo $this->form()->closeTag(); ?>
 

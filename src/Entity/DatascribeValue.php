@@ -109,7 +109,7 @@ class DatascribeValue extends AbstractEntity
         $this->isMissing = $isMissing;
     }
 
-    public function getIsMissing() : bool
+    public function getIsMissing() : ?bool
     {
         return $this->isMissing;
     }
@@ -119,7 +119,7 @@ class DatascribeValue extends AbstractEntity
         $this->isIllegible = $isIllegible;
     }
 
-    public function getIsIllegible() : bool
+    public function getIsIllegible() : ?bool
     {
         return $this->isIllegible;
     }
