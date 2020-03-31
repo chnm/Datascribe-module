@@ -64,10 +64,10 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+            return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'guidelines', 'validated', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'project', 'itemSet', 'guidelines', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+        return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'guidelines', 'validated', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
     }
 
     /**
@@ -220,6 +220,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     /**
      * {@inheritDoc}
      */
+    public function setValidatedBy(\Omeka\Entity\User $validatedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setValidatedBy', [$validatedBy]);
+
+        parent::setValidatedBy($validatedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getValidatedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValidatedBy', []);
+
+        return parent::getValidatedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setGuidelines(?string $guidelines): void
     {
 
@@ -237,6 +259,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGuidelines', []);
 
         return parent::getGuidelines();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setValidated(\DateTime $validated): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setValidated', [$validated]);
+
+        parent::setValidated($validated);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getValidated(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValidated', []);
+
+        return parent::getValidated();
     }
 
     /**

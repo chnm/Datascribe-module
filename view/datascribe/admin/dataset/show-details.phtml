@@ -55,7 +55,7 @@
     ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Last syncced'); ?></h4>
+    <h4><?php echo $this->translate('Last synced'); ?></h4>
     <?php
     $synced = $dataset->synced();
     $syncedBy = $dataset->syncedBy();
@@ -69,5 +69,22 @@
                 ? $this->translate('[Unknown]')
                 : $syncedBy->link($syncedBy->name())
         ) : $this->translate('[Not synced]');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last validated'); ?></h4>
+    <?php
+    $validated = $dataset->validated();
+    $validatedBy = $dataset->validatedBy();
+    ?>
+    <div class="value"><?php
+    echo $validated
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($validated, 'medium', 'medium'),
+            null === $validatedBy
+                ? $this->translate('[Unknown]')
+                : $validatedBy->link($validatedBy->name())
+        ) : $this->translate('[Not validated]');
     ?></div>
 </div>

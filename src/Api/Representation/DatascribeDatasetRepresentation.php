@@ -17,6 +17,8 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
         $createdBy = $this->createdBy();
         $modifiedBy = $this->modifiedBy();
         $modified = $this->modified();
+        $validatedBy = $this->validatedBy();
+        $validated = $this->validated();
         $synced = $this->synced();
         $syncedBy = $this->syncedBy();
         $itemSet = $this->itemSet();
@@ -31,9 +33,11 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:synced_by' => $syncedBy ? $syncedBy->getReference() : null,
             'o:created' => $this->getDateTime($this->created()),
             'o:modified' => $modified ? $this->getDateTime($modified) : null,
+            'o:validated' => $validated ? $this->getDateTime($validated) : null,
             'o:owner' => $owner ? $owner->getReference() : null,
             'o-module-datascribe:created_by' => $createdBy ? $createdBy->getReference() : null,
             'o-module-datascribe:modified_by' => $modifiedBy ? $modifiedBy->getReference() : null,
+            'o-module-datascribe:validated_by' => $validatedBy ? $validatedBy->getReference() : null,
         ];
     }
 
@@ -111,6 +115,12 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             ->getRepresentation($this->resource->getModifiedBy());
     }
 
+    public function validatedBy()
+    {
+        return $this->getAdapter('users')
+            ->getRepresentation($this->resource->getValidatedBy());
+    }
+
     public function created()
     {
         return $this->resource->getCreated();
@@ -119,6 +129,11 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
     public function modified()
     {
         return $this->resource->getModified();
+    }
+
+    public function validated()
+    {
+        return $this->resource->getValidated();
     }
 
     public function fields(array $options = [])

@@ -5,6 +5,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\ItemSet;
+use Omeka\Entity\User;
 
 /**
  * @Entity
@@ -41,12 +42,31 @@ class DatascribeDataset extends AbstractEntity
     protected $itemSet;
 
     /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $validatedBy;
+
+    /**
      * @Column(
      *     type="text",
      *     nullable=true
      * )
      */
     protected $guidelines;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $validated;
 
     /**
      * @OneToMany(
@@ -85,6 +105,16 @@ class DatascribeDataset extends AbstractEntity
         return $this->itemSet;
     }
 
+    public function setValidatedBy(?User $validatedBy = null) : void
+    {
+        $this->validatedBy = $validatedBy;
+    }
+
+    public function getValidatedBy() : ?User
+    {
+        return $this->validatedBy;
+    }
+
     public function setGuidelines(?string $guidelines) : void
     {
         $this->guidelines = $guidelines;
@@ -93,6 +123,16 @@ class DatascribeDataset extends AbstractEntity
     public function getGuidelines() : ?string
     {
         return $this->guidelines;
+    }
+
+    public function setValidated(DateTime $validated) : void
+    {
+        $this->validated = $validated;
+    }
+
+    public function getValidated() : ?DateTime
+    {
+        return $this->validated;
     }
 
     public function getFields()
