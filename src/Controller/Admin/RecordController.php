@@ -338,6 +338,7 @@ class RecordController extends AbstractActionController
         $project = $dataset->project();
 
         $query = json_decode($this->params()->fromPost('query', []), true);
+        $query['datascribe_item_id'] = $item->id();
         unset(
             $query['submit'], $query['page'], $query['per_page'],
             $query['limit'], $query['offset'], $query['sort_by'],
