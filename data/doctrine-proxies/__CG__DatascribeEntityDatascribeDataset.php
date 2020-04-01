@@ -64,10 +64,10 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'guidelines', 'validated', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+            return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'guidelines', 'validated', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+        return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
     }
 
     /**
@@ -242,6 +242,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     /**
      * {@inheritDoc}
      */
+    public function setExportedBy(\Omeka\Entity\User $exportedBy = NULL): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setExportedBy', [$exportedBy]);
+
+        parent::setExportedBy($exportedBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExportedBy(): ?\Omeka\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExportedBy', []);
+
+        return parent::getExportedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setGuidelines(?string $guidelines): void
     {
 
@@ -264,6 +286,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     /**
      * {@inheritDoc}
      */
+    public function setExportStorageId(?string $exportStorageId): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setExportStorageId', [$exportStorageId]);
+
+        parent::setExportStorageId($exportStorageId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExportStorageId(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExportStorageId', []);
+
+        return parent::getExportStorageId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setValidated(\DateTime $validated): void
     {
 
@@ -281,6 +325,28 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValidated', []);
 
         return parent::getValidated();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setExported(\DateTime $exported): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setExported', [$exported]);
+
+        parent::setExported($exported);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExported(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExported', []);
+
+        return parent::getExported();
     }
 
     /**

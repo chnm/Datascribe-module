@@ -88,3 +88,30 @@
         ) : $this->translate('[Not validated]');
     ?></div>
 </div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last exported'); ?></h4>
+    <?php
+    $exported = $dataset->exported();
+    $exportedBy = $dataset->exportedBy();
+    ?>
+    <div class="value"><?php
+    echo $exported
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($exported, 'medium', 'medium'),
+            null === $exportedBy
+                ? $this->translate('[Unknown]')
+                : $exportedBy->link($exportedBy->name())
+        ) : $this->translate('[Not exported]');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Export file'); ?></h4>
+    <div class="value">
+        <?php if ($dataset->exportStorageId()): ?>
+        <?php echo $this->hyperlink($this->translate('Click to download CSV file'), $dataset->exportUrl()); ?>
+        <?php else: ?>
+        <?php echo $this->translate('[No export file available]'); ?>
+        <?php endif; ?>
+    </div>
+</div>

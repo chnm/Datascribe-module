@@ -53,6 +53,17 @@ class DatascribeDataset extends AbstractEntity
     protected $validatedBy;
 
     /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $exportedBy;
+
+    /**
      * @Column(
      *     type="text",
      *     nullable=true
@@ -62,11 +73,28 @@ class DatascribeDataset extends AbstractEntity
 
     /**
      * @Column(
+     *     type="string",
+     *     length=255,
+     *     nullable=true
+     * )
+     */
+    protected $exportStorageId;
+
+    /**
+     * @Column(
      *     type="datetime",
      *     nullable=true
      * )
      */
     protected $validated;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $exported;
 
     /**
      * @OneToMany(
@@ -115,6 +143,16 @@ class DatascribeDataset extends AbstractEntity
         return $this->validatedBy;
     }
 
+    public function setExportedBy(?User $exportedBy = null) : void
+    {
+        $this->exportedBy = $exportedBy;
+    }
+
+    public function getExportedBy() : ?User
+    {
+        return $this->exportedBy;
+    }
+
     public function setGuidelines(?string $guidelines) : void
     {
         $this->guidelines = $guidelines;
@@ -125,6 +163,16 @@ class DatascribeDataset extends AbstractEntity
         return $this->guidelines;
     }
 
+    public function setExportStorageId(?string $exportStorageId) : void
+    {
+        $this->exportStorageId = $exportStorageId;
+    }
+
+    public function getExportStorageId() : ?string
+    {
+        return $this->exportStorageId;
+    }
+
     public function setValidated(DateTime $validated) : void
     {
         $this->validated = $validated;
@@ -133,6 +181,16 @@ class DatascribeDataset extends AbstractEntity
     public function getValidated() : ?DateTime
     {
         return $this->validated;
+    }
+
+    public function setExported(DateTime $exported) : void
+    {
+        $this->exported = $exported;
+    }
+
+    public function getExported() : ?DateTime
+    {
+        return $this->exported;
     }
 
     public function getFields()

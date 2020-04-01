@@ -13,15 +13,17 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
 
     public function getJsonLd()
     {
+        $itemSet = $this->itemSet();
         $owner = $this->owner();
         $createdBy = $this->createdBy();
-        $modifiedBy = $this->modifiedBy();
         $modified = $this->modified();
-        $validatedBy = $this->validatedBy();
-        $validated = $this->validated();
+        $modifiedBy = $this->modifiedBy();
         $synced = $this->synced();
         $syncedBy = $this->syncedBy();
-        $itemSet = $this->itemSet();
+        $validated = $this->validated();
+        $validatedBy = $this->validatedBy();
+        $exported = $this->exported();
+        $exportedBy = $this->exportedBy();
         return [
             'o-module-datascribe:project' => $this->project()->getReference(),
             'o-module-datascribe:name' => $this->name(),
@@ -29,15 +31,17 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:guidelines' => $this->guidelines(),
             'o:is_public' => $this->isPublic(),
             'o:item_set' => $itemSet ? $itemSet->getReference() : null,
+            'o:owner' => $owner ? $owner->getReference() : null,
+            'o:created' => $this->getDateTime($this->created()),
+            'o-module-datascribe:created_by' => $createdBy ? $createdBy->getReference() : null,
+            'o:modified' => $modified ? $this->getDateTime($modified) : null,
+            'o-module-datascribe:modified_by' => $modifiedBy ? $modifiedBy->getReference() : null,
             'o-module-datascribe:synced' => $synced ? $this->getDateTime($synced) : null,
             'o-module-datascribe:synced_by' => $syncedBy ? $syncedBy->getReference() : null,
-            'o:created' => $this->getDateTime($this->created()),
-            'o:modified' => $modified ? $this->getDateTime($modified) : null,
-            'o:validated' => $validated ? $this->getDateTime($validated) : null,
-            'o:owner' => $owner ? $owner->getReference() : null,
-            'o-module-datascribe:created_by' => $createdBy ? $createdBy->getReference() : null,
-            'o-module-datascribe:modified_by' => $modifiedBy ? $modifiedBy->getReference() : null,
+            'o-module-datascribe:validated' => $validated ? $this->getDateTime($validated) : null,
             'o-module-datascribe:validated_by' => $validatedBy ? $validatedBy->getReference() : null,
+            'o-module-datascribe:exported' => $exported ? $this->getDateTime($exported) : null,
+            'o-module-datascribe:exported_by' => $exportedBy ? $exportedBy->getReference() : null,
         ];
     }
 
@@ -121,6 +125,12 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             ->getRepresentation($this->resource->getValidatedBy());
     }
 
+    public function exportedBy()
+    {
+        return $this->getAdapter('users')
+            ->getRepresentation($this->resource->getExportedBy());
+    }
+
     public function created()
     {
         return $this->resource->getCreated();
@@ -134,6 +144,16 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
     public function validated()
     {
         return $this->resource->getValidated();
+    }
+
+    public function exported()
+    {
+        return $this->resource->getExported();
+    }
+
+    public function exportStorageId()
+    {
+        return $this->resource->getExportStorageId();
     }
 
     public function fields(array $options = [])
@@ -160,5 +180,10 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             $fields[] = new DatascribeFieldRepresentation($fieldEntity, $this->getServiceLocator());
         }
         return $fields;
+    }
+
+    public function exportUrl()
+    {
+        return $this->getFileUrl('asset', $this->exportStorageId(), 'csv');
     }
 }

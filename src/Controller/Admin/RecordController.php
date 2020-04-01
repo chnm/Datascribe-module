@@ -26,7 +26,7 @@ class RecordController extends AbstractActionController
         $dataset = $item->dataset();
         $project = $dataset->project();
 
-        $this->setBrowseDefaults('id');
+        $this->setBrowseDefaults('id', 'asc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_item_id' => $item->id()]

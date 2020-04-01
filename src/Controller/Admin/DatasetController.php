@@ -2,8 +2,10 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetForm;
+use Datascribe\Form\DatasetExportForm;
 use Datascribe\Form\DatasetSyncForm;
 use Datascribe\Form\DatasetValidateForm;
+use Datascribe\Job\ExportDataset;
 use Datascribe\Job\SyncDataset;
 use Datascribe\Job\ValidateDataset;
 use Omeka\Form\ConfirmForm;
@@ -187,6 +189,30 @@ class DatasetController extends AbstractActionController
                         '<a href="%s">%s</a>',
                         htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
                         $this->translate('See this job for validate progress.')
+                    ));
+                $message->setEscapeHtml(false);
+                $this->messenger()->addSuccess($message);
+            }
+        }
+        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+    }
+
+    public function exportAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $form = $this->getForm(DatasetExportForm::class);
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $job = $this->jobDispatcher()->dispatch(
+                    ExportDataset::class,
+                    ['datascribe_dataset_id' => $this->params('dataset-id')]
+                );
+                $message = new Message(
+                    'Exporting dataset. This may take a while. %s', // @translate
+                    sprintf(
+                        '<a href="%s">%s</a>',
+                        htmlspecialchars($this->url()->fromRoute('admin/id', ['controller' => 'job', 'id' => $job->getId()])),
+                        $this->translate('See this job for export progress.')
                     ));
                 $message->setEscapeHtml(false);
                 $this->messenger()->addSuccess($message);

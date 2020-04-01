@@ -28,9 +28,6 @@ class ValidateDataset extends AbstractJob
             throw new Exception\RuntimeException('Cannot find dataset');
         }
 
-        $dataset->setValidatedBy($this->job->getOwner());
-        $dataset->setValidated(new DateTime('now'));
-
         // Null-fill uncreated values of this dataset. When an admin adds a
         // field to a dataset, any records existing before that time will have
         // uncreated values for that field. Here we create those uncreated
@@ -102,5 +99,11 @@ class ValidateDataset extends AbstractJob
             $em->flush();
             $em->clear();
         } while ($result);
+
+        $dataset->setValidated(new DateTime('now'));
+        $dataset->setValidatedBy($this->job->getOwner());
+
+        $em->merge($dataset);
+        $em->flush();
     }
 }
