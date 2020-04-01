@@ -246,7 +246,7 @@ if ($dataset->userIsAllowed('update')):
 <div id="export-dataset" class="sidebar">
     <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
     <h3><?php echo $this->translate('Export dataset'); ?></h3>
-    <p><?php echo $this->translate('Export this dataset to a CSV file. Note that the file will only include records from approved items, and that invalid values will be null.'); ?></p>
+    <p><?php echo $this->translate('Export this dataset to a CSV file. Note that the file will only include records from approved items, and that invalid values will be null. This will overwrite an existing export file.'); ?></p>
     <?php
     $exportForm->setAttribute('action', $this->url('admin/datascribe-dataset-id', ['action' => 'export'], true));
     echo $this->form($exportForm);

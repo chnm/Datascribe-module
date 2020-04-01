@@ -35,10 +35,20 @@ class ExportDataset extends AbstractJob
             $strategy
         );
 
+        $fields = $dataset->getFields();
+
         // Create the CSV file.
         $tempFile = $tempFileFactory->build();
         $fp = fopen($tempFile->getTempPath(), 'w');
 
+        // Add the header row.
+        $headerRow = ['ID'];
+        foreach ($fields as $field) {
+            $headerRow[] = $field->getName();
+        }
+        fputcsv($fp, $headerRow);
+
+        // Add a row for every record of approved items.
         $maxResults = 100;
         $offset = 0;
         $dql = '
@@ -60,12 +70,12 @@ class ExportDataset extends AbstractJob
                 // can cross-reference the file with the dataset.
                 $row = [$record->getId()];
                 $values = $record->getValues();
-                foreach ($dataset->getFields() as $field) {
+                foreach ($fields as $field) {
                     // All values should exist since validation null-fills
                     // uncreated values, but we account for null values anyway.
                     $value = $values[$field->getId()] ?? null;
                     $valueText = null;
-                    if ($value && (true !== $value->getIsInvalid())) {
+                    if ($value && !$value->getIsInvalid()) {
                         // The value must exist and be valid.
                         $valueText = $value->getText();
                     }
@@ -73,7 +83,7 @@ class ExportDataset extends AbstractJob
                 }
                 $table[] = $row;
             }
-            // Add to the CSV file.
+            // Add the rows to the CSV file.
             foreach ($table as $row) {
                 fputcsv($fp, $row);
             }
