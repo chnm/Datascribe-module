@@ -28,6 +28,9 @@ class ExportDataset extends AbstractJob
             throw new Exception\RuntimeException('Cannot find dataset');
         }
 
+        $dataset->setExported(new DateTime('now'));
+        $dataset->setExportedBy($this->job->getOwner());
+
         // First, validate the dataset synchronously.
         $dispatcher->dispatch(
             ValidateDataset::class,
@@ -94,8 +97,6 @@ class ExportDataset extends AbstractJob
         $tempFile->store('asset', 'csv');
         $tempFile->delete();
 
-        $dataset->setExported(new DateTime('now'));
-        $dataset->setExportedBy($this->job->getOwner());
         $dataset->setExportStorageId($tempFile->getStorageId());
 
         // Clear the entity manager to avoid a "A new entity was found" error.
