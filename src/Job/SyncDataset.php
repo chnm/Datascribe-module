@@ -28,6 +28,9 @@ class SyncDataset extends AbstractJob
             throw new Exception\RuntimeException('Cannot sync dataset without an item set');
         }
 
+        $dataset->setSynced(new DateTime('now'));
+        $dataset->setSyncedBy($this->job->getOwner());
+
         $dsItems = $this->getDatasetItemIds($dataset);
         $oItems = $this->getItemSetItemIds($dataset->getItemSet());
 
@@ -52,8 +55,6 @@ class SyncDataset extends AbstractJob
         ')->setParameter('dsitem_ids', array_keys($toDelete));
         $query->execute();
 
-        $dataset->setSynced(new DateTime('now'));
-        $dataset->setSyncedBy($this->job->getOwner());
         $em->flush();
     }
 

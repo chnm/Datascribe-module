@@ -55,7 +55,7 @@
     ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Last syncced'); ?></h4>
+    <h4><?php echo $this->translate('Last synced'); ?></h4>
     <?php
     $synced = $dataset->synced();
     $syncedBy = $dataset->syncedBy();
@@ -70,4 +70,48 @@
                 : $syncedBy->link($syncedBy->name())
         ) : $this->translate('[Not synced]');
     ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last validated'); ?></h4>
+    <?php
+    $validated = $dataset->validated();
+    $validatedBy = $dataset->validatedBy();
+    ?>
+    <div class="value"><?php
+    echo $validated
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($validated, 'medium', 'medium'),
+            null === $validatedBy
+                ? $this->translate('[Unknown]')
+                : $validatedBy->link($validatedBy->name())
+        ) : $this->translate('[Not validated]');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Last exported'); ?></h4>
+    <?php
+    $exported = $dataset->exported();
+    $exportedBy = $dataset->exportedBy();
+    ?>
+    <div class="value"><?php
+    echo $exported
+        ? sprintf(
+            '%s by %s',
+            $this->i18n()->dateFormat($exported, 'medium', 'medium'),
+            null === $exportedBy
+                ? $this->translate('[Unknown]')
+                : $exportedBy->link($exportedBy->name())
+        ) : $this->translate('[Not exported]');
+    ?></div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Export file'); ?></h4>
+    <div class="value">
+        <?php if ($dataset->exportStorageId()): ?>
+        <?php echo $this->hyperlink($this->translate('Click to download CSV file'), $dataset->exportUrl()); ?>
+        <?php else: ?>
+        <?php echo $this->translate('[No export file available]'); ?>
+        <?php endif; ?>
+    </div>
 </div>

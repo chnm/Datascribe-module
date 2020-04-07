@@ -3,6 +3,7 @@ namespace Datascribe\Job;
 
 use Datascribe\Entity\DatascribeDataset;
 use Datascribe\Entity\DatascribeValue;
+use DateTime;
 use Omeka\Job\AbstractJob;
 use Omeka\Job\Exception;
 
@@ -26,6 +27,9 @@ class ValidateDataset extends AbstractJob
         if (null === $dataset) {
             throw new Exception\RuntimeException('Cannot find dataset');
         }
+
+        $dataset->setValidated(new DateTime('now'));
+        $dataset->setValidatedBy($this->job->getOwner());
 
         // Null-fill uncreated values of this dataset. When an admin adds a
         // field to a dataset, any records existing before that time will have
@@ -98,5 +102,8 @@ class ValidateDataset extends AbstractJob
             $em->flush();
             $em->clear();
         } while ($result);
+
+        $em->merge($dataset);
+        $em->flush();
     }
 }

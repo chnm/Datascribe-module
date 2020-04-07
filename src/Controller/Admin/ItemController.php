@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe\Controller\Admin;
 
+use Datascribe\Form\DatasetExportForm;
 use Datascribe\Form\DatasetSyncForm;
 use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\ItemBatchForm;
@@ -21,7 +22,7 @@ class ItemController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $this->setBrowseDefaults('created');
+        $this->setBrowseDefaults('id', 'asc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_dataset_id' => $dataset->id()]
@@ -48,6 +49,7 @@ class ItemController extends AbstractActionController
         $view->setVariable('items', $items);
         $view->setVariable('syncForm', $this->getForm(DatasetSyncForm::class, ['dataset' => $dataset]));
         $view->setVariable('validateForm', $this->getForm(DatasetValidateForm::class, ['dataset' => $dataset]));
+        $view->setVariable('exportForm', $this->getForm(DatasetExportForm::class, ['dataset' => $dataset]));
         return $view;
     }
 

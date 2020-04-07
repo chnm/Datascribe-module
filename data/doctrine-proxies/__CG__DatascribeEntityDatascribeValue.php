@@ -253,7 +253,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function getIsMissing(): bool
+    public function getIsMissing(): ?bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsMissing', []);
@@ -275,7 +275,7 @@ class DatascribeValue extends \Datascribe\Entity\DatascribeValue implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function getIsIllegible(): bool
+    public function getIsIllegible(): ?bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIllegible', []);

@@ -5,6 +5,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\ItemSet;
+use Omeka\Entity\User;
 
 /**
  * @Entity
@@ -41,12 +42,59 @@ class DatascribeDataset extends AbstractEntity
     protected $itemSet;
 
     /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $validatedBy;
+
+    /**
+     * @ManyToOne(
+     *     targetEntity="Omeka\Entity\User"
+     * )
+     * @JoinColumn(
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
+    protected $exportedBy;
+
+    /**
      * @Column(
      *     type="text",
      *     nullable=true
      * )
      */
     protected $guidelines;
+
+    /**
+     * @Column(
+     *     type="string",
+     *     length=255,
+     *     nullable=true
+     * )
+     */
+    protected $exportStorageId;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $validated;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $exported;
 
     /**
      * @OneToMany(
@@ -85,6 +133,26 @@ class DatascribeDataset extends AbstractEntity
         return $this->itemSet;
     }
 
+    public function setValidatedBy(?User $validatedBy = null) : void
+    {
+        $this->validatedBy = $validatedBy;
+    }
+
+    public function getValidatedBy() : ?User
+    {
+        return $this->validatedBy;
+    }
+
+    public function setExportedBy(?User $exportedBy = null) : void
+    {
+        $this->exportedBy = $exportedBy;
+    }
+
+    public function getExportedBy() : ?User
+    {
+        return $this->exportedBy;
+    }
+
     public function setGuidelines(?string $guidelines) : void
     {
         $this->guidelines = $guidelines;
@@ -93,6 +161,36 @@ class DatascribeDataset extends AbstractEntity
     public function getGuidelines() : ?string
     {
         return $this->guidelines;
+    }
+
+    public function setExportStorageId(?string $exportStorageId) : void
+    {
+        $this->exportStorageId = $exportStorageId;
+    }
+
+    public function getExportStorageId() : ?string
+    {
+        return $this->exportStorageId;
+    }
+
+    public function setValidated(DateTime $validated) : void
+    {
+        $this->validated = $validated;
+    }
+
+    public function getValidated() : ?DateTime
+    {
+        return $this->validated;
+    }
+
+    public function setExported(DateTime $exported) : void
+    {
+        $this->exported = $exported;
+    }
+
+    public function getExported() : ?DateTime
+    {
+        return $this->exported;
     }
 
     public function getFields()
