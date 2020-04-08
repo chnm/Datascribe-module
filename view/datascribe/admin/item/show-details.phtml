@@ -1,5 +1,9 @@
 <h3><?php echo $this->translate('Item metadata'); ?></h3>
 <div class="meta-group">
+    <h4><?php echo $this->translate('Item #'); ?></h4>
+    <div class="value"><?php echo $item->id(); ?></div>
+</div>
+<div class="meta-group">
     <h4><?php echo $this->translate('DataScribe item'); ?></h4>
     <div class="value"><?php echo $item->linkPretty(); ?></div>
 </div>

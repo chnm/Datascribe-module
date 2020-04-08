@@ -34,7 +34,7 @@ $sortBy = [
 ];
 ?>
 
-<?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Browse')); ?>
+<?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Records')); ?>
 
 <?php echo $this->datascribe()->breadcrumbs(); ?>
 
@@ -113,7 +113,7 @@ $sortBy = [
                 ); ?>
                 <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
                 <?php endif; ?>
-                <span class="record-number"><?php echo $record->link(number_format($record->id())); ?></span>
+                <span class="record-number"><?php echo $record->link($record->id()); ?></span>
                 <ul class="actions">
                     <?php if ($record->userIsAllowed('update')): ?>
                     <li><?php echo $record->link('', 'edit', [
