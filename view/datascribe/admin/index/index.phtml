@@ -15,3 +15,11 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
         </ul>
     </div>
 </div>
+
+<h2>Welcome to DataScribe</h2>
+<ul>
+    <li><?php echo $this->hyperlink($this->translate('Browse projects'), $this->url('admin/datascribe-project')); ?></li>
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeProjectAdapter', 'create')): ?>
+    <li><?php echo $this->hyperlink($this->translate('Add new project'), $this->url('admin/datascribe-project', ['action' => 'add'])); ?></li>
+    <?php endif; ?>
+</ul>
