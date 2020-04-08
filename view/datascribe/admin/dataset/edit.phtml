@@ -1,6 +1,5 @@
 <?php
 $this->headScript()->appendFile($this->assetUrl('js/admin/dataset-form.js', 'Datascribe'));
-$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->ckEditor();
 $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset edit');
 $form->prepare();

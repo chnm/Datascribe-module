@@ -119,6 +119,20 @@ SQL;
             'entity.persist.pre',
             [$this, 'assertCreateRecordPrivilege']
         );
+        $controllers = [
+            'Datascribe\Controller\Admin\Index',
+            'Datascribe\Controller\Admin\Project',
+            'Datascribe\Controller\Admin\Dataset',
+            'Datascribe\Controller\Admin\Item',
+            'Datascribe\Controller\Admin\Record',
+        ];
+        foreach ($controllers as $controller) {
+            $sharedEventManager->attach(
+                $controller,
+                'view.layout',
+                [$this, 'appendToLayout']
+            );
+        }
     }
 
     /**
@@ -436,5 +450,18 @@ SQL;
             // The user is not assigned to this project and is not an admin.
             throw new PermissionDeniedException($errorMessage);
         }
+    }
+
+    /**
+     * Append stylesheets and scripts to all DataScribe pages.
+     *
+     * @param Event $event
+     */
+    public function appendToLayout(Event $event)
+    {
+        $view = $event->getTarget();
+        $view->headLink()->appendStylesheet($view->assetUrl('css/admin.css', 'Datascribe'));
+        $view->headScript()->appendFile($view->assetUrl('js/datascribe.js', 'Datascribe'));
+        $view->headScript()->appendFile($view->assetUrl('js/admin.js', 'Datascribe'));
     }
 }

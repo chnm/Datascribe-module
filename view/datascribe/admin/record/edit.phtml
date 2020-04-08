@@ -1,12 +1,9 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record edit');
 $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
-$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $this->headScript()->appendFile($this->assetUrl('vendor/jquery-panzoom/jquery.panzoom.min.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('vendor/featherlight/featherlight.min.js', 'Datascribe'));
-$this->headScript()->appendFile($this->assetUrl('js/datascribe.js', 'Datascribe'));
-$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
 $form->prepare();
 ?>

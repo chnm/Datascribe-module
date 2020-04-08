@@ -1,7 +1,5 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe dataset browse');
-$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
-$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 ?>
 
 <?php echo $this->pageTitle($project->name(), 1, $this->translate('DataScribe: Project'), $this->translate('Datasets')); ?>

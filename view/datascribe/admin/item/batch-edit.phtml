@@ -1,7 +1,5 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item batch-edit');
-$this->headLink()->appendStylesheet($this->assetUrl('css/admin.css', 'Datascribe'));
-$this->headScript()->appendFile($this->assetUrl('js/admin.js', 'Datascribe'));
 ?>
 
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Batch edit items')); ?>
