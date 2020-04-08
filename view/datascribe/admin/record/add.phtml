@@ -6,6 +6,7 @@ $this->headScript()->appendFile($this->assetUrl('vendor/jquery-panzoom/jquery.pa
 $this->headScript()->appendFile($this->assetUrl('vendor/featherlight/featherlight.min.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
 $form->prepare();
+$fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 ?>
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('New record')); ?>
@@ -59,8 +60,8 @@ $form->prepare();
     <input type="submit" name="submit-return" value="<?php echo $this->escapeHtml($this->translate('Add and return')); ?>">
     <input type="submit" name="submit-add" value="<?php echo $this->escapeHtml($this->translate('Add and add another')); ?>">
 </div>
-
-<?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
+<?php if ($fieldsets): ?>
+<?php foreach ($fieldsets as $fieldset): ?>
 <?php $field = $fieldset->getOption('datascribe_field'); ?>
 <fieldset>
     <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
@@ -78,6 +79,18 @@ $form->prepare();
     <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
 </fieldset>
 <?php endforeach; ?>
+<?php else: ?>
+<div class="no-resources">
+    <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
+    <p><?php echo sprintf(
+        $this->translate('This dataset has no form. %s'),
+        $this->hyperlink($this->translate('Build the form.'), $this->url('admin/datascribe-dataset-id', ['action' => 'edit', 'project-id' => $project->id(), 'dataset-id' => $dataset->id()], ['fragment' => 'form-builder']))
+    ); ?></p>
+    <?php else: ?>
+    <p><?php echo $this->translate('This dataset has no form.'); ?></p>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
