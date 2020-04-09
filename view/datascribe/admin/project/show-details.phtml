@@ -6,7 +6,7 @@
 <div class="meta-group">
     <h4><?php echo $this->translate('Description'); ?></h4>
     <?php $description = $project->description(); ?>
-    <div class="value"><?php echo $description ? $this->escapeHtml($project->description()) : $this->translate('[No description]'); ?></div>
+    <div class="value"><?php echo $description ? $this->escapeHtml($description) : $this->translate('[No description]'); ?></div>
 </div>
 <div class="meta-group">
     <h4><?php echo $this->translate('Visibility'); ?></h4>
