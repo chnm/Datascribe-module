@@ -154,7 +154,7 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully created.'); // @translate
-                    if (isset($postData['submit-add'])) {
+                    if (isset($postData['submit-return'])) {
                         return $this->redirect()->toRoute(null, [], true);
                     } else {
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);

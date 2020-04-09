@@ -70,7 +70,11 @@ class DatasetController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $postData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate
-                    return $this->redirect()->toUrl($response->getContent()->url());
+                    if (isset($postData['submit-return'])) {
+                        return $this->redirect()->toRoute(null, [], ['fragment' => 'form-builder'], true);
+                    } else {
+                        return $this->redirect()->toUrl($response->getContent()->url());
+                    }
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
