@@ -15,6 +15,14 @@ $(document).on('o:expanded', '#page-action-menu a.collapse', function() {
     });
 });
 
+// Close all sidebars before opening another.
+$('a.sidebar-content').on('click', function(e) {
+    var sidebars = $('.sidebar').each(function() {
+        Omeka.closeSidebar($(this));
+    });
+});
+
+// Handle the sidebar drawers.
 $('.sidebar.always-open').on('click', '.sidebar-drawer', function() {
     var drawerButton = $(this);
     var sidebar = drawerButton.parents('.sidebar');

@@ -10,9 +10,18 @@ $form->prepare();
 
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
+<div class="row-controls">
+      <button type="button" class="full-screen"><?php echo $this->translate('Go full screen'); ?></button>
+      <div class="layout">
+          <label><?php echo $this->translate('Layout'); ?></label>
+          <button type="button" name="horizontal" class="horizontal active" aria-label="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" disabled=""></button>
+          <button type="button" name="vertical" class="vertical" aria-label="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>"></button>
+      </div>
+</div>
+
 <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => $this->translate('Before')]); ?>
 
-<div class="current-row">
+<div class="current-row horizontal">
 <div class="media-viewer">
       <?php $media = $oItem->media(); ?>
       <?php $mediaCount = count($media); ?>

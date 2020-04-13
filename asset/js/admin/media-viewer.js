@@ -63,6 +63,20 @@ $(document).ready(function() {
       var panzoomImg = $(this).parents('.panzoom-container').find('img');
       panzoomImg.css('transform', 'none');
   });
+
+  // Handle the layout buttons.
+  $('.layout button').click(function(e) {
+      var currentFocus = $(':focus');
+      $('.layout button').toggleClass('active');
+      $('.current-row').toggleClass('horizontal').toggleClass('vertical');
+      $('.layout button:disabled').removeAttr('disabled');
+      $('.layout button.active').attr('disabled', true);
+      currentFocus.focus();
+  });
+  
+  $('.full-screen').click(function(e) {
+    $('#content').toggleClass('fullscreen');
+  });
   
   // Manages a select that switches the active media being viewed.
 
