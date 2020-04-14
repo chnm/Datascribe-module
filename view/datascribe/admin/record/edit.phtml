@@ -18,7 +18,6 @@ $form->prepare();
     <button type="button" class="full-screen"><?php echo $this->translate('Focus mode'); ?></button>
 </div>
 
-<div class="resizable-container">
 <div class="media-viewer">
       <?php $media = $oItem->media(); ?>
       <?php $mediaCount = count($media); ?>
@@ -127,7 +126,6 @@ $form->prepare();
     </div>
 
 <?php echo $this->form()->closeTag(); ?>
-</div>
 </div>
 
 <?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter, 'beforeAfter' => $this->translate('After')]); ?>
