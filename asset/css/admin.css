@@ -294,6 +294,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
+  height: 100%;
 }
 
 .current-row form {
@@ -312,6 +313,23 @@
 .expanded-right .current-row .media-viewer,
 .expanded-right .current-row form {
   width: calc(50% - 6px);
+}
+
+.fullscreen .current-row {
+  position: fixed;
+  top: 48px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  background-color: #fff;
+  padding: 6px 20px;
+  height: 100%;
+  z-index: 2;
+}
+
+div[role="main"].fullscreen > h1:first-of-type {
+  z-index: 1;
 }
 
 /* Form Builder */

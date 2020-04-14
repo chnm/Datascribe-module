@@ -76,6 +76,7 @@ $(document).ready(function() {
   
   $('.full-screen').click(function(e) {
     $('#content').toggleClass('fullscreen');
+    $('.sidebar').toggle();
   });
   
   // Manages a select that switches the active media being viewed.
