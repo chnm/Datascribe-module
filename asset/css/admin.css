@@ -302,6 +302,10 @@
   float: right;
 }
 
+.current-row.vertical {
+  position: relative;
+}
+
 .current-row.vertical .media-viewer {
   width: 100%;
   text-align: center;
@@ -316,6 +320,11 @@
 
 .current-row.vertical .media-viewer img {
   width: 100%;
+}
+
+.current-row.vertical form {
+  height: calc(50% - 72px);
+  overflow-y: scroll;
 }
 
 .current-row fieldset {
