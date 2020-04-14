@@ -287,7 +287,7 @@
   height: calc(100vh - 180px);
 }
 
-.current-row .media-viewer {
+.current-row.horizontal .media-viewer {
   width: calc(40% - 6px);
   float: left;
   margin-right: 12px;
@@ -297,9 +297,25 @@
   height: 100%;
 }
 
-.current-row form {
+.current-row.horizontal form {
   width: calc(60% - 6px);
   float: right;
+}
+
+.current-row.vertical .media-viewer {
+  width: 100%;
+  text-align: center;
+  height: 50%;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.current-row.vertical .media-container {
+  height: 100%;
+}
+
+.current-row.vertical .media-viewer img {
+  width: 100%;
 }
 
 .current-row fieldset {
@@ -310,8 +326,8 @@
   padding: 6px 0;
 }
 
-.expanded-right .current-row .media-viewer,
-.expanded-right .current-row form {
+.expanded-right .current-row.horizontal .media-viewer,
+.expanded-right .current-row.horizontal form {
   width: calc(50% - 6px);
 }
 
@@ -651,6 +667,7 @@ button.sidebar-drawer.collapse:after {
 .layout {
     display: inline-flex;
     align-items: center;
+    margin-left: 12px;
 }
 
 .layout label {
