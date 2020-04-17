@@ -277,13 +277,11 @@
 }
 
 .edit .current-row {
-  overflow-y: scroll;
   height: calc(100vh - 360px);
   margin-bottom: 12px;
 }
 
 .add .current-row {
-  overflow-y: scroll;
   height: calc(100vh - 180px);
 }
 
@@ -294,12 +292,14 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
-  height: 100%;
+  height: calc(100% - 96px);
 }
 
 .current-row.horizontal form {
   width: calc(60% - 6px);
   float: right;
+  overflow-y: scroll;
+  height: calc(100% - 48px);
 }
 
 .current-row.vertical {
@@ -311,9 +311,11 @@
   text-align: center;
   height: 50%;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 24px;  
 }
 
+.current-row.horizontal .media-container,
+.current-row.horizontal .panzoom-container,
 .current-row.vertical .media-container {
   height: 100%;
 }
@@ -333,6 +335,12 @@
 
 .current-row legend {
   padding: 6px 0;
+}
+
+.current-row .panzoom-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .expanded-right .current-row.horizontal .media-viewer,
