@@ -83,7 +83,7 @@ return [
             'datascribe' => Service\ViewHelper\DatascribeFactory::class,
         ],
         'delegators' => [
-            'Zend\Form\View\Helper\FormElement' => [
+            'Laminas\Form\View\Helper\FormElement' => [
                 Service\Delegator\FormElementDelegatorFactory::class,
             ],
         ],

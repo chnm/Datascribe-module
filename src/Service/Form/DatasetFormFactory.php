@@ -2,7 +2,7 @@
 namespace Datascribe\Service\Form;
 
 use Datascribe\Form\DatasetForm;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class DatasetFormFactory implements FactoryInterface

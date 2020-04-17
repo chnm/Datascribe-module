@@ -1,8 +1,8 @@
 <?php
 namespace Datascribe\Form\ViewHelper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper\FormNumber;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\FormNumber;
 
 class DatascribeFormNumber extends FormNumber
 {

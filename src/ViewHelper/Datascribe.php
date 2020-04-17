@@ -5,11 +5,11 @@ use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\Api\Representation\DatascribeRecordRepresentation;
 use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\DatasetForm;
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * View helper used to render DataScribe template elements.

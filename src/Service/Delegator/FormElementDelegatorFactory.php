@@ -3,7 +3,7 @@ namespace Datascribe\Service\Delegator;
 
 use Datascribe\Form\Element as DatascribeElement;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
+use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 
 class FormElementDelegatorFactory implements DelegatorFactoryInterface
 {

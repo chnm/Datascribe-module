@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Zend\Form\Element\Textarea as ZendTextarea;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Element\Textarea as LaminasTextarea;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator;
 
-class Textarea extends ZendTextarea implements InputProviderInterface
+class Textarea extends LaminasTextarea implements InputProviderInterface
 {
     public function __construct($name = null, $options = [])
     {
