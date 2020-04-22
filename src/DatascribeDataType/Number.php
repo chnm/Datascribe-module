@@ -16,19 +16,19 @@ class Number implements DataTypeInterface
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
-        $element = new Element\Text('min');
+        $element = new DatascribeElement\OptionalNumber('min');
         $element->setLabel('Minimum value'); // @translate
         $element->setOption('info', 'The minimum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['min'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('max');
+        $element = new DatascribeElement\OptionalNumber('max');
         $element->setLabel('Maximum value'); // @translate
         $element->setOption('info', 'The maximum value to accept for this input.'); // @translate
         $element->setAttribute('value', $fieldData['max'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('step');
+        $element = new DatascribeElement\OptionalNumber('step');
         $element->setLabel('Stepping interval'); // @translate
         $element->setOption('info', 'A number that specifies the granularity that the value must adhere to.'); // @translate
         $element->setAttribute('value', $fieldData['step'] ?? null);
@@ -46,7 +46,7 @@ class Number implements DataTypeInterface
         $element->setAttribute('value', $fieldData['pattern'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('default_value');
+        $element = new DatascribeElement\OptionalNumber('default_value');
         $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
