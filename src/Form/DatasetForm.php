@@ -226,7 +226,7 @@ class DatasetForm extends Form
     public function addFieldElements(Fieldset $fieldFieldset, DataTypeInterface $dataType, ?DatascribeFieldRepresentation $field)
     {
         // Add the common "name" element.
-        $element = new Element\Text('name');
+        $element = new DatascribeElement\RequiredText('name');
         $element->setLabel('Field name'); // @translate
         $element->setAttributes([
             'required' => true,
