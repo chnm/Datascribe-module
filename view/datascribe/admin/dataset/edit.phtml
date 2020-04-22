@@ -26,7 +26,6 @@ $form->prepare();
     <?php endif; ?>
     <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-item', ['action' => 'browse'], true), ['class' => 'button']); ?>
     <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
-    <input type="submit" name="submit-return" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
     <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
 </div>
 
@@ -48,6 +47,8 @@ $form->prepare();
     </div>
     <div id="data-types" class="sidebar always-open">
         <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+        <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
+        <?php echo sprintf($this->translate('Last saved: %s on %s'), $dataset->modified()->format('g:ia'), $dataset->modified()->format('M j, Y')); ?>
         <h3><?php echo $this->translate('Add a field to the form'); ?></h3>
         <?php foreach ($form->dataTypes() as $dataTypeName => $dataType): ?>
         <button class="option" data-name="<?php echo $this->escapeHtml($dataTypeName); ?>"><?php echo $this->escapeHtml($this->translate($dataType->getLabel())); ?></button>
