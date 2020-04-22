@@ -268,4 +268,31 @@ class DatasetForm extends Form
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldElements($fieldDataFieldset, $field ? $field->data() : []);
     }
+
+    /**
+     * Remove deleted fields.
+     *
+     * We must explicitly remove deleted fields from the form or it will not
+     * validate if any field elements are required (note that field names are
+     * always required).
+     *
+     * @param array $postData
+     * @return self
+     */
+    public function removeDeletedFields(array $postData)
+    {
+        // Fields deleted by the form builder are not passed with POST data.
+        $fieldIdsToRetain = array_keys($postData['o-module-datascribe:field']);
+        $fieldsFieldset = $this->get('o-module-datascribe:field');
+        $fieldsInputFilter = $this->getInputFilter()->get('o-module-datascribe:field');
+        foreach ($fieldsFieldset->getFieldsets() as $fieldId => $fieldFieldset) {
+            if (!in_array($fieldId, $fieldIdsToRetain)) {
+                // This field was deleted by the form builder. Delete it from
+                // the form by removing the field's fieldset and input filter.
+                $fieldsFieldset->remove($fieldId);
+                $fieldsInputFilter->remove($fieldId);
+            }
+        }
+        return $this;
+    }
 }
