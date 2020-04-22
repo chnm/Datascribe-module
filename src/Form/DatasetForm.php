@@ -268,4 +268,17 @@ class DatasetForm extends Form
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldElements($fieldDataFieldset, $field ? $field->data() : []);
     }
+
+    public function removeDeletedElements(array $postData)
+    {
+        $fieldIdsToRetain = array_keys($postData['o-module-datascribe:field']);
+        $fieldsFieldset = $this->get('o-module-datascribe:field');
+        $fieldsInputFilter = $this->getInputFilter()->get('o-module-datascribe:field');
+        foreach ($fieldsFieldset->getFieldsets() as $fieldId => $fieldFieldset) {
+            if (!in_array($fieldId, $fieldIdsToRetain)) {
+                $fieldsFieldset->remove($fieldId);
+                $fieldsInputFilter->remove($fieldId);
+            }
+        }
+    }
 }

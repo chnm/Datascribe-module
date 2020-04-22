@@ -77,4 +77,23 @@ fieldsContainer.on('click', 'button.field-collapse, button.field-expand', functi
     field.find('.field-collapse, .field-expand').toggleClass('active');
     field.toggleClass('closed open');
 });
+$('#save-progress').on('click', function(e) {
+    var thisButton = $(this);
+    fetch(thisButton.data('save-progress-url'), {
+        method: 'post',
+        mode: 'cors',
+        body: new FormData($('#datasetform')[0])
+    })
+    .then((response) => {
+        if (response.ok) {
+            // Handle success message.
+            $('fieldset.deleted').remove();
+        }
+        return response.json();
+    })
+    .then((data) => {
+        // Handle error messages.
+        console.log(data);
+    });
+});
 });

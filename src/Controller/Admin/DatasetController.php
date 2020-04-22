@@ -58,9 +58,11 @@ class DatasetController extends AbstractActionController
         $form = $this->getForm(DatasetForm::class, [
             'dataset' => $dataset,
         ]);
+        $form->setAttribute('id', 'datasetform');
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
+            $form->removeDeletedElements($postData);
             $form->setData($postData);
             if ($form->isValid()) {
                 // Note that the form cannot validate new fields. Instead we
@@ -90,6 +92,43 @@ class DatasetController extends AbstractActionController
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
         return $view;
+    }
+
+    public function saveProgressAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+        $form = $this->getForm(DatasetForm::class, [
+            'dataset' => $dataset,
+        ]);
+        $postData = $this->params()->fromPost();
+        $form->removeDeletedElements($postData);
+        $form->setData($postData);
+        $response = $this->getResponse();
+        if ($form->isValid()) {
+            $postData['o:item_set'] = ['o:id' => $postData['o:item_set']];
+            try {
+                $this->api(null, true)->update('datascribe_datasets', $this->params('dataset-id'), $postData);
+                $response->setStatusCode(200); // OK
+                $response->setContent(json_encode([]));
+            } catch (\Omeka\Api\Exception\ValidationException $e) {
+                $errorStore = $e->getErrorStore();
+                $response->setStatusCode(422); // Unprocessable Entity
+                $response->setContent(json_encode($errorStore->getErrors()));
+            }
+        } else {
+            $response->setStatusCode(422); // Unprocessable Entity
+            $response->setContent(json_encode($form->getMessages()));
+        }
+        return $response;
     }
 
     public function deleteAction()
