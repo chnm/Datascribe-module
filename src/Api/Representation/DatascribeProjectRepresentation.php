@@ -88,8 +88,8 @@ class DatascribeProjectRepresentation extends AbstractEntityRepresentation
     public function users()
     {
         $users = [];
-        foreach ($this->resource->getUsers() as $user) {
-            $users[] = new DatascribeUserRepresentation($user, $this->getServiceLocator());
+        foreach ($this->resource->getUsers() as $userId => $user) {
+            $users[$userId] = new DatascribeUserRepresentation($user, $this->getServiceLocator());
         }
         return $users;
     }
