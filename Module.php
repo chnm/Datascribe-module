@@ -461,7 +461,7 @@ SQL;
     {
         $view = $event->getTarget();
         $view->headLink()->appendStylesheet($view->assetUrl('css/admin.css', 'Datascribe'));
-        $view->headScript()->appendFile($view->assetUrl('js/datascribe.js', 'Datascribe'));
+        $view->headScript()->prependFile($view->assetUrl('js/datascribe.js', 'Datascribe'));
         $view->headScript()->appendFile($view->assetUrl('js/admin.js', 'Datascribe'));
     }
 }
