@@ -267,6 +267,10 @@ class DatasetForm extends Form
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldElements($fieldDataFieldset, $field ? $field->data() : []);
+        if (0 === $fieldDataFieldset->count()) {
+            // Remove the fieldset if the data type adds no field elements.
+            $fieldFieldset->remove('data');
+        }
     }
 
     /**
