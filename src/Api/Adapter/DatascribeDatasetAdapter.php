@@ -78,9 +78,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
                     if (!isset($fieldData['is_required'])) {
                         $errorStore->addError('is_required', sprintf('Invalid field format passed in request. Missing "is_required" for field #%s.', $fieldId));
                     }
-                    if (!isset($fieldData['data'])) {
-                        $errorStore->addError('data', sprintf('Invalid field format passed in request. Missing "data" for field #%s.', $fieldId));
-                    } elseif (!is_array($fieldData['data'])) {
+                    if (isset($fieldData['data']) && !is_array($fieldData['data'])) {
                         $errorStore->addError('data', sprintf('Invalid field format passed in request. Invalid "data" format for field #%s.', $fieldId));
                     }
                 }
@@ -173,7 +171,8 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $dataType = $dataTypes->get($field->getDataType());
             if (!($dataType instanceof Unknown)) {
                 // Set field data only when the data type is known.
-                $field->setData($dataType->getFieldDataFromUserData($fieldData['data']));
+                $data = $fieldData['data'] ?? [];
+                $field->setData($dataType->getFieldDataFromUserData($data));
             }
         }
 

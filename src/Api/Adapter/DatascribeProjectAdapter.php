@@ -56,6 +56,23 @@ class DatascribeProjectAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $query['has_user_id']))
             );
         }
+        $identity = $this->getServiceLocator()->get('Omeka\AuthenticationService')->getIdentity();
+        if (isset($query['my_projects'])) {
+            $aliasOwner = $this->createAlias();
+            $aliasUsers = $this->createAlias();
+            $qb->leftJoin('omeka_root.owner', $aliasOwner);
+            $qb->leftJoin('omeka_root.users', $aliasUsers);
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->eq(
+                    "$aliasOwner.id",
+                    $this->createNamedParameter($qb, $identity)
+                ),
+                $qb->expr()->eq(
+                    "$aliasUsers.user",
+                    $this->createNamedParameter($qb, $identity)
+                )
+            ));
+        }
     }
 
     public function validateRequest(Request $request, ErrorStore $errorStore)

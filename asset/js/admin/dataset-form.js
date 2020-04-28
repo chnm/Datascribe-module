@@ -17,6 +17,12 @@ $('#form-builder-fields > fieldset > fieldset').each(function(i) {
     field.toggleClass('closed'); // fields are closed by default
 });
 
+// Open fields that contain error messages.
+$('#form-builder-fields ul.messages').each(function(i) {
+    var field = $(this).closest('fieldset.dataset-field');
+    field.toggleClass('closed open');
+});
+
 // Hande the add field control.
 $('#data-types').on('click', '.option', function(e) {
     e.preventDefault();

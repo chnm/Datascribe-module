@@ -226,7 +226,7 @@ class DatasetForm extends Form
     public function addFieldElements(Fieldset $fieldFieldset, DataTypeInterface $dataType, ?DatascribeFieldRepresentation $field)
     {
         // Add the common "name" element.
-        $element = new Element\Text('name');
+        $element = new DatascribeElement\RequiredText('name');
         $element->setLabel('Field name'); // @translate
         $element->setAttributes([
             'required' => true,
@@ -267,5 +267,36 @@ class DatasetForm extends Form
         $fieldDataFieldset->setAttribute('class', 'dataset-field-data');
         $fieldFieldset->add($fieldDataFieldset);
         $dataType->addFieldElements($fieldDataFieldset, $field ? $field->data() : []);
+        if (0 === $fieldDataFieldset->count()) {
+            // Remove the fieldset if the data type adds no field elements.
+            $fieldFieldset->remove('data');
+        }
+    }
+
+    /**
+     * Remove deleted fields.
+     *
+     * We must explicitly remove deleted fields from the form or it will not
+     * validate if any field elements are required (note that field names are
+     * always required).
+     *
+     * @param array $postData
+     * @return self
+     */
+    public function removeDeletedFields(array $postData)
+    {
+        // Fields deleted by the form builder are not passed with POST data.
+        $fieldIdsToRetain = array_keys($postData['o-module-datascribe:field']);
+        $fieldsFieldset = $this->get('o-module-datascribe:field');
+        $fieldsInputFilter = $this->getInputFilter()->get('o-module-datascribe:field');
+        foreach ($fieldsFieldset->getFieldsets() as $fieldId => $fieldFieldset) {
+            if (!in_array($fieldId, $fieldIdsToRetain)) {
+                // This field was deleted by the form builder. Delete it from
+                // the form by removing the field's fieldset and input filter.
+                $fieldsFieldset->remove($fieldId);
+                $fieldsInputFilter->remove($fieldId);
+            }
+        }
+        return $this;
     }
 }

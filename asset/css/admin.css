@@ -534,6 +534,7 @@ body.sidebar-open #content.expanded {
 
 .sidebar.always-open.collapsed {
     left: 100%;
+    overflow: visible;
 }
 
 button.sidebar-drawer {

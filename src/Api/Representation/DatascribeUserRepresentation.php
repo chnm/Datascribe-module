@@ -42,4 +42,16 @@ class DatascribeUserRepresentation extends AbstractRepresentation
     {
         return $this->user->getRole();
     }
+
+    public function roleLabel()
+    {
+        switch ($this->role()) {
+            case DatascribeUser::ROLE_REVIEWER:
+                return 'Reviewer'; // @translate
+            case DatascribeUser::ROLE_TRANSCRIBER:
+                return 'Transcriber'; // @translate
+            default:
+                return null;
+        }
+    }
 }

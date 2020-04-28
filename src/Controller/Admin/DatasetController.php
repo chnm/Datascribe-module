@@ -61,7 +61,7 @@ class DatasetController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
-            $form->setData($postData);
+            $form->removeDeletedFields($postData)->setData($postData);
             if ($form->isValid()) {
                 // Note that the form cannot validate new fields. Instead we
                 // rely on browser and API validation, and we pass POST data to
@@ -70,7 +70,7 @@ class DatasetController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_datasets', $this->params('dataset-id'), $postData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully edited.'); // @translate
-                    if (isset($postData['submit-return'])) {
+                    if (isset($postData['submit-save-progress'])) {
                         return $this->redirect()->toRoute(null, [], ['fragment' => 'form-builder'], true);
                     } else {
                         return $this->redirect()->toUrl($response->getContent()->url());
