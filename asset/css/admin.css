@@ -277,7 +277,7 @@
 }
 
 .current-row {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .edit .current-row {
@@ -361,10 +361,10 @@
   right: 0;
   left: 0;
   bottom: 0;
-  overflow-y: scroll;
+  overflow-y: hidden;
   background-color: #fff;
   padding: 6px 20px;
-  height: 100%;
+  height: calc(100% - 6rem);
   z-index: 2;
 }
 
