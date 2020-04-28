@@ -63,6 +63,7 @@ $form->prepare();
     
     <div class="sidebar always-open">
         <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+        <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
         <h3><?php echo $this->translate('Record actions'); ?></h3>
         <?php if ($form->has('o-module-datascribe:needs_review')): ?>
         <div class="meta-group checkbox">

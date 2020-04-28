@@ -153,9 +153,12 @@ class RecordController extends AbstractActionController
                 $formData['o-module-datascribe:item']['o:id'] = $item->id();
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
+                    $record = $response->getContent();
                     $this->messenger()->addSuccess('Record successfully created.'); // @translate
-                    if (isset($postData['submit-return'])) {
+                    if (isset($postData['submit-add-another'])) {
                         return $this->redirect()->toRoute(null, [], true);
+                    } elseif (isset($postData['submit-save-progress'])) {
+                        return $this->redirect()->toRoute('admin/datascribe-record-id', ['action' => 'edit', 'record-id' => $record->id()], true);
                     } else {
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                     }
@@ -212,7 +215,11 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully edited.'); // @translate
-                    return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
+                    if (isset($postData['submit-save-progress'])) {
+                        return $this->redirect()->toRoute(null, [], true);
+                    } else {
+                        return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
+                    }
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
