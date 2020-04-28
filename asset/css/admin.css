@@ -515,6 +515,16 @@ fieldset.open .dataset-field-data legend {
   font-size: 16px
 }
 
+.save-progress.button {
+  margin-bottom: .25rem;
+}
+
+.last-saved-timestamp {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: .875rem;
+}
+
 /* Sidebar */
 
 body.sidebar-open #content.expanded {
