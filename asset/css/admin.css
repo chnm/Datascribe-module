@@ -161,6 +161,21 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
+.datascribe.item.browse td:first-child, 
+.datascribe.item.browse th:first-child {
+  width: auto;
+}
+
+.datascribe.item.browse td:nth-child(2), 
+.datascribe.item.browse th:nth-child(2) {
+  width: 50%;
+}
+
+.datascribe.item.browse .item-id {
+  float: right;
+  margin-left: auto;
+}
+
 .record.browse .record-number-cell {
   display: flex;
   flex-wrap: wrap;
@@ -277,7 +292,7 @@
 }
 
 .current-row {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .edit .current-row {
@@ -361,10 +376,10 @@
   right: 0;
   left: 0;
   bottom: 0;
-  overflow-y: scroll;
+  overflow-y: hidden;
   background-color: #fff;
   padding: 6px 20px;
-  height: 100%;
+  height: calc(100% - 6rem);
   z-index: 2;
 }
 
@@ -520,6 +535,16 @@ fieldset.open .dataset-field-data legend {
   width: 100%;
   padding: 6px 0;
   font-size: 16px
+}
+
+.save-progress.button {
+  margin-bottom: .25rem;
+}
+
+.last-saved-timestamp {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: .875rem;
 }
 
 /* Sidebar */
