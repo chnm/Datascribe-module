@@ -161,6 +161,21 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
+.datascribe.item.browse td:first-child, 
+.datascribe.item.browse th:first-child {
+  width: auto;
+}
+
+.datascribe.item.browse td:nth-child(2), 
+.datascribe.item.browse th:nth-child(2) {
+  width: 50%;
+}
+
+.datascribe.item.browse .item-id {
+  float: right;
+  margin-left: auto;
+}
+
 .record.browse .record-number-cell {
   display: flex;
   flex-wrap: wrap;
