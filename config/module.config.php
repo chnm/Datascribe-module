@@ -78,6 +78,7 @@ return [
             'datascribeFormText' => Form\ViewHelper\DatascribeFormText::class,
             'datascribeFormTextarea' => Form\ViewHelper\DatascribeFormTextarea::class,
             'datascribeFormNumber' => Form\ViewHelper\DatascribeFormNumber::class,
+            'datascribeFormCheckbox' => Form\ViewHelper\DatascribeFormCheckbox::class,
         ],
         'factories' => [
             'datascribe' => Service\ViewHelper\DatascribeFactory::class,

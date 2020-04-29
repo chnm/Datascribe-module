@@ -14,6 +14,7 @@ class FormElementDelegatorFactory implements DelegatorFactoryInterface
         $formElement->addClass(DatascribeElement\Text::class, 'datascribeFormText');
         $formElement->addClass(DatascribeElement\Textarea::class, 'datascribeFormTextarea');
         $formElement->addClass(DatascribeElement\Number::class, 'datascribeFormNumber');
+        $formElement->addClass(DatascribeElement\Checkbox::class, 'datascribeFormCheckbox');
         return $formElement;
     }
 }

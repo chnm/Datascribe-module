@@ -68,7 +68,7 @@ class Checkbox implements DataTypeInterface
 
     public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
-        $element = new Element\Checkbox('value');
+        $element = new DatascribeElement\Checkbox('value');
         $element->setLabel($fieldData['checkbox_label'] ?? 'Check'); // @translate
         $element->setUseHiddenElement(true);
         $element->setCheckedValue($fieldData['checked_value'] ?? self::DEFAULT_CHECKED_VALUE);
@@ -77,11 +77,21 @@ class Checkbox implements DataTypeInterface
             $valueText = $fieldData['checked_value'] ?? self::DEFAULT_CHECKED_VALUE;
         }
         $element->setValue($valueText);
+        $element->setAttribute('class', 'datascribe-checkbox-value');
+        $fieldset->add($element);
+
+        $element = new Element\Checkbox('null');
+        $element->setLabel('Set null'); // @translate
+        $element->setValue(false);
+        $element->setAttribute('class', 'datascribe-checkbox-null');
         $fieldset->add($element);
     }
 
     public function getValueTextFromUserData(array $userData) : ?string
     {
+        if (isset($userData['null']) && ('1' === $userData['null'])) {
+            return null;
+        }
         return $userData['value'] ?? null;
     }
 
