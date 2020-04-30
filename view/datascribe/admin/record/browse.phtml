@@ -180,91 +180,101 @@ $sortBy = [
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
-    <h3><?php echo $this->translate('Item status'); ?></h3>
-    <div class="meta-group">
-        <div class="value"><?php echo $this->translate($item->statusLabel()); ?></div>
-    </div>
     <h3><?php echo $this->translate('Item actions'); ?></h3>
-    <div class="meta-group">
-        <h4><?php echo $this->translate('Lock action'); ?></h4>
-        <div class="value">
-            <?php if ($item->locked()): ?>
+    <div class="action-group">
+        <div class="status-row">
+            <h4><?php echo $this->translate('Item status:'); ?></h4>
+            <div class="value"><?php echo $this->translate($item->statusLabel()); ?></div>
+        </div>
+    </div>
+    <div class="action-group">
+        <?php $itemLocked = $item->locked(); ?>
+        <div class="status-row">
+            <h4><?php echo $this->translate('Lock status:'); ?></h4>
+            <div class="value"><?php echo ($itemLocked) ? $this->translate('Locked') : $this->translate('Unlocked'); ?></div>
+        </div>
+        <?php if ($itemLocked): ?>
+            <div class="value">
             <?php $lockedBy = $item->lockedBy(); ?>
             <?php echo sprintf(
                 $this->translate('Last locked to %s on %s'),
                 $lockedBy ? $lockedBy->link($lockedBy->name()) : $this->translate('[Unknown]'),
                 $this->i18n()->dateFormat($item->locked(), 'medium', 'medium')
             ); ?>
-            <?php else: ?>
-            <?php echo $this->translate('Unlocked'); ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
         <?php if ($item->userIsAllowed('datascribe_edit_lock_action')): ?>
-        <div class="value"><?php echo $this->formElement($form->get('lock_action')); ?></div>
+            <div class="value"><?php echo $this->formElement($form->get('lock_action')); ?></div>
         <?php endif; ?>
     </div>
-    <div class="meta-group">
-        <h4><?php echo $this->translate('Submit action'); ?></h4>
-        <div class="value">
-            <?php if ($item->submitted()): ?>
+    <div class="action-group">
+        <?php $itemSubmitted = $item->submitted(); ?>
+        <div class="status-row">
+            <h4><?php echo $this->translate('Submission status:'); ?></h4>
+            <div class="value"><?php echo ($itemSubmitted) ? $this->translate('Submitted') : $this->translate('Not submitted'); ?></div>
+        </div>
+        <?php if ($itemSubmitted): ?>
+            <div class="value">
             <?php $submittedBy = $item->submittedBy(); ?>
             <?php echo sprintf(
                 $this->translate('Last submitted by %s on %s'),
                 $submittedBy ? $submittedBy->link($submittedBy->name()) : $this->translate('[Unknown]'),
                 $this->i18n()->dateFormat($item->submitted(), 'medium', 'medium')
             ); ?>
-            <?php else: ?>
-            <?php echo $this->translate('Not submitted'); ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
         <?php if ($item->userIsAllowed('datascribe_edit_submit_action')): ?>
-        <div class="value"><?php echo $this->formElement($form->get('submit_action')); ?></div>
+            <div class="value"><?php echo $this->formElement($form->get('submit_action')); ?></div>
         <?php endif; ?>
     </div>
-    <div class="meta-group">
-        <h4><?php echo $this->translate('Review action'); ?></h4>
-        <div class="value">
-            <?php if ($item->reviewed()): ?>
+    <div class="action-group">
+        <?php $itemReviewed =  $item->reviewed(); ?>
+        <div class="status-row">
+            <h4><?php echo $this->translate('Review status:'); ?></h4>
+            <div class="value"><?php echo ($itemReviewed) ? $this->translate('Reviewed') : $this->translate('Not reviewed'); ?></div>
+        </div>
+        <?php if ($itemReviewed): ?>
+            <div class="value">
             <?php $reviewedBy = $item->reviewedBy(); ?>
             <?php echo sprintf(
                 $this->translate('Last reviewed by %s on %s'),
                 $reviewedBy ? $reviewedBy->link($reviewedBy->name()) : $this->translate('[Unknown]'),
                 $this->i18n()->dateFormat($item->reviewed(), 'medium', 'medium')
             ); ?>
-            <?php else: ?>
-            <?php echo $this->translate('Not reviewed'); ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
         <?php if ($item->userIsAllowed('datascribe_edit_review_action')): ?>
-        <div class="value"><?php echo $this->formElement($form->get('review_action')); ?></div>
+            <div class="value"><?php echo $this->formElement($form->get('review_action')); ?></div>
         <?php endif; ?>
     </div>
-    <div class="meta-group">
-        <h4><?php echo $this->translate('Priority action'); ?></h4>
-        <div class="value">
-            <?php if ($item->prioritized()): ?>
+    <div class="action-group">
+        <?php $itemPrioritized = $item->prioritized(); ?>
+        <div class="status-row">
+            <h4><?php echo $this->translate('Priority status:'); ?></h4>
+            <div class="value"><?php echo ($itemPrioritized) ? $this->translate('Prioritized') : $this->translate('Not prioritized'); ?></div>
+        </div>
+        <?php if ($itemPrioritized): ?>
+            <div class="value">
             <?php $prioritizedBy = $item->prioritizedBy(); ?>
             <?php echo sprintf(
                 $this->translate('Last prioritized by %s on %s'),
                 $prioritizedBy ? $prioritizedBy->link($prioritizedBy->name()) : $this->translate('[Unknown]'),
                 $this->i18n()->dateFormat($item->prioritized(), 'medium', 'medium')
             ); ?>
-            <?php else: ?>
-            <?php echo $this->translate('Not prioritized'); ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
         <?php if ($item->userIsAllowed('datascribe_edit_priority_action')): ?>
-        <div class="value"><?php echo $this->formElement($form->get('priority_action')); ?></div>
+            <div class="value"><?php echo $this->formElement($form->get('priority_action')); ?></div>
         <?php endif; ?>
     </div>
     <?php if ($form->has('o-module-datascribe:transcriber_notes')): ?>
-    <div class="meta-group">
+    <div class="action-group">
         <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
     </div>
     <?php endif; ?>
     <?php if ($form->has('o-module-datascribe:reviewer_notes')): ?>
-    <div class="meta-group">
+    <div class="action-group">
         <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
     </div>

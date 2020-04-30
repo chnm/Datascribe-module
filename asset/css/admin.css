@@ -596,6 +596,27 @@ button.sidebar-drawer.collapse:after {
     content: "\f105";
 }
 
+.sidebar .status-row h4,
+.sidebar .status-row .value {
+    display: inline-block;
+    width: auto;
+    border-bottom: 0;
+    margin: 0;
+}
+
+.sidebar .action-group {
+    margin-bottom: 12px;
+}
+
+.sidebar .action-group + h3 {
+    margin-top: 24px;
+}
+
+.sidebar .action-group .value {
+    margin-bottom: 0;
+    border-bottom: 0;
+}
+
 /* Media Viewer */
 
 .media-viewer,
