@@ -191,7 +191,9 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 }
                 // Set value text.
                 $valueText = $value->getText();
-                if (isset($valueData['data'])) {
+                if (isset($valueData['set_null']) && $valueData['set_null']) {
+                    $valueText = null;
+                } elseif (isset($valueData['data'])) {
                     $valueText = $dataType->getValueTextFromUserData($valueData['data']);
                 }
                 if (!($dataType instanceof Unknown)) {

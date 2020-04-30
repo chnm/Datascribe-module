@@ -12,6 +12,7 @@ return [
             'date' => DatascribeDataType\Date::class,
             'time' => DatascribeDataType\Time::class,
             'checkbox' => DatascribeDataType\Checkbox::class,
+            'radio' => DatascribeDataType\Radio::class,
         ],
     ],
     'translator' => [

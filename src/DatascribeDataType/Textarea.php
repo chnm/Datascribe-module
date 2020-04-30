@@ -16,6 +16,11 @@ class Textarea implements DataTypeInterface
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Text('label');
+        $element->setLabel('Textarea label'); // @translate
+        $element->setAttribute('value', $fieldData['label'] ?? null);
+        $fieldset->add($element);
+
         $element = new DatascribeElement\OptionalNumber('rows');
         $element->setLabel('Rows'); // @translate
         $element->setAttribute('min', 1);
@@ -52,11 +57,6 @@ class Textarea implements DataTypeInterface
         $element->setLabel('Default value'); // @translate
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
-
-        $element = new Element\Text('textarea_label');
-        $element->setLabel('Textarea label'); // @translate
-        $element->setAttribute('value', $fieldData['textarea_label'] ?? null);
-        $fieldset->add($element);
     }
 
     public function getFieldDataFromUserData(array $userData) : array
@@ -80,9 +80,9 @@ class Textarea implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
             ? $userData['default_value'] : null;
-        $fieldData['textarea_label'] =
-            (isset($userData['textarea_label']) && preg_match('/^.+$/', $userData['textarea_label']))
-            ? $userData['textarea_label'] : null;
+        $fieldData['label'] =
+            (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
+            ? $userData['label'] : null;
         return $fieldData;
     }
 
@@ -97,7 +97,7 @@ class Textarea implements DataTypeInterface
         $element = new DatascribeElement\Textarea('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['textarea_label'] ?? 'Text'); // @translate
+        $element->setLabel($fieldData['label'] ?? 'Text'); // @translate
         $value = null;
         if (isset($valueText)) {
             $value = $valueText;
