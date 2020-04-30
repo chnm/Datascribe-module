@@ -8,6 +8,11 @@ abstract class AbstractSelection implements DataTypeInterface
 {
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Text('label');
+        $element->setLabel('Selection label'); // @translate
+        $element->setValue($fieldData['label'] ?? null);
+        $fieldset->add($element);
+
         $element = new Element\Textarea('options');
         $element->setLabel('Options'); // @translate
         $element->setOption('info', 'The selection options separated by new lines.'); // @translate
@@ -18,11 +23,6 @@ abstract class AbstractSelection implements DataTypeInterface
         $element = new Element\Text('default_value');
         $element->setLabel('Default value'); // @translate
         $element->setValue($fieldData['default_value'] ?? null);
-        $fieldset->add($element);
-
-        $element = new Element\Text('field_label');
-        $element->setLabel('Field label'); // @translate
-        $element->setValue($fieldData['field_label'] ?? null);
         $fieldset->add($element);
     }
 
@@ -41,9 +41,9 @@ abstract class AbstractSelection implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
             ? $userData['default_value'] : null;
-        $fieldData['field_label'] =
-            (isset($userData['field_label']) && preg_match('/^.+$/', $userData['field_label']))
-            ? $userData['field_label'] : null;
+        $fieldData['label'] =
+            (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
+            ? $userData['label'] : null;
         return $fieldData;
     }
 

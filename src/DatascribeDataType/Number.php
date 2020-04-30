@@ -16,6 +16,11 @@ class Number implements DataTypeInterface
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Text('label');
+        $element->setLabel('Number input label'); // @translate
+        $element->setAttribute('value', $fieldData['label'] ?? null);
+        $fieldset->add($element);
+
         $element = new DatascribeElement\OptionalNumber('min');
         $element->setLabel('Minimum value'); // @translate
         $element->setOption('info', 'The minimum value to accept for this input.'); // @translate
@@ -51,13 +56,9 @@ class Number implements DataTypeInterface
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('number_input_label');
-        $element->setLabel('Number input label'); // @translate
-        $element->setAttribute('value', $fieldData['number_input_label'] ?? null);
-        $fieldset->add($element);
-
         $element = new Element\Textarea('datalist');
         $element->setLabel('Datalist'); // @translate
+        $element->setOption('info', 'Recommended options available to choose, separated by new lines.'); // @translate
         $element->setAttribute('rows', 10);
         $element->setValue(implode("\n", $fieldData['datalist'] ?? []));
         $fieldset->add($element);
@@ -84,9 +85,9 @@ class Number implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($userData['default_value']) && is_numeric($userData['default_value']))
             ? $userData['default_value'] : null;
-        $fieldData['number_input_label'] =
-            (isset($userData['number_input_label']) && preg_match('/^.+$/', $userData['number_input_label']))
-            ? $userData['number_input_label'] : null;
+        $fieldData['label'] =
+            (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
+            ? $userData['label'] : null;
         if (isset($userData['datalist']) && preg_match('/^.+$/s', $userData['datalist'])) {
             $options = explode("\n", $userData['datalist']);
             $options = array_map('trim', $options);
@@ -110,7 +111,7 @@ class Number implements DataTypeInterface
         $element = new DatascribeElement\Number('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['number_input_label'] ?? 'Number'); // @translate
+        $element->setLabel($fieldData['label'] ?? 'Number'); // @translate
         $value = null;
         if (isset($valueText)) {
             $value = $valueText;

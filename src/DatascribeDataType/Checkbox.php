@@ -19,6 +19,11 @@ class Checkbox implements DataTypeInterface
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Text('label');
+        $element->setLabel('Checkbox label'); // @translate
+        $element->setAttribute('value', $fieldData['label'] ?? null);
+        $fieldset->add($element);
+
         $element = new Element\Text('checked_value');
         $element->setLabel('Checked value'); // @translate
         $element->setAttribute('value', $fieldData['checked_value'] ?? self::DEFAULT_CHECKED_VALUE);
@@ -32,11 +37,6 @@ class Checkbox implements DataTypeInterface
         $element = new DatascribeElement\OptionalCheckbox('checked_by_default');
         $element->setLabel('Checked by default'); // @translate
         $element->setValue($fieldData['checked_by_default'] ?? '0');
-        $fieldset->add($element);
-
-        $element = new Element\Text('checkbox_label');
-        $element->setLabel('Checkbox label'); // @translate
-        $element->setAttribute('value', $fieldData['checkbox_label'] ?? null);
         $fieldset->add($element);
     }
 
@@ -52,9 +52,9 @@ class Checkbox implements DataTypeInterface
         $fieldData['checked_by_default'] =
             (isset($userData['checked_by_default']) && in_array($userData['checked_by_default'], ['0', '1']))
             ? $userData['checked_by_default'] : '0';
-        $fieldData['checkbox_label'] =
-            (isset($userData['checkbox_label']) && preg_match('/^.+$/', $userData['checkbox_label']))
-            ? $userData['checkbox_label'] : null;
+        $fieldData['label'] =
+            (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
+            ? $userData['label'] : null;
         return $fieldData;
     }
 
@@ -69,7 +69,7 @@ class Checkbox implements DataTypeInterface
     public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
         $element = new Element\Checkbox('value');
-        $element->setLabel($fieldData['checkbox_label'] ?? 'Check'); // @translate
+        $element->setLabel($fieldData['label'] ?? 'Check'); // @translate
         $element->setUseHiddenElement(true);
         $element->setCheckedValue($fieldData['checked_value'] ?? self::DEFAULT_CHECKED_VALUE);
         $element->setUncheckedValue($fieldData['unchecked_value'] ?? self::DEFAULT_UNCHECKED_VALUE);

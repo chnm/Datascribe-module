@@ -18,8 +18,8 @@ class Radio extends AbstractSelection
         $element = new DatascribeElement\Radio('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['field_label'] ?? 'Select'); // @translate
-        $value = null;
+        $element->setLabel($fieldData['label'] ?? 'Select'); // @translate
+        $value = '';
         if (isset($valueText)) {
             $value = $valueText;
         } elseif (isset($fieldData['default_value'])) {

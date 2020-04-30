@@ -16,6 +16,11 @@ class Text implements DataTypeInterface
 
     public function addFieldElements(Fieldset $fieldset, array $fieldData) : void
     {
+        $element = new Element\Text('label');
+        $element->setLabel('Text input label'); // @translate
+        $element->setAttribute('value', $fieldData['label'] ?? null);
+        $fieldset->add($element);
+
         $element = new DatascribeElement\OptionalNumber('minlength');
         $element->setLabel('Minimum length'); // @translate
         $element->setOption('info', 'The minimum number of characters long the input can be and still be considered valid.'); // @translate
@@ -47,13 +52,9 @@ class Text implements DataTypeInterface
         $element->setAttribute('value', $fieldData['default_value'] ?? null);
         $fieldset->add($element);
 
-        $element = new Element\Text('text_input_label');
-        $element->setLabel('Text input label'); // @translate
-        $element->setAttribute('value', $fieldData['text_input_label'] ?? null);
-        $fieldset->add($element);
-
         $element = new Element\Textarea('datalist');
         $element->setLabel('Datalist'); // @translate
+        $element->setOption('info', 'Recommended options available to choose, separated by new lines.'); // @translate
         $element->setAttribute('rows', 10);
         $element->setValue(implode("\n", $fieldData['datalist'] ?? []));
         $fieldset->add($element);
@@ -77,9 +78,9 @@ class Text implements DataTypeInterface
         $fieldData['default_value'] =
             (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
             ? $userData['default_value'] : null;
-        $fieldData['text_input_label'] =
-            (isset($userData['text_input_label']) && preg_match('/^.+$/', $userData['text_input_label']))
-            ? $userData['text_input_label'] : null;
+        $fieldData['label'] =
+            (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
+            ? $userData['label'] : null;
         if (isset($userData['datalist']) && preg_match('/^.+$/s', $userData['datalist'])) {
             $options = explode("\n", $userData['datalist']);
             $options = array_map('trim', $options);
@@ -103,7 +104,7 @@ class Text implements DataTypeInterface
         $element = new DatascribeElement\Text('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['text_input_label'] ?? 'Text'); // @translate
+        $element->setLabel($fieldData['label'] ?? 'Text'); // @translate
         $value = null;
         if (isset($valueText)) {
             $value = $valueText;

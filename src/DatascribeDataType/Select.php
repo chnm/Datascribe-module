@@ -19,10 +19,10 @@ class Select extends AbstractSelection
         $element = new DatascribeElement\Select('value', [
             'datascribe_field_data' => $fieldData,
         ]);
-        $element->setLabel($fieldData['field_label'] ?? 'Select'); // @translate
+        $element->setLabel($fieldData['label'] ?? 'Select'); // @translate
         $element->setAttribute('class', 'chosen-select');
         $element->setAttribute('data-placeholder', '[No selection]'); // @translate
-        $value = null;
+        $value = '';
         if (isset($valueText)) {
             $value = $valueText;
         } elseif (isset($fieldData['default_value'])) {
