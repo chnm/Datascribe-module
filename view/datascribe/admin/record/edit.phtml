@@ -64,6 +64,12 @@ $form->prepare();
     
     <div class="sidebar always-open">
         <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+        <div class="meta-group">
+            <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
+            <?php if ($record->modified()): ?>
+            <div class="last-saved-timestamp"><?php echo sprintf($this->translate('Last saved: %s on %s'), $record->modified()->format('g:ia'), $record->modified()->format('M j, Y')); ?></div>
+            <?php endif; ?>
+        </div>
         <h3><?php echo $this->translate('Record actions'); ?></h3>
         <?php if ($form->has('o-module-datascribe:needs_review')): ?>
         <div class="meta-group checkbox">

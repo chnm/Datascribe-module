@@ -28,7 +28,6 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 
 <div id="page-actions">
     <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
-    <input type="submit" name="submit-return" value="<?php echo $this->escapeHtml($this->translate('Add + add another')); ?>">
     <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Add')); ?>">
 </div>
 <?php if ($fieldsets): ?>
@@ -66,6 +65,10 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 
 <div class="sidebar always-open">
     <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <div class="meta-group">
+        <input type="submit" name="submit-add-another" class="button" value="<?php echo $this->escapeHtml($this->translate('Add + add another')); ?>">
+        <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
+    </div>
     <h3><?php echo $this->translate('Record actions'); ?></h3>
     <?php if ($form->has('o-module-datascribe:needs_review')): ?>
     <div class="meta-group checkbox">
