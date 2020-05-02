@@ -31,6 +31,22 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         return 'Datascribe\Entity\DatascribeRecord';
     }
 
+    public function sortQuery(QueryBuilder $qb, array $query)
+    {
+        if (isset($query['sort_by']) && is_numeric($query['sort_by'])) {
+            // Sort by the values of a field.
+            $alias = $this->createAlias();
+            $qb->leftJoin(
+                "omeka_root.values", $alias,
+                'WITH', $qb->expr()->eq("$alias.field", $query['sort_by'])
+            );
+            $qb->addOrderBy(
+                "GROUP_CONCAT($alias.text ORDER BY $alias.id)",
+                $query['sort_order']
+            );
+        }
+    }
+
     public function buildQuery(QueryBuilder $qb, array $query)
     {
         if (isset($query['datascribe_item_id']) && is_numeric($query['datascribe_item_id'])) {

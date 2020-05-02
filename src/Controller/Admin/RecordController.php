@@ -70,6 +70,7 @@ class RecordController extends AbstractActionController
         $view->setVariable('form', $form);
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
+        $view->setVariable('fields', $dataset->fields());
         $view->setVariable('item', $item);
         $view->setVariable('oItem', $oItem);
         $view->setVariable('records', $records);

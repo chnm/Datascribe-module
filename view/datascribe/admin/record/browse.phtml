@@ -8,27 +8,33 @@ $canViewBatchActions = $item->userIsAllowed('datascribe_view_record_batch_action
 $filters = [
     [
         'label' => $this->translate('Records that need review'),
-        'value' => 'needs_review'
+        'value' => 'needs_review',
     ],
     [
         'label' => $this->translate('Records that need work'),
-        'value' => 'needs_work'
+        'value' => 'needs_work',
     ],
     [
         'label' => $this->translate('Records with values marked as invalid'),
-        'value' => 'has_invalid_values'
+        'value' => 'has_invalid_values',
     ],
 ];
 $sortBy = [
     [
         'label' => $this->translate('Record #'),
-        'value' => 'id'
+        'value' => 'id',
     ],
     [
-        'label' => $this->translate('Created'),
-        'value' => 'created'
+        'label' => $this->translate('Record created'),
+        'value' => 'created',
     ],
 ];
+foreach ($fields as $field) {
+    $sortBy[] = [
+        'label' => $field->name(),
+        'value' => $field->id(),
+    ];
+}
 ?>
 
 <?php echo $this->pageTitle($oItem->title(), 1, $this->translate('DataScribe: Item'), $this->translate('Records')); ?>
@@ -78,7 +84,7 @@ $sortBy = [
             </th>
             <th class="record-meta"><?php echo $this->translate('Created by'); ?></th>
             <th class="record-meta last"><?php echo $this->translate('Created'); ?></th>
-            <?php foreach ($dataset->fields() as $field): ?>
+            <?php foreach ($fields as $field): ?>
             <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
                 'length' => 20,
                 'trim_marker' => '...',
@@ -130,7 +136,7 @@ $sortBy = [
             <td class="record-meta"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
             <td class="record-meta last"><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
 
-            <?php foreach ($dataset->fields() as $field): ?>
+            <?php foreach ($fields as $field): ?>
             <?php $value = $values[$field->id()] ?? null; ?>
             <td<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>>
                 <?php if ($field->dataTypeIsUnknown()): ?>
