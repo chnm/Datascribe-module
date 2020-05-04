@@ -123,6 +123,7 @@ SQL;
             'Datascribe\Controller\Admin\Index',
             'Datascribe\Controller\Admin\Project',
             'Datascribe\Controller\Admin\Dataset',
+            'Datascribe\Controller\Admin\DatasetRecord',
             'Datascribe\Controller\Admin\Item',
             'Datascribe\Controller\Admin\Record',
         ];
@@ -187,6 +188,7 @@ SQL;
                 'read',
                 'update',
                 'datascribe_view_item_batch_update',
+                'datascribe_view_record_batch_actions',
             ]
         );
         $acl->allow(
@@ -280,7 +282,10 @@ SQL;
                 Acl::ROLE_RESEARCHER,
             ],
             'Datascribe\Entity\DatascribeDataset',
-            'datascribe_view_item_batch_update',
+            [
+                'datascribe_view_item_batch_update',
+                'datascribe_view_record_batch_actions',
+            ],
             new ReviewerCanAssertion
         );
         $acl->allow(

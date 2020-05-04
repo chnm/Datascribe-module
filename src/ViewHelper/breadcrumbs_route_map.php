@@ -15,6 +15,11 @@ return [
         'text' => 'Datasets', // @translate
         'params' => ['project-id'],
     ],
+    'admin/datascribe-dataset-record' => [
+        'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project', 'admin/datascribe-dataset'],
+        'text' => 'Records', // @translate
+        'params' => ['project-id', 'dataset-id'],
+    ],
     'admin/datascribe-item' => [
         'breadcrumbs' => ['admin/datascribe', 'admin/datascribe-project', 'admin/datascribe-dataset'],
         'text' => 'Items', // @translate

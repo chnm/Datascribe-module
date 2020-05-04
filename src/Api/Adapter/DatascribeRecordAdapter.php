@@ -33,22 +33,38 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
 
     public function sortQuery(QueryBuilder $qb, array $query)
     {
-        if (isset($query['sort_by']) && is_numeric($query['sort_by'])) {
-            // Sort by the values of a field.
-            $alias = $this->createAlias();
-            $qb->leftJoin(
-                "omeka_root.values", $alias,
-                'WITH', $qb->expr()->eq("$alias.field", $query['sort_by'])
-            );
-            $qb->addOrderBy(
-                "GROUP_CONCAT($alias.text ORDER BY $alias.id)",
-                $query['sort_order']
-            );
+        if (isset($query['sort_by'])) {
+            if (is_numeric($query['sort_by'])) {
+                // Sort by the values of a field.
+                $alias = $this->createAlias();
+                $qb->leftJoin(
+                    "omeka_root.values", $alias,
+                    'WITH', $qb->expr()->eq("$alias.field", $query['sort_by'])
+                );
+                $qb->addOrderBy(
+                    "GROUP_CONCAT($alias.text ORDER BY $alias.id)",
+                    $query['sort_order']
+                );
+            } elseif ('item_id' === $query['sort_by']) {
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->addOrderBy("$alias.id", $query['sort_order']);
+            }
         }
     }
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
+        if (isset($query['datascribe_dataset_id']) && is_numeric($query['datascribe_dataset_id'])) {
+            $itemAlias = $this->createAlias();
+            $qb->innerJoin('omeka_root.item', $itemAlias);
+            $datasetAlias = $this->createAlias();
+            $qb->innerJoin("$itemAlias.dataset", $datasetAlias);
+            $qb->andWhere($qb->expr()->eq(
+                "$datasetAlias.id",
+                $this->createNamedParameter($qb, $query['datascribe_dataset_id']))
+            );
+        }
         if (isset($query['datascribe_item_id']) && is_numeric($query['datascribe_item_id'])) {
             $alias = $this->createAlias();
             $qb->innerJoin('omeka_root.item', $alias);

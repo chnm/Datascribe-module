@@ -55,6 +55,7 @@ return [
             'Datascribe\Controller\Admin\Index' => Controller\Admin\IndexController::class,
             'Datascribe\Controller\Admin\Project' => Controller\Admin\ProjectController::class,
             'Datascribe\Controller\Admin\Dataset' => Controller\Admin\DatasetController::class,
+            'Datascribe\Controller\Admin\DatasetRecord' => Controller\Admin\DatasetRecordController::class,
             'Datascribe\Controller\Admin\Item' => Controller\Admin\ItemController::class,
             'Datascribe\Controller\Admin\Record' => Controller\Admin\RecordController::class,
         ],
@@ -174,6 +175,22 @@ return [
                                 '__NAMESPACE__' => 'Datascribe\Controller\Admin',
                                 'controller' => 'dataset',
                                 'action' => 'show',
+                            ],
+                        ],
+                    ],
+                    'datascribe-dataset-record' =>  [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/datascribe/:project-id/:dataset-id/record[/:action]',
+                            'constraints' => [
+                                'project-id' => '\d+',
+                                'dataset-id' => '\d+',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Datascribe\Controller\Admin',
+                                'controller' => 'dataset-record',
+                                'action' => 'browse',
                             ],
                         ],
                     ],

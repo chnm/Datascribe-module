@@ -1,0 +1,32 @@
+<?php
+$this->htmlElement('body')->appendAttribute('class', 'datascribe record batch-edit');
+$form->prepare();
+?>
+
+<?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Batch edit records')); ?>
+
+<?php echo $this->form()->openTag($form); ?>
+
+<?php foreach ($records as $record): ?>
+<input type="hidden" name="record_ids[]" value="<?php echo $record->id(); ?>">
+<?php endforeach; ?>
+
+<div id="page-actions">
+    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
+    <input type="submit" name="batch_edit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
+</div>
+
+<?php echo $this->formCollection($form); ?>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<div class="sidebar always-open">
+    <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+    <h3><?php echo $this->translate('Affected records'); ?></h3>
+    <p><?php echo sprintf($this->translate('You are editing the following %s records'), count($records)); ?></p>
+    <ul class="batch-selected">
+        <?php foreach ($records as $record): ?>
+        <li><?php echo $record->displayTitle(); ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>

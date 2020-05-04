@@ -54,25 +54,37 @@ abstract class AbstractForm extends Form
     }
 
     /**
-     * Get users who have done something to records in an items.
+     * Get users who have done something to records in a parent item or dataset.
      *
      * @param string $byColumn
-     * @param DatascribeItemRepresentation $item
+     * @param DatascribeItemRepresentation|DatascribeDatasetRepresentation $parent
      * @return string
      */
-    protected function getByUsersForRecords(string $byColumn, DatascribeItemRepresentation $item)
+    protected function getByUsersForRecords(string $byColumn, $parent)
     {
         if (!in_array($byColumn, ['createdBy', 'modifiedBy'])) {
             return [];
         }
-        $dql = "
-            SELECT u
-            FROM Omeka\Entity\User u
-            JOIN Datascribe\Entity\DatascribeRecord r WITH r.$byColumn = u
-            JOIN r.item i
-            WHERE i = :itemId";
+        if ($parent instanceof DatascribeItemRepresentation) {
+            $dql = "
+                SELECT u
+                FROM Omeka\Entity\User u
+                JOIN Datascribe\Entity\DatascribeRecord r WITH r.$byColumn = u
+                JOIN r.item i
+                WHERE i = :parentId";
+        } elseif ($parent instanceof DatascribeDatasetRepresentation) {
+            $dql = "
+                SELECT u
+                FROM Omeka\Entity\User u
+                JOIN Datascribe\Entity\DatascribeRecord r WITH r.$byColumn = u
+                JOIN r.item i
+                JOIN i.dataset d
+                WHERE d = :parentId";
+        } else {
+            return [];
+        }
         $query = $this->em->createQuery($dql);
-        $query->setParameter('itemId', $item->id());
+        $query->setParameter('parentId', $parent->id());
         $users = $query->getResult();
         usort($users, function ($userA, $userB) {
             return strcmp($userA->getName(), $userB->getName());

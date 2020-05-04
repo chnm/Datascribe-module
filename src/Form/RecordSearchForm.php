@@ -5,7 +5,7 @@ class RecordSearchForm extends AbstractForm
 {
     public function init()
     {
-        $item = $this->getOption('item');
+        $parent = $this->getOption('parent');
 
         $this->add([
             'type' => 'select',
@@ -59,7 +59,7 @@ class RecordSearchForm extends AbstractForm
         ]);
 
         $valueOptions = [];
-        foreach ($this->getByUsersForRecords('createdBy', $item) as $user) {
+        foreach ($this->getByUsersForRecords('createdBy', $parent) as $user) {
             $valueOptions[$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([
@@ -77,7 +77,7 @@ class RecordSearchForm extends AbstractForm
         ]);
 
         $valueOptions = [];
-        foreach ($this->getByUsersForRecords('modifiedBy', $item) as $user) {
+        foreach ($this->getByUsersForRecords('modifiedBy', $parent) as $user) {
             $valueOptions[$user->getId()] = sprintf('%s (%s)', $user->getName(), $user->getEmail());
         }
         $this->add([

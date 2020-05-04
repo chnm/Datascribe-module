@@ -60,11 +60,11 @@ class RecordBatchForm extends AbstractForm
      */
     protected function addValueElements()
     {
-        $item = $this->getOption('item');
+        $dataset = $this->getOption('dataset');
 
         $valuesFieldset = new Fieldset('values');
         $this->add($valuesFieldset);
-        foreach ($item->dataset()->fields() as $field) {
+        foreach ($dataset->fields() as $field) {
             $valueFieldset = new Fieldset($field->id());
             $valueFieldset->setLabel($field->name());
             $valuesFieldset->add($valueFieldset);
@@ -118,7 +118,7 @@ class RecordBatchForm extends AbstractForm
 
         $inputFilter = $this->getInputFilter();
         $values = $inputFilter->get('values');
-        foreach ($item->dataset()->fields() as $field) {
+        foreach ($dataset->fields() as $field) {
             $value = $values->get($field->id());
             $value->add([
                 'name' => 'is_missing_action',

@@ -115,7 +115,7 @@ class RecordController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $form = $this->getForm(RecordSearchForm::class, ['item' => $item]);
+        $form = $this->getForm(RecordSearchForm::class, ['parent' => $item]);
         $form->setAttribute('method', 'get');
         $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
         $form->setData($this->params()->fromQuery());
@@ -304,7 +304,7 @@ class RecordController extends AbstractActionController
             $records[] = $this->api()->read('datascribe_records', $recordId)->getContent();
         }
 
-        $form = $this->getForm(RecordBatchForm::class, ['item' => $item]);
+        $form = $this->getForm(RecordBatchForm::class, ['dataset' => $item->dataset()]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());
@@ -354,7 +354,7 @@ class RecordController extends AbstractActionController
         );
         $count = $this->api()->search('datascribe_records', array_merge($query, ['limit' => 0]))->getTotalResults();
 
-        $form = $this->getForm(RecordBatchForm::class, ['item' => $item]);
+        $form = $this->getForm(RecordBatchForm::class, ['dataset' => $item->dataset()]);
 
         if ($this->params()->fromPost('batch_edit')) {
             $form->setData($this->params()->fromPost());

@@ -1,0 +1,227 @@
+<?php
+$this->htmlElement('body')->appendAttribute('class', 'datascribe record browse');
+$this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
+$this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
+$this->headScript()->appendFile($this->assetUrl('js/admin/record-browse.js', 'Datascribe'));
+$this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
+$canViewBatchActions = $dataset->userIsAllowed('datascribe_view_record_batch_actions');
+$filters = [
+    [
+        'label' => $this->translate('Records that need review'),
+        'value' => 'needs_review',
+    ],
+    [
+        'label' => $this->translate('Records that need work'),
+        'value' => 'needs_work',
+    ],
+    [
+        'label' => $this->translate('Records with values marked as invalid'),
+        'value' => 'has_invalid_values',
+    ],
+];
+$sortBy = [
+    [
+        'label' => $this->translate('Item #'),
+        'value' => 'item_id',
+    ],
+    [
+        'label' => $this->translate('Record #'),
+        'value' => 'id',
+    ],
+    [
+        'label' => $this->translate('Record created'),
+        'value' => 'created',
+    ],
+];
+foreach ($fields as $field) {
+    $sortBy[] = [
+        'label' => $field->name(),
+        'value' => $field->id(),
+    ];
+}
+?>
+
+<?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Records')); ?>
+
+<div id="page-actions">
+    <div id="page-action-menu">
+        <a href="#" class="expand button" aria-label="<?php echo $this->translate('Expand'); ?>"><?php echo $this->translate('Actions'); ?></a>
+        <ul class="collapsible">
+            <?php if ($dataset->userIsAllowed('update')): ?>
+            <li><?php echo $dataset->link($this->translate('Edit dataset'), 'edit'); ?></li>
+            <?php endif; ?>
+            <li><?php echo $dataset->link($this->translate('Browse items'), 'show'); ?></li>
+        </ul>
+    </div>
+</div>
+
+<?php echo $this->datascribe()->breadcrumbs(); ?>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+    <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true)); ?>
+    <?php echo $this->sortSelector($sortBy); ?>
+    <?php echo $this->filterSelector($filters); ?>
+</div>
+
+<?php if ($records): ?>
+
+<form method="post" id="batch-form" class="disable-unsaved-warning">
+
+<?php if ($canViewBatchActions): ?>
+<div class="batch-inputs">
+    <select class="batch-actions-select" aria-label="<?php echo $this->translate('Batch actions'); ?>">
+        <option value="default"><?php echo $this->translate('Batch actions'); ?></option>
+        <option value="update-selected" disabled="true"><?php echo $this->translate('Edit selected'); ?></option>
+        <option value="update-all"><?php echo $this->translate('Edit all'); ?></option>
+        <option value="delete-selected" disabled="true"><?php echo $this->translate('Delete selected'); ?></option>
+        <option value="delete-all"><?php echo $this->translate('Delete all'); ?></option>
+    </select>
+    <div class="batch-actions">
+        <button type="button" class="default active" disabled="true"><?php echo $this->translate('Go'); ?></button>
+        <input type="submit" class="update-selected" name="update_selected" value="<?php echo $this->translate('Go'); ?>" formaction="<?php echo $this->escapeHtml($this->url(null, ['action' => 'batch-edit'], true)); ?>">
+        <input type="submit" class="update-all" name="update_all" value="<?php echo $this->translate('Go'); ?>" formaction="<?php echo $this->escapeHtml($this->url(null, ['action' => 'batch-edit-all'], true)); ?>">
+        <input type="hidden" name="query" class="batch-query" value="<?php echo $this->escapeHtml(json_encode($this->params()->fromQuery())); ?>">
+        <a class="delete button sidebar-content delete-selected" data-sidebar-selector="#sidebar-delete-selected"><?php echo $this->translate('Go'); ?></a>
+        <a class="delete button sidebar-content delete-all" data-sidebar-selector="#sidebar-delete-all"><?php echo $this->translate('Go'); ?></a>
+    </div>
+</div>
+<?php endif; ?>
+
+<div class="tablesaw-swipe-wrapper">
+<table class="tablesaw batch-edit" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)"  data-tablesaw-minimap>
+    <thead>
+        <tr>
+            <th scope="col" class="row-select" data-tablesaw-priority="persist">
+                <?php if ($canViewBatchActions): ?>
+                <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
+                <?php endif; ?>
+                <?php echo $this->translate('Record #'); ?>
+            </th>
+            <th class="record-meta last"><?php echo $this->translate('Item'); ?></th>
+            <?php foreach ($fields as $field): ?>
+            <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([
+                'length' => 20,
+                'trim_marker' => '...',
+            ]); ?></th>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($records as $record): ?>
+        <?php
+        $values = $record->values();
+        $createdBy = $record->createdBy();
+        $hasInvalidValues = $record->hasInvalidValues();
+        $needsReview = $record->needsReview();
+        $needsWork = $record->needsWork();
+        ?>
+        <tr>
+            <td>
+                <div class="record-number-cell">
+                <?php if ($canViewBatchActions): ?>
+                <input type="checkbox" name="record_ids[]" value="<?php echo $record->id(); ?>" aria-label="<?php echo $this->translate('Select records'); ?>">
+                <?php endif; ?>
+                <?php if ($hasInvalidValues || $needsReview || $needsWork): ?>
+                <?php $alertString = sprintf(
+                    "%s\n%s\n%s",
+                    $hasInvalidValues ? $this->translate('Has invalid values') : null,
+                    $needsReview ? $this->translate('Needs review') : null,
+                    $needsWork ? $this->translate('Needs work') : null
+                ); ?>
+                <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
+                <?php endif; ?>
+                <span class="record-number"><?php echo $record->link($record->id()); ?></span>
+                <ul class="actions">
+                    <?php if ($record->userIsAllowed('update')): ?>
+                    <li><?php echo $record->link('', 'edit', [
+                        'class' => 'o-icon-edit',
+                        'title' => $this->translate('Edit'),
+                    ]) ?></li>
+                    <?php endif; ?>
+                    <li><?php echo $this->hyperlink('', '#', [
+                        'data-sidebar-content-url' => $record->url('show-details'),
+                        'class' => 'o-icon-more sidebar-content',
+                        'data-sidebar-selector' => '#show-details',
+                        'title' => $this->translate('Details'),
+                    ]); ?></li>
+                </ul>
+                </div>
+            </td>
+            <td class="record-meta last"><?php echo $record->item()->linkPretty(); ?></td>
+            <?php foreach ($fields as $field): ?>
+            <?php $value = $values[$field->id()] ?? null; ?>
+            <td<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>>
+                <?php if ($field->dataTypeIsUnknown()): ?>
+                <span style="color: #ffcccc;"><?php echo $this->translate('unknown'); ?></span>
+                <?php elseif ($field->isRequired() && (null === $value)): ?>
+                <span style="color: #ffcccc;"><?php echo $this->translate('invalid'); ?></span>
+                <?php elseif (null === $value): ?>
+                <span style="color: #e6e6e6;"><?php echo $this->translate('null'); ?></span>
+                <?php else: ?>
+                <?php echo $value->displayText([
+                    'length' => 50,
+                    'trim_marker' => '...',
+                    'if_invalid_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('invalid')),
+                    'if_empty_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('empty')),
+                    'if_null_return' => sprintf('<span style="color: #e6e6e6;">%s</span>', $this->translate('null')),
+                    'if_unknown_return' => sprintf('<span style="color: #ffcccc;">%s</span>', $this->translate('unknown')),
+                ]); ?>
+                <?php endif; ?>
+            </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+</form>
+
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+</div>
+
+<?php else: ?>
+<div class="no-resources">
+    <p><?php echo $this->translate('No records found.'); ?></p>
+</div>
+<?php endif; ?>
+
+<div id="show-details" class="sidebar">
+    <?php echo $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $this->translate('Close'),
+    ]); ?>
+    <div class="sidebar-content"></div>
+</div>
+<div id="sidebar-delete-selected" class="sidebar">
+    <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
+    <div class="sidebar-content">
+        <div id="sidebar-confirm">
+            <h3><?php echo $this->translate('Delete records'); ?></h3>
+            <p><?php echo $this->translate('Are you sure you would like to delete the selected records?'); ?></p>
+            <p class="error"><?php echo sprintf(
+                $this->translate('%1$s: this action will permanently delete %2$s records and cannot be undone.'),
+                sprintf('<strong>%s</strong>', $this->translate('Warning')),
+                '<strong><span id="delete-selected-count"></span></strong>'
+            ); ?></p>
+            <?php echo $this->form($this->formDeleteSelected); ?>
+        </div>
+    </div>
+</div>
+<div id="sidebar-delete-all" class="sidebar">
+    <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
+    <div class="sidebar-content">
+        <div id="sidebar-confirm">
+            <h3><?php echo $this->translate('Delete records'); ?></h3>
+            <p><?php echo $this->translate('Are you sure you would like to delete all records on all pages of this result?'); ?></p>
+            <p class="error"><?php echo sprintf(
+                $this->translate('%1$s: this action will permanently delete %2$s records and cannot be undone.'),
+                sprintf('<strong>%s</strong>', $this->translate('Warning')),
+                sprintf('<strong>%s</strong>', number_format($this->pagination()->getPaginator()->getTotalCount()))
+            ); ?></p>
+            <label><input type="checkbox" name="confirm-delete-all-check"> <?php echo $this->translate('Are you sure?'); ?></label>
+            <?php echo $this->form($this->formDeleteAll); ?>
+        </div>
+    </div>
+</div>
