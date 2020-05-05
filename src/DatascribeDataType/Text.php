@@ -73,7 +73,7 @@ class Text implements DataTypeInterface
             (isset($userData['placeholder']) && preg_match('/^.+$/', $userData['placeholder']))
             ? $userData['placeholder'] : null;
         $fieldData['pattern'] =
-            (isset($userData['pattern']) && preg_match('/^.+$/', $userData['pattern']))
+            (isset($userData['pattern']) && (false !== @preg_match(sprintf('/%s/', $userData['pattern']), '')))
             ? $userData['pattern'] : null;
         $fieldData['default_value'] =
             (isset($userData['default_value']) && preg_match('/^.+$/', $userData['default_value']))
