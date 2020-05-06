@@ -43,13 +43,22 @@ class ItemController extends AbstractActionController
             $this->messenger()->addError($message);
         }
 
+        $formSync = $this->getForm(DatasetSyncForm::class, ['dataset' => $dataset]);
+        $formSync->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'sync'], true));
+
+        $formValidate = $this->getForm(DatasetValidateForm::class, ['dataset' => $dataset]);
+        $formValidate->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'validate'], true));
+
+        $formExport = $this->getForm(DatasetExportForm::class, ['dataset' => $dataset]);
+        $formExport->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'export'], true));
+
         $view = new ViewModel;
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
         $view->setVariable('items', $items);
-        $view->setVariable('syncForm', $this->getForm(DatasetSyncForm::class, ['dataset' => $dataset]));
-        $view->setVariable('validateForm', $this->getForm(DatasetValidateForm::class, ['dataset' => $dataset]));
-        $view->setVariable('exportForm', $this->getForm(DatasetExportForm::class, ['dataset' => $dataset]));
+        $view->setVariable('formSync', $formSync);
+        $view->setVariable('formValidate', $formValidate);
+        $view->setVariable('formExport', $formExport);
         return $view;
     }
 

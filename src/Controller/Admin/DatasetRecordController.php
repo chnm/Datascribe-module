@@ -1,6 +1,9 @@
 <?php
 namespace Datascribe\Controller\Admin;
 
+use Datascribe\Form\DatasetExportForm;
+use Datascribe\Form\DatasetSyncForm;
+use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\RecordBatchForm;
 use Datascribe\Form\RecordSearchForm;
 use Omeka\Form\ConfirmForm;
@@ -39,6 +42,15 @@ class DatasetRecordController extends AbstractActionController
         $formDeleteAll->setAttribute('id', 'confirm-delete-all');
         $formDeleteAll->get('submit')->setAttribute('disabled', true);
 
+        $formSync = $this->getForm(DatasetSyncForm::class, ['dataset' => $dataset]);
+        $formSync->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'sync'], true));
+
+        $formValidate = $this->getForm(DatasetValidateForm::class, ['dataset' => $dataset]);
+        $formValidate->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'validate'], true));
+
+        $formExport = $this->getForm(DatasetExportForm::class, ['dataset' => $dataset]);
+        $formExport->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'export'], true));
+
         $view = new ViewModel;
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
@@ -46,6 +58,9 @@ class DatasetRecordController extends AbstractActionController
         $view->setVariable('records', $records);
         $view->setVariable('formDeleteSelected', $formDeleteSelected);
         $view->setVariable('formDeleteAll', $formDeleteAll);
+        $view->setVariable('formSync', $formSync);
+        $view->setVariable('formValidate', $formValidate);
+        $view->setVariable('formExport', $formExport);
         return $view;
     }
 

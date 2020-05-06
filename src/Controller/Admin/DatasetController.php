@@ -174,7 +174,7 @@ class DatasetController extends AbstractActionController
                 $this->messenger()->addSuccess($message);
             }
         }
-        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+        return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }
 
     public function validateAction()
@@ -198,7 +198,7 @@ class DatasetController extends AbstractActionController
                 $this->messenger()->addSuccess($message);
             }
         }
-        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+        return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }
 
     public function exportAction()
@@ -222,6 +222,6 @@ class DatasetController extends AbstractActionController
                 $this->messenger()->addSuccess($message);
             }
         }
-        return $this->redirect()->toRoute('admin/datascribe-item', ['action' => 'browse'], true);
+        return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }
 }
