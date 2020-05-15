@@ -9,16 +9,24 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $userId = $this->identity()->getId();
-        $response = $this->api()->search(
+        $myResponse = $this->api()->search(
+            'datascribe_projects',
+            [
+                'sort_by' => 'modified',
+                'sort_order' => 'desc',
+                'limit' => 10,
+            ]
+        );
+        $recentProjects = $this->api()->search(
             'datascribe_projects',
             [
                 'sort_by' => 'name',
                 'sort_order' => 'asc',
-                'my_projects' => true,
+                'my_projects' => false,
             ]
-        );
+        )->getContent();
         $myProjects = [];
-        foreach ($response->getContent() as $project) {
+        foreach ($myResponse->getContent() as $project) {
             $roles = [];
             if ($project->owner()->id() === $userId) {
                 $roles[] = $this->translate('Owner');
@@ -40,6 +48,7 @@ class IndexController extends AbstractActionController
         }
 
         $view = new ViewModel;
+        $view->setVariable('recentProjects', $recentProjects);
         $view->setVariable('myProjects', $myProjects);
         return $view;
     }

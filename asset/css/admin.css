@@ -784,3 +784,43 @@ div[role="main"].fullscreen > h1:first-of-type {
   flex-direction: column;
   overflow: hidden;
 }
+
+/* Dashboard */
+
+.welcome {
+  margin: 0 0 24px;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  padding: 6px;
+}
+
+.recent.project.browse:not(:only-child) {
+  width: calc(60% - 12px);
+  margin-right: 24px;
+  float: left;
+}
+
+.my-projects {
+  width: calc(40% - 12px);
+  display: inline-block;
+}
+
+.my-projects h2 {
+  width: 100%;
+}
+
+.user-projects {
+  list-style: none;
+  border-radius: 3px;
+  border: 1px solid #dfdfdf;
+  padding-left: 0;
+}
+
+.user-projects ul {
+  list-style: none;
+  padding-left: 12px;
+}
+
+.user-projects li {
+  padding: 6px;
+}
