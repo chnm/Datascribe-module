@@ -795,13 +795,13 @@ div[role="main"].fullscreen > h1:first-of-type {
 }
 
 .recent.project.browse:not(:only-child) {
-  width: calc(60% - 12px);
-  margin-right: 24px;
+  width: calc(50% - 6px);
+  margin-right: 12px;
   float: left;
 }
 
 .my-projects {
-  width: calc(40% - 12px);
+  width: calc(50% - 6px);
   display: inline-block;
 }
 
@@ -818,9 +818,59 @@ div[role="main"].fullscreen > h1:first-of-type {
 
 .user-projects ul {
   list-style: none;
-  padding-left: 12px;
+  padding-left: 0;
+}
+
+.user-projects li.project {
+  background-color: rgba(0, 0, 0, .08);
+}
+
+.user-projects .dataset {
+  background-color: #fff;
+  margin: 6px -6px -6px;
+  padding: 6px;
+  border-top: 1px solid #dfdfdf;
+}
+
+.user-projects li.project:not(:last-child) {
+  border-bottom: 1px solid #dfdfdf;
+  
 }
 
 .user-projects li {
+  padding: 0;
+}
+
+.user-projects > li {
   padding: 6px;
+}
+
+.user-projects .items {
+  margin-top: 6px;
+}
+
+.user-projects .category {
+  border-top: 1px solid #dfdfdf;
+  margin: 0 -6px;
+  padding: 6px;
+  display: flex;
+}
+
+.category-label {
+  width: 30%;
+  margin: 0 12px;
+}
+
+.category-items {
+  background-color: #fff;
+  display: block;
+  margin: -6px 0;
+  padding: 6px;
+}
+
+.category-items:not(:last-child):after {
+  content: "|";
+  display: inline-block;
+  margin: 0 -6px 0 6px;
+  color: #dfdfdf;
 }
