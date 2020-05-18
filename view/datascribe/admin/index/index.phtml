@@ -119,18 +119,18 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
 </div>
 <?php endif; ?>
 
-<?php if ($recentProjects): ?>
-<div class="recent project browse">
-    <h2><?php echo $this->translate('Recently modified projects'); ?></h2>
+<?php if ($allProjects): ?>
+<div class="project browse">
+    <h2><?php echo $this->translate('All projects'); ?></h2>
     <table class="tablesaw" data-tablesaw-mode="stack">
         <thead>
             <tr>
                 <th><?php echo $this->translate('Project'); ?></th>
-                <th><?php echo $this->translate('Modified'); ?></th>
+                <th><?php echo $this->translate('Created by'); ?></th>
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($recentProjects as $project): ?>
+        <?php foreach ($allProjects as $project): ?>
         <?php $createdBy = $project->createdBy(); ?>
             <tr>
                 <td>
@@ -139,12 +139,11 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                         <span class="o-icon-private" aria-label="<?php echo $this->translate('Private'); ?>"></span>
                     <?php endif; ?>
                 </td>
-                <td><?php echo $this->i18n()->dateFormat($project->modified()); ?></td>
+                <td><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <?php echo $this->hyperlink($this->translate('View all projects'), $this->url('admin/datascribe-project'), ['class' => 'view-all']); ?>
 </div>
 <?php else: ?>
 <div class="no-resources"><?php echo $this->translate('No projects found.'); ?></div>

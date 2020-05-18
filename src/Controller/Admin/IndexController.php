@@ -1,8 +1,8 @@
 <?php
 namespace Datascribe\Controller\Admin;
 
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
@@ -12,12 +12,12 @@ class IndexController extends AbstractActionController
         $myResponse = $this->api()->search(
             'datascribe_projects',
             [
-                'sort_by' => 'modified',
-                'sort_order' => 'desc',
-                'limit' => 10,
+                'sort_by' => 'name',
+                'sort_order' => 'asc',
+                'my_projects' => true,
             ]
         );
-        $recentProjects = $this->api()->search(
+        $allProjects = $this->api()->search(
             'datascribe_projects',
             [
                 'sort_by' => 'name',
@@ -48,7 +48,7 @@ class IndexController extends AbstractActionController
         }
 
         $view = new ViewModel;
-        $view->setVariable('recentProjects', $recentProjects);
+        $view->setVariable('recentProjects', $allProjects);
         $view->setVariable('myProjects', $myProjects);
         return $view;
     }
