@@ -10,8 +10,8 @@ use Datascribe\Job\SyncDataset;
 use Datascribe\Job\ValidateDataset;
 use Omeka\Form\ConfirmForm;
 use Omeka\Stdlib\Message;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class DatasetController extends AbstractActionController
 {

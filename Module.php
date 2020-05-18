@@ -10,11 +10,11 @@ use Datascribe\PermissionsAssertion\TranscriberCanAssertion;
 use Omeka\Api\Exception\PermissionDeniedException;
 use Omeka\Module\AbstractModule;
 use Omeka\Permissions\Acl;
-use Laminas\EventManager\Event;
-use Laminas\EventManager\SharedEventManagerInterface;
-use Laminas\Mvc\MvcEvent;
-use Laminas\Permissions\Acl\Assertion\AssertionAggregate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\Event;
+use Zend\EventManager\SharedEventManagerInterface;
+use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Assertion\AssertionAggregate;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module extends AbstractModule
 {

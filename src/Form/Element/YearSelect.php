@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Laminas\Form\Element\Select as LaminasSelect;
-use Laminas\InputFilter\InputProviderInterface;
-use Laminas\Validator;
+use Zend\Form\Element\Select as ZendSelect;
+use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator;
 
-class YearSelect extends LaminasSelect implements InputProviderInterface
+class YearSelect extends ZendSelect implements InputProviderInterface
 {
     public function __construct($name = null, $options = [])
     {

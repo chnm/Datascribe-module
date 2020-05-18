@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Laminas\Form\Element\Select as LaminasSelect;
-use Laminas\InputFilter\InputProviderInterface;
-use Laminas\Validator;
+use Zend\Form\Element\Select as ZendSelect;
+use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator;
 
-class DaySelect extends LaminasSelect implements InputProviderInterface
+class DaySelect extends ZendSelect implements InputProviderInterface
 {
     const DAYS = [
         1 => '01',

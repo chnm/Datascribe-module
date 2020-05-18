@@ -2,9 +2,9 @@
 namespace Datascribe\DatascribeDataType;
 
 use Datascribe\Form\Element as DatascribeElement;
-use Laminas\Form\Element;
-use Laminas\Form\Fieldset;
-use Laminas\Validator\ValidatorChain;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\Validator\ValidatorChain;
 
 abstract class AbstractDatetime implements DataTypeInterface
 {

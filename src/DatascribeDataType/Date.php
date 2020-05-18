@@ -2,7 +2,7 @@
 namespace Datascribe\DatascribeDataType;
 
 use Datascribe\Form\Element as DatascribeElement;
-use Laminas\Form\Fieldset;
+use Zend\Form\Fieldset;
 
 class Date extends AbstractDatetime
 {

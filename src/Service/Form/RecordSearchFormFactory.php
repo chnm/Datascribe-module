@@ -2,7 +2,7 @@
 namespace Datascribe\Service\Form;
 
 use Datascribe\Form\RecordSearchForm;
-use Laminas\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class RecordSearchFormFactory implements FactoryInterface

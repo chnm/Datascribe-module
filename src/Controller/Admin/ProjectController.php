@@ -3,8 +3,8 @@ namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\ProjectForm;
 use Omeka\Form\ConfirmForm;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class ProjectController extends AbstractActionController
 {

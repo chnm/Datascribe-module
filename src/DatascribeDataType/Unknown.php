@@ -1,9 +1,9 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
-use Laminas\Form\Element;
-use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilter;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilter;
 
 class Unknown implements DataTypeInterface
 {

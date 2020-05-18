@@ -2,7 +2,7 @@
 namespace Datascribe\DatascribeDataType;
 
 use Omeka\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 
 class Manager extends AbstractPluginManager
 {

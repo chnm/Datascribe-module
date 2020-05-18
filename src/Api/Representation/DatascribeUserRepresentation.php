@@ -3,7 +3,7 @@ namespace Datascribe\Api\Representation;
 
 use Omeka\Api\Representation\AbstractRepresentation;
 use Datascribe\Entity\DatascribeUser;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DatascribeUserRepresentation extends AbstractRepresentation
 {

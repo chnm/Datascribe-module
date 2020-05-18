@@ -4,7 +4,7 @@ namespace Datascribe\Api\Representation;
 use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeField;
 use Omeka\Api\Representation\AbstractRepresentation;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DatascribeFieldRepresentation extends AbstractRepresentation
 {

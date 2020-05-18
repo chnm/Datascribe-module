@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Laminas\Form\Element\Number as LaminasNumber;
-use Laminas\InputFilter\InputProviderInterface;
-use Laminas\Validator;
+use Zend\Form\Element\Number as ZendNumber;
+use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator;
 
-class Number extends LaminasNumber implements InputProviderInterface
+class Number extends ZendNumber implements InputProviderInterface
 {
     public function __construct($name = null, $options = [])
     {

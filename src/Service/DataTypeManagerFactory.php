@@ -3,7 +3,7 @@ namespace Datascribe\Service;
 
 use Datascribe\DatascribeDataType\Manager;
 use Omeka\Service\Exception;
-use Laminas\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class DataTypeManagerFactory implements FactoryInterface

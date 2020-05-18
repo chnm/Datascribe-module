@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
-use Laminas\Form\Form;
+use Zend\Form\Form;
 
 class DatasetExportForm extends Form
 {

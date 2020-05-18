@@ -2,7 +2,7 @@
 namespace Datascribe\Service\Form;
 
 use Datascribe\Form\ItemBatchForm;
-use Laminas\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class ItemBatchFormFactory implements FactoryInterface

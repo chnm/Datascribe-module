@@ -1,8 +1,8 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Laminas\Form\Element\Number;
-use Laminas\InputFilter\InputProviderInterface;
+use Zend\Form\Element\Number;
+use Zend\InputFilter\InputProviderInterface;
 
 /**
  * By default, ZF3 sets Number elements as required. This makes it optional.

@@ -2,7 +2,7 @@
 namespace Datascribe\Service\Form;
 
 use Datascribe\Form\ItemSearchForm;
-use Laminas\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class ItemSearchFormFactory implements FactoryInterface
