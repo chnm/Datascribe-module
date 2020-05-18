@@ -48,7 +48,7 @@ class IndexController extends AbstractActionController
         }
 
         $view = new ViewModel;
-        $view->setVariable('recentProjects', $allProjects);
+        $view->setVariable('allProjects', $allProjects);
         $view->setVariable('myProjects', $myProjects);
         return $view;
     }

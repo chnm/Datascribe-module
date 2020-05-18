@@ -794,7 +794,7 @@ div[role="main"].fullscreen > h1:first-of-type {
   padding: 6px;
 }
 
-.dashvoard .project.browse:not(:only-child) {
+.dashboard .project.browse:not(:only-child) {
   width: calc(50% - 6px);
   margin-right: 12px;
   float: left;
