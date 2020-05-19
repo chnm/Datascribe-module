@@ -22,7 +22,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
               <li class="dataset"><?php echo $myDataset->link($myDataset->name()) ?>
                   <ul class="items">
                       <li class="category">
-                      <span class="category-label"><?php echo $this->translate('Unlocked'); ?></span>
+                      <span class="category-label"><?php echo $this->translate('Unlocked items'); ?></span>
                       <?php
                           echo $this->hyperlink(
                           $this->translate('New'),
@@ -84,18 +84,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                       </li>
                       <?php if ($myDataset->userIsAllowed('datascribe_view_item_batch_update')): ?>
                       <li class="category">
-                      <span class="category-label"><?php echo $this->translate('Items that need review'); ?></span>
-                      <?php 
-                          echo $this->hyperlink(
-                              $this->translate('Needs re-review from me'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'my_reviewed_and_need_review' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          );
-                      ?>
+                      <span class="category-label"><?php echo $this->translate('Items needing review'); ?></span>
                       <?php
                           echo $this->hyperlink(
                               $this->translate('All'),
@@ -106,6 +95,17 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                               ),
                               ['class' => 'category-items']
                           ); 
+                      ?>
+                      <?php 
+                          echo $this->hyperlink(
+                              $this->translate('Needs my re-review'),
+                              $this->url(
+                                  'admin/datascribe-item',
+                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                  ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'my_reviewed_and_need_review' => true]]
+                              ),
+                              ['class' => 'category-items']
+                          );
                       ?>
                       </li>
                       <?php endif; ?>

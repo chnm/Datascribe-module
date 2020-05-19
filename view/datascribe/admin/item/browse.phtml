@@ -79,10 +79,10 @@ if ($canViewBatchUpdate) {
 if ($dataset->userIsAllowed('update')):
 ?>
 <div id="page-actions">
+    <?php echo $dataset->link($this->translate('Edit dataset'), 'edit', ['class' => 'button']); ?>
     <div id="page-action-menu">
-        <a href="#" class="expand button" aria-label="<?php echo $this->translate('Expand'); ?>"><?php echo $this->translate('Actions'); ?></a>
+        <a href="#" class="expand button" aria-label="<?php echo $this->translate('Expand'); ?>"><?php echo $this->translate('More actions'); ?></a>
         <ul class="collapsible">
-            <li><?php echo $dataset->link($this->translate('Edit dataset'), 'edit'); ?></li>
             <li><a href="#" class="sidebar-content" data-sidebar-selector="#sync-dataset"><?php echo $this->translate('Sync dataset'); ?></a></li>
             <li><a href="#" class="sidebar-content" data-sidebar-selector="#validate-dataset"><?php echo $this->translate('Validate dataset'); ?></a></li>
             <li><a href="#" class="sidebar-content" data-sidebar-selector="#export-dataset"><?php echo $this->translate('Export dataset'); ?></a></li>

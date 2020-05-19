@@ -22,7 +22,6 @@ class IndexController extends AbstractActionController
             [
                 'sort_by' => 'name',
                 'sort_order' => 'asc',
-                'my_projects' => false,
             ]
         )->getContent();
         $myProjects = [];
