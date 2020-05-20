@@ -419,7 +419,7 @@ SQL;
     }
 
     /**
-     * Assert that the current user has permission to create a DataScribe item.
+     * Assert that the current user has permission to create a DataScribe record.
      *
      * Asserting create privilege for a record is a special case that cannot be
      * done using the ACL becuase the ACL checks permissions before the record

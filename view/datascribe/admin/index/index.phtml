@@ -17,102 +17,102 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
     <ul class="user-projects">
         <?php foreach ($myProjects as $myProject): ?>
         <li class="project"><?php echo sprintf('%s (%s)', $myProject['project']->link($myProject['project']->name()), implode('/', $myProject['roles'])); ?>
-          <ul>
-              <?php foreach ($myProject['datasets'] as $myDataset): ?>
-              <li class="dataset"><?php echo $myDataset->link($myDataset->name()) ?>
-                  <ul class="items">
-                      <li class="category">
-                      <span class="category-label"><?php echo $this->translate('Unlocked items'); ?></span>
-                      <?php
-                          echo $this->hyperlink(
-                          $this->translate('New'),
-                          $this->url(
-                              'admin/datascribe-item',
-                              ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                              ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_in_progress' => true]]
-                          ),
-                          ['class' => 'category-items']
-                          );
-                      ?>
-                      <?php
-                          echo $this->hyperlink(
-                              $this->translate('In progress'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_new' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          ); 
-                      ?>
-                      </li>
-                      <li class="category">
-                      <span class="category-label"><?php echo $this->translate('My items'); ?></span>
-                      <?php
-                          echo $this->hyperlink(
-                          $this->translate('New'),
-                          $this->url(
-                              'admin/datascribe-item',
-                              ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                              ['query' => ['limit' => 25, 'sort_by' => 'locked', 'sort_order' => 'asc', 'my_new' => true]]
-                          ),
-                          ['class' => 'category-items']
-                          ); 
-                      ?>
-                      <?php
-                          echo $this->hyperlink(
-                              $this->translate('In progress'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'locked', 'sort_order' => 'asc', 'my_in_progress' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          );
-                      ?>
-                      <?php
+            <ul>
+                <?php foreach ($myProject['datasets'] as $myDataset): ?>
+                <li class="dataset"><?php echo $myDataset->link($myDataset->name()) ?>
+                    <ul class="items">
+                        <li class="category">
+                            <span class="category-label"><?php echo $this->translate('Unlocked items'); ?></span>
+                            <?php
                             echo $this->hyperlink(
-                              $this->translate('Not approved'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'reviewed', 'sort_order' => 'asc', 'my_not_approved' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          ); 
-                      ?>
-                      </li>
-                      <?php if ($myDataset->userIsAllowed('datascribe_view_item_batch_update')): ?>
-                      <li class="category">
-                      <span class="category-label"><?php echo $this->translate('Items needing review'); ?></span>
-                      <?php
-                          echo $this->hyperlink(
-                              $this->translate('All'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'all_need_review' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          ); 
-                      ?>
-                      <?php 
-                          echo $this->hyperlink(
-                              $this->translate('Needs my re-review'),
-                              $this->url(
-                                  'admin/datascribe-item',
-                                  ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                  ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'my_reviewed_and_need_review' => true]]
-                              ),
-                              ['class' => 'category-items']
-                          );
-                      ?>
-                      </li>
-                      <?php endif; ?>
-                  </ul>
-              </li>
-              <?php endforeach; ?>
-          </ul>
+                                $this->translate('New'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_in_progress' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('In progress'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_new' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                        </li>
+                        <li class="category">
+                            <span class="category-label"><?php echo $this->translate('My items'); ?></span>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('New'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'locked', 'sort_order' => 'asc', 'my_new' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('In progress'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'locked', 'sort_order' => 'asc', 'my_in_progress' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('Not approved'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'reviewed', 'sort_order' => 'asc', 'my_not_approved' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                        </li>
+                        <?php if ($myDataset->userIsAllowed('datascribe_view_item_batch_update')): ?>
+                        <li class="category">
+                            <span class="category-label"><?php echo $this->translate('Items needing review'); ?></span>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('All'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'all_need_review' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('Needs my re-review'),
+                                $this->url(
+                                    'admin/datascribe-item',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'submitted', 'sort_order' => 'asc', 'my_reviewed_and_need_review' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endforeach; ?>
+            </ul>
         </li>
         <?php endforeach; ?>
     </ul>
