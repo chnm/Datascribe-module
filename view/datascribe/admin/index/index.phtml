@@ -29,7 +29,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                                 $this->url(
                                     'admin/datascribe-item',
                                     ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_in_progress' => true]]
+                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_new' => true]]
                                 ),
                                 ['class' => 'category-items']
                             );
@@ -40,7 +40,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                                 $this->url(
                                     'admin/datascribe-item',
                                     ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
-                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_new' => true]]
+                                    ['query' => ['limit' => 25, 'sort_by' => 'created', 'sort_order' => 'asc', 'all_unlocked_and_in_progress' => true]]
                                 ),
                                 ['class' => 'category-items']
                             );
