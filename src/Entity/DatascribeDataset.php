@@ -9,6 +9,13 @@ use Omeka\Entity\User;
 
 /**
  * @Entity
+ * @Table(
+ *     uniqueConstraints={
+ *         @UniqueConstraint(
+ *             columns={"project_id", "name"}
+ *         )
+ *     }
+ * )
  * @HasLifecycleCallbacks
  */
 class DatascribeDataset extends AbstractEntity

@@ -6,6 +6,13 @@ use Omeka\Entity\AbstractEntity;
 
 /**
  * @Entity
+ * @Table(
+ *     uniqueConstraints={
+ *         @UniqueConstraint(
+ *             columns={"name"}
+ *         )
+ *     }
+ * )
  * @HasLifecycleCallbacks
  */
 class DatascribeProject extends AbstractEntity

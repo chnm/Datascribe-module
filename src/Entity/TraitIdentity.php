@@ -7,8 +7,7 @@ trait TraitIdentity
      * @Column(
      *     type="string",
      *     length=255,
-     *     nullable=false,
-     *     unique=true
+     *     nullable=false
      * )
      */
     protected $name;

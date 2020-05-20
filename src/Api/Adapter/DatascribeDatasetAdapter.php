@@ -190,7 +190,7 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
         $services = $this->getServiceLocator();
         $dataTypes = $services->get('Datascribe\DataTypeManager');
 
-        if (!$this->isUnique($entity, ['name' => $entity->getName()])) {
+        if (!$this->isUnique($entity, ['project' => $entity->getProject()->getId(), 'name' => $entity->getName()])) {
             $errorStore->addError('o-module-datascribe:name', new Message(
                 'The name "%s" is already taken.', // @translate
                 $entity->getName()
