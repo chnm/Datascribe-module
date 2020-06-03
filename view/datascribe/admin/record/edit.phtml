@@ -2,6 +2,7 @@
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record edit');
 $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
+$this->headScript()->appendFile($this->assetUrl('js/admin/record-form.js', 'Datascribe'));
 $form->prepare();
 $lastSaved = $record->modified() ?? $record->created();
 ?>
@@ -57,9 +58,12 @@ $lastSaved = $record->modified() ?? $record->created();
         <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
         <?php endif; ?>
         <?php echo $this->formCollection($fieldset->get('data'), false); ?>
-        <?php echo $this->formRow($fieldset->get('set_null')); ?>
-        <?php echo $this->formRow($fieldset->get('is_missing')); ?>
-        <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
+        <div class="common-elements">
+            <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
+            <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>
+            <?php echo $this->formElement($fieldset->get('set_null')); ?>
+        </div>
+        <button type="button" class="set-null-button" aria-label="<?php echo $this->escapeHtml($this->translate('Reset value')); ?>" title="<?php echo $this->escapeHtml($this->translate('Reset value')); ?>"></button>
     </fieldset>
     <?php endforeach; ?>
     
