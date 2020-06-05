@@ -402,18 +402,18 @@ div[role="main"].fullscreen > h1:first-of-type {
   margin-left: 6px;
 }
 
-.rows fieldset {
+.current-row fieldset {
   position: relative;
   margin-bottom: 12px;
 }
 
-.rows fieldset.set-to-null .field,
-.rows fieldset.set-to-null .common-elements {
+.current-row fieldset.set-to-null .field,
+.current-row fieldset.set-to-null .common-elements {
   position: relative;
 }
 
-.rows fieldset.set-to-null .field:after,
-.rows fieldset.set-to-null .common-elements:after {
+.current-row fieldset.set-to-null .field:after,
+.current-row fieldset.set-to-null .common-elements:after {
   content: "";
   position: absolute;
   top: 0;
