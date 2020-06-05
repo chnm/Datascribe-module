@@ -125,9 +125,9 @@ class RecordForm extends Form
             }
 
             // Add the common "set_null" element.
-            $element = new Element\Hidden('set_null');
-            $element->setAttribute('class', 'set-null-input');
-            $element->setValue('0');
+            $element = new Element\Checkbox('set_null');
+            $element->setLabel('Set to null'); // @translate
+            $element->setAttribute('required', false);
             $valueFieldset->add($element);
 
             // Add the common "is_missing" element.

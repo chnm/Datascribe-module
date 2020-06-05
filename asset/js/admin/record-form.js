@@ -1,10 +1,8 @@
 $(document).ready(function() {
 
-$('.set-null-button').on('click', function(e) {
-    var thisButton = $(this);
-    var setNullCheckbox = thisButton.closest('fieldset').toggleClass('set-to-null').find('.common-elements .set-null-input');
-    var setNullValue = ('0' === setNullCheckbox.val()) ? '1' : '0';
-    setNullCheckbox.val(setNullValue);
+$('.set-null-checkbox input[type="checkbox"]').on('change', function(e) {
+    var thisCheckbox = $(this);
+    var setNullCheckbox = thisCheckbox.closest('fieldset').toggleClass('set-to-null');
 });
 
 });

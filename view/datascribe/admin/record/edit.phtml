@@ -61,9 +61,8 @@ $lastSaved = $record->modified() ?? $record->created();
         <div class="common-elements">
             <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
             <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>
-            <?php echo $this->formElement($fieldset->get('set_null')); ?>
+            <label class="set-null-checkbox"><?php echo $this->translate('Reset value'); ?><?php echo $this->formElement($fieldset->get('set_null')); ?></label>
         </div>
-        <button type="button" class="set-null-button" aria-label="<?php echo $this->escapeHtml($this->translate('Reset value')); ?>" title="<?php echo $this->escapeHtml($this->translate('Reset value')); ?>"></button>
     </fieldset>
     <?php endforeach; ?>
     

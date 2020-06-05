@@ -390,6 +390,7 @@ div[role="main"].fullscreen > h1:first-of-type {
 .common-elements {
   padding: 6px;
   background-color: rgba(0,0,0,0.04);
+  display: flex;
 }
 
 .common-elements label {
@@ -422,24 +423,11 @@ div[role="main"].fullscreen > h1:first-of-type {
   background-color: rgba(255,255,255,.5);
 }
 
-.set-null-button {
-  position: absolute;
-  top: -36px;
-  right: 0;
-  box-shadow: none;
-  background-color: transparent;
+.common-elements label.set-null-checkbox {
+  margin: 0 0 0 auto;
+  position: relative;
+  z-index: 2;
 }
-
-.set-null-button:hover,
-.set-null-button:hover:not(.inactive) {
-  box-shadow: none;
-}
-
-.set-null-button:after {
-  content: "\f01e";
-  font-family: "Font Awesome 5 Free";
-}
-
 
 /* Form Builder */
 
