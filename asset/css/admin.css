@@ -387,6 +387,60 @@ div[role="main"].fullscreen > h1:first-of-type {
   z-index: 1;
 }
 
+.common-elements {
+  padding: 6px;
+  background-color: rgba(0,0,0,0.04);
+}
+
+.common-elements label {
+  display: inline-block;
+  margin-right: 24px;
+}
+
+.common-elements input[type="checkbox"] {
+  margin-left: 6px;
+}
+
+.rows fieldset {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.rows fieldset.set-to-null .field,
+.rows fieldset.set-to-null .common-elements {
+  position: relative;
+}
+
+.rows fieldset.set-to-null .field:after,
+.rows fieldset.set-to-null .common-elements:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255,255,255,.5);
+}
+
+.set-null-button {
+  position: absolute;
+  top: -36px;
+  right: 0;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.set-null-button:hover,
+.set-null-button:hover:not(.inactive) {
+  box-shadow: none;
+}
+
+.set-null-button:after {
+  content: "\f01e";
+  font-family: "Font Awesome 5 Free";
+}
+
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
