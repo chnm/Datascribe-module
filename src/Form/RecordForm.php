@@ -132,14 +132,12 @@ class RecordForm extends Form
 
             // Add the common "is_missing" element.
             $element = new Element\Checkbox('is_missing');
-            $element->setLabel('Is missing'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($value ? $value->isMissing() : null);
             $valueFieldset->add($element);
 
             // Add the common "is_illegible" element.
             $element = new Element\Checkbox('is_illegible');
-            $element->setLabel('Is illegible'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($value ? $value->isIllegible() : null);
             $valueFieldset->add($element);

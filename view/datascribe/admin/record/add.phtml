@@ -2,6 +2,7 @@
 $this->htmlElement('body')->appendAttribute('class', 'datascribe record add');
 $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.css');
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
+$this->headScript()->appendFile($this->assetUrl('js/admin/record-form.js', 'Datascribe'));
 $form->prepare();
 $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 ?>
@@ -46,9 +47,11 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
     <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be added.')); ?>
     <?php endif; ?>
     <?php echo $this->formCollection($fieldset->get('data'), false); ?>
-    <?php echo $this->formRow($fieldset->get('set_null')); ?>
-    <?php echo $this->formRow($fieldset->get('is_missing')); ?>
-    <?php echo $this->formRow($fieldset->get('is_illegible')); ?>
+    <div class="common-elements">
+        <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
+        <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>
+        <label class="set-null-checkbox"><?php echo $this->translate('Reset value'); ?><?php echo $this->formElement($fieldset->get('set_null')); ?></label>
+    </div>
 </fieldset>
 <?php endforeach; ?>
 <?php else: ?>

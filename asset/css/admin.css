@@ -387,6 +387,48 @@ div[role="main"].fullscreen > h1:first-of-type {
   z-index: 1;
 }
 
+.common-elements {
+  padding: 6px;
+  background-color: rgba(0,0,0,0.04);
+  display: flex;
+}
+
+.common-elements label {
+  display: inline-block;
+  margin-right: 24px;
+}
+
+.common-elements input[type="checkbox"] {
+  margin-left: 6px;
+}
+
+.current-row fieldset {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.current-row fieldset.set-to-null .field,
+.current-row fieldset.set-to-null .common-elements {
+  position: relative;
+}
+
+.current-row fieldset.set-to-null .field:after,
+.current-row fieldset.set-to-null .common-elements:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255,255,255,.5);
+}
+
+.common-elements label.set-null-checkbox {
+  margin: 0 0 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {
