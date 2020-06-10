@@ -9,7 +9,7 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('New record')); ?>
 
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => null]); ?>
+<?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records')]); ?>
 
 <div class="current-row horizontal">
 

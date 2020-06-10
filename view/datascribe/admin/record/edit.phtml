@@ -10,7 +10,7 @@ $lastSaved = $record->modified() ?? $record->created();
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
 
 <div class="rows">
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsBefore, 'beforeAfter' => $this->translate('Before')]); ?>
+<?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records')]); ?>
 
 <div class="current-row horizontal">
 
@@ -103,7 +103,7 @@ $lastSaved = $record->modified() ?? $record->created();
 <?php echo $this->form()->closeTag(); ?>
 </div>
 
-<?php echo $this->partial('before-after-records', ['dataset' => $dataset, 'records' => $recordsAfter, 'beforeAfter' => $this->translate('After')]); ?>
+<?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsNext, 'heading' => $this->translate('Next records')]); ?>
 
 </div>
 

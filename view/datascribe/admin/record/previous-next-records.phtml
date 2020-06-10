@@ -3,7 +3,7 @@ $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
 ?>
 <?php if ($records): ?>
 <div class="tablesaw-swipe-wrapper <?php echo ($beforeAfter) ? strtolower($beforeAfter): ''; ?>">
-<?php echo ($beforeAfter) ? sprintf('<h3>%s</h3>', $beforeAfter) : ''; ?>
+<?php echo ($heading) ? sprintf('<h3>%s</h3>', $heading) : ''; ?>
 <table class="tablesaw before-after-records" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)" data-tablesaw-minimap>
     <thead>
         <tr>

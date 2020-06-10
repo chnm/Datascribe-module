@@ -169,7 +169,7 @@ class RecordController extends AbstractActionController
             }
         }
 
-        $recordsBefore = $this->api()->search('datascribe_records', [
+        $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'limit' => 4,
             'sort_by' => 'id',
@@ -182,7 +182,7 @@ class RecordController extends AbstractActionController
         $view->setVariable('dataset', $dataset);
         $view->setVariable('item', $item);
         $view->setVariable('oItem', $oItem);
-        $view->setVariable('recordsBefore', array_reverse($recordsBefore));
+        $view->setVariable('recordsPrevious', array_reverse($recordsPrevious));
         return $view;
     }
 
@@ -227,12 +227,12 @@ class RecordController extends AbstractActionController
             }
         }
 
-        $recordsBefore = $this->api()->search('datascribe_records', [
+        $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'before_id' => $record->id(),
             'limit' => 4,
         ])->getContent();
-        $recordsAfter = $this->api()->search('datascribe_records', [
+        $recordsNext = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'after_id' => $record->id(),
             'limit' => 4,
@@ -245,8 +245,8 @@ class RecordController extends AbstractActionController
         $view->setVariable('item', $item);
         $view->setVariable('oItem', $oItem);
         $view->setVariable('record', $record);
-        $view->setVariable('recordsBefore', array_reverse($recordsBefore));
-        $view->setVariable('recordsAfter', $recordsAfter);
+        $view->setVariable('recordsPrevious', array_reverse($recordsPrevious));
+        $view->setVariable('recordsNext', $recordsNext);
         return $view;
     }
 
