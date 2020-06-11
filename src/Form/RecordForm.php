@@ -3,6 +3,8 @@ namespace Datascribe\Form;
 
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\DatascribeDataType\Manager;
+use Datascribe\Form\Element as DatascribeElement;
+use Omeka\Form\Element\ResourceSelect;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
@@ -66,6 +68,34 @@ class RecordForm extends Form
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->reviewerNotes() : null);
             $this->add($element);
+        }
+
+        // Add "new_position" elements.
+        if ($item->userIsAllowed('datascribe_change_record_position')) {
+            $element = new DatascribeElement\OptionalSelect('new_position_direction');
+            $element->setValueOptions([
+                'before' => 'Insert before',
+                'after' => 'Insert after',
+            ]);
+            $element->setEmptyOption('[Default position]');
+            $this->add($element);
+            $this->add([
+                'type' => ResourceSelect::class,
+                'name' => 'new_position',
+                'options' => [
+                    'resource_value_options' => [
+                        'resource' => 'datascribe_records',
+                        'query' => [
+                            'datascribe_item_id' => $item->id(),
+                            'sort_by' => 'position',
+                            'sort_order' => 'asc',
+                        ],
+                        'option_text_callback' => function ($record) {
+                            return $record->displayTitle();
+                        },
+                    ],
+                ],
+            ]);
         }
     }
 

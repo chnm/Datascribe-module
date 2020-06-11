@@ -49,6 +49,8 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $alias = $this->createAlias();
                 $qb->innerJoin('omeka_root.item', $alias);
                 $qb->addOrderBy("$alias.id", $query['sort_order']);
+            } elseif ('position' === $query['sort_by']) {
+                $qb->addOrderBy('omeka_root.position', $query['sort_order']);
             }
         }
     }
