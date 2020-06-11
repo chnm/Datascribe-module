@@ -39,7 +39,6 @@ class RecordForm extends Form
         // Add "needs_review" element.
         if ($item->userIsAllowed('datascribe_flag_record_needs_review')) {
             $element = new Element\Checkbox('o-module-datascribe:needs_review');
-            $element->setLabel('Needs review'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->needsReview() : null);
             $this->add($element);
@@ -48,7 +47,6 @@ class RecordForm extends Form
         // Add "needs_work" element.
         if ($item->userIsAllowed('datascribe_flag_record_needs_work')) {
             $element = new Element\Checkbox('o-module-datascribe:needs_work');
-            $element->setLabel('Needs work'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->needsWork() : null);
             $this->add($element);
@@ -57,7 +55,6 @@ class RecordForm extends Form
         // Add "transcriber_notes" element.
         if ($item->userIsAllowed('datascribe_edit_transcriber_notes')) {
             $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
-            $element->setLabel('Transcriber notes'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->transcriberNotes() : null);
             $this->add($element);
@@ -66,7 +63,6 @@ class RecordForm extends Form
         // Add "reviewer_notes" element.
         if ($item->userIsAllowed('datascribe_edit_reviewer_notes')) {
             $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
-            $element->setLabel('Reviewer notes'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->reviewerNotes() : null);
             $this->add($element);
