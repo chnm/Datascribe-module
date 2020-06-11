@@ -76,6 +76,11 @@ class DatascribeRecordRepresentation extends AbstractEntityRepresentation
         return $this->resource->getNeedsWork();
     }
 
+    public function position()
+    {
+        return $this->resource->getPosition();
+    }
+
     public function created()
     {
         return $this->resource->getCreated();

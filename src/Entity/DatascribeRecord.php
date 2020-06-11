@@ -6,6 +6,13 @@ use Omeka\Entity\AbstractEntity;
 
 /**
  * @Entity
+ * @Table(
+ *     uniqueConstraints={
+ *         @UniqueConstraint(
+ *             columns={"item_id", "position"}
+ *         )
+ *     }
+ * )
  * @HasLifecycleCallbacks
  */
 class DatascribeRecord extends AbstractEntity
@@ -42,6 +49,16 @@ class DatascribeRecord extends AbstractEntity
      * )
      */
     protected $needsWork;
+
+    /**
+     * @Column(
+     *     type="integer",
+     *     nullable=false
+     * )
+     */
+    protected $position;
+
+    protected $newPosition;
 
     /**
      * @OneToMany(
@@ -87,6 +104,26 @@ class DatascribeRecord extends AbstractEntity
     public function getNeedsWork() : bool
     {
         return $this->needsWork;
+    }
+
+    public function setPosition(int $position) : void
+    {
+        $this->position = $position;
+    }
+
+    public function getPosition() : int
+    {
+        return $this->position;
+    }
+
+    public function setNewPosition(int $newPosition) : void
+    {
+        $this->newPosition = $newPosition;
+    }
+
+    public function getNewPosition() : ?int
+    {
+        return $this->newPosition;
     }
 
     public function getValues()
