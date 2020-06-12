@@ -38,7 +38,7 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 <fieldset>
     <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
     <?php if ($fieldDescription = $field->description()): ?>
-    <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
+    <?php echo sprintf('<p class="description">%s</p>', $fieldDescription); ?>
     <?php endif; ?>
     <?php if ($field->isRequired()): ?>
     <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
