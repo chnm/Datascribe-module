@@ -178,7 +178,7 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
         foreach ($this->resource->getRecords() as $recordEntity) {
             $records[] = $recordAdapter->getRepresentation($recordEntity);
         }
-        return $record;
+        return $records;
     }
 
     public function status()
