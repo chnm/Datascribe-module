@@ -99,7 +99,9 @@ SQL;
         if (Comparator::lessThan($oldVersion, '0.2.0')) {
             // Add the record position column and populate the records with
             // consecutive integers per item.
-            $conn->exec('ALTER TABLE datascribe_record ADD COLUMN position INT NOT NULL AFTER needs_work');
+            $conn->exec('
+            ALTER TABLE datascribe_record
+            ADD COLUMN position INT NOT NULL AFTER needs_work');
             $itemStmt = $conn->query('SELECT id FROM datascribe_item');
             $recordStmt = $conn->prepare('
             UPDATE datascribe_record
@@ -111,7 +113,9 @@ SQL;
                 $recordStmt->bindValue(1, (int) $row['id']);
                 $recordStmt->execute();
             }
-            $conn->exec('ALTER TABLE datascribe_record ADD CONSTRAINT UNIQUE INDEX UNIQ_5628651126F525E462CE4F5 (item_id, position)');
+            $conn->exec('
+            ALTER TABLE datascribe_record
+            ADD CONSTRAINT UNIQUE INDEX UNIQ_5628651126F525E462CE4F5 (item_id, position)');
         }
     }
 
