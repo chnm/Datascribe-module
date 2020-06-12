@@ -497,9 +497,10 @@ SQL;
      * some other error could happen after the state changes.
      *
      * Note that this does not place the record positions in consecutive order.
-     * Rather, it leaves any gaps that may have occured when records were
-     * deleted. Record position represents the order of records, not the row or
-     * line number, which may diverge during the transcription process.
+     * Rather, it guarantees a sequential order but leaves any gaps that may
+     * have occured when records were deleted. Record position is an opaque
+     * property that represents the sequence of records, not the row or line
+     * number, which may diverge during the transcription process.
      *
      * @param Event $event
      */
