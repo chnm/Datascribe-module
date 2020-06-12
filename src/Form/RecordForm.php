@@ -4,7 +4,6 @@ namespace Datascribe\Form;
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\DatascribeDataType\Manager;
 use Datascribe\Form\Element as DatascribeElement;
-use Omeka\Form\Element\ResourceSelect;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
@@ -79,23 +78,14 @@ class RecordForm extends Form
             ]);
             $element->setEmptyOption('[Default position]');
             $this->add($element);
-            $this->add([
-                'type' => ResourceSelect::class,
-                'name' => 'new_position',
-                'options' => [
-                    'resource_value_options' => [
-                        'resource' => 'datascribe_records',
-                        'query' => [
-                            'datascribe_item_id' => $item->id(),
-                            'sort_by' => 'position',
-                            'sort_order' => 'asc',
-                        ],
-                        'option_text_callback' => function ($record) {
-                            return $record->displayTitle();
-                        },
-                    ],
-                ],
-            ]);
+
+            $element = new Element\Select('new_position_reference');
+            $valueOptions = [];
+            foreach ($item->records() as $record) {
+                $valueOptions[$record->position()] = $record->displayTitle();
+            }
+            $element->setValueOptions($valueOptions);
+            $this->add($element);
         }
     }
 

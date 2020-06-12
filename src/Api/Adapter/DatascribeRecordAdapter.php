@@ -194,6 +194,16 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         if ($this->shouldHydrate($request, 'o-module-datascribe:needs_work') && $acl->userIsAllowed($entity->getItem(), 'datascribe_flag_record_needs_work')) {
             $entity->setNeedsWork($request->getValue('o-module-datascribe:needs_work'));
         }
+        $positionReference = $request->getValue('new_position_reference');
+        $positionDirection = $request->getValue('new_position_direction');
+        if (isset($positionReference, $positionDirection)
+            && is_numeric($positionReference)
+            && in_array($positionDirection, ['before', 'after'])
+            && $acl->userIsAllowed($entity->getItem(), 'datascribe_change_record_position')
+        ) {
+            $newPosition = ('after' === $positionDirection) ? $positionReference + 1 : $positionReference;
+            $entity->setNewPosition($newPosition);
+        }
         if ($this->shouldHydrate($request, 'o-module-datascribe:value')) {
             $values = $entity->getValues();
             $valuesToRetain = new ArrayCollection;
