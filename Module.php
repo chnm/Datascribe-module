@@ -258,6 +258,7 @@ SQL;
                 'datascribe_add_record',
                 'datascribe_flag_record_needs_review',
                 'datascribe_flag_record_needs_work',
+                'datascribe_change_record_position',
             ]
         );
         $acl->allow(
@@ -374,6 +375,7 @@ SQL;
                 'datascribe_edit_lock_action',
                 'datascribe_add_record',
                 'datascribe_flag_record_needs_review',
+                'datascribe_change_record_position',
             ],
             $userCanAssertion
         );
