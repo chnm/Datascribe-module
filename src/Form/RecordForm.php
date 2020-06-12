@@ -69,8 +69,8 @@ class RecordForm extends Form
             $this->add($element);
         }
 
-        // Add "new_position" elements.
-        if ($item->userIsAllowed('datascribe_change_record_position')) {
+        // Add the new position elements only if the item already has records.
+        if ($item->recordCount() && $item->userIsAllowed('datascribe_change_record_position')) {
             $element = new DatascribeElement\OptionalSelect('new_position_direction');
             $element->setValueOptions([
                 'before' => 'Insert before',
@@ -79,7 +79,7 @@ class RecordForm extends Form
             $element->setEmptyOption('[Default position]');
             $this->add($element);
 
-            $element = new Element\Select('new_position_reference');
+            $element = new DatascribeElement\OptionalSelect('new_position_reference');
             $valueOptions = [];
             foreach ($item->records() as $record) {
                 $valueOptions[$record->position()] = $record->displayTitle();
