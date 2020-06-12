@@ -114,15 +114,15 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
             }
         }
-        if (isset($query['before_id']) && is_numeric($query['before_id'])) {
-            $qb->andWhere($qb->expr()->lt('omeka_root.id', $query['before_id']));
+        if (isset($query['before_position']) && is_numeric($query['before_position'])) {
+            $qb->andWhere($qb->expr()->lt('omeka_root.position', $query['before_position']));
             // Setting ORDER BY DESC here so a LIMIT won't cut off expected
             // rows. It's the consumer's responsibility to reverse the result
             // set if ORDER BY ASC is needed.
-            $qb->orderBy('omeka_root.id', 'desc');
-        } elseif (isset($query['after_id']) && is_numeric($query['after_id'])) {
-            $qb->andWhere($qb->expr()->gt('omeka_root.id', $query['after_id']));
-            $qb->orderBy('omeka_root.id', 'asc');
+            $qb->orderBy('omeka_root.position', 'desc');
+        } elseif (isset($query['after_position']) && is_numeric($query['after_position'])) {
+            $qb->andWhere($qb->expr()->gt('omeka_root.position', $query['after_position']));
+            $qb->orderBy('omeka_root.position', 'asc');
         }
     }
 
