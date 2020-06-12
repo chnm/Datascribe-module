@@ -228,6 +228,7 @@
   border-width: 1px 1px 0 1px;
   border-radius: 3px 3px 0 0;
   padding: 5px;
+  min-height: 30px;
 }
 
 .batch-inputs > * {
@@ -279,16 +280,40 @@
   overflow: visible;
 }
 
-.before.tablesaw-swipe-wrapper {
+.previous.tablesaw-swipe-wrapper {
   position: sticky;
   top: 0;
 }
 
-.tablesaw-swipe-wrapper > h3 {
+.previous-next-rows-header {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 4px;
+  left: 10px;
+  z-index: 100;
+}
+
+.previous-next-rows-header h3 {
   font-size: 16px;
+  display: inline-block;
+}
+  
+.previous-next-rows-header a.button {
+  display: inline-block;
+  box-shadow: none;
+  margin: 0;
+  background-color: transparent;
+}
+
+.previous-next-rows-header a.button:hover {
+  box-shadow: none;
+}
+
+.collapsed table,
+.collapsed .tablesaw-bar > * {
+  height: 0;
+  overflow: hidden;
+  display: block;
+  border-width: 1px 0 0 0;
 }
 
 .current-row {

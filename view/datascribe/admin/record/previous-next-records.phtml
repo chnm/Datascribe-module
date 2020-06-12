@@ -2,8 +2,11 @@
 $this->headScript()->appendScript('Datascribe.enableTableNavArrows();');
 ?>
 <?php if ($records): ?>
-<div class="tablesaw-swipe-wrapper <?php echo ($beforeAfter) ? strtolower($beforeAfter): ''; ?>">
-<?php echo ($heading) ? sprintf('<h3>%s</h3>', $heading) : ''; ?>
+<div class="tablesaw-swipe-wrapper collapsed <?php echo (isset($previousNext)) ? $previousNext : ''; ?>">
+<div class="previous-next-rows-header">
+    <?php echo ($heading) ? sprintf('<h3>%s</h3>', $heading) : ''; ?>
+    <a href="#" class="previous-next-toggle expand button" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>"></a>
+</div>
 <table class="tablesaw before-after-records" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)" data-tablesaw-minimap>
     <thead>
         <tr>
