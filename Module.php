@@ -101,7 +101,11 @@ SQL;
             // consecutive integers per item.
             $conn->exec('ALTER TABLE datascribe_record ADD COLUMN position INT NOT NULL AFTER needs_work');
             $itemStmt = $conn->query('SELECT id FROM datascribe_item');
-            $recordStmt = $conn->prepare('UPDATE datascribe_record SET position = (@position := @position + 1) WHERE item_id = ? ORDER BY id');
+            $recordStmt = $conn->prepare('
+            UPDATE datascribe_record
+            SET position = (@position := @position + 1)
+            WHERE item_id = ?
+            ORDER BY id');
             while ($row = $itemStmt->fetch()) {
                 $conn->exec('SET @position := 0');
                 $recordStmt->bindValue(1, (int) $row['id']);
@@ -510,7 +514,10 @@ SQL;
         $record = $event->getTarget();
 
         // Get the maximum possible record position for this item.
-        $sql = 'SELECT MAX(position) AS max_position FROM datascribe_record WHERE item_id = ?';
+        $sql = '
+        SELECT MAX(position) AS max_position
+        FROM datascribe_record
+        WHERE item_id = ?';
         $maxPosition = 1 + (int) $conn->fetchColumn($sql, [$record->getItem()->getId()], 0);
 
         $newPosition = $record->getNewPosition();
@@ -519,7 +526,11 @@ SQL;
             // are greater than the new position by one. Here we must update in
             // descending order to avoid an integrity constraint violation on
             // the unique index.
-            $sql = 'UPDATE datascribe_record SET position = (position + 1) WHERE position >= ? ORDER BY position DESC';
+            $sql = '
+            UPDATE datascribe_record
+            SET position = (position + 1)
+            WHERE position >= ?
+            ORDER BY position DESC';
             $conn->executeUpdate($sql, [$newPosition]);
             $record->setPosition($newPosition);
         } elseif (null === $record->getId()) {
