@@ -355,6 +355,14 @@
   margin: 0;
 }
 
+.current-row fieldset p {
+  margin: 0;
+}
+
+.current-row fieldset p:last-of-type {
+  margin-bottom: 12px;
+}
+
 .current-row legend {
   padding: 6px 0;
 }
