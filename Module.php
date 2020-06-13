@@ -518,13 +518,14 @@ SQL;
         $services = $this->getServiceLocator();
         $conn = $services->get('Omeka\Connection');
         $record = $event->getTarget();
+        $item = $record->getItem();
 
         // Get the maximum possible record position for this item.
         $sql = '
         SELECT MAX(position) AS max_position
         FROM datascribe_record
         WHERE item_id = ?';
-        $maxPosition = 1 + (int) $conn->fetchColumn($sql, [$record->getItem()->getId()], 0);
+        $maxPosition = 1 + (int) $conn->fetchColumn($sql, [$item->getId()], 0);
 
         $newPosition = $record->getNewPosition();
         if (is_int($newPosition) && ($newPosition > 0) && ($newPosition <= $maxPosition)) {
@@ -535,9 +536,10 @@ SQL;
             $sql = '
             UPDATE datascribe_record
             SET position = (position + 1)
-            WHERE position >= ?
+            WHERE item_id = ?
+            AND position >= ?
             ORDER BY position DESC';
-            $conn->executeUpdate($sql, [$newPosition]);
+            $conn->executeUpdate($sql, [$item->getId(), $newPosition]);
             $record->setPosition($newPosition);
         } elseif (null === $record->getId()) {
             // New records have the maximum position by default.
