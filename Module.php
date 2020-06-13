@@ -563,6 +563,20 @@ SQL;
                 $record->setPosition($position);
             }
         }
+        if ('after' === $positionChange['direction']) {
+            if ($fromPosition < $position) {
+                $conn->exec(sprintf('SET @position := %d', $fromPosition - 1));
+                $sql = '
+                UPDATE datascribe_record
+                SET position = (@position := @position + 1)
+                WHERE item_id = ?
+                AND position > ?
+                AND position <= ?
+                ORDER BY position ASC';
+                $conn->executeUpdate($sql, [$item->getId(), $fromPosition, $position]);
+                $record->setPosition($position);
+            }
+        }
     }
 
     /**
