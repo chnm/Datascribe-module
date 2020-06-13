@@ -85,12 +85,12 @@ $fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
         <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_work')); ?></div>
     </div>
     <?php endif; ?>
-    <?php if ($form->has('new_position_reference')): ?>
+    <?php if ($form->has('position_change_record_id')): ?>
     <div class="meta-group">
         <h4><?php echo $this->translate('Position'); ?></h4>
         <div class="value">
-            <?php echo $this->formElement($form->get('new_position_direction')); ?>
-            <?php echo $this->formElement($form->get('new_position_reference')); ?>
+            <?php echo $this->formElement($form->get('position_change_direction')); ?>
+            <?php echo $this->formElement($form->get('position_change_record_id')); ?>
         </div>
     </div>
     <?php endif; ?>
