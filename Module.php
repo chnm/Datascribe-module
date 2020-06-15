@@ -98,7 +98,7 @@ SQL;
         $conn = $services->get('Omeka\Connection');
         if (Comparator::lessThan($oldVersion, '0.2.0')) {
             // Add the record position column and populate the records with
-            // consecutive integers per item.
+            // consecutive positive integers per item.
             $conn->exec('
             ALTER TABLE datascribe_record
             ADD COLUMN position INT DEFAULT NULL AFTER needs_work');
@@ -521,32 +521,34 @@ SQL;
         $item = $record->getItem();
         $positionChange = $record->getPositionChange();
 
-        $sql = '
-        SELECT MAX(position) AS max_position
-        FROM datascribe_record
-        WHERE item_id = ?';
-        $maxPosition = (int) $conn->fetchColumn($sql, [$item->getId()], 0);
-
-        if (null === $positionChange) {
-            // No position change. Assume default position. A new record has the
-            // maximum position by default. An existing record keeps its current
-            // position by default.
-            if (!$record->getId()) {
-                $record->setPosition($maxPosition + 1);
+        // Existing record
+        if ($record->getId()) {
+            if (null === $positionChange) {
+                // An existing record keeps its current position by default.
+                return;
             }
-            return;
+            if ($record->getId() === $positionChange['record_id']) {
+                // An existing record cannot be before or after itself.
+                return;
+            }
+            $originalPosition = $record->getPosition();
+        // New record
+        } else {
+            $sql = '
+            SELECT MAX(position) AS max_position
+            FROM datascribe_record
+            WHERE item_id = ?';
+            $maxPosition = (int) $conn->fetchColumn($sql, [$item->getId()], 0);
+            if (null === $positionChange) {
+                // A new record has the maximum position by default.
+                $record->setPosition($maxPosition + 1);
+                return;
+            }
+            $originalPosition = $maxPosition + 1;
         }
 
-        if ($record->getId() && ($record->getId() === $positionChange['record_id'])) {
-            // An existing record cannot be before or after itself.
-            return;
-        }
-
-        $originalPosition = $record->getId() ? $record->getPosition() : ($maxPosition + 1);
-        $referencePosition = (int) $conn->fetchColumn(
-            'SELECT position FROM datascribe_record WHERE id = ?',
-            [$positionChange['record_id']], 0
-        );
+        $sql = 'SELECT position FROM datascribe_record WHERE id = ?';
+        $referencePosition = (int) $conn->fetchColumn($sql, [$positionChange['record_id']], 0);
 
         if ('before' === $positionChange['direction']) {
             if ($originalPosition < $referencePosition) {
@@ -605,7 +607,7 @@ SQL;
     /**
      * Restore consecutive (1,2,3,...) record position for an item.
      *
-     * Typically used when a record is deleted.
+     * Typically used when a record is deleted, leaving a gap in position.
      *
      * @param Event $event
      */
