@@ -146,13 +146,19 @@ SQL;
         $sharedEventManager->attach(
             'Datascribe\Entity\DatascribeRecord',
             'entity.persist.pre',
-            [$this, 'handlePositionChange'],
+            [$this, 'handleRecordPositionChange'],
             -100
         );
         $sharedEventManager->attach(
             'Datascribe\Entity\DatascribeRecord',
             'entity.update.pre',
-            [$this, 'handlePositionChange'],
+            [$this, 'handleRecordPositionChange'],
+            -100
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Entity\DatascribeRecord',
+            'entity.remove.post',
+            [$this, 'restoreRecordPositions'],
             -100
         );
         $controllers = [
@@ -498,6 +504,9 @@ SQL;
     /**
      * Handle a position change before persisting or updating a record.
      *
+     * This assures that an item's record positions remain as consecutive
+     * positive integers (1,2,3,...).
+     *
      * This could be done in the record adapter, but given that it will likely
      * affect the state of other records, it's safer to do at the last possible
      * moment (note the low priority on attach()). Otherwise, a permission error
@@ -505,7 +514,7 @@ SQL;
      *
      * @param Event $event
      */
-    public function handlePositionChange(Event $event) {
+    public function handleRecordPositionChange(Event $event) {
         $services = $this->getServiceLocator();
         $conn = $services->get('Omeka\Connection');
         $record = $event->getTarget();
@@ -589,6 +598,28 @@ SQL;
                 $record->setPosition($position + 1);
             }
         }
+    }
+
+    /**
+     * Restore consecutive (1,2,3,...) record position for an item.
+     *
+     * Typically used when a record is deleted.
+     *
+     * @param Event $event
+     */
+    public function restoreRecordPositions(Event $event)
+    {
+        $services = $this->getServiceLocator();
+        $conn = $services->get('Omeka\Connection');
+        $item = $event->getTarget()->getItem();
+
+        $conn->exec(sprintf('SET @position := %d', 0));
+        $sql = '
+        UPDATE datascribe_record
+        SET position = (@position := @position + 1)
+        WHERE item_id = ?
+        ORDER BY position ASC';
+        $conn->executeUpdate($sql, [$item->getId()]);
     }
 
     /**
