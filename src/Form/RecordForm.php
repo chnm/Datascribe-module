@@ -77,6 +77,7 @@ class RecordForm extends Form
                 'after' => 'Insert after',
             ]);
             $element->setEmptyOption('[Default position]');
+            $element->setAttribute('id', 'position_change_direction');
             $this->add($element);
 
             $element = new DatascribeElement\OptionalSelect('position_change_record_id');
@@ -85,6 +86,7 @@ class RecordForm extends Form
                 $valueOptions[$itemRecord->id()] = $itemRecord->displayTitle();
             }
             $element->setValueOptions($valueOptions);
+            $element->setAttribute('id', 'position_change_record_id');
             $this->add($element);
         }
     }
