@@ -542,13 +542,15 @@ SQL;
             return;
         }
 
-        $fromPosition = $record->getId() ? $record->getPosition() : ($maxPosition + 1);
-        $sql = 'SELECT position FROM datascribe_record WHERE id = ?';
-        $position = (int) $conn->fetchColumn($sql, [$positionChange['record_id']], 0);
+        $originalPosition = $record->getId() ? $record->getPosition() : ($maxPosition + 1);
+        $referencePosition = (int) $conn->fetchColumn(
+            'SELECT position FROM datascribe_record WHERE id = ?',
+            [$positionChange['record_id']], 0
+        );
 
         if ('before' === $positionChange['direction']) {
-            if ($fromPosition < $position) {
-                $conn->exec(sprintf('SET @position := %d', $fromPosition - 1));
+            if ($originalPosition < $referencePosition) {
+                $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
                 $sql = '
                 UPDATE datascribe_record
                 SET position = (@position := @position + 1)
@@ -556,11 +558,11 @@ SQL;
                 AND position > ?
                 AND position < ?
                 ORDER BY position ASC';
-                $conn->executeUpdate($sql, [$item->getId(), $fromPosition, $position]);
-                $record->setPosition($position - 1);
+                $conn->executeUpdate($sql, [$item->getId(), $originalPosition, $referencePosition]);
+                $record->setPosition($referencePosition - 1);
             }
-            if ($fromPosition > $position) {
-                $conn->exec(sprintf('SET @position := %d', $position));
+            if ($originalPosition > $referencePosition) {
+                $conn->exec(sprintf('SET @position := %d', $referencePosition));
                 $sql = '
                 UPDATE datascribe_record
                 SET position = (@position := @position + 1)
@@ -568,13 +570,13 @@ SQL;
                 AND position >= ?
                 AND position < ?
                 ORDER BY position ASC';
-                $conn->executeUpdate($sql, [$item->getId(), $position, $fromPosition]);
-                $record->setPosition($position);
+                $conn->executeUpdate($sql, [$item->getId(), $referencePosition, $originalPosition]);
+                $record->setPosition($referencePosition);
             }
         }
         if ('after' === $positionChange['direction']) {
-            if ($fromPosition < $position) {
-                $conn->exec(sprintf('SET @position := %d', $fromPosition - 1));
+            if ($originalPosition < $referencePosition) {
+                $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
                 $sql = '
                 UPDATE datascribe_record
                 SET position = (@position := @position + 1)
@@ -582,11 +584,11 @@ SQL;
                 AND position > ?
                 AND position <= ?
                 ORDER BY position ASC';
-                $conn->executeUpdate($sql, [$item->getId(), $fromPosition, $position]);
-                $record->setPosition($position);
+                $conn->executeUpdate($sql, [$item->getId(), $originalPosition, $referencePosition]);
+                $record->setPosition($referencePosition);
             }
-            if ($fromPosition > $position) {
-                $conn->exec(sprintf('SET @position := %d', $position + 1));
+            if ($originalPosition > $referencePosition) {
+                $conn->exec(sprintf('SET @position := %d', $referencePosition + 1));
                 $sql = '
                 UPDATE datascribe_record
                 SET position = (@position := @position + 1)
@@ -594,8 +596,8 @@ SQL;
                 AND position > ?
                 AND position < ?
                 ORDER BY position ASC';
-                $conn->executeUpdate($sql, [$item->getId(), $position, $fromPosition]);
-                $record->setPosition($position + 1);
+                $conn->executeUpdate($sql, [$item->getId(), $referencePosition, $originalPosition]);
+                $record->setPosition($referencePosition + 1);
             }
         }
     }
