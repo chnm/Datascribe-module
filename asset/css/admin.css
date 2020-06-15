@@ -409,7 +409,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  overflow-y: hidden;
+  overflow-y: visible;
   background-color: #fff;
   padding: 6px 20px;
   height: calc(100% - 6rem);
