@@ -521,8 +521,11 @@ SQL;
         $item = $record->getItem();
         $positionChange = $record->getPositionChange();
 
-        // Existing record
+        // Get the original position. Return if no position change is needed or
+        // if no adjustments to the positions of the surrounding records need to
+        // be made.
         if ($record->getId()) {
+            // This is an existing record.
             if (null === $positionChange) {
                 // An existing record keeps its current position by default.
                 return;
@@ -532,8 +535,8 @@ SQL;
                 return;
             }
             $originalPosition = $record->getPosition();
-        // New record
         } else {
+            // This is a new record.
             $sql = '
             SELECT MAX(position) AS max_position
             FROM datascribe_record
@@ -547,11 +550,18 @@ SQL;
             $originalPosition = $maxPosition + 1;
         }
 
+        // Get the reference position.
         $sql = 'SELECT position FROM datascribe_record WHERE id = ?';
         $referencePosition = (int) $conn->fetchColumn($sql, [$positionChange['record_id']], 0);
 
+        // Set the new position and make adjustments to the positions of the
+        // surrounding records to maintain consecutive order.
         if ('before' === $positionChange['direction']) {
             if ($originalPosition < $referencePosition) {
+                // Starting at the original position number, increment from
+                // where the position is greater than the original position to
+                // where the position is less than the reference position, then
+                // set the new position to one less than the reference position.
                 $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
                 $sql = '
                 UPDATE datascribe_record
@@ -564,6 +574,11 @@ SQL;
                 $record->setPosition($referencePosition - 1);
             }
             if ($originalPosition > $referencePosition) {
+                // Starting at one more than the reference position number,
+                // increment from where the position is greater than or equal to
+                // the reference position to where the position is less than the
+                // original position, then set the new position to the reference
+                // position.
                 $conn->exec(sprintf('SET @position := %d', $referencePosition));
                 $sql = '
                 UPDATE datascribe_record
@@ -578,6 +593,10 @@ SQL;
         }
         if ('after' === $positionChange['direction']) {
             if ($originalPosition < $referencePosition) {
+                // Starting at one less than the original position, increment
+                // from where the position is greater than the original position
+                // to where the position is less than or equal to the reference
+                // position, then set the new position to the reference position.
                 $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
                 $sql = '
                 UPDATE datascribe_record
@@ -590,6 +609,10 @@ SQL;
                 $record->setPosition($referencePosition);
             }
             if ($originalPosition > $referencePosition) {
+                // Starting at the reference position, increment from where the
+                // position is greater than the reference position to where the
+                // position is less than the original position, then set the new
+                // position to one more than the reference position.
                 $conn->exec(sprintf('SET @position := %d', $referencePosition + 1));
                 $sql = '
                 UPDATE datascribe_record
@@ -607,7 +630,9 @@ SQL;
     /**
      * Restore consecutive (1,2,3,...) record position for an item.
      *
-     * Typically used when a record is deleted, leaving a gap in position.
+     * Note that this does not reset the positions to their default state
+     * (ordered by record ID), rather it restores positions after a gap in
+     * position is made (typically when a record is deleted).
      *
      * @param Event $event
      */
