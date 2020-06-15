@@ -244,6 +244,7 @@
   margin-top: 4px;
   width: 50%;
 }
+
 .batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar:before {
   content: none;.
 } 
@@ -415,6 +416,10 @@
   padding: 6px 20px;
   height: calc(100% - 6rem);
   z-index: 2;
+}
+
+.fullscreen .rows .tablesaw-swipe-wrapper {
+  z-index: 1;
 }
 
 div[role="main"].fullscreen > h1:first-of-type {
