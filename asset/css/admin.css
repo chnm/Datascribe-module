@@ -317,6 +317,18 @@
   border-width: 1px 0 0 0;
 }
 
+.row-controls {
+  display: flex;
+}
+
+.layout {
+  margin-bottom: 1rem;
+}
+
+.open-guidelines {
+  margin-left: auto;
+}
+
 .current-row {
   overflow-y: hidden;
   height: 100%;
@@ -885,6 +897,47 @@ div[role="main"].fullscreen > h1:first-of-type {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.guidelines-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 10000;
+}
+
+.guidelines-content {
+  background-color: #fff;
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  max-width: 75rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.close-guidelines {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.close-guidelines:hover:not(.inactive) {
+  box-shadow: none;
+}
+
+.close-guidelines:before {
+  content: "\f00d";
+  font-family: "Font Awesome 5 Free";
+}
+
+.guidelines-container.closed {
+  display: none;
 }
 
 /* Dashboard */

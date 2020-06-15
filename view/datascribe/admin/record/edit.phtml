@@ -5,6 +5,7 @@ $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dis
 $this->headScript()->appendFile($this->assetUrl('js/admin/record-form.js', 'Datascribe'));
 $form->prepare();
 $lastSaved = $record->modified() ?? $record->created();
+$guidelines = $dataset->guidelines();
 ?>
 
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
@@ -21,6 +22,9 @@ $lastSaved = $record->modified() ?? $record->created();
         <button type="button" name="horizontal" class="horizontal active" aria-label="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" disabled=""></button>
         <button type="button" name="vertical" class="vertical" aria-label="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>"></button>
     </div>
+    <?php if($guidelines): ?>
+    <button type="button" class="open-guidelines"><?php echo $this->translate('Guidelines'); ?></button>
+    <?php endif; ?>
 </div>
 
 <?php echo $this->partial('media-viewer', ['oItem' => $oItem]); ?>
@@ -104,6 +108,15 @@ $lastSaved = $record->modified() ?? $record->created();
 </div>
 
 <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsNext, 'heading' => $this->translate('Next records')]); ?>
+
+<?php if ($guidelines): ?>
+<div class="guidelines-container closed">
+    <div class="guidelines-content">
+      <button type="button" class="close-guidelines" aria-label="<?php echo $this->translate('Close'); ?>" title="<?php echo $this->translate('Close'); ?>"></button>
+      <?php echo $guidelines; ?>
+    </div>
+</div>
+<?php endif; ?>
 
 </div>
 

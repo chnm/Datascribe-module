@@ -10,4 +10,12 @@ $('.previous-next-toggle').click(function() {
     container.toggleClass('collapsed');  
 });
 
+$('.open-guidelines').click(function() {
+    $('.guidelines-container').removeClass('closed');
+});
+
+$('.close-guidelines').click(function() {
+    $('.guidelines-container').addClass('closed');
+});
+
 });
