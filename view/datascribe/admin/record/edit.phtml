@@ -61,7 +61,9 @@ $guidelines = $dataset->guidelines();
         <?php if ($fieldset->has('invalid_value_text')): ?>
         <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
         <?php endif; ?>
-        <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+        <div class="value-elements">
+            <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+        </div>
         <div class="common-elements">
             <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
             <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>

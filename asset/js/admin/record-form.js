@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
 $('.set-null-checkbox input[type="checkbox"]').on('change', function(e) {
-    var thisCheckbox = $(this);
-    var setNullCheckbox = thisCheckbox.closest('fieldset').toggleClass('set-to-null');
+    var fieldset = $(this).closest('fieldset');
+    var inputs = fieldset.find('div.value-elements :input');
+    inputs.prop('disabled', !fieldset.hasClass('set-to-null'));
+    fieldset.toggleClass('set-to-null');
 });
 
 $('.previous-next-toggle').click(function() {
