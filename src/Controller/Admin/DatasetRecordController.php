@@ -22,7 +22,7 @@ class DatasetRecordController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $this->setBrowseDefaults('item_id', 'asc');
+        $this->setBrowseDefaults('position', 'asc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_dataset_id' => $dataset->id()]

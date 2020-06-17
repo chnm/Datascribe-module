@@ -45,11 +45,10 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     "GROUP_CONCAT($alias.text ORDER BY $alias.id)",
                     $query['sort_order']
                 );
-            } elseif ('item_id' === $query['sort_by']) {
-                $alias = $this->createAlias();
-                $qb->innerJoin('omeka_root.item', $alias);
-                $qb->addOrderBy("$alias.id", $query['sort_order']);
-            } elseif ('position' === $query['sort_by']) {
+            } elseif ('id' === $query['sort_by']) {
+                $qb->addOrderBy('omeka_root.id', $query['sort_order']);
+            } elseif (in_array($query['sort_by'], ['item_id', 'position'])) {
+                $qb->addOrderBy('omeka_root.item', $query['sort_order']);
                 $qb->addOrderBy('omeka_root.position', $query['sort_order']);
             }
         }
