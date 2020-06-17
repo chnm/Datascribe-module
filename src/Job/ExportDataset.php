@@ -73,9 +73,9 @@ class ExportDataset extends AbstractJob
             $table = [];
             $result = $query->setFirstResult($offset)->getResult();
             foreach ($result as $record) {
-                // So the user can cross-reference the exported data with the
-                // DataScribe dataset, begin each row with the item's unique ID
-                // and the record's unique ID and position.
+                // So the user can cross-reference the CSV with the dataset,
+                // begin each row with the item's unique ID and the record's
+                // unique ID and position.
                 $row = [
                     $record->getItem()->getId(),
                     $record->getId(),
