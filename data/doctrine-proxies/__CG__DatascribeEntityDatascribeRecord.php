@@ -66,10 +66,10 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
+            return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'position', 'positionChange', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
         }
 
-        return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
+        return ['__isInitialized__', 'item', 'needsReview', 'needsWork', 'position', 'positionChange', 'values', 'id', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'transcriberNotes', 'reviewerNotes'];
     }
 
     /**
@@ -240,6 +240,50 @@ class DatascribeRecord extends \Datascribe\Entity\DatascribeRecord implements \D
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNeedsWork', []);
 
         return parent::getNeedsWork();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPosition(int $position): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPosition', [$position]);
+
+        parent::setPosition($position);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPosition(): int
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPosition', []);
+
+        return parent::getPosition();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPositionChange(string $direction, int $recordId): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPositionChange', [$direction, $recordId]);
+
+        parent::setPositionChange($direction, $recordId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPositionChange(): ?array
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPositionChange', []);
+
+        return parent::getPositionChange();
     }
 
     /**

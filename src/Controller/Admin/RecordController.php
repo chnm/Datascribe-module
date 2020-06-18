@@ -26,7 +26,7 @@ class RecordController extends AbstractActionController
         $dataset = $item->dataset();
         $project = $dataset->project();
 
-        $this->setBrowseDefaults('id', 'asc');
+        $this->setBrowseDefaults('position', 'asc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_item_id' => $item->id()]
@@ -172,7 +172,7 @@ class RecordController extends AbstractActionController
         $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'limit' => 4,
-            'sort_by' => 'id',
+            'sort_by' => 'position',
             'sort_order' => 'desc',
         ])->getContent();
 
@@ -229,12 +229,12 @@ class RecordController extends AbstractActionController
 
         $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
-            'before_id' => $record->id(),
+            'before_position' => $record->position(),
             'limit' => 4,
         ])->getContent();
         $recordsNext = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
-            'after_id' => $record->id(),
+            'after_position' => $record->position(),
             'limit' => 4,
         ])->getContent();
 

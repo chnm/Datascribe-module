@@ -1,6 +1,7 @@
 <?php
 namespace Datascribe;
 
+use Composer\Semver\Comparator;
 use Datascribe\Api\Adapter\DatascribeDatasetAdapter;
 use Datascribe\Api\Adapter\DatascribeProjectAdapter;
 use Datascribe\Entity\DatascribeUser;
@@ -39,7 +40,7 @@ class Module extends AbstractModule
         $sql = <<<'SQL'
 CREATE TABLE datascribe_user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, project_id INT UNSIGNED NOT NULL, user_id INT DEFAULT NULL, role VARCHAR(255) NOT NULL, INDEX IDX_D99C3265166D1F9C (project_id), INDEX IDX_D99C3265A76ED395 (user_id), UNIQUE INDEX UNIQ_D99C3265166D1F9CA76ED395 (project_id, user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
 CREATE TABLE datascribe_value (id INT UNSIGNED AUTO_INCREMENT NOT NULL, field_id INT UNSIGNED NOT NULL, record_id INT UNSIGNED NOT NULL, is_invalid TINYINT(1) DEFAULT '0' NOT NULL, is_missing TINYINT(1) DEFAULT '0' NOT NULL, is_illegible TINYINT(1) DEFAULT '0' NOT NULL, text LONGTEXT DEFAULT NULL, INDEX IDX_2FFB3B33443707B0 (field_id), INDEX IDX_2FFB3B334DFD750C (record_id), UNIQUE INDEX UNIQ_2FFB3B33443707B04DFD750C (field_id, record_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
-CREATE TABLE datascribe_record (id INT UNSIGNED AUTO_INCREMENT NOT NULL, item_id INT UNSIGNED NOT NULL, owner_id INT DEFAULT NULL, created_by_id INT DEFAULT NULL, modified_by_id INT DEFAULT NULL, needs_review TINYINT(1) DEFAULT '0' NOT NULL, needs_work TINYINT(1) DEFAULT '0' NOT NULL, created DATETIME NOT NULL, modified DATETIME DEFAULT NULL, transcriber_notes LONGTEXT DEFAULT NULL, reviewer_notes LONGTEXT DEFAULT NULL, INDEX IDX_5628651126F525E (item_id), INDEX IDX_56286517E3C61F9 (owner_id), INDEX IDX_5628651B03A8386 (created_by_id), INDEX IDX_562865199049ECE (modified_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+CREATE TABLE datascribe_record (id INT UNSIGNED AUTO_INCREMENT NOT NULL, item_id INT UNSIGNED NOT NULL, owner_id INT DEFAULT NULL, created_by_id INT DEFAULT NULL, modified_by_id INT DEFAULT NULL, needs_review TINYINT(1) DEFAULT '0' NOT NULL, needs_work TINYINT(1) DEFAULT '0' NOT NULL, position INT DEFAULT NULL, created DATETIME NOT NULL, modified DATETIME DEFAULT NULL, transcriber_notes LONGTEXT DEFAULT NULL, reviewer_notes LONGTEXT DEFAULT NULL, INDEX IDX_5628651126F525E (item_id), INDEX IDX_56286517E3C61F9 (owner_id), INDEX IDX_5628651B03A8386 (created_by_id), INDEX IDX_562865199049ECE (modified_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
 CREATE TABLE datascribe_item (id INT UNSIGNED AUTO_INCREMENT NOT NULL, dataset_id INT UNSIGNED NOT NULL, item_id INT NOT NULL, prioritized_by_id INT DEFAULT NULL, locked_by_id INT DEFAULT NULL, submitted_by_id INT DEFAULT NULL, reviewed_by_id INT DEFAULT NULL, synced_by_id INT DEFAULT NULL, prioritized DATETIME DEFAULT NULL, locked DATETIME DEFAULT NULL, submitted DATETIME DEFAULT NULL, reviewed DATETIME DEFAULT NULL, is_approved TINYINT(1) DEFAULT NULL, synced DATETIME DEFAULT NULL, transcriber_notes LONGTEXT DEFAULT NULL, reviewer_notes LONGTEXT DEFAULT NULL, INDEX IDX_4B14C132D47C2D1B (dataset_id), INDEX IDX_4B14C132126F525E (item_id), INDEX IDX_4B14C1324A0B323 (prioritized_by_id), INDEX IDX_4B14C1327A88E00 (locked_by_id), INDEX IDX_4B14C13279F7D87D (submitted_by_id), INDEX IDX_4B14C132FC6B21F1 (reviewed_by_id), INDEX IDX_4B14C1327141DBAD (synced_by_id), UNIQUE INDEX UNIQ_4B14C132D47C2D1B126F525E (dataset_id, item_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
 CREATE TABLE datascribe_field (id INT UNSIGNED AUTO_INCREMENT NOT NULL, dataset_id INT UNSIGNED NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, position INT NOT NULL, is_primary TINYINT(1) DEFAULT '0' NOT NULL, is_required TINYINT(1) DEFAULT '0' NOT NULL, data_type VARCHAR(255) NOT NULL, data LONGTEXT NOT NULL COMMENT '(DC2Type:json)', INDEX IDX_6979265FD47C2D1B (dataset_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
 CREATE TABLE datascribe_dataset (id INT UNSIGNED AUTO_INCREMENT NOT NULL, project_id INT UNSIGNED NOT NULL, item_set_id INT DEFAULT NULL, validated_by_id INT DEFAULT NULL, exported_by_id INT DEFAULT NULL, synced_by_id INT DEFAULT NULL, owner_id INT DEFAULT NULL, created_by_id INT DEFAULT NULL, modified_by_id INT DEFAULT NULL, guidelines LONGTEXT DEFAULT NULL, export_storage_id VARCHAR(255) DEFAULT NULL, validated DATETIME DEFAULT NULL, exported DATETIME DEFAULT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, synced DATETIME DEFAULT NULL, created DATETIME NOT NULL, modified DATETIME DEFAULT NULL, is_public TINYINT(1) DEFAULT '0' NOT NULL, INDEX IDX_2C5AD579166D1F9C (project_id), INDEX IDX_2C5AD579960278D7 (item_set_id), INDEX IDX_2C5AD579C69DE5E5 (validated_by_id), INDEX IDX_2C5AD579F748B80E (exported_by_id), INDEX IDX_2C5AD5797141DBAD (synced_by_id), INDEX IDX_2C5AD5797E3C61F9 (owner_id), INDEX IDX_2C5AD579B03A8386 (created_by_id), INDEX IDX_2C5AD57999049ECE (modified_by_id), UNIQUE INDEX UNIQ_2C5AD579166D1F9C5E237E06 (project_id, name), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
@@ -92,6 +93,29 @@ SQL;
         $conn->exec('SET FOREIGN_KEY_CHECKS=1;');
     }
 
+    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $services)
+    {
+        $conn = $services->get('Omeka\Connection');
+        if (Comparator::lessThan($oldVersion, '0.2.0')) {
+            // Add the record position column and populate the records with
+            // consecutive positive integers per item.
+            $conn->exec('
+            ALTER TABLE datascribe_record
+            ADD COLUMN position INT DEFAULT NULL AFTER needs_work');
+            $itemStmt = $conn->query('SELECT id FROM datascribe_item');
+            $recordStmt = $conn->prepare('
+            UPDATE datascribe_record
+            SET position = (@position := @position + 1)
+            WHERE item_id = ?
+            ORDER BY id');
+            while ($row = $itemStmt->fetch()) {
+                $conn->exec('SET @position := 0');
+                $recordStmt->bindValue(1, (int) $row['id']);
+                $recordStmt->execute();
+            }
+        }
+    }
+
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $sharedEventManager->attach(
@@ -118,6 +142,24 @@ SQL;
             'Datascribe\Entity\DatascribeRecord',
             'entity.persist.pre',
             [$this, 'assertCreateRecordPrivilege']
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Entity\DatascribeRecord',
+            'entity.persist.pre',
+            [$this, 'handleRecordPositionChange'],
+            -100
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Entity\DatascribeRecord',
+            'entity.update.pre',
+            [$this, 'handleRecordPositionChange'],
+            -100
+        );
+        $sharedEventManager->attach(
+            'Datascribe\Entity\DatascribeRecord',
+            'entity.remove.post',
+            [$this, 'restoreRecordPositions'],
+            -100
         );
         $controllers = [
             'Datascribe\Controller\Admin\Index',
@@ -219,6 +261,7 @@ SQL;
                 'datascribe_add_record',
                 'datascribe_flag_record_needs_review',
                 'datascribe_flag_record_needs_work',
+                'datascribe_change_record_position',
             ]
         );
         $acl->allow(
@@ -335,6 +378,7 @@ SQL;
                 'datascribe_edit_lock_action',
                 'datascribe_add_record',
                 'datascribe_flag_record_needs_review',
+                'datascribe_change_record_position',
             ],
             $userCanAssertion
         );
@@ -455,6 +499,156 @@ SQL;
             // The user is not assigned to this project and is not an admin.
             throw new PermissionDeniedException($errorMessage);
         }
+    }
+
+    /**
+     * Handle a position change before persisting or updating a record.
+     *
+     * This assures that an item's record positions remain as consecutive
+     * positive integers (1,2,3,...).
+     *
+     * This could be done in the record adapter, but given that it will likely
+     * affect the state of other records, it's safer to do at the last possible
+     * moment (note the low priority on attach()). Otherwise, a permission error
+     * or some other error could happen after the state changes.
+     *
+     * @param Event $event
+     */
+    public function handleRecordPositionChange(Event $event) {
+        $services = $this->getServiceLocator();
+        $conn = $services->get('Omeka\Connection');
+        $record = $event->getTarget();
+        $item = $record->getItem();
+        $positionChange = $record->getPositionChange();
+
+        // Get the original position. Return if no position change is needed or
+        // if no adjustments to the positions of the surrounding records need to
+        // be made.
+        if ($record->getId()) {
+            // This is an existing record.
+            if (null === $positionChange) {
+                // An existing record keeps its current position by default.
+                return;
+            }
+            if ($record->getId() === $positionChange['record_id']) {
+                // An existing record cannot be before or after itself.
+                return;
+            }
+            $originalPosition = $record->getPosition();
+        } else {
+            // This is a new record.
+            $sql = '
+            SELECT MAX(position) AS max_position
+            FROM datascribe_record
+            WHERE item_id = ?';
+            $maxPosition = (int) $conn->fetchColumn($sql, [$item->getId()], 0);
+            if (null === $positionChange) {
+                // A new record has the maximum position by default.
+                $record->setPosition($maxPosition + 1);
+                return;
+            }
+            $originalPosition = $maxPosition + 1;
+        }
+
+        // Get the reference position.
+        $sql = 'SELECT position FROM datascribe_record WHERE id = ?';
+        $referencePosition = (int) $conn->fetchColumn($sql, [$positionChange['record_id']], 0);
+
+        // Set the new position and make adjustments to the positions of the
+        // surrounding records to maintain consecutive order.
+        if ('before' === $positionChange['direction']) {
+            if ($originalPosition < $referencePosition) {
+                // Starting at the original position number, increment from
+                // where the position is greater than the original position to
+                // where the position is less than the reference position, then
+                // set the new position to one less than the reference position.
+                $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
+                $sql = '
+                UPDATE datascribe_record
+                SET position = (@position := @position + 1)
+                WHERE item_id = ?
+                AND position > ?
+                AND position < ?
+                ORDER BY position ASC';
+                $conn->executeUpdate($sql, [$item->getId(), $originalPosition, $referencePosition]);
+                $record->setPosition($referencePosition - 1);
+            }
+            if ($originalPosition > $referencePosition) {
+                // Starting at one more than the reference position number,
+                // increment from where the position is greater than or equal to
+                // the reference position to where the position is less than the
+                // original position, then set the new position to the reference
+                // position.
+                $conn->exec(sprintf('SET @position := %d', $referencePosition));
+                $sql = '
+                UPDATE datascribe_record
+                SET position = (@position := @position + 1)
+                WHERE item_id = ?
+                AND position >= ?
+                AND position < ?
+                ORDER BY position ASC';
+                $conn->executeUpdate($sql, [$item->getId(), $referencePosition, $originalPosition]);
+                $record->setPosition($referencePosition);
+            }
+        }
+        if ('after' === $positionChange['direction']) {
+            if ($originalPosition < $referencePosition) {
+                // Starting at one less than the original position, increment
+                // from where the position is greater than the original position
+                // to where the position is less than or equal to the reference
+                // position, then set the new position to the reference position.
+                $conn->exec(sprintf('SET @position := %d', $originalPosition - 1));
+                $sql = '
+                UPDATE datascribe_record
+                SET position = (@position := @position + 1)
+                WHERE item_id = ?
+                AND position > ?
+                AND position <= ?
+                ORDER BY position ASC';
+                $conn->executeUpdate($sql, [$item->getId(), $originalPosition, $referencePosition]);
+                $record->setPosition($referencePosition);
+            }
+            if ($originalPosition > $referencePosition) {
+                // Starting at the reference position, increment from where the
+                // position is greater than the reference position to where the
+                // position is less than the original position, then set the new
+                // position to one more than the reference position.
+                $conn->exec(sprintf('SET @position := %d', $referencePosition + 1));
+                $sql = '
+                UPDATE datascribe_record
+                SET position = (@position := @position + 1)
+                WHERE item_id = ?
+                AND position > ?
+                AND position < ?
+                ORDER BY position ASC';
+                $conn->executeUpdate($sql, [$item->getId(), $referencePosition, $originalPosition]);
+                $record->setPosition($referencePosition + 1);
+            }
+        }
+    }
+
+    /**
+     * Restore consecutive (1,2,3,...) record position for an item.
+     *
+     * Note that this does not reset the positions to their default state
+     * (ordered by record ID), rather it restores positions after a gap in
+     * position is made (typically when a record is deleted).
+     *
+     * @param Event $event
+     */
+    public function restoreRecordPositions(Event $event)
+    {
+        $services = $this->getServiceLocator();
+        $conn = $services->get('Omeka\Connection');
+        $item = $event->getTarget()->getItem();
+
+        $conn->exec(sprintf('SET @position := %d', 0));
+        $sql = '
+        UPDATE datascribe_record
+        SET position = (@position := @position + 1)
+        WHERE item_id = ?
+        ORDER BY position ASC';
+        $conn->executeUpdate($sql, [$item->getId()]);
     }
 
     /**

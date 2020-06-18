@@ -45,10 +45,11 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                     "GROUP_CONCAT($alias.text ORDER BY $alias.id)",
                     $query['sort_order']
                 );
-            } elseif ('item_id' === $query['sort_by']) {
-                $alias = $this->createAlias();
-                $qb->innerJoin('omeka_root.item', $alias);
-                $qb->addOrderBy("$alias.id", $query['sort_order']);
+            } elseif ('id' === $query['sort_by']) {
+                $qb->addOrderBy('omeka_root.id', $query['sort_order']);
+            } elseif (in_array($query['sort_by'], ['item_id', 'position'])) {
+                $qb->addOrderBy('omeka_root.item', $query['sort_order']);
+                $qb->addOrderBy('omeka_root.position', $query['sort_order']);
             }
         }
     }
@@ -112,15 +113,15 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
                 $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
             }
         }
-        if (isset($query['before_id']) && is_numeric($query['before_id'])) {
-            $qb->andWhere($qb->expr()->lt('omeka_root.id', $query['before_id']));
+        if (isset($query['before_position']) && is_numeric($query['before_position'])) {
+            $qb->andWhere($qb->expr()->lt('omeka_root.position', $query['before_position']));
             // Setting ORDER BY DESC here so a LIMIT won't cut off expected
             // rows. It's the consumer's responsibility to reverse the result
             // set if ORDER BY ASC is needed.
-            $qb->orderBy('omeka_root.id', 'desc');
-        } elseif (isset($query['after_id']) && is_numeric($query['after_id'])) {
-            $qb->andWhere($qb->expr()->gt('omeka_root.id', $query['after_id']));
-            $qb->orderBy('omeka_root.id', 'asc');
+            $qb->orderBy('omeka_root.position', 'desc');
+        } elseif (isset($query['after_position']) && is_numeric($query['after_position'])) {
+            $qb->andWhere($qb->expr()->gt('omeka_root.position', $query['after_position']));
+            $qb->orderBy('omeka_root.position', 'asc');
         }
     }
 
@@ -191,6 +192,15 @@ class DatascribeRecordAdapter extends AbstractEntityAdapter
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:needs_work') && $acl->userIsAllowed($entity->getItem(), 'datascribe_flag_record_needs_work')) {
             $entity->setNeedsWork($request->getValue('o-module-datascribe:needs_work'));
+        }
+        $positionDirection = $request->getValue('position_change_direction');
+        $positionRecordId = $request->getValue('position_change_record_id');
+        if (isset($positionDirection, $positionRecordId)
+            && in_array($positionDirection, ['before', 'after'])
+            && is_numeric($positionRecordId)
+            && $acl->userIsAllowed($entity->getItem(), 'datascribe_change_record_position')
+        ) {
+            $entity->setPositionChange($positionDirection, $positionRecordId);
         }
         if ($this->shouldHydrate($request, 'o-module-datascribe:value')) {
             $values = $entity->getValues();

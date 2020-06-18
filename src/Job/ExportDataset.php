@@ -45,7 +45,11 @@ class ExportDataset extends AbstractJob
         $fp = fopen($tempFile->getTempPath(), 'w');
 
         // Add the header row.
-        $headerRow = ['ID'];
+        $headerRow = [
+            'DataScribe Item #',
+            'DataScribe Record #',
+            'DataScribe Record Position',
+        ];
         foreach ($fields as $field) {
             $headerRow[] = $field->getName();
         }
@@ -61,7 +65,7 @@ class ExportDataset extends AbstractJob
             INNER JOIN item.dataset dataset
             WHERE dataset.id = :datasetId
             AND item.isApproved = true
-            ORDER BY item.id ASC, record.id ASC';
+            ORDER BY item.id ASC, record.position ASC, record.id ASC';
         $query = $em->createQuery($dql)
             ->setParameter('datasetId', $dataset->getId())
             ->setMaxResults($maxResults);
@@ -69,9 +73,14 @@ class ExportDataset extends AbstractJob
             $table = [];
             $result = $query->setFirstResult($offset)->getResult();
             foreach ($result as $record) {
-                // Begin each row with the unique ID of the record so the user
-                // can cross-reference the file with the dataset.
-                $row = [$record->getId()];
+                // So the user can cross-reference the CSV with the dataset,
+                // begin each row with the item's unique ID and the record's
+                // unique ID and position.
+                $row = [
+                    $record->getItem()->getId(),
+                    $record->getId(),
+                    $record->getPosition(),
+                ];
                 $values = $record->getValues();
                 foreach ($fields as $field) {
                     // All values should exist since validation null-fills

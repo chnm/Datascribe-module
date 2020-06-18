@@ -137,6 +137,7 @@ class DatascribeItem extends AbstractEntity
      *     mappedBy="item",
      *     fetch="EXTRA_LAZY"
      * )
+     * @OrderBy({"position" = "ASC"})
      */
     protected $records;
 

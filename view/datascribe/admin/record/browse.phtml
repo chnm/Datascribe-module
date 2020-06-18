@@ -21,6 +21,10 @@ $filters = [
 ];
 $sortBy = [
     [
+        'label' => $this->translate('Position'),
+        'value' => 'position',
+    ],
+    [
         'label' => $this->translate('Record #'),
         'value' => 'id',
     ],
@@ -82,6 +86,7 @@ foreach ($fields as $field) {
                 <?php endif; ?>
                 <?php echo $this->translate('Record #'); ?>
             </th>
+            <th class="record-meta"><?php echo $this->translate('Position'); ?></th>
             <th class="record-meta"><?php echo $this->translate('Created by'); ?></th>
             <th class="record-meta last"><?php echo $this->translate('Created'); ?></th>
             <?php foreach ($fields as $field): ?>
@@ -133,6 +138,7 @@ foreach ($fields as $field) {
                 </ul>
                 </div>
             </td>
+            <td class="record-meta"><?php echo $record->position(); ?></td>
             <td class="record-meta"><?php echo $createdBy ? $createdBy->link($createdBy->name()) : ''; ?></td>
             <td class="record-meta last"><?php echo $this->i18n()->dateFormat($record->created()); ?></td>
 

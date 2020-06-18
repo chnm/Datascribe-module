@@ -44,6 +44,16 @@ class DatascribeRecord extends AbstractEntity
     protected $needsWork;
 
     /**
+     * @Column(
+     *     type="integer",
+     *     nullable=true
+     * )
+     */
+    protected $position;
+
+    protected $positionChange;
+
+    /**
      * @OneToMany(
      *     targetEntity="DatascribeValue",
      *     mappedBy="record",
@@ -87,6 +97,32 @@ class DatascribeRecord extends AbstractEntity
     public function getNeedsWork() : bool
     {
         return $this->needsWork;
+    }
+
+    public function setPosition(int $position) : void
+    {
+        $this->position = $position;
+    }
+
+    public function getPosition() : int
+    {
+        return $this->position;
+    }
+
+    public function setPositionChange(string $direction, int $recordId) : void
+    {
+        if (!in_array($direction, ['before', 'after'])) {
+            $direction = 'before'; // default direction is "above"
+        }
+        $this->positionChange = [
+            'direction' => $direction,
+            'record_id' => $recordId,
+        ];
+    }
+
+    public function getPositionChange() : ?array
+    {
+        return $this->positionChange;
     }
 
     public function getValues()

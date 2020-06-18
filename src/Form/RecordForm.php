@@ -3,6 +3,7 @@ namespace Datascribe\Form;
 
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\DatascribeDataType\Manager;
+use Datascribe\Form\Element as DatascribeElement;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
@@ -39,7 +40,6 @@ class RecordForm extends Form
         // Add "needs_review" element.
         if ($item->userIsAllowed('datascribe_flag_record_needs_review')) {
             $element = new Element\Checkbox('o-module-datascribe:needs_review');
-            $element->setLabel('Needs review'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->needsReview() : null);
             $this->add($element);
@@ -48,7 +48,6 @@ class RecordForm extends Form
         // Add "needs_work" element.
         if ($item->userIsAllowed('datascribe_flag_record_needs_work')) {
             $element = new Element\Checkbox('o-module-datascribe:needs_work');
-            $element->setLabel('Needs work'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->needsWork() : null);
             $this->add($element);
@@ -57,7 +56,6 @@ class RecordForm extends Form
         // Add "transcriber_notes" element.
         if ($item->userIsAllowed('datascribe_edit_transcriber_notes')) {
             $element = new Element\Textarea('o-module-datascribe:transcriber_notes');
-            $element->setLabel('Transcriber notes'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->transcriberNotes() : null);
             $this->add($element);
@@ -66,9 +64,29 @@ class RecordForm extends Form
         // Add "reviewer_notes" element.
         if ($item->userIsAllowed('datascribe_edit_reviewer_notes')) {
             $element = new Element\Textarea('o-module-datascribe:reviewer_notes');
-            $element->setLabel('Reviewer notes'); // @translate
             $element->setAttribute('required', false);
             $element->setValue($record ? $record->reviewerNotes() : null);
+            $this->add($element);
+        }
+
+        // Add the change position elements only if the item already has records.
+        if ($item->recordCount() && $item->userIsAllowed('datascribe_change_record_position')) {
+            $element = new DatascribeElement\OptionalSelect('position_change_direction');
+            $element->setValueOptions([
+                'before' => 'Insert before',
+                'after' => 'Insert after',
+            ]);
+            $element->setEmptyOption('[Default position]');
+            $element->setAttribute('id', 'position_change_direction');
+            $this->add($element);
+
+            $element = new DatascribeElement\OptionalSelect('position_change_record_id');
+            $valueOptions = [];
+            foreach ($item->records() as $itemRecord) {
+                $valueOptions[$itemRecord->id()] = $itemRecord->displayTitle();
+            }
+            $element->setValueOptions($valueOptions);
+            $element->setAttribute('id', 'position_change_record_id');
             $this->add($element);
         }
     }
