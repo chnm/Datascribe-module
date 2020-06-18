@@ -171,7 +171,7 @@ class RecordController extends AbstractActionController
 
         $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
-            'limit' => 4,
+            'limit' => 10,
             'sort_by' => 'position',
             'sort_order' => 'desc',
         ])->getContent();
@@ -230,12 +230,12 @@ class RecordController extends AbstractActionController
         $recordsPrevious = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'before_position' => $record->position(),
-            'limit' => 4,
+            'limit' => 10,
         ])->getContent();
         $recordsNext = $this->api()->search('datascribe_records', [
             'datascribe_item_id' => $item->id(),
             'after_position' => $record->position(),
-            'limit' => 4,
+            'limit' => 10,
         ])->getContent();
 
         $view = new ViewModel;
