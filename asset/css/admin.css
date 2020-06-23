@@ -330,7 +330,7 @@
 }
 
 .current-row {
-  overflow-y: hidden;
+  overflow: hidden;
   height: 100%;
 }
 
@@ -423,19 +423,27 @@
   right: 0;
   left: 0;
   bottom: 0;
-  overflow-y: visible;
+  overflow-y: hidden;
   background-color: #fff;
   padding: 6px 20px;
-  height: calc(100% - 6rem);
   z-index: 2;
+  margin-bottom: 0;
+  height: calc(100% - 48px);
 }
 
 .fullscreen .rows .tablesaw-swipe-wrapper {
-  z-index: 1;
+  z-index: 0;
 }
 
-div[role="main"].fullscreen > h1:first-of-type {
+.fullscreen #content > h1:first-of-type {
   z-index: 1;
+  background-color: #fff;
+  left: 0;
+  width: 100%;
+}
+
+.fullscreen .current-row form {
+  overflow: auto;
 }
 
 .common-elements {
@@ -875,7 +883,11 @@ button.sidebar-drawer.collapse:after {
     content: "\f338";
 }
 
-#content.fullscreen {
+body.fullscreen {
+  overflow: hidden;
+}
+
+.fullscreen #content {
   position: absolute;
   top: 0;
   right: 0;

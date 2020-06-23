@@ -75,7 +75,7 @@ $(document).ready(function() {
   });
   
   $('.full-screen').click(function(e) {
-    $('#content').toggleClass('fullscreen');
+    $('body').toggleClass('fullscreen');
     $('.sidebar').toggle();
   });
   
