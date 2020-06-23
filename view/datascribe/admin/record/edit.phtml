@@ -4,131 +4,62 @@ $this->headLink()->appendStylesheet('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2
 $this->headScript()->appendFile('https://cdn.jsdelivr.net/npm/tablesaw@3.1.2/dist/tablesaw.jquery.js');
 $this->headScript()->appendFile($this->assetUrl('js/admin/record-form.js', 'Datascribe'));
 $form->prepare();
-$lastSaved = $record->modified() ?? $record->created();
-$guidelines = $dataset->guidelines();
+$fieldsets = $form->get('o-module-datascribe:value')->getFieldsets();
 ?>
-
 <?php echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit')); ?>
-
 <div class="rows">
-<?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records'), 'previousNext' => 'previous']); ?>
-
-<div class="current-row horizontal">
-
-<div class="row-controls">
-    <button type="button" class="full-screen"><?php echo $this->translate('Focus mode'); ?></button>
-    <div class="layout">
-        <label><?php echo $this->translate('Layout'); ?></label>
-        <button type="button" name="horizontal" class="horizontal active" aria-label="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" disabled=""></button>
-        <button type="button" name="vertical" class="vertical" aria-label="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>"></button>
-    </div>
-    <?php if($guidelines): ?>
-    <button type="button" class="open-guidelines"><?php echo $this->translate('Guidelines'); ?></button>
-    <?php endif; ?>
-</div>
-
-<?php echo $this->partial('media-viewer', ['oItem' => $oItem]); ?>
-
-<?php echo $this->form()->openTag($form); ?>
-    <?php echo $this->formElement($form->get('csrf')); ?>
-    
-    <div id="page-actions">
-        <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
-        <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
-        <button><?php echo $this->translate('Save'); ?></button>
-    </div>
-    
-    <?php foreach ($form->get('o-module-datascribe:value')->getFieldsets() as $fieldset): ?>
-    <?php
-    $field = $fieldset->getOption('datascribe_field');
-    $value = $fieldset->getOption('datascribe_value');
-    ?>
-    <fieldset>
-        <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
-        <?php if ($fieldDescription = $field->description()): ?>
-        <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
-        <?php endif; ?>
-        <?php if ($field->isRequired()): ?>
-        <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
-        <?php endif; ?>
-        <?php if ($field->dataTypeIsUnknown()): ?>
-        <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>
-        <?php elseif ($value && !$value->textIsValid()): ?>
-        <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form.')); ?>
-        <?php elseif ($value && $value->isInvalid()): ?>
-        <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is marked as invalid but does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
-        <?php endif; ?>
-        <?php if ($fieldset->has('invalid_value_text')): ?>
-        <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
-        <?php endif; ?>
-        <div class="value-elements">
-            <?php echo $this->formCollection($fieldset->get('data'), false); ?>
-        </div>
-        <div class="common-elements">
-            <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
-            <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>
-            <label class="set-null-checkbox"><?php echo $this->translate('Reset value'); ?><?php echo $this->formElement($fieldset->get('set_null')); ?></label>
-        </div>
-    </fieldset>
-    <?php endforeach; ?>
-    
-    <div class="sidebar always-open">
-        <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
-        <div class="meta-group">
-            <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
-            <div class="last-saved-timestamp"><?php echo sprintf($this->translate('Last saved: %s on %s'), $lastSaved->format('g:i:sa'), $lastSaved->format('M j, Y')); ?></div>
-        </div>
-        <h3><?php echo $this->translate('Record actions'); ?></h3>
-        <?php if ($form->has('o-module-datascribe:needs_review')): ?>
-        <div class="meta-group checkbox">
-            <h4><?php echo $this->translate('Needs review'); ?></h4>
-            <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_review')); ?></div>
-        </div>
-        <?php endif; ?>
-        <?php if ($form->has('o-module-datascribe:needs_work')): ?>
-        <div class="meta-group checkbox">
-            <h4><?php echo $this->translate('Needs work'); ?></h4>
-            <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:needs_work')); ?></div>
-        </div>
-        <?php endif; ?>
-        <?php if ($form->has('position_change_record_id')): ?>
-        <div class="meta-group">
-            <h4><?php echo $this->translate('Position'); ?></h4>
-            <div class="value">
-                <?php echo $this->formElement($form->get('position_change_direction')); ?>
-                <?php echo $this->formElement($form->get('position_change_record_id')); ?>
+    <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records'), 'previousNext' => 'previous']); ?>
+    <div class="current-row horizontal">
+        <?php echo $this->partial('form/row-controls'); ?>
+        <?php echo $this->partial('form/media-viewer'); ?>
+        <?php echo $this->form()->openTag($form); ?>
+            <?php echo $this->formElement($form->get('csrf')); ?>
+            <div id="page-actions">
+                <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
+                <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
+                <button><?php echo $this->translate('Save'); ?></button>
             </div>
-        </div>
-        <?php endif; ?>
-        <?php if ($form->has('o-module-datascribe:transcriber_notes')): ?>
-        <div class="meta-group">
-            <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
-            <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
-        </div>
-        <?php endif; ?>
-        <?php if ($form->has('o-module-datascribe:reviewer_notes')): ?>
-        <div class="meta-group">
-            <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
-            <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
-        </div>
-        <?php endif; ?>
-        <?php echo $this->partial('show-details'); ?>
+            <?php if ($fieldsets): ?>
+            <?php foreach ($fieldsets as $fieldset): ?>
+            <?php
+            $field = $fieldset->getOption('datascribe_field');
+            $value = $fieldset->getOption('datascribe_value');
+            ?>
+            <fieldset>
+                <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
+                <?php if ($fieldDescription = $field->description()): ?>
+                <?php echo sprintf('<p>%s</p>', $fieldDescription); ?>
+                <?php endif; ?>
+                <?php if ($field->isRequired()): ?>
+                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
+                <?php endif; ?>
+                <?php if ($field->dataTypeIsUnknown()): ?>
+                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>
+                <?php elseif ($value && !$value->textIsValid()): ?>
+                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form.')); ?>
+                <?php elseif ($value && $value->isInvalid()): ?>
+                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is marked as invalid but does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
+                <?php endif; ?>
+                <?php if ($fieldset->has('invalid_value_text')): ?>
+                <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
+                <?php endif; ?>
+                <div class="value-elements">
+                    <?php echo $this->formCollection($fieldset->get('data'), false); ?>
+                </div>
+                <div class="common-elements">
+                    <label><?php echo $this->translate('Is missing'); ?><?php echo $this->formElement($fieldset->get('is_missing')); ?></label>
+                    <label><?php echo $this->translate('Is illegible'); ?><?php echo $this->formElement($fieldset->get('is_illegible')); ?></label>
+                    <label class="set-null-checkbox"><?php echo $this->translate('Reset value'); ?><?php echo $this->formElement($fieldset->get('set_null')); ?></label>
+                </div>
+            </fieldset>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <?php echo $this->partial('form/no-resources'); ?>
+            <?php endif; ?>
+            <?php echo $this->partial('form/sidebar', ['action' => 'edit', 'form' => $form, 'record' => $record]); ?>
+        <?php echo $this->form()->closeTag(); ?>
     </div>
-
-<?php echo $this->form()->closeTag(); ?>
+    <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsNext, 'heading' => $this->translate('Next records')]); ?>
+    <?php echo $this->partial('form/guidelines'); ?>
 </div>
-
-<?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsNext, 'heading' => $this->translate('Next records')]); ?>
-
-<?php if ($guidelines): ?>
-<div class="guidelines-container closed">
-    <div class="guidelines-content">
-      <button type="button" class="close-guidelines" aria-label="<?php echo $this->translate('Close'); ?>" title="<?php echo $this->translate('Close'); ?>"></button>
-      <?php echo $guidelines; ?>
-    </div>
-</div>
-<?php endif; ?>
-
-</div>
-
 <?php echo $this->deleteConfirm($record, 'record'); ?>
