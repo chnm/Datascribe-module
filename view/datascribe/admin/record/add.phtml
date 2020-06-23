@@ -10,6 +10,7 @@ $guidelines = $dataset->guidelines();
 
 <?php echo $this->pageTitle($item->item()->title(), 1, $this->translate('DataScribe: Item'), $this->translate('New record')); ?>
 
+<div class="rows">
 <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records'), 'previousNext' => 'previous']); ?>
 
 <div class="current-row horizontal">
@@ -115,6 +116,7 @@ $guidelines = $dataset->guidelines();
 </div>
 
 <?php echo $this->form()->closeTag(); ?>
+</div>
 
 <?php if ($guidelines): ?>
 <div class="guidelines-container closed">
