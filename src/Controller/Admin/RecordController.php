@@ -177,6 +177,7 @@ class RecordController extends AbstractActionController
         ])->getContent();
 
         $view = new ViewModel;
+        $view->setVariable('action', 'add');
         $view->setVariable('form', $form);
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
@@ -239,6 +240,7 @@ class RecordController extends AbstractActionController
         ])->getContent();
 
         $view = new ViewModel;
+        $view->setVariable('action', 'edit');
         $view->setVariable('form', $form);
         $view->setVariable('project', $project);
         $view->setVariable('dataset', $dataset);
