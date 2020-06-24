@@ -50,12 +50,13 @@ if ('add' === $action) {
             $value = $fieldset->getOption('datascribe_value');
             ?>
             <fieldset>
+                <?php if ($field->isRequired()): ?>
+                <?php echo sprintf('<legend>%1$s<span class="required" aria-label="%2$s" title="%2$s"></span></legend>', $field->name(), $this->translate('Required')); ?>
+                <?php else: ?>
                 <?php echo sprintf('<legend>%s</legend>', $field->name()); ?>
+                <?php endif; ?>
                 <?php if ($fieldDescription = $field->description()): ?>
                 <?php echo sprintf('<p class="description">%s</p>', $fieldDescription); ?>
-                <?php endif; ?>
-                <?php if ($field->isRequired()): ?>
-                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field is required. The value will be marked as invalid if not completed.')); ?>
                 <?php endif; ?>
                 <?php if ('add' === $action): ?>
                 <?php if ($field->dataTypeIsUnknown()): ?>

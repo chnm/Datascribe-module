@@ -390,10 +390,7 @@
   overflow-y: scroll;
 }
 
-.current-row fieldset {
-  margin: 0;
-}
-
+.current-row fieldset,
 .current-row fieldset p {
   margin: 0;
 }
@@ -402,8 +399,21 @@
   margin-bottom: 12px;
 }
 
+.current-row .required:after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f069";
+  font-size: 12px;
+  color: #A91919;
+  margin-left: 6px;
+  vertical-align: top;
+}
+
 .current-row legend {
   padding: 6px 0;
+}
+
+.current-row .required + legend {
+  width: calc(100% - 36px);
 }
 
 .current-row .panzoom-container {
