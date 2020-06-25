@@ -24,6 +24,8 @@ $(document).ready(function() {
       });
   }
   
+  applyPanzoom($('.media-render'));
+
   // Allows media to be rotated.
   var setRotation = function(obj, direction) {
       var matrix = obj.css("-webkit-transform")
@@ -78,7 +80,7 @@ $(document).ready(function() {
   });
   
   // Manages a select that switches the active media being viewed.
-
+  var mediaRenderDiv = $('.media-render');
   var currentImage = $('.media-render img');
   var mediaSelect = $('.media-select select');
   var mediaCount = $('.media-select select option').length;
@@ -86,11 +88,13 @@ $(document).ready(function() {
   var mediaPrevButton = $('.media-select .previous.button');
   var mediaNextButton = $('.media-select .next.button');
 
-  var replaceImage = function(mediaUrl, mediaText, mediaIndex, mediaSelectorType) {
+  var replaceImage = function(mediaUrl, mediaText, mediaIndex, mediaSelectorType, resetImage = true) {
       $.get(mediaUrl, function(data) {
         currentImage.attr('src', mediaUrl);
         currentImage.attr('title', mediaText);
-        $('.reset').trigger('click');
+        if (resetImage) {
+          $('.reset').trigger('click');
+        }
       });    
 
       if (mediaSelectorType !== 'select') {
@@ -153,26 +157,22 @@ $(document).ready(function() {
   });
 
 // Preserve media viewer state.
-const mediaRenderDiv = $('.media-render');
-const mediaRenderImg = $('.media-render img');
-//~ const mediaSelect = $('.media-select select');
 const urlParams = new URLSearchParams(window.location.search);
-
-applyPanzoom($('.media-render'));
-if (urlParams.get('media_select_value')) {
-    const mediaSelectValue = window.atob(urlParams.get('media_select_value'));
-    mediaSelect.val(mediaSelectValue);
-    mediaSelect.trigger('change');
-}
 if (urlParams.get('media_render_style')) {
     mediaRenderDiv.attr('style', window.atob(urlParams.get('media_render_style')));
 }
 if (urlParams.get('media_render_img_style')) {
-    mediaRenderImg.attr('style', window.atob(urlParams.get('media_render_img_style')));
+    currentImage.attr('style', window.atob(urlParams.get('media_render_img_style')));
+}
+if (urlParams.get('media_select_value')) {
+    const mediaSelectValue = window.atob(urlParams.get('media_select_value'));
+    mediaSelect.val(mediaSelectValue);
+    replaceImage(mediaSelect.val(), mediaSelect.text(), mediaSelect.find(':selected').index() + 1, 'select', false);
+
 }
 $('#record-form').on('submit', function(e) {
     const mediaRenderStyle = encodeURIComponent(window.btoa(mediaRenderDiv.attr('style')));
-    const mediaRenderImgStyle = encodeURIComponent(window.btoa(mediaRenderImg.attr('style')));
+    const mediaRenderImgStyle = encodeURIComponent(window.btoa(currentImage.attr('style')));
     const mediaSelectValue = encodeURIComponent(window.btoa(mediaSelect.val()));
     window.history.replaceState({}, null, `?media_render_style=${mediaRenderStyle}&media_render_img_style=${mediaRenderImgStyle}&media_select_value=${mediaSelectValue}`);
 });
