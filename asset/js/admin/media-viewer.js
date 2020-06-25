@@ -25,7 +25,7 @@ $(document).ready(function() {
   }
   
   applyPanzoom($('.media-render'));
-
+  
   // Allows media to be rotated.
   var setRotation = function(obj, direction) {
       var matrix = obj.css("-webkit-transform")
