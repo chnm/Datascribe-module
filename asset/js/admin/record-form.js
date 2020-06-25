@@ -2,10 +2,8 @@ $(document).ready(function() {
 
 $('.set-null-checkbox input[type="checkbox"]').on('change', function(e) {
     var fieldset = $(this).closest('fieldset');
-    var valueInputs = fieldset.find('div.value-elements :input');
-    var commonInputs = fieldset.find('div.common-elements label:not(.set-null-checkbox) :input');
-    valueInputs.prop('disabled', !fieldset.hasClass('set-to-null'));
-    commonInputs.prop('disabled', !fieldset.hasClass('set-to-null'));
+    var inputs = fieldset.find('div.value-elements :input');
+    inputs.prop('disabled', !fieldset.hasClass('set-to-null'));
     fieldset.toggleClass('set-to-null');
 });
 

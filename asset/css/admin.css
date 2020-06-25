@@ -485,8 +485,7 @@
   position: relative;
 }
 
-.current-row fieldset.set-to-null .field:after,
-.current-row fieldset.set-to-null .common-elements:after {
+.current-row fieldset.set-to-null .field:after {
   content: "";
   position: absolute;
   top: 0;
