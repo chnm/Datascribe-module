@@ -517,6 +517,7 @@
   margin-top: -4px;
   width: calc(100% - 192px);
   height: 44px;
+  line-height: 44px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -551,6 +552,7 @@ legend .data-type-label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.5;
 }
 
 legend .field-label {
