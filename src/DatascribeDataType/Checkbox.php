@@ -68,7 +68,7 @@ class Checkbox implements DataTypeInterface
 
     public function addValueElements(Fieldset $fieldset, array $fieldData, ?string $valueText) : void
     {
-        $element = new Element\Checkbox('value');
+        $element = new DatascribeElement\OptionalCheckbox('value');
         $element->setLabel($fieldData['label'] ?? 'Check'); // @translate
         $element->setUseHiddenElement(true);
         $element->setCheckedValue($fieldData['checked_value'] ?? self::DEFAULT_CHECKED_VALUE);
