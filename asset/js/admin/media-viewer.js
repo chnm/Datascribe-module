@@ -23,8 +23,6 @@ $(document).ready(function() {
           });
       });
   }
-
-  applyPanzoom($('.media-render'));
   
   // Allows media to be rotated.
   var setRotation = function(obj, direction) {
@@ -153,4 +151,30 @@ $(document).ready(function() {
       var newMediaOption = $('.media-select select option:nth-child(' + newMediaIndex + ')');
       replaceImage(newMediaOption.val(), newMediaOption.text(), newMediaIndex, 'button');
   });
+
+// Preserve media viewer state.
+const mediaRenderDiv = $('.media-render');
+const mediaRenderImg = $('.media-render img');
+//~ const mediaSelect = $('.media-select select');
+const urlParams = new URLSearchParams(window.location.search);
+
+applyPanzoom($('.media-render'));
+if (urlParams.get('media_select_value')) {
+    const mediaSelectValue = window.atob(urlParams.get('media_select_value'));
+    mediaSelect.val(mediaSelectValue);
+    mediaSelect.trigger('change');
+}
+if (urlParams.get('media_render_style')) {
+    mediaRenderDiv.attr('style', window.atob(urlParams.get('media_render_style')));
+}
+if (urlParams.get('media_render_img_style')) {
+    mediaRenderImg.attr('style', window.atob(urlParams.get('media_render_img_style')));
+}
+$('#record-form').on('submit', function(e) {
+    const mediaRenderStyle = encodeURIComponent(window.btoa(mediaRenderDiv.attr('style')));
+    const mediaRenderImgStyle = encodeURIComponent(window.btoa(mediaRenderImg.attr('style')));
+    const mediaSelectValue = encodeURIComponent(window.btoa(mediaSelect.val()));
+    window.history.replaceState({}, null, `?media_render_style=${mediaRenderStyle}&media_render_img_style=${mediaRenderImgStyle}&media_select_value=${mediaSelectValue}`);
+});
+
 });

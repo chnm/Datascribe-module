@@ -25,6 +25,7 @@ class RecordForm extends Form
 
     public function init()
     {
+        $this->setAttribute('id', 'record-form');
         $this->addCommonElements();
         $this->addValueElements();
     }

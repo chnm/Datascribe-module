@@ -157,9 +157,9 @@ class RecordController extends AbstractActionController
                     $record = $response->getContent();
                     $this->messenger()->addSuccess('Record successfully created.'); // @translate
                     if (isset($postData['submit-add-another'])) {
-                        return $this->redirect()->toRoute(null, [], true);
+                        return $this->redirect()->toRoute(null, [], ['query' => $this->params()->fromQuery()], true);
                     } elseif (isset($postData['submit-save-progress'])) {
-                        return $this->redirect()->toRoute('admin/datascribe-record-id', ['action' => 'edit', 'record-id' => $record->id()], true);
+                        return $this->redirect()->toRoute('admin/datascribe-record-id', ['action' => 'edit', 'record-id' => $record->id()], ['query' => $this->params()->fromQuery()], true);
                     } else {
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                     }
@@ -218,7 +218,7 @@ class RecordController extends AbstractActionController
                 if ($response) {
                     $this->messenger()->addSuccess('Record successfully edited.'); // @translate
                     if (isset($postData['submit-save-progress'])) {
-                        return $this->redirect()->toRoute(null, [], true);
+                        return $this->redirect()->toRoute(null, [], ['query' => $this->params()->fromQuery()], true);
                     } else {
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                     }
