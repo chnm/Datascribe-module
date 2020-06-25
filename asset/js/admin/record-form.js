@@ -37,4 +37,26 @@ $(document).on('wheel', 'input[type=number]', function (e) {
     $(this).blur();
 });
 
+// Handle form submission.
+$('#record-form').on('submit', function(e) {
+    e.preventDefault();
+    fetch(this.dataset.saveProgressUrl, {
+        method: 'post',
+        mode: 'cors',
+        body: new FormData(this)
+    })
+    .then((response) => {
+        if (!response.ok) {
+            // handle error
+            console.log('error');
+        }
+        return response.json();
+    })
+    .then((data) => {
+        // handle success
+        console.log('success');
+    });
+    return false;
+});
+
 });

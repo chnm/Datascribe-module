@@ -127,6 +127,53 @@ class RecordController extends AbstractActionController
         return $view;
     }
 
+    public function saveProgressAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $item = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id'),
+            $this->params('item-id')
+        );
+        if (!$item) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $oItem = $item->item();
+        $dataset = $item->dataset();
+        $project = $dataset->project();
+
+        $form = $this->getForm(RecordForm::class, [
+            'item' => $item,
+        ]);
+
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->params()->fromPost();
+            $form->setData($postData);
+            $response = $this->getResponse();
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $formData['o-module-datascribe:item']['o:id'] = $item->id();
+                try {
+                    $this->api(null, true)->create('datascribe_records', $formData);
+                    $response->setStatusCode(200); // OK
+                    $response->setContent(json_encode([]));
+                } catch (\Omeka\Api\Exception\ValidationException $e) {
+                    $errorStore = $e->getErrorStore();
+                    $response->setStatusCode(422); // Unprocessable Entity
+                    $response->setContent(json_encode($errorStore->getErrors()));
+                }
+            } else {
+                $response->setStatusCode(422); // Unprocessable Entity
+                $response->setContent(json_encode($form->getMessages()));
+            }
+            return $response;
+        }
+    }
+
     public function addAction()
     {
         $item = $this->datascribe()->getRepresentation(
@@ -145,6 +192,8 @@ class RecordController extends AbstractActionController
         $form = $this->getForm(RecordForm::class, [
             'item' => $item,
         ]);
+        $form->setAttribute('id', 'record-form');
+        $form->setAttribute('data-save-progress-url', $this->url()->fromRoute(null, ['action' => 'save-progress'], true));
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->params()->fromPost();
