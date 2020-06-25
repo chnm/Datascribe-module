@@ -23,7 +23,7 @@ $(document).ready(function() {
           });
       });
   }
-  
+
   applyPanzoom($('.media-render'));
   
   // Allows media to be rotated.
