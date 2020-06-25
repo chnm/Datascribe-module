@@ -231,6 +231,10 @@
   min-height: 30px;
 }
 
+.tablesaw-swipe-wrapper table {
+  table-layout: auto;
+}
+
 .batch-inputs > * {
   position: relative;
   z-index: 1;
