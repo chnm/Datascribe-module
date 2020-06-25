@@ -20,7 +20,7 @@ foreach($oItem->media() as $media) {
           <select name="active-media" id="active-media">
               <?php $i = 0; ?>
               <?php foreach ($imageMedia as $file): ?> 
-              <option name="media-<?php echo $i; ?>" value="<?php echo $file->originalUrl(); ?>"><?php echo $file->displayTitle(); ?></option>
+              <option data-media-id="<?php echo $file->id(); ?>" value="<?php echo $file->originalUrl(); ?>"><?php echo $file->displayTitle(); ?></option>
               <?php $i++; ?>
               <?php endforeach; ?>
           </select>

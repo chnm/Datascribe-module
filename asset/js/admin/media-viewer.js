@@ -157,27 +157,24 @@ $(document).ready(function() {
   });
 
 // Preserve media viewer state.
-const params = new URLSearchParams(localStorage.getItem('datascribe_media_viewer_options'));
-if (params.get('media_render_style')) {
-    mediaRenderDiv.attr('style', window.atob(params.get('media_render_style')));
-}
-if (params.get('media_render_img_style')) {
-    currentImage.attr('style', window.atob(params.get('media_render_img_style')));
-}
-if (params.get('media_select_value')) {
-    const mediaSelectValue = window.atob(params.get('media_select_value'));
-    mediaSelect.val(mediaSelectValue);
+const mediaId = localStorage.getItem('datascribe_media_viewer_media_id');
+const renderStyle = localStorage.getItem('datascribe_media_viewer_render_style');
+const renderImgStyle = localStorage.getItem('datascribe_media_viewer_render_img_style');
+if (mediaId && mediaSelect.children(`option[data-media-id="${mediaId}"]`).length) {
+    // This Omeka item has this Omeka media. Use the saved state.
+    if (renderStyle) {
+        mediaRenderDiv.attr('style', renderStyle);
+    }
+    if (renderImgStyle) {
+        currentImage.attr('style', renderImgStyle);
+    }
+    mediaSelect.children(`option[data-media-id="${mediaId}"]`).prop('selected', true);
     replaceImage(mediaSelect.val(), mediaSelect.text(), mediaSelect.find(':selected').index() + 1, 'select', false);
-
 }
 $('#record-form').on('submit', function(e) {
-    const mediaRenderStyle = encodeURIComponent(window.btoa(mediaRenderDiv.attr('style')));
-    const mediaRenderImgStyle = encodeURIComponent(window.btoa(currentImage.attr('style')));
-    const mediaSelectValue = encodeURIComponent(window.btoa(mediaSelect.val()));
-    localStorage.setItem(
-        `datascribe_media_viewer_options`,
-        `?media_render_style=${mediaRenderStyle}&media_render_img_style=${mediaRenderImgStyle}&media_select_value=${mediaSelectValue}`
-    );
+    localStorage.setItem('datascribe_media_viewer_render_style', mediaRenderDiv.attr('style'));
+    localStorage.setItem('datascribe_media_viewer_render_img_style', currentImage.attr('style'));
+    localStorage.setItem('datascribe_media_viewer_media_id', mediaSelect.children('option:selected').data('mediaId'));
 });
 
 });
