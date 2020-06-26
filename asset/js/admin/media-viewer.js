@@ -157,24 +157,39 @@ $(document).ready(function() {
   });
 
 // Preserve media viewer state.
-const mediaId = localStorage.getItem('datascribe_media_viewer_media_id');
-const renderStyle = localStorage.getItem('datascribe_media_viewer_render_style');
-const renderImgStyle = localStorage.getItem('datascribe_media_viewer_render_img_style');
-if (mediaId && mediaSelect.children(`option[data-media-id="${mediaId}"]`).length) {
-    // This Omeka item has this Omeka media. Use the saved state.
-    if (renderStyle) {
-        mediaRenderDiv.attr('style', renderStyle);
+const mediaViewerState = {
+    mediaId:        localStorage.getItem('datascribe_media_viewer_media_id'),
+    renderStyle:    localStorage.getItem('datascribe_media_viewer_render_style'),
+    renderImgStyle: localStorage.getItem('datascribe_media_viewer_render_img_style'),
+    fullScreen:     localStorage.getItem('datascribe_media_viewer_full_screen'),
+    layout:         localStorage.getItem('datascribe_media_viewer_layout'),
+};
+const mediaOption = mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`);
+if (mediaOption.length) {
+    // Use the saved state if the stored media ID is present for this item.
+    if ('true' === mediaViewerState.fullScreen) {
+        $('.full-screen').click();
     }
-    if (renderImgStyle) {
-        currentImage.attr('style', renderImgStyle);
+    if ('vertical' === mediaViewerState.layout) {
+        $('.layout button[name="vertical"]').click();
     }
-    mediaSelect.children(`option[data-media-id="${mediaId}"]`).prop('selected', true);
-    replaceImage(mediaSelect.val(), mediaSelect.text(), mediaSelect.find(':selected').index() + 1, 'select', false);
+    mediaRenderDiv.attr('style', mediaViewerState.renderStyle);
+    currentImage.attr('style', mediaViewerState.renderImgStyle);
+    mediaOption.prop('selected', true);
+    replaceImage(
+        mediaSelect.val(),
+        mediaSelect.text(),
+        mediaSelect.find(':selected').index() + 1,
+        'select',
+        false
+    );
 }
 $('#record-form').on('submit', function(e) {
-    localStorage.setItem('datascribe_media_viewer_render_style', mediaRenderDiv.attr('style'));
+    localStorage.setItem('datascribe_media_viewer_render_style',     mediaRenderDiv.attr('style'));
     localStorage.setItem('datascribe_media_viewer_render_img_style', currentImage.attr('style'));
-    localStorage.setItem('datascribe_media_viewer_media_id', mediaSelect.children('option:selected').data('mediaId'));
+    localStorage.setItem('datascribe_media_viewer_media_id',         mediaSelect.children('option:selected').data('mediaId'));
+    localStorage.setItem('datascribe_media_viewer_full_screen',      $('body').hasClass('fullscreen'));
+    localStorage.setItem('datascribe_media_viewer_layout',           $('.layout button.active').attr('name'));
 });
 
 });
