@@ -35,12 +35,26 @@ if ('add' === $action) {
             <div id="page-actions">
                 <?php if ('add' === $action): ?>
                 <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
-                <input type="submit" name="submit-add-another" class="button" value="<?php echo $this->escapeHtml($this->translate('Add +')); ?>">
-                <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Add')); ?>">
+                <div id="page-action-menu">
+                    <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
+                        <?php echo $this->translate('Save and&hellip;'); ?></a>
+                        <ul class="collapsible">
+                            <li><input type="submit" name="submit-add-another" class="button" value="<?php echo $this->escapeHtml($this->translate('Add another ')); ?>"></li>
+                            <li><input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to records')); ?>"></li>
+                            <li><input type="submit" name="submit-save-progress" class="button" value="<?php echo $this->escapeHtml($this->translate('Stay on this record')); ?>"></li>
+                        </ul>
+                </div>
                 <?php else: ?>
-                 <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
-                 <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
-                 <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
+                    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
+                    <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
+                    <div id="page-action-menu">
+                        <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
+                            <?php echo $this->translate('Save and&hellip;'); ?></a>
+                            <ul class="collapsible">
+                                <li><input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to records')); ?>"></li>
+                                <li><input type="submit" name="submit-save-progress" class="button" value="<?php echo $this->escapeHtml($this->translate('Stay on this record')); ?>"></li>
+                            </ul>
+                    </div>
                 <?php endif; ?>
             </div>
             <?php if ($fieldsets): ?>
@@ -98,14 +112,13 @@ if ('add' === $action) {
             <?php endif; ?>
             <div class="sidebar always-open">
                 <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
+                <h3><?php echo $this->translate('Record actions'); ?></h3>
+                <?php if ('edit' === $action): ?>
                 <div class="meta-group">
-                    <input type="submit" name="submit-save-progress" class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
-                    <?php if ('edit' === $action): ?>
                     <?php $lastSaved = $record->modified() ?? $record->created(); ?>
                     <div class="last-saved-timestamp"><?php echo sprintf($this->translate('Last saved: %s on %s'), $lastSaved->format('g:i:sa'), $lastSaved->format('M j, Y')); ?></div>
-                    <?php endif; ?>
                 </div>
-                <h3><?php echo $this->translate('Record actions'); ?></h3>
+                <?php endif; ?>
                 <?php if ($form->has('o-module-datascribe:needs_review')): ?>
                 <div class="meta-group checkbox">
                     <h4><?php echo $this->translate('Needs review'); ?></h4>
