@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
 const mediaRenderDiv = $('.media-render');
 const mediaRenderImage = $('.media-render img');
 const mediaSelect = $('.media-select select');
@@ -7,15 +7,118 @@ const mediaSelectNumber = $('.media-select input[type="number"]');
 const mediaPrevButton = $('.media-select .previous.button');
 const mediaNextButton = $('.media-select .next.button');
 
-initMediaViewer();
+/**
+ * Initialize the media viewer.
+ */
+function initMediaViewer() {
+    applyPanzoom(mediaRenderDiv);
+    const mediaViewerState = {
+        mediaId:      localStorage.getItem('datascribe_media_viewer_media_id'),
+        transform:    localStorage.getItem('datascribe_media_viewer_transform'),
+        imgTransform: localStorage.getItem('datascribe_media_viewer_img_transform'),
+        fullScreen:   localStorage.getItem('datascribe_media_viewer_full_screen'),
+        layout:       localStorage.getItem('datascribe_media_viewer_layout'),
+    };
+    const savedMediaOption = mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`);
+    if (savedMediaOption.length) {
+        // Use the saved state if the stored media ID is present for this item.
+        savedMediaOption.prop('selected', true);
+        mediaSelect.trigger('change');
+        mediaRenderDiv.css('transform', mediaViewerState.transform);
+        mediaRenderImage.css('transform', mediaViewerState.imgTransform);
+        if ('true' === mediaViewerState.fullScreen) {
+            $('.full-screen').click();
+        }
+        if ('vertical' === mediaViewerState.layout) {
+            $('.layout button[name="vertical"]').click();
+        }
+    }
+}
+/**
+ * Apply pan/zoom functionality to media viewer.
+ */
+function applyPanzoom(element) {
+    const container = element.parent();
+    if (!container.hasClass('image')) {
+        return;
+    }
+    $panzoom = element.panzoom({
+        $zoomIn: container.find(".zoom-in"),
+        $zoomOut: container.find(".zoom-out"),
+        $reset: container.find(".reset"),
+        maxScale: 20
+    });
+    container.on('mousewheel.focal', function(e) {
+        e.preventDefault();
+        const delta = e.delta || e.originalEvent.wheelDelta;
+        const zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+        $panzoom.panzoom('zoom', zoomOut, {
+            increment: 0.1,
+            animate: false,
+        focal: e
+        });
+    });
+}
+/**
+ * Set image rotation.
+ */
+function setRotation(obj, direction) {
+    let angle = 0;
+    const matrix = obj.css("-webkit-transform")
+        || obj.css("-moz-transform")
+        || obj.css("-ms-transform")
+        || obj.css("-o-transform")
+        || obj.css("transform");
+    if (matrix !== 'none') {
+        const values = matrix.split('(')[1].split(')')[0].split(',');
+        const a = values[0];
+        const b = values[1];
+        angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+    }
+    const currentRotation = (angle < 0) ? angle + 360 : angle;
+    const newRotation = (direction == 'left') ? currentRotation - 90 : currentRotation + 90;
+    obj.css('transform', 'rotate(' + newRotation + 'deg)');
+}
+/**
+ * Replace the image.
+ */
+function replaceImage(mediaUrl, mediaText, mediaIndex, mediaSelectorType) {
+    mediaRenderImage.attr('src', mediaUrl);
+    mediaRenderImage.attr('title', mediaText);
+    $('.reset').trigger('click');
+    if (mediaSelectorType !== 'select') {
+        mediaSelect.val(mediaUrl);
+    }
+    if ((mediaSelectorType !== 'number') && (mediaSelectNumber.val() !== mediaIndex)) {
+        mediaSelectNumber.val(mediaIndex);
+    }
+    if (mediaSelectNumber.val() == 1) {
+        mediaPrevButton.addClass('inactive').attr('disabled', true);
+    } else {
+        mediaPrevButton.removeClass('inactive').attr('disabled', false);
+    }
+    if (mediaSelectNumber.val() == mediaSelect.children('option').length) {
+        mediaNextButton.addClass('inactive').attr('disabled', true);
+    } else {
+        mediaNextButton.removeClass('inactive').attr('disabled', false);
+    }
+}
+/**
+ * Activate media pagination number.
+ */
+function activateMediaPaginationNumber(mediaNumber) {
+    const mediaIndex = mediaNumber.val();
+    const mediaOption = $('.media-select select option:nth-child(' + mediaIndex + ')');
+    replaceImage(mediaOption.val(), mediaOption.text(), 'number');
+}
 
 // Handle form submission.
 $('#record-form').on('submit', function(e) {
-    localStorage.setItem('datascribe_media_viewer_render_style',     mediaRenderDiv.attr('style'));
-    localStorage.setItem('datascribe_media_viewer_render_img_style', mediaRenderImage.attr('style'));
-    localStorage.setItem('datascribe_media_viewer_media_id',         mediaSelect.children('option:selected').data('mediaId'));
-    localStorage.setItem('datascribe_media_viewer_full_screen',      $('body').hasClass('fullscreen'));
-    localStorage.setItem('datascribe_media_viewer_layout',           $('.layout button.active').attr('name'));
+    localStorage.setItem('datascribe_media_viewer_transform',     mediaRenderDiv.css('transform'));
+    localStorage.setItem('datascribe_media_viewer_img_transform', mediaRenderImage.css('transform'));
+    localStorage.setItem('datascribe_media_viewer_media_id',      mediaSelect.children('option:selected').data('mediaId'));
+    localStorage.setItem('datascribe_media_viewer_full_screen',   $('body').hasClass('fullscreen'));
+    localStorage.setItem('datascribe_media_viewer_layout',        $('.layout button.active').attr('name'));
 });
 // Handle the left image rotation control.
 $('.panzoom-container').on('click', '.rotate-left', function(e) {
@@ -83,119 +186,6 @@ mediaNextButton.click(function() {
     replaceImage(newMediaOption.val(), newMediaOption.text(), newMediaIndex, 'button');
 });
 
-/**
- * Initialize the media viewer.
- */
-function initMediaViewer() {
-    applyPanzoom(mediaRenderDiv);
-    const mediaViewerState = {
-        mediaId:        localStorage.getItem('datascribe_media_viewer_media_id'),
-        renderStyle:    localStorage.getItem('datascribe_media_viewer_render_style'),
-        renderImgStyle: localStorage.getItem('datascribe_media_viewer_render_img_style'),
-        fullScreen:     localStorage.getItem('datascribe_media_viewer_full_screen'),
-        layout:         localStorage.getItem('datascribe_media_viewer_layout'),
-    };
-    const savedMediaOption = mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`);
-    if (savedMediaOption.length) {
-        // Use the saved state if the stored media ID is present for this item.
-        if ('true' === mediaViewerState.fullScreen) {
-            $('.full-screen').click();
-        }
-        if ('vertical' === mediaViewerState.layout) {
-            $('.layout button[name="vertical"]').click();
-        }
-        mediaRenderDiv.attr('style', mediaViewerState.renderStyle);
-        mediaRenderImage.attr('style', mediaViewerState.renderImgStyle);
-        savedMediaOption.prop('selected', true);
-        replaceImage(
-            mediaSelect.val(),
-            mediaSelect.text(),
-            mediaSelect.find(':selected').index() + 1,
-            'select',
-            false
-        );
-    }
-}
-/**
- * Apply pan/zoom functionality to media viewer.
- */
-function applyPanzoom(element) {
-    const container = element.parent();
-    if (!container.hasClass('image')) {
-        return;
-    }
-    $panzoom = element.panzoom({
-        $zoomIn: container.find(".zoom-in"),
-        $zoomOut: container.find(".zoom-out"),
-        $reset: container.find(".reset"),
-        maxScale: 20
-    });
-    container.on('mousewheel.focal', function(e) {
-        e.preventDefault();
-        const delta = e.delta || e.originalEvent.wheelDelta;
-        const zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
-        $panzoom.panzoom('zoom', zoomOut, {
-            increment: 0.1,
-            animate: false,
-        focal: e
-        });
-    });
-}
-/**
- * Set image rotation.
- */
-function setRotation(obj, direction) {
-    let angle = 0;
-    const matrix = obj.css("-webkit-transform")
-        || obj.css("-moz-transform")
-        || obj.css("-ms-transform")
-        || obj.css("-o-transform")
-        || obj.css("transform");
-    if (matrix !== 'none') {
-        const values = matrix.split('(')[1].split(')')[0].split(',');
-        const a = values[0];
-        const b = values[1];
-        angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
-    }
-    const currentRotation = (angle < 0) ? angle + 360 : angle;
-    const newRotation = (direction == 'left') ? currentRotation - 90 : currentRotation + 90;
-    obj.css('transform', 'rotate(' + newRotation + 'deg)');
-}
-/**
- * Replace the image.
- */
-function replaceImage(mediaUrl, mediaText, mediaIndex, mediaSelectorType, resetImage = true) {
-    $.get(mediaUrl, function(data) {
-        mediaRenderImage.attr('src', mediaUrl);
-        mediaRenderImage.attr('title', mediaText);
-        if (resetImage) {
-            $('.reset').trigger('click');
-        }
-    });    
-    if (mediaSelectorType !== 'select') {
-        mediaSelect.val(mediaUrl);          
-    }
-    if ((mediaSelectorType !== 'number') && (mediaSelectNumber.val() !== mediaIndex)) {
-        mediaSelectNumber.val(mediaIndex);
-    }
-    if (mediaSelectNumber.val() == 1) {
-        mediaPrevButton.addClass('inactive').attr('disabled', true);
-    } else {
-        mediaPrevButton.removeClass('inactive').attr('disabled', false);
-    }
-    if (mediaSelectNumber.val() == mediaSelect.children('option').length) {
-        mediaNextButton.addClass('inactive').attr('disabled', true);
-    } else {
-        mediaNextButton.removeClass('inactive').attr('disabled', false);
-    }
-}
-/**
- * Activate media pagination number.
- */
-function activateMediaPaginationNumber(mediaNumber) {
-    const mediaIndex = mediaNumber.val();
-    const mediaOption = $('.media-select select option:nth-child(' + mediaIndex + ')');
-    replaceImage(mediaOption.val(), mediaOption.text(), 'number');
-}
+initMediaViewer();
 
 });
