@@ -12,26 +12,26 @@ const mediaNextButton = $('.media-select .next.button');
  */
 function initMediaViewer() {
     applyPanzoom(mediaRenderDiv);
-    const mediaViewerState = {
-        mediaId:      localStorage.getItem('datascribe_media_viewer_media_id'),
-        transform:    localStorage.getItem('datascribe_media_viewer_transform'),
-        imgTransform: localStorage.getItem('datascribe_media_viewer_img_transform'),
-        fullScreen:   localStorage.getItem('datascribe_media_viewer_full_screen'),
-        layout:       localStorage.getItem('datascribe_media_viewer_layout'),
-    };
+    const mediaViewerState = JSON.parse(localStorage.getItem('datascribe_media_viewer'));
+    if (null === mediaViewerState) {
+        // The media viewer has no saved state.
+        return;
+    }
     const savedMediaOption = mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`);
-    if (savedMediaOption.length) {
-        // Use the saved state if the stored media ID is present for this item.
-        savedMediaOption.prop('selected', true);
-        mediaSelect.trigger('change');
-        mediaRenderDiv.css('transform', mediaViewerState.transform);
-        mediaRenderImage.css('transform', mediaViewerState.imgTransform);
-        if ('true' === mediaViewerState.fullScreen) {
-            $('.full-screen').click();
-        }
-        if ('vertical' === mediaViewerState.layout) {
-            $('.layout button[name="vertical"]').click();
-        }
+    if (!savedMediaOption.length) {
+        // The saved media does not belong to this item.
+        return;
+    }
+    // Reestablish the media viewer's saved state.
+    savedMediaOption.prop('selected', true);
+    mediaSelect.trigger('change');
+    mediaRenderDiv.css('transform', mediaViewerState.transform);
+    mediaRenderImage.css('transform', mediaViewerState.imgTransform);
+    if ('true' === mediaViewerState.fullScreen) {
+        $('.full-screen').click();
+    }
+    if ('vertical' === mediaViewerState.layout) {
+        $('.layout button[name="vertical"]').click();
     }
 }
 /**
@@ -114,11 +114,14 @@ function activateMediaPaginationNumber(mediaNumber) {
 
 // Handle form submission.
 $('#record-form').on('submit', function(e) {
-    localStorage.setItem('datascribe_media_viewer_transform',     mediaRenderDiv.css('transform'));
-    localStorage.setItem('datascribe_media_viewer_img_transform', mediaRenderImage.css('transform'));
-    localStorage.setItem('datascribe_media_viewer_media_id',      mediaSelect.children('option:selected').data('mediaId'));
-    localStorage.setItem('datascribe_media_viewer_full_screen',   $('body').hasClass('fullscreen'));
-    localStorage.setItem('datascribe_media_viewer_layout',        $('.layout button.active').attr('name'));
+    const localStorageItems = {
+        transform: mediaRenderDiv.css('transform'),
+        imgTransform: mediaRenderImage.css('transform'),
+        mediaId: mediaSelect.children('option:selected').data('mediaId'),
+        fullScreen: $('body').hasClass('fullscreen'),
+        layout: $('.layout button.active').attr('name'),
+    };
+    localStorage.setItem('datascribe_media_viewer', JSON.stringify(localStorageItems));
 });
 // Handle the left image rotation control.
 $('.panzoom-container').on('click', '.rotate-left', function(e) {
