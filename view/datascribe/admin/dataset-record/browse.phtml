@@ -100,11 +100,12 @@ foreach ($fields as $field) {
     <thead>
         <tr>
             <th scope="col" class="row-select" data-tablesaw-priority="persist">
-                <?php if ($canViewBatchActions): ?>
-                <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
-                <?php endif; ?>
-                <?php echo $this->translate('Record #'); ?>
-            </th>
+                <div class="record-number-cell">
+                    <?php if ($canViewBatchActions): ?>
+                    <input type="checkbox" class="select-all" aria-label="<?php echo $this->translate('Select all'); ?>">
+                    <?php endif; ?>
+                    <span class="record-number"><?php echo $this->translate('Record #'); ?></span>
+                </div>            </th>
             <th class="record-meta last"><?php echo $this->translate('Item'); ?></th>
             <?php foreach ($fields as $field): ?>
             <th scope="col"<?php echo $field->isPrimary() ? ' class="primary-field"' : ''; ?>><?php echo $field->name([

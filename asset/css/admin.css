@@ -176,10 +176,30 @@
   margin-left: auto;
 }
 
+.datascribe.record.browse td:first-child, 
+.datascribe.record.browse th:first-child,
+.tablesaw-swipe .tablesaw-swipe-cellpersist {
+  width: 7rem !important;
+  border-right: 1px solid #dfdfdf;
+}
+
+.tablesaw-swipe-wrapper th,
+.record.browse th {
+  width: 7rem;
+}
+
+.record.browse .select-all {
+  width: auto;
+}
+
 .record.browse .record-number-cell {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.record.browse .record-number {
+  text-align: right;
 }
 
 .record.browse .record-number-cell .actions {
@@ -255,11 +275,6 @@
 
 .tablesaw-swipe-wrapper > .tablesaw-bar + .tablesaw {
   border-radius: 0;
-}
-
-.tablesaw-swipe-wrapper th,
-.record.browse th {
-  width: 7rem;
 }
 
 .meta-group.checkbox {
