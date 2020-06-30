@@ -27,11 +27,11 @@ function initMediaViewer() {
     mediaSelect.trigger('change');
     mediaRenderDiv.css('transform', mediaViewerState.transform);
     mediaRenderImage.css('transform', mediaViewerState.imgTransform);
-    if ('true' === mediaViewerState.fullScreen) {
-        $('.full-screen').click();
+    if (true === mediaViewerState.fullScreen) {
+        $('.full-screen').trigger('click');
     }
     if ('vertical' === mediaViewerState.layout) {
-        $('.layout button[name="vertical"]').click();
+        $('.layout button[name="vertical"]').trigger('click');
     }
 }
 /**
