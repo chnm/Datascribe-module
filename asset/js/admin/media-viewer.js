@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+const mediaViewerDiv = $('.media-viewer');
 const mediaRenderDiv = $('.media-render');
 const mediaRenderImage = $('.media-render img');
 const mediaSelect = $('.media-select select');
@@ -17,14 +18,17 @@ function initMediaViewer() {
         // The media viewer has no saved state.
         return;
     }
-    const savedMediaOption = mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`);
-    if (!savedMediaOption.length) {
+    const mediaIds = mediaViewerDiv.data('mediaIds');
+    if (!mediaIds.includes(mediaViewerState.mediaId)) {
         // The saved media does not belong to this item.
         return;
     }
     // Reestablish the media viewer's saved state.
-    savedMediaOption.prop('selected', true);
-    mediaSelect.trigger('change');
+    mediaViewerDiv.attr('data-media-id-selected', mediaViewerState.mediaId);
+    if (mediaSelect.length) {
+        mediaSelect.children(`option[data-media-id="${mediaViewerState.mediaId}"]`).prop('selected', true);
+        mediaSelect.trigger('change');
+    }
     mediaRenderDiv.css('transform', mediaViewerState.transform);
     mediaRenderImage.css('transform', mediaViewerState.imgTransform);
     if (true === mediaViewerState.fullScreen) {
@@ -102,6 +106,7 @@ function replaceImage(mediaUrl, mediaText, mediaIndex, mediaSelectorType) {
     } else {
         mediaNextButton.removeClass('inactive').attr('disabled', false);
     }
+    mediaViewerDiv.attr('data-media-id-selected', mediaSelect.find(':selected').data('mediaId'));
 }
 /**
  * Activate media pagination number.
@@ -115,11 +120,11 @@ function activateMediaPaginationNumber(mediaNumber) {
 // Handle form submission.
 $('#record-form').on('submit', function(e) {
     const localStorageItems = {
-        transform: mediaRenderDiv.css('transform'),
+        mediaId:      mediaViewerDiv.data('mediaIdSelected'),
+        transform:    mediaRenderDiv.css('transform'),
         imgTransform: mediaRenderImage.css('transform'),
-        mediaId: mediaSelect.children('option:selected').data('mediaId'),
-        fullScreen: $('body').hasClass('fullscreen'),
-        layout: $('.layout button.active').attr('name'),
+        fullScreen:   $('body').hasClass('fullscreen'),
+        layout:       $('.layout button.active').attr('name'),
     };
     localStorage.setItem('datascribe_media_viewer', JSON.stringify(localStorageItems));
 });

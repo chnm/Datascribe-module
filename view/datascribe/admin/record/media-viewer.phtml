@@ -3,38 +3,37 @@ $this->headScript()->appendFile($this->assetUrl('vendor/jquery-panzoom/jquery.pa
 $this->headScript()->appendFile($this->assetUrl('vendor/featherlight/featherlight.min.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
 
-$imageWhitelist = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
+$mediaTypeAllowList = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
 $imageMedia = [];
 foreach($oItem->media() as $media) {
-  $mediaType = $media->mediaType();
-  $mediaRenderer = $media->renderer();
-  if (in_array($mediaType, $imageWhitelist) || (strpos($mediaRenderer, 'youtube') !== false)) {
-    $imageMedia[] = $media;
-  }
+    $mediaRenderer = $media->renderer();
+    if (in_array($media->mediaType(), $mediaTypeAllowList) || (strpos($mediaRenderer, 'youtube') !== false)) {
+        $imageMedia[$media->id()] = $media;
+    }
 }
 ?>
-<div class="media-viewer">
-      <?php $mediaCount = count($imageMedia); ?>
-      <?php if ($mediaCount > 1): ?>
-      <div class="media-select">
-          <select name="active-media" id="active-media">
-              <?php $i = 0; ?>
-              <?php foreach ($imageMedia as $file): ?> 
-              <option data-media-id="<?php echo $file->id(); ?>" value="<?php echo $file->originalUrl(); ?>"><?php echo $file->displayTitle(); ?></option>
-              <?php $i++; ?>
-              <?php endforeach; ?>
-          </select>
-          <nav class="media pagination">
+<div class="media-viewer"
+    data-media-ids="<?php echo $this->escapeHtml(json_encode(array_keys($imageMedia), true)); ?>"
+    data-media-id-selected="<?php echo $this->escapeHtml(key($imageMedia)); ?>">
+    <?php $mediaCount = count($imageMedia); ?>
+    <?php if (1 < $mediaCount): ?>
+    <div class="media-select">
+        <select name="active-media" id="active-media">
+            <?php foreach ($imageMedia as $media): ?> 
+            <option data-media-id="<?php echo $media->id(); ?>" value="<?php echo $media->originalUrl(); ?>"><?php echo $media->displayTitle(); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <nav class="media pagination">
             <input type="number" min="1" max="<?php echo $mediaCount; ?>" aria-label="<?php echo $this->translate('Media'); ?>" name="active-media" value="1">
             <span class="media-count"><?php echo sprintf($this->translate('of %s'), $mediaCount); ?></span>
             <button type="button" aria-label="<?php echo $this->translate('Previous'); ?>" class="previous o-icon-prev button inactive" disabled="disabled"></button>
             <button type="button" aria-label="<?php echo $this->translate('Next'); ?>" class="next o-icon-next button"></button>
-          </nav>
-      </div>
-      <?php endif; ?>
-      <?php if ($mediaCount > 0): ?>
-      <?php $primaryMedia = $oItem->primaryMedia(); ?>
-      <div class="media-container">
+        </nav>
+    </div>
+    <?php endif; ?>
+    <?php if (0 < $mediaCount): ?>
+    <?php $primaryMedia = $oItem->primaryMedia(); ?>
+    <div class="media-container">
         <div class="panzoom-container image">
             <div class="zoom-controls">
                 <button class="zoom-in" aria-label="<?php echo $this->translate('Zoom in'); ?>" title="<?php echo $this->translate('Zoom in'); ?>"></button>
@@ -44,9 +43,9 @@ foreach($oItem->media() as $media) {
                 <button class="reset"><?php echo $this->translate('Reset'); ?></button>
             </div>
             <div class="media-render">
-              <img src="<?php echo $this->escapeHtml($primaryMedia->originalUrl()); ?>" title="<?php echo $primaryMedia->displayTitle(); ?>">
+                <img src="<?php echo $this->escapeHtml($primaryMedia->originalUrl()); ?>" title="<?php echo $primaryMedia->displayTitle(); ?>">
             </div>
         </div>
-      </div>
-      <?php endif; ?>
+    </div>
+    <?php endif; ?>
 </div>
