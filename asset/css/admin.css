@@ -381,9 +381,19 @@
   height: calc(100vh - 180px);
 }
 
+.current-row.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.current-row.horizontal .row-controls {
+  width: 100%;
+}
+
 .current-row.horizontal .media-viewer {
-  width: calc(40% - 6px);
-  float: left;
+  width: 100%;
+  max-width: calc(100% - 812px);
+  min-width: calc(40% - 12px);
   margin-right: 12px;
   position: -webkit-sticky;
   position: sticky;
@@ -393,9 +403,9 @@
 
 .current-row.horizontal form {
   width: calc(60% - 6px);
-  float: right;
+  max-width: 800px;
   overflow-y: scroll;
-  height: calc(100% - 48px);
+  height: calc(100% - 52px);
 }
 
 .current-row.vertical {
@@ -410,7 +420,10 @@
   margin-bottom: 12px;
 }
 
-.current-row.horizontal .media-container,
+.current-row.horizontal .media-container {
+  height: calc(100% - 42px);
+}
+
 .current-row.horizontal .panzoom-container,
 .current-row.vertical .panzoom-container {
   height: 100%;
