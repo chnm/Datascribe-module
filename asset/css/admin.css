@@ -58,7 +58,11 @@
     color: #dfdfdf;
 }
 
-#page-action-menu ul a:hover:before {
+#page-action-menu ul li {
+  position: relative;
+}
+
+#page-action-menu ul li:hover:before {
     content: "";
     position: absolute;
     left: 0;
@@ -69,10 +73,18 @@
 }
 
 #page-action-menu ul li:not(:last-child) a,
-#page-action-menu ul li:not(:last-child) span {
+#page-action-menu ul li:not(:last-child) span,
+#page-action-menu ul li:not(:last-child) [type="submit"] {
     border-bottom: 1px solid #dfdfdf;
 }
 
+#page-action-menu [type="submit"] {
+    background: none;
+    box-shadow: none;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: left;    
+}
 #page-action-menu .expand:after {
     content: "\f0d7";
 }
@@ -702,7 +714,6 @@ fieldset.open .dataset-field-data legend {
 }
 
 .last-saved-timestamp {
-  text-align: center;
   font-size: .875rem;
 }
 
