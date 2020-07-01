@@ -34,28 +34,24 @@ if ('add' === $action) {
             <?php echo $this->formElement($form->get('csrf')); ?>
             <div id="page-actions">
                 <?php if ('add' === $action): ?>
-                <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['class' => 'button']); ?>
+                <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['id' => 'cancel-button', 'class' => 'button']); ?>
+                <?php else: ?>
+                <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['id' => 'cancel-button', 'class' => 'button']); ?>
+                <?php endif; ?>
+                <?php if ('edit' === $action): ?>
+                <a href="#" id="delete-button" class="delete button"><?php echo $this->translate('Delete'); ?></a>
+                <?php endif; ?>
                 <div id="page-action-menu">
                     <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
                         <?php echo $this->translate('Save and&hellip;'); ?></a>
                         <ul class="collapsible">
-                            <li><input type="submit" name="submit-add-another" class="button" value="<?php echo $this->escapeHtml($this->translate('Add another ')); ?>"></li>
-                            <li><input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to records')); ?>"></li>
-                            <li><input type="submit" name="submit-save-progress" class="button" value="<?php echo $this->escapeHtml($this->translate('Stay on this record')); ?>"></li>
+                            <?php if ('add' === $action): ?>
+                            <li><input type="submit" id="submit-add-another-button" name="submit-add-another" value="<?php echo $this->escapeHtml($this->translate('Add another ')); ?>"></li>
+                            <?php endif; ?>
+                            <li><input type="submit" id="submit-button" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to records')); ?>"></li>
+                            <li><input type="submit" id="submit-save-progress-button" name="submit-save-progress" value="<?php echo $this->escapeHtml($this->translate('Stay on this record')); ?>"></li>
                         </ul>
                 </div>
-                <?php else: ?>
-                    <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['class' => 'button']); ?>
-                    <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
-                    <div id="page-action-menu">
-                        <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
-                            <?php echo $this->translate('Save and&hellip;'); ?></a>
-                            <ul class="collapsible">
-                                <li><input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to records')); ?>"></li>
-                                <li><input type="submit" name="submit-save-progress" class="button" value="<?php echo $this->escapeHtml($this->translate('Stay on this record')); ?>"></li>
-                            </ul>
-                    </div>
-                <?php endif; ?>
             </div>
             <?php if ($fieldsets): ?>
             <?php foreach ($fieldsets as $fieldset): ?>

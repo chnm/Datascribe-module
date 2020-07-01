@@ -117,8 +117,24 @@ function activateMediaPaginationNumber(mediaNumber) {
     replaceImage(mediaOption.val(), mediaOption.text(), 'number');
 }
 
+// Handle submit, cancel, and delete button clicks.
+const buttons = $('#cancel-button, #delete-button, #submit-button, #submit-add-another-button, #submit-save-progress-button');
+buttons.on('click', function(e) {
+    const thisButton = $(this);
+    buttons.removeClass('clicked');
+    thisButton.addClass('clicked');
+    if (thisButton.is('#cancel-button, #delete-button')) {
+        // Clear local storage if the clicked button is cancel or delete button.
+        localStorage.clear();
+    }
+});
 // Handle form submission.
 $('#record-form').on('submit', function(e) {
+    if (buttons.filter('.clicked').is('#submit-button')) {
+        // Clear local storage if the clicked button is the normal submit button.
+        localStorage.clear();
+        return true;
+    }
     const localStorageItems = {
         mediaId:      mediaViewerDiv.data('mediaIdSelected'),
         transform:    mediaRenderDiv.css('transform'),
