@@ -175,6 +175,7 @@ $('.layout button').on('click', function(e) {
 $('.full-screen').on('click', function(e) {
     $('body').toggleClass('fullscreen');
     $('.sidebar').toggle();
+    $('#delete-button').toggle();
 });
 // Handle the media selection control.
 mediaSelect.on('change', function() {

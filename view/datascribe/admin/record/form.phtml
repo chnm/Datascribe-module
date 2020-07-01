@@ -33,13 +33,13 @@ if ('add' === $action) {
         <?php echo $this->form()->openTag($form); ?>
             <?php echo $this->formElement($form->get('csrf')); ?>
             <div id="page-actions">
+                <?php if ('edit' === $action): ?>
+                <a href="#" id="delete-button" class="delete button"><?php echo $this->translate('Delete'); ?></a>
+                <?php endif; ?>
                 <?php if ('add' === $action): ?>
                 <?php echo $this->hyperlink($this->translate('Cancel'), $this->url(null, ['action' => 'browse'], true), ['id' => 'cancel-button', 'class' => 'button']); ?>
                 <?php else: ?>
                 <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-record', ['action' => 'browse'], true), ['id' => 'cancel-button', 'class' => 'button']); ?>
-                <?php endif; ?>
-                <?php if ('edit' === $action): ?>
-                <a href="#" id="delete-button" class="delete button"><?php echo $this->translate('Delete'); ?></a>
                 <?php endif; ?>
                 <div id="page-action-menu">
                     <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
