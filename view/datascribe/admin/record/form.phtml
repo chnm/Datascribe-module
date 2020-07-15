@@ -70,11 +70,11 @@ if ('add' === $action) {
                 <?php endif; ?>
                 <?php if ('add' === $action): ?>
                 <?php if ($field->dataTypeIsUnknown()): ?>
-                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be added.')); ?>
+                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be added.')); ?>
                 <?php endif; ?>
                 <?php else: ?>
                 <?php if ($field->dataTypeIsUnknown()): ?>
-                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>
+                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>
                 <?php elseif ($value && !$value->textIsValid()): ?>
                 <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form to update.')); ?>
                 <?php elseif ($value && $value->isInvalid()): ?>
