@@ -561,6 +561,14 @@
   z-index: 2;
 }
 
+.record .error,
+.record .warning {
+    box-shadow: 0 0 0 1px inset;
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin-top: 6px;
+}
+
 /* Form Builder */
 
 #form-builder-fields .dataset-field {

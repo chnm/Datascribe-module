@@ -76,9 +76,9 @@ if ('add' === $action) {
                 <?php if ($field->dataTypeIsUnknown()): ?>
                 <?php echo sprintf('<p class="error">%s</p>', $this->translate('This field\'s data type is unknown. The value cannot be edited.')); ?>
                 <?php elseif ($value && !$value->textIsValid()): ?>
-                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form.')); ?>
+                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This value is invalid. Please correct it below and save this form to update.')); ?>
                 <?php elseif ($value && $value->isInvalid()): ?>
-                <?php echo sprintf('<p class="error">%s</p>', $this->translate('This value is marked as invalid but does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
+                <?php echo sprintf('<p class="warning">%s</p>', $this->translate('This value is marked as invalid but does not appear to be invalid. Either re-validate the dataset or save this form as-is.')); ?>
                 <?php endif; ?>
                 <?php if ($fieldset->has('invalid_value_text')): ?>
                 <?php echo $this->formRow($fieldset->get('invalid_value_text')); ?>
