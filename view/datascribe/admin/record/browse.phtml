@@ -187,7 +187,9 @@ foreach ($fields as $field) {
     <?php if ($item->userIsAllowed('datascribe_add_record')): ?>
     <?php echo $this->hyperlink($this->translate('Add new record'), $this->url(null, ['action' => 'add'], true), ['class' => 'button']); ?>
     <?php endif; ?>
+    <?php if ($item->userIsAllowed('update')): ?>
     <button><?php echo $this->translate('Save'); ?></button>
+    <?php endif; ?>
 </div>
 
 <div class="sidebar always-open">
