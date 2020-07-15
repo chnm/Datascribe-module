@@ -26,7 +26,14 @@ $form->prepare();
     <?php endif; ?>
     <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-item', ['action' => 'browse'], true), ['class' => 'button']); ?>
     <a href="#" class="delete button"><?php echo $this->translate('Delete'); ?></a>
-    <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Save')); ?>">
+    <div id="page-action-menu">
+        <a href="#" class="button expand" aria-label="<?php echo $this->translate('Expand'); ?>" title="<?php echo $this->translate('Expand'); ?>">
+            <?php echo $this->translate('Save and&hellip;'); ?></a>
+            <ul class="collapsible">
+                <li><input type="submit" id="submit-button" name="submit" value="<?php echo $this->escapeHtml($this->translate('Return to dataset items')); ?>"></li>
+                <li><input type="submit" id="submit-save-progress-button" name="submit-save-progress" value="<?php echo $this->escapeHtml($this->translate('Continue editing dataset')); ?>"></li>
+            </ul>
+    </div>
 </div>
 
 <?php echo $this->sectionNav([
@@ -47,13 +54,10 @@ $form->prepare();
     </div>
     <div id="data-types" class="sidebar always-open">
         <button type="button" class="sidebar-drawer collapse" aria-label="<?php echo $this->translate('Collapse'); ?>"></button>
-        <div class="meta-group">
-            <input type="submit" name="submit-save-progress"  class="button" value="<?php echo $this->escapeHtml($this->translate('Save progress')); ?>">
-            <?php if ($dataset->modified()): ?>
-            <div class="last-saved-timestamp"><?php echo sprintf($this->translate('Last saved: %s on %s'), $dataset->modified()->format('g:ia'), $dataset->modified()->format('M j, Y')); ?></div>
-            <?php endif; ?>
-        </div>
         <h3><?php echo $this->translate('Add a field to the form'); ?></h3>
+        <?php if ($dataset->modified()): ?>
+        <div class="last-saved-timestamp"><?php echo sprintf($this->translate('Last saved: %s on %s'), $dataset->modified()->format('g:ia'), $dataset->modified()->format('M j, Y')); ?></div>
+        <?php endif; ?>
         <?php foreach ($form->dataTypes() as $dataTypeName => $dataType): ?>
         <button class="option" data-name="<?php echo $this->escapeHtml($dataTypeName); ?>"><?php echo $this->escapeHtml($this->translate($dataType->getLabel())); ?></button>
         <?php endforeach; ?>
