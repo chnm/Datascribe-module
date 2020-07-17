@@ -230,12 +230,16 @@
   border-right: 1px solid #dfdfdf;
 }
 
+.batch-actions-select {
+  width: calc(25% - 3rem);
+}
+
 .tablesaw-bar {
   position: absolute;
   top: 0;
   right: 0;
   width: 50%;
-  padding: 2px .5rem 0 0;
+  padding: 0 .5rem 0 0;
 }
 
 .primary-field {
@@ -244,7 +248,7 @@
 
 .tablesaw-swipe-wrapper {
   position: relative;
-  padding-top: 2.5rem;
+  padding-top: 2.25rem;
   width: 100%;
 }
 
@@ -253,7 +257,7 @@
   background-color:rgba(0,0,0,0.04);  
   position: absolute;
   top: 0;
-  bottom: 3px;
+  bottom: 0;
   left: -100%;
   right: 0;
   padding: 5px;
@@ -270,17 +274,51 @@
 }
 
 .batch-inputs ~ .tablesaw-swipe-wrapper {
-  margin-top: -2.5rem;
+  margin-top: -2.25rem;
 }
 
 .batch-inputs ~ .tablesaw-swipe-wrapper .tablesaw-bar {
-  margin-top: 4px;
-  width: 50%;
+  width: 75%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar:before {
-  content: none;.
+  content: none;
 } 
+
+.batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar .minimap {
+  display: flex !important;
+  align-items: center;
+  height: 36px;
+  max-width: 75%;
+  line-height: 1;
+  order: 1;
+  margin-left: auto;
+}
+
+.tablesaw-advance {
+  order: 2;
+}
+
+.btn.tablesaw-nav-btn.tablesaw-btn.btn-micro {
+  margin: 0 .1em;
+  vertical-align: bottom;
+}
+
+.tablesaw-advance-dots {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tablesaw-advance-dots li {
+  padding: 0 .2em;
+}
+
+.tablesaw-advance-dots li i {
+  vertical-align: middle;
+}
 
 .tablesaw-swipe-wrapper > .tablesaw-bar + .tablesaw {
   border-radius: 0;
