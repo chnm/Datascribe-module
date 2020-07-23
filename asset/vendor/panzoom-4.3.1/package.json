@@ -1,0 +1,183 @@
+{
+  "_from": "@panzoom/panzoom",
+  "_id": "@panzoom/panzoom@4.3.1",
+  "_inBundle": false,
+  "_integrity": "sha512-VbxaSdJzDelt0nDHMLql6DDoHZWsmtQYD1XjJwVwy85MK093PzUby/g396wxc/0ONH2Br9rJ/nX6wTN0ST5pXA==",
+  "_location": "/@panzoom/panzoom",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@panzoom/panzoom",
+    "name": "@panzoom/panzoom",
+    "escapedName": "@panzoom%2fpanzoom",
+    "scope": "@panzoom",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@panzoom/panzoom/-/panzoom-4.3.1.tgz",
+  "_shasum": "1a1e7f47a9527b85956d8fc5b2987e8251005dc5",
+  "_spec": "@panzoom/panzoom",
+  "_where": "/mnt/1TB/html/omeka-s2/modules/Datascribe",
+  "author": {
+    "name": "Timmy Willison",
+    "email": "4timmywil@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/timmywil/panzoom/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Pan and zoom elements anywhere using native transformations",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@types/mocha": "^7.0.0",
+    "@types/prismjs": "^1.16.1",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "commitlint": "^9.0.1",
+    "concat-md": "^0.3.5",
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "gzip-size-cli": "^3.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "karma": "^5.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-typescript": "^5.0.3",
+    "lint-staged": "^10.2.11",
+    "marked": "^1.1.0",
+    "mocha": "^8.0.1",
+    "prettier": "^2.0.5",
+    "prismjs": "^1.20.0",
+    "puppeteer": "^5.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.20.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "semantic-release": "^17.1.1",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^7.0.5",
+    "typedoc": "^0.17.8",
+    "typedoc-plugin-markdown": "^2.3.1",
+    "typescript": "^3.9.6",
+    "uglify-js": "^3.10.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "files": [
+    "MIT-License.txt",
+    "src",
+    "dist",
+    "README.md"
+  ],
+  "homepage": "https://github.com/timmywil/panzoom#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "keywords": [
+    "panzoom",
+    "pan",
+    "zoom",
+    "draggable",
+    "dragging",
+    "drag"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix ."
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  },
+  "main": "dist/panzoom.js",
+  "name": "@panzoom/panzoom",
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "jsxBracketSameLine": true,
+    "arrowParens": "always",
+    "trailingComma": "none"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "release": {
+    "ci": false,
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npm run docs && npm run build"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "README.md",
+            "package.json",
+            "package-lock.json"
+          ]
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "tagFormat": "${version}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timmywil/panzoom.git"
+  },
+  "scripts": {
+    "build": "npm run clean && rollup --config && npm run minify",
+    "clean": "rm -rf dist/",
+    "demo": "webpack --mode production",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --hideBreadcrumbs --exclude \"**/src/+(css|isAttached|isSVGElement|pointers|shallowClone).ts\" --out docs --readme none src/panzoom.ts && node tasks/docs.js",
+    "eslint": "eslint .",
+    "format": "prettier --write \"**/*.tsx\" \"**/*.ts\" \"**/*.js\" \"**/*.md\"",
+    "lint": "concurrently --raw \"npm run type-check\" \"npm run eslint\" \"npm run prettier\"",
+    "lint:fix": "concurrently --raw \"npm run type-check\" \"lint-staged\"",
+    "minify": "uglifyjs --compress --mangle --comments /Timmy/ --output dist/panzoom.min.js -- dist/panzoom.js && npm run sizeup",
+    "prettier": "prettier --check \"**/*.tsx\" \"**/*.ts\" \"**/*.js\"",
+    "release": "cross-env HUSKY_SKIP_HOOKS=1 semantic-release",
+    "sizeup": "echo \"gzipped size: \" && gzip-size dist/panzoom.min.js",
+    "start": "webpack-dev-server",
+    "test": "npm run lint && npm run test:unit && npm run test:node",
+    "test:node": "npm run build && node test/test-node.js",
+    "test:unit": "karma start",
+    "test:watch": "karma start --singleRun=false --autoWatch",
+    "type-check": "tsc -p tsconfig.json --noEmit"
+  },
+  "types": "dist/src/panzoom.d.ts",
+  "version": "4.3.1"
+}

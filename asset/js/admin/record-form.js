@@ -37,4 +37,20 @@ $(document).on('wheel', 'input[type=number]', function (e) {
     $(this).blur();
 });
 
+// Handle the layout controls.
+$('.layout button').on('click', function(e) {
+    const currentFocus = $(':focus');
+    $('.layout button').toggleClass('active');
+    $('.current-row').toggleClass('horizontal').toggleClass('vertical');
+    $('.layout button:disabled').removeAttr('disabled');
+    $('.layout button.active').attr('disabled', true);
+    currentFocus.focus();
+});
+// Handle the full-screen control.
+$('.full-screen').on('click', function(e) {
+    $('body').toggleClass('fullscreen');
+    $('.sidebar').toggle();
+    $('#delete-button').toggle();
+});
+
 });

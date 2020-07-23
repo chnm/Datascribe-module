@@ -1,51 +1,41 @@
 <?php
-$this->headScript()->appendFile($this->assetUrl('vendor/jquery-panzoom/jquery.panzoom.min.js', 'Datascribe'));
-$this->headScript()->appendFile($this->assetUrl('vendor/featherlight/featherlight.min.js', 'Datascribe'));
+$this->headScript()->appendFile($this->assetUrl('vendor/panzoom-4.3.1/dist/panzoom.min.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
-
-$mediaTypeAllowList = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
-$imageMedia = [];
-foreach($oItem->media() as $media) {
-    $mediaRenderer = $media->renderer();
-    if (in_array($media->mediaType(), $mediaTypeAllowList) || (strpos($mediaRenderer, 'youtube') !== false)) {
-        $imageMedia[$media->id()] = $media;
+$allowedMediaTypes = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
+$medias = [];
+foreach ($oItem->media() as $media) {
+    if (in_array($media->mediaType(), $allowedMediaTypes)) {
+        $medias[$media->id()] = $media;
     }
 }
+$mediaCount = count($medias);
+$mediaPage = 1;
 ?>
-<div class="media-viewer"
-    data-media-ids="<?php echo $this->escapeHtml(json_encode(array_keys($imageMedia), true)); ?>"
-    data-media-id-selected="<?php echo $this->escapeHtml(key($imageMedia)); ?>">
-    <?php $mediaCount = count($imageMedia); ?>
-    <?php if (1 < $mediaCount): ?>
-    <div class="media-select">
-        <select name="active-media" id="active-media">
-            <?php foreach ($imageMedia as $media): ?> 
-            <option data-media-id="<?php echo $media->id(); ?>" value="<?php echo $media->originalUrl(); ?>"><?php echo $media->displayTitle(); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <nav class="media pagination">
-            <input type="number" min="1" max="<?php echo $mediaCount; ?>" aria-label="<?php echo $this->translate('Media'); ?>" name="active-media" value="1">
-            <span class="media-count"><?php echo sprintf($this->translate('of %s'), $mediaCount); ?></span>
-            <button type="button" aria-label="<?php echo $this->translate('Previous'); ?>" class="previous o-icon-prev button inactive" disabled="disabled"></button>
-            <button type="button" aria-label="<?php echo $this->translate('Next'); ?>" class="next o-icon-next button"></button>
-        </nav>
+<div id="media-viewer">
+    <select id="media-select">
+        <?php foreach ($medias as $media): ?>
+        <option value="<?php echo $this->escapeHtml($media->originalUrl()); ?>"><?php echo sprintf($this->translate('%s. %s'), $mediaPage++, $media->displayTitle()); ?></option>
+        <?php endforeach; ?>
+    </select>
+    <nav id="media-pagination">
+        <span><?php echo sprintf(
+            $this->translate('%s of %s'),
+            sprintf('<input id="media-page" type="number" min="1" max="%s" value="1">', $mediaCount),
+            $mediaCount
+        ); ?></span>
+        <button id="media-previous" disabled="disabled"><?php echo $this->translate('Previous'); ?></button>
+        <button id="media-next"><?php echo $this->translate('Next'); ?></button>
+    </nav>
+    <div id="panzoom-buttons">
+        <button id="panzoom-zoom-in"><?php echo $this->translate('Zoom in'); ?></button>
+        <button id="panzoom-zoom-out"><?php echo $this->translate('Zoom out'); ?></button>
+        <button id="panzoom-rotate-left"><?php echo $this->translate('Rotate left'); ?></button>
+        <button id="panzoom-rotate-right"><?php echo $this->translate('Rotate right'); ?></button>
+        <button id="panzoom-reset"><?php echo $this->translate('Reset'); ?></button>
     </div>
-    <?php endif; ?>
-    <?php if (0 < $mediaCount): ?>
-    <?php $primaryMedia = $oItem->primaryMedia(); ?>
-    <div class="media-container">
-        <div class="panzoom-container image">
-            <div class="zoom-controls">
-                <button class="zoom-in" aria-label="<?php echo $this->translate('Zoom in'); ?>" title="<?php echo $this->translate('Zoom in'); ?>"></button>
-                <button class="zoom-out" aria-label="<?php echo $this->translate('Zoom out'); ?>" title="<?php echo $this->translate('Zoom out'); ?>"></button>
-                <button class="rotate-right" aria-label="<?php echo $this->translate('Rotate right'); ?>" title="<?php echo $this->translate('Rotate right'); ?>"></button>
-                <button class="rotate-left" aria-label="<?php echo $this->translate('Rotate left'); ?>" title="<?php echo $this->translate('Rotate left'); ?>"></button>
-                <button class="reset"><?php echo $this->translate('Reset'); ?></button>
-            </div>
-            <div class="media-render">
-                <img src="<?php echo $this->escapeHtml($primaryMedia->originalUrl()); ?>" title="<?php echo $primaryMedia->displayTitle(); ?>">
-            </div>
+    <div id="panzoom-container">
+        <div id="panzoom">
+            <img id="panzoom-img" src="<?php echo $this->escapeHtml($oItem->primaryMedia()->originalUrl()); ?>">
         </div>
     </div>
-    <?php endif; ?>
 </div>
