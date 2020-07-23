@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', e => {
 
 const mediaSelect = document.getElementById('media-select');
+const mediaPageInput = document.getElementById('media-page');
+const previousButton = document.getElementById('media-previous');
+const nextButton = document.getElementById('media-next');
 const panzoomContainer = document.getElementById('panzoom-container');
 const panzoomElem = document.getElementById('panzoom');
 const panzoomImg = document.getElementById('panzoom-img');
@@ -18,7 +21,26 @@ initMediaViewer();
 // Handle media change.
 mediaSelect.addEventListener('change', e => {
     panzoomImg.src = e.target.value;
+    gotoPage(mediaSelect.selectedIndex + 1);
     resetPanzoom();
+});
+// Handle page input enter key.
+mediaPageInput.addEventListener('keydown', e => {
+    if (13 === e.keyCode) {
+        gotoPage(mediaPageInput.value);
+    }
+});
+// Handle page input change.
+mediaPageInput.addEventListener('change', e => {
+    gotoPage(mediaPageInput.value);
+});
+// Handle the previous button.
+previousButton.addEventListener('click', e => {
+    gotoPage(mediaSelect.selectedIndex);
+});
+// Handle the next button.
+nextButton.addEventListener('click', e => {
+    gotoPage(mediaSelect.selectedIndex + 2);
 });
 // Handle the scroll wheel.
 panzoomContainer.addEventListener('wheel', panzoom.zoomWithWheel);
@@ -45,6 +67,11 @@ rotateRightButton.addEventListener('click', e => {
 // Initialize the media viewer.
 function initMediaViewer() {
     panzoom = Panzoom(panzoomElem, {});
+    if (1 < mediaSelect.options.length) {
+        // There is more than one page.
+        mediaPageInput.disabled = false;
+        nextButton.disabled = false;
+    }
 }
 // Reset panzoom.
 function resetPanzoom() {
@@ -54,6 +81,29 @@ function resetPanzoom() {
     // rotating back to 0deg.
     panzoomImg.style.transition = 'none';
     panzoomImg.style.transform = 'none';
+}
+// Go to a page.
+function gotoPage(page) {
+    if (mediaSelect.options.length < page || 1 > page) {
+        // The page is invalid. Reset the pagination.
+        page = 1;
+    }
+    if (1 === page) {
+        previousButton.disabled = true;
+    }
+    if (1 < page) {
+        previousButton.disabled = false;
+    }
+    if (mediaSelect.options.length === page) {
+        nextButton.disabled = true;
+    }
+    if (mediaSelect.options.length > page) {
+        nextButton.disabled = false;
+    }
+    mediaSelect.selectedIndex = page - 1;
+    mediaPageInput.value = page;
+    panzoomImg.src = mediaSelect.value;
+    resetPanzoom();
 }
 
 });

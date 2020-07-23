@@ -20,11 +20,11 @@ $mediaPage = 1;
     <nav id="media-pagination">
         <span><?php echo sprintf(
             $this->translate('%s of %s'),
-            sprintf('<input id="media-page" type="number" min="1" max="%s" value="1">', $mediaCount),
+            sprintf('<input id="media-page" type="number" min="1" max="%s" value="1" disabled="disabled">', $mediaCount),
             $mediaCount
         ); ?></span>
         <button id="media-previous" disabled="disabled"><?php echo $this->translate('Previous'); ?></button>
-        <button id="media-next"><?php echo $this->translate('Next'); ?></button>
+        <button id="media-next" disabled="disabled"><?php echo $this->translate('Next'); ?></button>
     </nav>
     <div id="panzoom-buttons">
         <button id="panzoom-zoom-in"><?php echo $this->translate('Zoom in'); ?></button>
