@@ -20,9 +20,7 @@ initMediaViewer();
 
 // Handle media change.
 mediaSelect.addEventListener('change', e => {
-    panzoomImg.src = e.target.value;
     gotoPage(mediaSelect.selectedIndex + 1);
-    resetPanzoom();
 });
 // Handle page input enter key.
 mediaPageInput.addEventListener('keydown', e => {
