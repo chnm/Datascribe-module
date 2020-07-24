@@ -15,6 +15,7 @@ const resetButton = document.getElementById('panzoom-reset');
 
 let panzoom;
 let rotateDeg = 0;
+let state = {panzoom: {}, rotate: {}, src: null};
 
 initMediaViewer();
 
@@ -47,20 +48,31 @@ zoomInButton.addEventListener('click', panzoom.zoomIn);
 // Handle the zoom out button.
 zoomOutButton.addEventListener('click', panzoom.zoomOut);
 // Handle the reset button.
-resetButton.addEventListener('click', resetPanzoom);
+resetButton.addEventListener('click', e => {
+    panzoom.reset();
+    resetRotate();
+    // Delete the current image's state.
+    delete state.panzoom[panzoomImg.src];
+    delete state.rotate[panzoomImg.src];
+});
 // Handle the rotate left button.
 rotateLeftButton.addEventListener('click', e => {
     rotateDeg = rotateDeg - 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
+    state.rotate[panzoomImg.src] = panzoomImg.style.transform;
 });
 // Handle the rotate right button.
 rotateRightButton.addEventListener('click', e => {
     rotateDeg = rotateDeg + 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
+    state.rotate[panzoomImg.src] = panzoomImg.style.transform;
 });
-
+// Set panzoom state on change.
+panzoomElem.addEventListener('panzoomchange', (event) => {
+    state.panzoom[panzoomImg.src] = event.detail;
+});
 
 // Initialize the media viewer.
 function initMediaViewer() {
@@ -70,15 +82,6 @@ function initMediaViewer() {
         mediaPageInput.disabled = false;
         nextButton.disabled = false;
     }
-}
-// Reset panzoom.
-function resetPanzoom() {
-    panzoom.reset();
-    rotateDeg = 0;
-    // Must set transition to none to prevent the image from unwinding when
-    // rotating back to 0deg.
-    panzoomImg.style.transition = 'none';
-    panzoomImg.style.transform = 'none';
 }
 // Go to a page.
 function gotoPage(page) {
@@ -101,7 +104,35 @@ function gotoPage(page) {
     mediaSelect.selectedIndex = page - 1;
     mediaPageInput.value = page;
     panzoomImg.src = mediaSelect.value;
-    resetPanzoom();
+    applyState();
+}
+// Reset rotation.
+function resetRotate() {
+    // Must set transition to none to prevent the image from unwinding when
+    // rotating back to 0deg.
+    rotateDeg = 0;
+    panzoomImg.style.transition = 'none';
+    panzoomImg.style.transform = 'none';
+}
+// Apply panzoom and rotate state for the current image.
+function applyState() {
+    let panzoomState = state.panzoom[panzoomImg.src];
+    let rotateState = state.rotate[panzoomImg.src];
+
+    if (panzoomState) {
+        panzoom.reset({
+            startScale: panzoomState.scale,
+            startX: panzoomState.x,
+            startY: panzoomState.y
+        });
+    } else {
+        panzoom.reset();
+    }
+    if (rotateState) {
+        panzoomImg.style.transform = rotateState;
+    } else {
+        resetRotate();
+    }
 }
 
 });
