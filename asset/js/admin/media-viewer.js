@@ -73,13 +73,13 @@ rotateRightButton.addEventListener('click', e => {
 panzoomElem.addEventListener('panzoomchange', (event) => {
     state.panzoom[panzoomImg.src] = event.detail;
 });
+// Set the state in local storage on form submit.
+document.getElementById('record-form').addEventListener('submit', e => {
+    localStorage.setItem('datascribe_media_viewer_state', JSON.stringify(state));
+});
 
 // Initialize the media viewer.
 function initMediaViewer() {
-    state = JSON.parse(localStorage.getItem('datascribe_media_viewer_state'));
-    if (null === state) {
-        state = {panzoom: {}, rotate: {}, src: null};
-    }
     rotateDeg = 0
     panzoom = Panzoom(panzoomElem, {});
     if (1 < mediaSelect.options.length) {
@@ -87,6 +87,20 @@ function initMediaViewer() {
         mediaPageInput.disabled = false;
         nextButton.disabled = false;
     }
+    // Get the state from local storage and go to the saved page, if any.
+    state = JSON.parse(localStorage.getItem('datascribe_media_viewer_state'));
+    if (null === state) {
+        state = {panzoom: {}, rotate: {}, src: null};
+    }
+    if (state.src) {
+        let option = mediaSelect.querySelector(`[value="${state.src}"]`);
+        if (option) {
+            option.selected = true;
+        } else {
+            state.src = null;
+        }
+    }
+    gotoPage(mediaSelect.selectedIndex + 1)
 }
 // Go to a page.
 function gotoPage(page) {
@@ -109,12 +123,11 @@ function gotoPage(page) {
     mediaSelect.selectedIndex = page - 1;
     mediaPageInput.value = page;
     panzoomImg.src = mediaSelect.value;
+    state.src = mediaSelect.value;
     applyState();
 }
 // Reset rotation.
 function resetRotate() {
-    // Must set transition to none to prevent the image from unwinding when
-    // rotating back to 0deg.
     rotateDeg = 0;
     panzoomImg.style.transition = 'none';
     panzoomImg.style.transform = 'none';
@@ -123,15 +136,18 @@ function resetRotate() {
 function applyState() {
     let panzoomState = state.panzoom[panzoomImg.src];
     let rotateState = state.rotate[panzoomImg.src];
-
     if (panzoomState) {
-        panzoom.pan(panzoomState.x, panzoomState.y);
         panzoom.zoom(panzoomState.scale);
+        // Must use setTimeout() due to async nature of Panzoom.
+        // @see https://github.com/timmywil/panzoom#a-note-on-the-async-nature-of-panzoom
+        setTimeout(() => panzoom.pan(panzoomState.x, panzoomState.y))
     } else {
         panzoom.reset();
     }
     if (rotateState) {
         rotateDeg = rotateState;
+        // Must set transition to none to prevent the image from unwinding when
+        // rotating back to 0deg.
         panzoomImg.style.transition = 'none';
         panzoomImg.style.transform = `rotate(${rotateState}deg)`;
     } else {
