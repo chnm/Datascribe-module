@@ -125,11 +125,8 @@ function applyState() {
     let rotateState = state.rotate[panzoomImg.src];
 
     if (panzoomState) {
-        panzoom.reset({
-            startScale: panzoomState.scale,
-            startX: panzoomState.x,
-            startY: panzoomState.y
-        });
+        panzoom.pan(panzoomState.x, panzoomState.y);
+        panzoom.zoom(panzoomState.scale);
     } else {
         panzoom.reset();
     }
