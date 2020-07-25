@@ -14,8 +14,8 @@ const rotateRightButton = document.getElementById('panzoom-rotate-right');
 const resetButton = document.getElementById('panzoom-reset');
 
 let panzoom;
-let rotateDeg = 0;
-let state = {panzoom: {}, rotate: {}, src: null};
+let state;
+let rotateDeg;
 
 initMediaViewer();
 
@@ -60,14 +60,14 @@ rotateLeftButton.addEventListener('click', e => {
     rotateDeg = rotateDeg - 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
-    state.rotate[panzoomImg.src] = panzoomImg.style.transform;
+    state.rotate[panzoomImg.src] = rotateDeg;
 });
 // Handle the rotate right button.
 rotateRightButton.addEventListener('click', e => {
     rotateDeg = rotateDeg + 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
-    state.rotate[panzoomImg.src] = panzoomImg.style.transform;
+    state.rotate[panzoomImg.src] = rotateDeg;
 });
 // Set panzoom state on change.
 panzoomElem.addEventListener('panzoomchange', (event) => {
@@ -76,6 +76,11 @@ panzoomElem.addEventListener('panzoomchange', (event) => {
 
 // Initialize the media viewer.
 function initMediaViewer() {
+    state = JSON.parse(localStorage.getItem('datascribe_media_viewer_state'));
+    if (null === state) {
+        state = {panzoom: {}, rotate: {}, src: null};
+    }
+    rotateDeg = 0
     panzoom = Panzoom(panzoomElem, {});
     if (1 < mediaSelect.options.length) {
         // There is more than one page.
@@ -129,7 +134,9 @@ function applyState() {
         panzoom.reset();
     }
     if (rotateState) {
-        panzoomImg.style.transform = rotateState;
+        rotateDeg = rotateState;
+        panzoomImg.style.transition = 'none';
+        panzoomImg.style.transform = `rotate(${rotateState}deg)`;
     } else {
         resetRotate();
     }
