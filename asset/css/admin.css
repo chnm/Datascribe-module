@@ -647,6 +647,11 @@
   margin-bottom: 0;
 }
 
+.dataset-field .sortable-handle {
+  float: left;
+  margin: .5rem .25rem;
+}
+
 legend .data-type-label {
   font-weight: normal;
   font-size: 14px;
