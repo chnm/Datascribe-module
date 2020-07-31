@@ -12,26 +12,25 @@ $mediaCount = count($medias);
 $mediaPage = 1;
 ?>
 <div id="media-viewer">
-    <select id="media-select">
-        <?php foreach ($medias as $media): ?>
-        <option value="<?php echo $this->escapeHtml($media->originalUrl()); ?>"><?php echo sprintf($this->translate('%s. %s'), $mediaPage++, $media->displayTitle()); ?></option>
-        <?php endforeach; ?>
-    </select>
-    <nav id="media-pagination">
-        <span><?php echo sprintf(
-            $this->translate('%s of %s'),
-            sprintf('<input id="media-page" type="number" min="1" max="%s" value="1" disabled="disabled">', $mediaCount),
-            $mediaCount
-        ); ?></span>
-        <button id="media-previous" disabled="disabled"><?php echo $this->translate('Previous'); ?></button>
-        <button id="media-next" disabled="disabled"><?php echo $this->translate('Next'); ?></button>
-    </nav>
+    <div id="media-select-controls">
+        <select id="media-select">
+            <?php foreach ($medias as $media): ?>
+            <option value="<?php echo $this->escapeHtml($media->originalUrl()); ?>"><?php echo sprintf($this->translate('%s. %s'), $mediaPage++, $media->displayTitle()); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <nav id="media-pagination" class="media pagination">
+            <input id="media-page" type="number" min="1" max="<?php echo $mediaCount; ?>" value="1" disabled="disabled">
+            <span class="media-count"><?php echo sprintf($this->translate('of %s'), $mediaCount); ?></span>
+            <button id="media-previous" class="o-icon-prev previous button" disabled="disabled" aria-label="<?php echo $this->translate('Previous'); ?>"></button>
+            <button id="media-next" class="o-icon-next next button" disabled="disabled" aria-label="<?php echo $this->translate('Next'); ?>"></button>
+        </nav>
+    </div>
     <div id="panzoom-buttons">
-        <button id="panzoom-zoom-in"><?php echo $this->translate('Zoom in'); ?></button>
-        <button id="panzoom-zoom-out"><?php echo $this->translate('Zoom out'); ?></button>
-        <button id="panzoom-rotate-left"><?php echo $this->translate('Rotate left'); ?></button>
-        <button id="panzoom-rotate-right"><?php echo $this->translate('Rotate right'); ?></button>
-        <button id="panzoom-reset"><?php echo $this->translate('Reset'); ?></button>
+        <button id="panzoom-zoom-in" aria-label="<?php echo $this->translate('Zoom in'); ?>" title="<?php echo $this->translate('Zoom in'); ?>"></button>
+        <button id="panzoom-zoom-out" aria-label="<?php echo $this->translate('Zoom out'); ?>" title="<?php echo $this->translate('Zoom out'); ?>"></button>
+        <button id="panzoom-rotate-left" aria-label="<?php echo $this->translate('Rotate left'); ?>" title="<?php echo $this->translate('Rotate left'); ?>"></button>
+        <button id="panzoom-rotate-right" aria-label="<?php echo $this->translate('Rotate right'); ?>" title="<?php echo $this->translate('Rotate right'); ?>"></button>
+        <button id="panzoom-reset" ><?php echo $this->translate('Reset'); ?></button>
     </div>
     <div id="panzoom-container">
         <div id="panzoom">

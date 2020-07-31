@@ -440,7 +440,7 @@
   width: 100%;
 }
 
-.current-row.horizontal .media-viewer {
+.current-row.horizontal #media-viewer {
   width: 100%;
   max-width: calc(100% - 812px);
   min-width: calc(40% - 12px);
@@ -462,7 +462,7 @@
   position: relative;
 }
 
-.current-row.vertical .media-viewer {
+.current-row.vertical #media-viewer {
   width: 100%;
   text-align: center;
   height: 50%;
@@ -483,7 +483,7 @@
   height: calc(100% - 42px);  
 }
 
-.current-row.vertical .media-viewer img {
+.current-row.vertical #media-viewer img {
   width: 100%;
 }
 
@@ -524,7 +524,7 @@
   justify-content: center;
 }
 
-.expanded-right .current-row.horizontal .media-viewer,
+.expanded-right .current-row.horizontal #media-viewer,
 .expanded-right .current-row.horizontal form {
   width: calc(50% - 6px);
 }
@@ -844,17 +844,17 @@ button.sidebar-drawer.collapse:after {
 
 /* Media Viewer */
 
-.media-viewer,
+#media-viewer,
 .records-list {
   width: 50%;
 }
 
-.media-select {
+#media-select-controls {
   display: flex;
-  margin-bottom: 6px;
+  margin-bottom: 18px;
 }
 
-.media-viewer select {
+#media-viewer select {
   width: 50%;
 }
 
@@ -878,31 +878,31 @@ button.sidebar-drawer.collapse:after {
   margin: 0;
 }
 
-.media-viewer .media-container {
+#media-viewer .media-container {
   margin-bottom: 6px;
   border: 1px solid #ccc;
 }
 
-.media-viewer .media-render {
+#media-viewer .media-render {
   margin-bottom: 0;
   overflow: hidden;
 }
 
-.media-viewer img {
+#media-viewer img {
   max-width: 100%;
+  width: 100%;
   height: auto;
   vertical-align: bottom;
 }
 
-.zoom-controls {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 1;
-    display: flex;
+#panzoom-buttons {
+  margin: 0 0 -3rem .5rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
 }
 
-.zoom-controls button {
+#panzoom-buttons button {
     position: relative;
     overflow: hidden;
     border-radius: 0;
@@ -915,15 +915,15 @@ button.sidebar-drawer.collapse:after {
     line-height: 21px;
 }
 
-.zoom-controls button:first-child {
+#panzoom-buttons button:first-child {
     border-radius: 3px 0 0 3px;
 }
 
-.zoom-controls button:last-child {
+#panzoom-buttons button:last-child {
     border-radius: 0 3px 3px 0;
 }
 
-.zoom-controls button:after {
+#panzoom-buttons button:after {
     content: "";
     position: absolute;
     top: 0;
@@ -934,24 +934,24 @@ button.sidebar-drawer.collapse:after {
     z-index: -1;
 }
 
-.zoom-controls button:before {
+#panzoom-buttons button:before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
 }
 
-.zoom-in:before {
+#panzoom-zoom-in:before {
     content: "\f00e";
 }
 
-.zoom-out:before {
+#panzoom-zoom-out:before {
     content: "\f010";
 }
 
-.rotate-left:before {
+#panzoom-rotate-left:before {
     content: "\f2ea";
 }
 
-.rotate-right:before {
+#panzoom-rotate-right:before {
     content: "\f2f9";
 }
 
