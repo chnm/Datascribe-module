@@ -126,8 +126,7 @@
 
 .browse .browse-controls > form,
 .browse .browse-controls > div,
-.browse .browse-controls > nav,
-.browse .browse-controls > a {
+.browse .browse-controls > nav {
     width: 50%;
 }
 
@@ -136,20 +135,7 @@
     text-align: right;
 }
 
-.browse-controls .pagination {
-    order: 1;
-}
-
-.browse-controls .sorting {
-    order: 2;
-}
-
-.browse-controls > a {
-  order: 3;
-}
-
 .browse-controls .filtering {
-  order: 4;
   margin-left: 0;
 }
 
