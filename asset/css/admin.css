@@ -420,6 +420,7 @@
 .current-row.horizontal {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
 }
 
 .current-row.horizontal .row-controls {
@@ -517,16 +518,16 @@
 
 .fullscreen .current-row {
   position: fixed;
-  top: 48px;
+  top: 0px;
   right: 0;
   left: 0;
   bottom: 0;
   overflow-y: hidden;
   background-color: #fff;
-  padding: 6px 20px;
+  padding: 56px 20px 6px;
   z-index: 2;
   margin-bottom: 0;
-  height: calc(100% - 48px);
+  height: 100%;
 }
 
 .fullscreen .rows .tablesaw-swipe-wrapper {
@@ -534,10 +535,21 @@
 }
 
 .fullscreen #content > h1:first-of-type {
-  z-index: 1;
+  z-index: 5;
   background-color: #fff;
   left: 0;
+  width: 60%;
+  border-bottom: 0;
+}
+
+.fullscreen #page-actions {
+  border-bottom: 1px solid #dfdfdf;
+  height: auto;
   width: 100%;
+}
+
+.fullscreen #page-actions .button {
+  margin-bottom: 0;
 }
 
 .fullscreen .current-row form {
