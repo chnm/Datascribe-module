@@ -83,4 +83,7 @@ fieldsContainer.on('click', 'button.field-collapse, button.field-expand', functi
     field.find('.field-collapse, .field-expand').toggleClass('active');
     field.toggleClass('closed open');
 });
+new Sortable($('.dataset-fields')[0], {
+  handle: '.sortable-handle'
+});
 });

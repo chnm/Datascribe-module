@@ -612,6 +612,7 @@
   padding: 4px;
   background-color: rgba(0,0,0,0.04);
   margin-bottom: 8px;
+  transform: translateZ(0);
 }
 
 .dataset-field > legend {
@@ -643,6 +644,11 @@
 
 #form-builder-fields .dataset-field.closed legend {
   margin-bottom: 0;
+}
+
+.dataset-field .sortable-handle {
+  float: left;
+  margin: .5rem .25rem;
 }
 
 legend .data-type-label {
