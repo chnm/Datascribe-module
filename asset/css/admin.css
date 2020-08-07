@@ -614,6 +614,7 @@
   padding: 4px;
   background-color: rgba(0,0,0,0.04);
   margin-bottom: 8px;
+  transform: translateZ(0);
 }
 
 .dataset-field > legend {
