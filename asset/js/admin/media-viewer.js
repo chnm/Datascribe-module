@@ -1,20 +1,21 @@
 document.addEventListener('DOMContentLoaded', e => {
 
-const mediaSelect = document.getElementById('media-select');
-const mediaPageInput = document.getElementById('media-page');
-const previousButton = document.getElementById('media-previous');
-const nextButton = document.getElementById('media-next');
-const panzoomContainer = document.getElementById('panzoom-container');
-const panzoomElem = document.getElementById('panzoom');
-const panzoomImg = document.getElementById('panzoom-img');
-const zoomInButton = document.getElementById('panzoom-zoom-in');
-const zoomOutButton = document.getElementById('panzoom-zoom-out');
-const rotateLeftButton = document.getElementById('panzoom-rotate-left');
-const rotateRightButton = document.getElementById('panzoom-rotate-right');
-const resetButton = document.getElementById('panzoom-reset');
-const fullscreenButton = document.getElementById('fullscreen');
-const layoutButtons = document.querySelectorAll('.layout button');
-const deleteButton = document.getElementById('delete-button');
+const mediaSelect            = document.getElementById('media-select');
+const mediaPageInput         = document.getElementById('media-page');
+const previousButton         = document.getElementById('media-previous');
+const nextButton             = document.getElementById('media-next');
+const panzoomContainer       = document.getElementById('panzoom-container');
+const panzoomElem            = document.getElementById('panzoom');
+const panzoomImg             = document.getElementById('panzoom-img');
+const zoomInButton           = document.getElementById('panzoom-zoom-in');
+const zoomOutButton          = document.getElementById('panzoom-zoom-out');
+const rotateLeftButton       = document.getElementById('panzoom-rotate-left');
+const rotateRightButton      = document.getElementById('panzoom-rotate-right');
+const resetButton            = document.getElementById('panzoom-reset');
+const fullscreenButton       = document.getElementById('fullscreen');
+const deleteButton           = document.getElementById('delete-button');
+const horizontalLayoutButton = document.getElementById('horizontal-layout');
+const verticalLayoutButton   = document.getElementById('vertical-layout');
 
 let panzoom;
 let state;
@@ -82,17 +83,15 @@ fullscreenButton.addEventListener('click', e => {
     }
     state.fullscreen[panzoomImg.src] = body.classList.contains('fullscreen');
 });
-// Handle layout buttons.
-layoutButtons.forEach(button => {
-    const currentRow = document.querySelector('.current-row');
-    button.addEventListener('click', e => {
-        layoutButtons.forEach(button => {
-            button.classList.toggle('active');
-            button.disabled = !button.disabled;
-        });
-        currentRow.classList.toggle('horizontal');
-        currentRow.classList.toggle('vertical');
-    });
+// Handle the horizontal layout button.
+horizontalLayoutButton.addEventListener('click', e => {
+    enableHorizontalLayout();
+    state.layout[panzoomImg.src] = 'horizontal';
+});
+// Handle the vertical layout button.
+verticalLayoutButton.addEventListener('click', e => {
+    enableVerticalLayout();
+    state.layout[panzoomImg.src] = 'vertical';
 });
 // Set panzoom state on change.
 panzoomElem.addEventListener('panzoomchange', (event) => {
@@ -163,6 +162,7 @@ function resetRotate() {
     panzoomImg.style.transition = 'none';
     panzoomImg.style.transform = 'none';
 }
+// Enable fullscreen.
 function enableFullscreen() {
     document.querySelector('body').classList.add('fullscreen');
     document.querySelector('.sidebar').style.display = 'none';
@@ -170,6 +170,7 @@ function enableFullscreen() {
         deleteButton.style.display = 'none';
     }
 }
+// Disable fullscreen.
 function disableFullscreen() {
     document.querySelector('body').classList.remove('fullscreen');
     document.querySelector('.sidebar').style.display = '';
@@ -177,11 +178,32 @@ function disableFullscreen() {
         deleteButton.style.display = '';
     }
 }
+// Enable horizontal layout.
+function enableHorizontalLayout() {
+    const currentRow = document.querySelector('.current-row');
+    verticalLayoutButton.classList.remove('active');
+    verticalLayoutButton.disabled = false;
+    horizontalLayoutButton.classList.add('active');
+    horizontalLayoutButton.disabled = true;
+    currentRow.classList.add('horizontal');
+    currentRow.classList.remove('vertical');
+}
+// Enable vertical layout.
+function enableVerticalLayout() {
+    const currentRow = document.querySelector('.current-row');
+    verticalLayoutButton.classList.add('active');
+    verticalLayoutButton.disabled = true;
+    horizontalLayoutButton.classList.remove('active');
+    horizontalLayoutButton.disabled = false;
+    currentRow.classList.remove('horizontal');
+    currentRow.classList.add('vertical');
+}
 // Apply panzoom and rotate state for the current image.
 function applyState() {
     let panzoomState = state.panzoom[panzoomImg.src];
     let rotateState = state.rotate[panzoomImg.src];
     let fullscreenState = state.fullscreen[panzoomImg.src];
+    let layoutState = state.layout[panzoomImg.src];
     if (panzoomState) {
         panzoom.zoom(panzoomState.scale);
         // Must use setTimeout() due to async nature of Panzoom.
@@ -203,6 +225,11 @@ function applyState() {
         enableFullscreen();
     } else {
         disableFullscreen();
+    }
+    if ('vertical' === layoutState) {
+        enableVerticalLayout();
+    } else {
+        enableHorizontalLayout();
     }
 }
 
