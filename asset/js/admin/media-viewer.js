@@ -12,6 +12,8 @@ const zoomOutButton = document.getElementById('panzoom-zoom-out');
 const rotateLeftButton = document.getElementById('panzoom-rotate-left');
 const rotateRightButton = document.getElementById('panzoom-rotate-right');
 const resetButton = document.getElementById('panzoom-reset');
+const fullscreenButton = document.getElementById('fullscreen');
+const layoutButtons = document.querySelectorAll('.layout button');
 
 let panzoom;
 let state;
@@ -68,6 +70,35 @@ rotateRightButton.addEventListener('click', e => {
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
     state.rotate[panzoomImg.src] = rotateDeg;
+});
+// Handle the fullscreen (focus) button.
+fullscreenButton.addEventListener('click', e => {
+    const body = document.querySelector('body');
+    const sidebar = document.querySelector('.sidebar');
+    const deleteButton = document.getElementById('delete-button');
+    body.classList.toggle('fullscreen');
+    if ('' === sidebar.style.display) {
+        sidebar.style.display = 'none';
+    } else {
+        sidebar.style.display = '';
+    }
+    if ('' === deleteButton.style.display) {
+        deleteButton.style.display = 'none';
+    } else {
+        deleteButton.style.display = '';
+    }
+});
+// Handle layout buttons.
+layoutButtons.forEach(button => {
+    const currentRow = document.querySelector('.current-row');
+    button.addEventListener('click', e => {
+        layoutButtons.forEach(button => {
+            button.classList.toggle('active');
+            button.disabled = !button.disabled;
+        });
+        currentRow.classList.toggle('horizontal');
+        currentRow.classList.toggle('vertical');
+    });
 });
 // Set panzoom state on change.
 panzoomElem.addEventListener('panzoomchange', (event) => {
