@@ -74,19 +74,12 @@ rotateRightButton.addEventListener('click', e => {
 // Handle the fullscreen (focus) button.
 fullscreenButton.addEventListener('click', e => {
     const body = document.querySelector('body');
-    const sidebar = document.querySelector('.sidebar');
-    const deleteButton = document.getElementById('delete-button');
-    body.classList.toggle('fullscreen');
-    if ('' === sidebar.style.display) {
-        sidebar.style.display = 'none';
+    if (body.classList.contains('fullscreen')) {
+        disableFullscreen();
     } else {
-        sidebar.style.display = '';
+        enableFullscreen();
     }
-    if ('' === deleteButton.style.display) {
-        deleteButton.style.display = 'none';
-    } else {
-        deleteButton.style.display = '';
-    }
+    state.fullscreen[panzoomImg.src] = body.classList.contains('fullscreen');
 });
 // Handle layout buttons.
 layoutButtons.forEach(button => {
@@ -121,7 +114,13 @@ function initMediaViewer() {
     // Get the state from local storage and go to the saved page, if any.
     state = JSON.parse(localStorage.getItem('datascribe_media_viewer_state'));
     if (null === state) {
-        state = {panzoom: {}, rotate: {}, src: null};
+        state = {
+            panzoom: {},
+            rotate: {},
+            fullscreen: {},
+            layout: {},
+            src: null
+        };
     }
     if (state.src) {
         let option = mediaSelect.querySelector(`[value="${state.src}"]`);
@@ -163,10 +162,21 @@ function resetRotate() {
     panzoomImg.style.transition = 'none';
     panzoomImg.style.transform = 'none';
 }
+function enableFullscreen() {
+    document.querySelector('body').classList.add('fullscreen');
+    document.querySelector('.sidebar').style.display = 'none';
+    document.getElementById('delete-button').style.display = 'none';
+}
+function disableFullscreen() {
+    document.querySelector('body').classList.remove('fullscreen');
+    document.querySelector('.sidebar').style.display = '';
+    document.getElementById('delete-button').style.display = '';
+}
 // Apply panzoom and rotate state for the current image.
 function applyState() {
     let panzoomState = state.panzoom[panzoomImg.src];
     let rotateState = state.rotate[panzoomImg.src];
+    let fullscreenState = state.fullscreen[panzoomImg.src];
     if (panzoomState) {
         panzoom.zoom(panzoomState.scale);
         // Must use setTimeout() due to async nature of Panzoom.
@@ -183,6 +193,11 @@ function applyState() {
         panzoomImg.style.transform = `rotate(${rotateState}deg)`;
     } else {
         resetRotate();
+    }
+    if (fullscreenState) {
+        enableFullscreen();
+    } else {
+        disableFullscreen();
     }
 }
 
