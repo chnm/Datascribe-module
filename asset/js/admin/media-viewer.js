@@ -14,6 +14,7 @@ const rotateRightButton = document.getElementById('panzoom-rotate-right');
 const resetButton = document.getElementById('panzoom-reset');
 const fullscreenButton = document.getElementById('fullscreen');
 const layoutButtons = document.querySelectorAll('.layout button');
+const deleteButton = document.getElementById('delete-button');
 
 let panzoom;
 let state;
@@ -165,12 +166,16 @@ function resetRotate() {
 function enableFullscreen() {
     document.querySelector('body').classList.add('fullscreen');
     document.querySelector('.sidebar').style.display = 'none';
-    document.getElementById('delete-button').style.display = 'none';
+    if (deleteButton) {
+        deleteButton.style.display = 'none';
+    }
 }
 function disableFullscreen() {
     document.querySelector('body').classList.remove('fullscreen');
     document.querySelector('.sidebar').style.display = '';
-    document.getElementById('delete-button').style.display = '';
+    if (deleteButton) {
+        deleteButton.style.display = '';
+    }
 }
 // Apply panzoom and rotate state for the current image.
 function applyState() {
