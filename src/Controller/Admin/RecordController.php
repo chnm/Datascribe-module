@@ -47,8 +47,16 @@ class RecordController extends AbstractActionController
                 $formData = $form->getData();
                 $response = $this->api($form)->update('datascribe_items', $item->id(), $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('Item successfully updated.'); // @translate
-                    return $this->redirect()->toUrl($response->getContent()->url());
+                    if ('submitted' === $postData['submit_action']) {
+                        $this->messenger()->addSuccess('Item successfully updated and submitted for review.'); // @translate
+                        return $this->redirect()->toRoute('admin/datascribe-item', [], true);
+                    } elseif ('approved' === $postData['review_action']) {
+                        $this->messenger()->addSuccess('Item successfully updated and marked as approved.'); // @translate
+                        return $this->redirect()->toRoute('admin/datascribe-item', [], true);
+                    } else {
+                        $this->messenger()->addSuccess('Item successfully updated.'); // @translate
+                        return $this->redirect()->toUrl($response->getContent()->url());
+                    }
                 }
             } else {
                 $this->messenger()->addFormErrors($form);
