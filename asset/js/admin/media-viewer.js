@@ -58,6 +58,7 @@ resetButton.addEventListener('click', e => {
     // Delete the current image's state.
     delete state.panzoom[panzoomImg.src];
     delete state.rotate[panzoomImg.src];
+    saveState();
 });
 // Handle the rotate left button.
 rotateLeftButton.addEventListener('click', e => {
@@ -65,6 +66,7 @@ rotateLeftButton.addEventListener('click', e => {
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
     state.rotate[panzoomImg.src] = rotateDeg;
+    saveState();
 });
 // Handle the rotate right button.
 rotateRightButton.addEventListener('click', e => {
@@ -72,6 +74,7 @@ rotateRightButton.addEventListener('click', e => {
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
     state.rotate[panzoomImg.src] = rotateDeg;
+    saveState();
 });
 // Handle the fullscreen (focus) button.
 fullscreenButton.addEventListener('click', e => {
@@ -82,24 +85,28 @@ fullscreenButton.addEventListener('click', e => {
         enableFullscreen();
     }
     state.fullscreen[panzoomImg.src] = body.classList.contains('fullscreen');
+    saveState();
 });
 // Handle the horizontal layout button.
 horizontalLayoutButton.addEventListener('click', e => {
     enableHorizontalLayout();
     state.layout[panzoomImg.src] = 'horizontal';
+    saveState();
 });
 // Handle the vertical layout button.
 verticalLayoutButton.addEventListener('click', e => {
     enableVerticalLayout();
     state.layout[panzoomImg.src] = 'vertical';
+    saveState();
 });
 // Set panzoom state on change.
 panzoomElem.addEventListener('panzoomchange', (event) => {
     state.panzoom[panzoomImg.src] = event.detail;
+    saveState();
 });
 // Set the state in local storage on form submit.
 document.getElementById('record-form').addEventListener('submit', e => {
-    localStorage.setItem('datascribe_media_viewer_state', JSON.stringify(state));
+    saveState();
 });
 
 // Initialize the media viewer.
@@ -121,6 +128,7 @@ function initMediaViewer() {
             layout: {},
             src: null
         };
+        saveState();
     }
     if (state.src) {
         let option = mediaSelect.querySelector(`[value="${state.src}"]`);
@@ -128,6 +136,7 @@ function initMediaViewer() {
             option.selected = true;
         } else {
             state.src = null;
+            saveState();
         }
     }
     gotoPage(mediaSelect.selectedIndex + 1)
@@ -154,6 +163,7 @@ function gotoPage(page) {
     mediaPageInput.value = page;
     panzoomImg.src = mediaSelect.value;
     state.src = mediaSelect.value;
+    saveState();
     applyState();
 }
 // Reset rotation.
@@ -231,6 +241,10 @@ function applyState() {
     } else {
         enableHorizontalLayout();
     }
+}
+// Save the state to local storage.
+function saveState() {
+    localStorage.setItem('datascribe_media_viewer_state', JSON.stringify(state));
 }
 
 });
