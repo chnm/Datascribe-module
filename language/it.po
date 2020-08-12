@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-12 15:47-0400\n"
+"POT-Creation-Date: 2020-08-12 16:25-0400\n"
 "PO-Revision-Date: 2020-02-03 14:36+0000\n"
 "Last-Translator: Giorgio Comai <g@giorgiocomai.eu>, 2020\n"
 "Language-Team: Italian (https://www.transifex.com/omeka/teams/14184/it/)\n"
@@ -1302,55 +1302,63 @@ msgid "A number that specifies the granularity that the value must adhere to."
 msgstr ""
 "Un numero che specifica la granularità con cui deve essere fornito il valore"
 
-#: src/Controller/Admin/RecordController.php:50
+#: src/Controller/Admin/RecordController.php:51
+msgid "Item successfully updated and submitted for review."
+msgstr ""
+
+#: src/Controller/Admin/RecordController.php:54
+msgid "Item successfully updated and marked as approved."
+msgstr ""
+
+#: src/Controller/Admin/RecordController.php:57
 msgid "Item successfully updated."
 msgstr "Contenuto aggiornato con successo."
 
-#: src/Controller/Admin/RecordController.php:159
+#: src/Controller/Admin/RecordController.php:167
 msgid "Record successfully added. Add another record below."
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:162
+#: src/Controller/Admin/RecordController.php:170
 msgid "Record successfully added. Continue editing it below."
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:165
+#: src/Controller/Admin/RecordController.php:173
 msgid "Record successfully added."
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:222
+#: src/Controller/Admin/RecordController.php:230
 msgid "Record successfully saved. Continue editing it below."
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:225
+#: src/Controller/Admin/RecordController.php:233
 msgid "Record successfully saved."
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:279
+#: src/Controller/Admin/RecordController.php:287
 msgid "Record successfully deleted"
 msgstr "Record eliminato con successo"
 
-#: src/Controller/Admin/RecordController.php:319
+#: src/Controller/Admin/RecordController.php:327
 #: src/Controller/Admin/DatasetRecordController.php:119
 msgid "Records successfully edited."
 msgstr "Record modificati con successo"
 
-#: src/Controller/Admin/RecordController.php:373
+#: src/Controller/Admin/RecordController.php:381
 #: src/Controller/Admin/DatasetRecordController.php:170
 msgid "Editing records. This may take a while."
 msgstr "Modifica dei record in corso. Potrebbe richiedere un po' di tempo."
 
-#: src/Controller/Admin/RecordController.php:407
+#: src/Controller/Admin/RecordController.php:415
 #: src/Controller/Admin/DatasetRecordController.php:202
 msgid "You must select at least one record to batch delete."
 msgstr "Devi selezionare almeno un record per eliminare in blocco."
 
-#: src/Controller/Admin/RecordController.php:416
+#: src/Controller/Admin/RecordController.php:424
 #: src/Controller/Admin/DatasetRecordController.php:211
 msgid "Records successfully deleted"
 msgstr "Record eliminati con successo"
 
-#: src/Controller/Admin/RecordController.php:455
+#: src/Controller/Admin/RecordController.php:463
 #: src/Controller/Admin/DatasetRecordController.php:249
 msgid "Deleting records. This may take a while."
 msgstr ""
