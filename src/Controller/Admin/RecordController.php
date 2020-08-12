@@ -155,12 +155,14 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
                     $record = $response->getContent();
-                    $this->messenger()->addSuccess('Record successfully created.'); // @translate
                     if (isset($postData['submit-add-another'])) {
+                        $this->messenger()->addSuccess('Record successfully added. Add another record below.'); // @translate
                         return $this->redirect()->toRoute(null, [], true);
                     } elseif (isset($postData['submit-save-progress'])) {
+                        $this->messenger()->addSuccess('Record successfully added. Continue editing it below.'); // @translate
                         return $this->redirect()->toRoute('admin/datascribe-record-id', ['action' => 'edit', 'record-id' => $record->id()], true);
                     } else {
+                        $this->messenger()->addSuccess('Record successfully added.'); // @translate
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                     }
                 }
@@ -216,10 +218,11 @@ class RecordController extends AbstractActionController
                 $formData = $form->getData();
                 $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
                 if ($response) {
-                    $this->messenger()->addSuccess('Record successfully edited.'); // @translate
                     if (isset($postData['submit-save-progress'])) {
+                        $this->messenger()->addSuccess('Record successfully saved. Continue editing it below.'); // @translate
                         return $this->redirect()->toRoute(null, [], true);
                     } else {
+                        $this->messenger()->addSuccess('Record successfully saved.'); // @translate
                         return $this->redirect()->toRoute('admin/datascribe-record', ['action' => 'browse'], true);
                     }
                 }
