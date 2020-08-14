@@ -133,10 +133,26 @@
 .browse .browse-controls .sorting,
 .browse .browse-controls .filtering {
     text-align: right;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .browse-controls .filtering {
   margin-left: 0;
+  justify-content: flex-end;
+}
+
+.browse-controls .sorting select {
+  max-width: 40%;
+}
+
+.browse-controls .filtering select {
+  max-width: 80%;
+}
+
+.browse-controls .sorting > *:not(:first-child),
+.browse-controls .filtering > *:not(:first-child) {
+  margin-left: .25rem;
 }
 
 .alert {
