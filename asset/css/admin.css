@@ -85,6 +85,7 @@
     margin-bottom: 0;
     text-align: left;    
 }
+
 #page-action-menu .expand:after {
     content: "\f0d7";
 }
@@ -410,10 +411,6 @@
 
 .row-controls {
   display: flex;
-}
-
-.layout {
-  margin-bottom: 1rem;
 }
 
 .open-guidelines {
@@ -978,7 +975,7 @@ button.sidebar-drawer.collapse:after {
 .layout {
     display: inline-flex;
     align-items: center;
-    margin-left: 12px;
+    margin: 0 12px 12px;
 }
 
 .layout label {

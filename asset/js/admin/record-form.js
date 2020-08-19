@@ -37,4 +37,8 @@ $(document).on('wheel', 'input[type=number]', function (e) {
     $(this).blur();
 });
 
+$('.fast-entry-mode').on('click', e => {
+    $('.common-elements').toggle();
+});
+
 });
