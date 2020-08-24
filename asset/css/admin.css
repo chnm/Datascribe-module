@@ -645,6 +645,16 @@
   margin-bottom: 8px;
 }
 
+.dataset-field .required-flag,
+.dataset-field .primary-flag {
+  font-size: 12px;
+  margin: 0 0 0 6px;
+}
+
+legend .inactive {
+  display: none;
+}
+
 #form-builder-fields .dataset-field:before {
   content: "";
   position: absolute;

@@ -14,7 +14,14 @@ var addFieldControls = function(field) {
 $('#form-builder-fields > fieldset > fieldset').each(function(i) {
     var field = $(this);
     addFieldControls(field); // add field controls
+    field.find('.field-name').after(fieldsData.data('field-flags'));
     field.toggleClass('closed'); // fields are closed by default
+    if (field.find('[type="checkbox"][name$="[is_required]"]').attr('checked') == 'checked') {
+      field.find('.required-flag').removeClass('inactive');
+    }
+    if (field.find('[type="checkbox"][name$="[is_primary]"]').attr('checked') == 'checked') {
+      field.find('.primary-flag').removeClass('inactive');
+    }
 });
 
 // Open fields that contain error messages.
@@ -35,6 +42,7 @@ $('#data-types').on('click', '.option', function(e) {
     var fieldLabelSpan = field.find('legend span.field-name');
     fieldLabelSpan.text(fieldLabelSpan.text() + ` - ${newFieldIndex++}`);
     addFieldControls(field);
+    field.find('legend').append(fieldsData.data('field-flags'));
     fieldsContainer.append(field);
     field[0].scrollIntoView();
 });
@@ -83,6 +91,18 @@ fieldsContainer.on('click', 'button.field-collapse, button.field-expand', functi
     field.find('.field-collapse, .field-expand').toggleClass('active');
     field.toggleClass('closed open');
 });
+// Handle required field toggle
+fieldsContainer.on('change', '[type="checkbox"][name$="[is_required]"]', function() {
+    var field = $(this).closest('fieldset');
+    field.find('.required-flag').toggleClass('inactive');
+});
+// Handle required field toggle
+fieldsContainer.on('change', '[type="checkbox"][name$="[is_primary]"]', function() {
+    var field = $(this).closest('fieldset');
+    $('.primary-flag').addClass('inactive');
+    field.find('.primary-flag').removeClass('inactive');
+});
+
 new Sortable($('.dataset-fields')[0], {
   handle: '.sortable-handle',
   animation: 150

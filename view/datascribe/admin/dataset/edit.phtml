@@ -50,7 +50,7 @@ $form->prepare();
 </div>
 
 <div id="form-builder" class="section">
-    <div id="form-builder-fields" data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>">
+    <div id="form-builder-fields" data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>" data-field-flags="<?php echo $this->escapeHtml($this->partial('form-builder-flags')); ?>">
         <?php echo $this->formCollection($form->get('o-module-datascribe:field')); ?>
     </div>
     <div id="data-types" class="sidebar always-open">
