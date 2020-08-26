@@ -176,6 +176,7 @@ function resetRotate() {
 function enableFullscreen() {
     document.querySelector('body').classList.add('fullscreen');
     document.querySelector('.sidebar').style.display = 'none';
+    fullscreenButton.textContent = Omeka.jsTranslate('Disable focus mode');
     if (deleteButton) {
         deleteButton.style.display = 'none';
     }
@@ -184,6 +185,7 @@ function enableFullscreen() {
 function disableFullscreen() {
     document.querySelector('body').classList.remove('fullscreen');
     document.querySelector('.sidebar').style.display = '';
+    fullscreenButton.textContent = Omeka.jsTranslate('Enable focus mode');
     if (deleteButton) {
         deleteButton.style.display = '';
     }

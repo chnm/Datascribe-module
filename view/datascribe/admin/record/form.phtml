@@ -19,13 +19,13 @@ if ('add' === $action) {
     <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records'), 'previousNext' => 'previous']); ?>
     <div class="current-row horizontal">
         <div class="row-controls">
-            <button type="button" id="fullscreen" class="full-screen"><?php echo $this->translate('Focus mode'); ?></button>
+            <button type="button" id="fullscreen" class="full-screen"><?php echo $this->translate('Enable focus mode'); ?></button>
+            <button type="button" class="fast-entry-mode"><?php echo $this->translate('Enable fast entry mode'); ?></button>
             <div class="layout">
                 <label><?php echo $this->translate('Layout'); ?></label>
                 <button type="button" name="horizontal" id="horizontal-layout" class="horizontal active" aria-label="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Horizontal view')); ?>" disabled=""></button>
                 <button type="button" name="vertical" id="vertical-layout" class="vertical" aria-label="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>" title="<?php echo $this->escapeHtml($this->translate('Vertical view')); ?>"></button>
             </div>
-            <button type="button" class="fast-entry-mode"><?php echo $this->translate('Fast entry mode'); ?></button>
             <?php if ($dataset->guidelines()): ?>
             <button type="button" class="open-guidelines"><?php echo $this->translate('Guidelines'); ?></button>
             <?php endif; ?>

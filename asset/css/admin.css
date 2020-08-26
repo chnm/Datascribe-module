@@ -582,6 +582,10 @@
   display: flex;
 }
 
+.common-elements.hidden {
+  display: none;
+}
+
 .common-elements label {
   display: inline-block;
   margin-right: 24px;
@@ -987,6 +991,10 @@ button.sidebar-drawer.collapse:after {
 
 #panzoom-rotate-right:before {
     content: "\f2f9";
+}
+
+#fullscreen {
+    margin-right: 6px;
 }
 
 .layout {

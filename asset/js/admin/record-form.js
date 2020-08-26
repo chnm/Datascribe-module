@@ -37,8 +37,14 @@ $(document).on('wheel', 'input[type=number]', function (e) {
     $(this).blur();
 });
 
-$('.fast-entry-mode').on('click', e => {
-    $('.common-elements').toggle();
+var fastEntryButton = $('.fast-entry-mode');
+fastEntryButton.on('click', e => {
+    $('.common-elements').toggleClass('hidden');
+    if ($('.common-elements').hasClass('hidden')) {
+      fastEntryButton.text(Omeka.jsTranslate('Disable fast entry mode'));
+    } else {
+      fastEntryButton.text(Omeka.jsTranslate('Enable fast entry mode'));
+    }
 });
 
 });
