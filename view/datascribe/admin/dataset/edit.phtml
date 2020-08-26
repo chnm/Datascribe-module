@@ -50,6 +50,7 @@ $form->prepare();
 </div>
 
 <div id="form-builder" class="section">
+    <a name="top-anchor-form-builder"></a>
     <div id="form-builder-fields" data-field-actions="<?php echo $this->escapeHtml($this->partial('form-builder-buttons')); ?>" data-field-flags="<?php echo $this->escapeHtml($this->partial('form-builder-flags')); ?>">
         <?php echo $this->formCollection($form->get('o-module-datascribe:field')); ?>
     </div>
@@ -64,6 +65,8 @@ $form->prepare();
         <?php endforeach; ?>
     </div>
 </div>
+
+<a href="#top-anchor-form-builder" class="back-to-top button"><span class="fas fa-arrow-up"></span> <?php echo $this->translate('Back to top'); ?></button>
 
 <?php echo $this->form()->closeTag(); ?>
 
