@@ -30,13 +30,37 @@ $filters = [
         'label' => $this->translate('My items that are approved'),
         'value' => 'my_approved'
     ],
+];
+$invalidFilter = [
     [
         'label' => $this->translate('Items with values marked as invalid'),
         'value' => 'has_invalid_values'
     ],
 ];
 if ($canViewBatchUpdate) {
-    $filters = array_merge([
+    $approvalNeedReviewFilters = [
+        [
+            'label' => $this->translate('All items that are not approved'),
+            'value' => 'all_not_approved'
+        ],
+        [
+            'label' => $this->translate('All items that are approved'),
+            'value' => 'all_approved'
+        ],
+        [
+            'label' => $this->translate('All items that need review'),
+            'value' => 'all_need_review'
+        ],
+        [
+            'label' => $this->translate('All items that need initial review'),
+            'value' => 'all_need_initial_review'
+        ],
+        [
+            'label' => $this->translate('All items that need re-review'),
+            'value' => 'all_need_rereview'
+        ],      
+    ];
+    $iApprovedFilters = [
         [
             'label' => $this->translate('Items I reviewed that need re-review'),
             'value' => 'my_reviewed_and_need_review'
@@ -48,28 +72,11 @@ if ($canViewBatchUpdate) {
         [
             'label' => $this->translate('Items I reviewed that are approved'),
             'value' => 'my_reviewed_and_approved'
-        ],
-        [
-            'label' => $this->translate('All items that need initial review'),
-            'value' => 'all_need_initial_review'
-        ],
-        [
-            'label' => $this->translate('All items that need re-review'),
-            'value' => 'all_need_rereview'
-        ],
-        [
-            'label' => $this->translate('All items that need review'),
-            'value' => 'all_need_review'
-        ],
-        [
-            'label' => $this->translate('All items that are not approved'),
-            'value' => 'all_not_approved'
-        ],
-        [
-            'label' => $this->translate('All items that are approved'),
-            'value' => 'all_approved'
-        ],
-    ], $filters);
+        ],      
+    ];
+    $filters = array_merge($approvalNeedReviewFilters, $invalidFilter, $iApprovedFilters, $filters);
+} else {
+    $filters = array_merge($invalidFilter, $filters);
 }
 ?>
 
