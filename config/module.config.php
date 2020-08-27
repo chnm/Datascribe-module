@@ -24,6 +24,12 @@ return [
             ],
         ],
     ],
+    'js_translate_strings' => [
+        'Enable focus mode', // @translate
+        'Disable focus mode', // @translate
+        'Enable fast entry mode', // @translate
+        'Disable fast entry mode', // @translate
+    ],
     'view_manager' => [
         'template_path_stack' => [
             sprintf('%s/../view', __DIR__),

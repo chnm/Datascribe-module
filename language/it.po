@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-27 13:00-0400\n"
+"POT-Creation-Date: 2020-08-27 13:11-0400\n"
 "PO-Revision-Date: 2020-02-03 14:36+0000\n"
 "Last-Translator: Giorgio Comai <g@giorgiocomai.eu>, 2020\n"
 "Language-Team: Italian (https://www.transifex.com/omeka/teams/14184/it/)\n"
@@ -1701,3 +1701,11 @@ msgstr "Blocca al revisore"
 #: src/Form/AbstractForm.php:110
 msgid "Lock to admin"
 msgstr "Blocca per l'amministratore"
+
+#: config/module.config.php:29
+msgid "Disable focus mode"
+msgstr ""
+
+#: config/module.config.php:31
+msgid "Disable fast entry mode"
+msgstr ""
