@@ -32,7 +32,7 @@ $mediaPage = 1;
         <button id="panzoom-rotate-right" aria-label="<?php echo $this->translate('Rotate right'); ?>" title="<?php echo $this->translate('Rotate right'); ?>"></button>
         <button id="panzoom-reset" ><?php echo $this->translate('Reset'); ?></button>
     </div>
-    <div id="panzoom-container">
+    <div id="panzoom-container" tabindex="0">
         <div id="panzoom">
             <img id="panzoom-img" src="<?php echo $this->escapeHtml($oItem->primaryMedia()->originalUrl()); ?>">
         </div>

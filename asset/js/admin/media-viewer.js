@@ -45,6 +45,30 @@ previousButton.addEventListener('click', e => {
 nextButton.addEventListener('click', e => {
     gotoPage(mediaSelect.selectedIndex + 2);
 });
+// Handle panzoom click to focus.
+panzoomContainer.addEventListener('click', e => {
+    panzoomContainer.focus();
+});
+// Handle panning by arrow keys.
+panzoomContainer.addEventListener('keydown', e => {
+    switch (e.code) {
+        case 'ArrowUp':
+            panzoom.pan(0, -2, {relative: true});
+            break;
+        case 'ArrowDown':
+            panzoom.pan(0, 2, {relative: true});
+            break;
+        case 'ArrowLeft':
+            panzoom.pan(-2, 0, {relative: true});
+            break;
+        case 'ArrowRight':
+            panzoom.pan(2, 0, {relative: true});
+            break;
+        default:
+            return;
+    }
+    e.preventDefault();
+});
 // Handle the scroll wheel.
 panzoomContainer.addEventListener('wheel', panzoom.zoomWithWheel);
 // Handle the zoom in button.
