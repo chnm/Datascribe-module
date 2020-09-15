@@ -55,6 +55,7 @@ if ('add' === $action) {
                 </div>
             </div>
             <?php if ($fieldsets): ?>
+            <a name="top-anchor-record-form"></a>
             <?php foreach ($fieldsets as $fieldset): ?>
             <?php
             $field = $fieldset->getOption('datascribe_field');
@@ -95,6 +96,7 @@ if ('add' === $action) {
                 </div>
             </fieldset>
             <?php endforeach; ?>
+            <a href="#top-anchor-record-form" class="back-to-top button"><span class="fas fa-arrow-up"></span> <?php echo $this->translate('Back to top'); ?></a>
             <?php else: ?>
             <div class="no-resources">
                 <?php if ($this->userIsAllowed('Datascribe\Api\Adapter\DatascribeDatasetAdapter', 'create')): ?>
