@@ -110,6 +110,7 @@ fieldsContainer.on('change', '[type="checkbox"][name$="[is_primary]"]', function
 
 new Sortable($('.dataset-fields')[0], {
   handle: '.sortable-handle',
-  animation: 150
+  animation: 150,
+  forceFallback: true
 });
 });
