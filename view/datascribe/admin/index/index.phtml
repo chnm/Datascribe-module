@@ -108,6 +108,20 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                             );
                             ?>
                         </li>
+                        <li class="category">
+                            <span class="category-label"><?php echo $this->translate('Records needing review'); ?></span>
+                            <?php
+                            echo $this->hyperlink(
+                                $this->translate('All'),
+                                $this->url(
+                                    'admin/datascribe-dataset-record',
+                                    ['project-id' => $myProject['project']->id(), 'dataset-id' => $myDataset->id()],
+                                    ['query' => ['limit' => 25, 'sort_by' => 'position', 'sort_order' => 'asc', 'needs_review' => true]]
+                                ),
+                                ['class' => 'category-items']
+                            );
+                            ?>
+                        </li>
                         <?php endif; ?>
                     </ul>
                 </li>
