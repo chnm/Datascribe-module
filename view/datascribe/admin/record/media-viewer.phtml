@@ -12,6 +12,7 @@ $mediaCount = count($medias);
 $mediaPage = 1;
 ?>
 <div id="media-viewer">
+    <?php if ($mediaCount): ?>
     <div id="media-select-controls">
         <select id="media-select">
             <?php foreach ($medias as $media): ?>
@@ -37,4 +38,5 @@ $mediaPage = 1;
             <img id="panzoom-img" src="<?php echo $this->escapeHtml($oItem->primaryMedia()->originalUrl()); ?>">
         </div>
     </div>
+    <?php endif; ?>
 </div>
