@@ -3,9 +3,9 @@ namespace Datascribe\ControllerPlugin;
 
 use Datascribe\DatascribeDataType\Manager;
 use Omeka\Api\Exception\NotFoundException;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\HelperPluginManager;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Controller plugin used for DataScribe-specific functionality.

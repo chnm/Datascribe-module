@@ -8,10 +8,10 @@ use Datascribe\DatascribeDataType\Unknown;
 use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\Element as DatascribeElement;
 use Omeka\Form\Element\ItemSetSelect;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\View\HelperPluginManager;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\View\HelperPluginManager;
 
 class DatasetForm extends Form
 {

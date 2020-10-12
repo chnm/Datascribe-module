@@ -7,8 +7,8 @@ use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\ItemBatchForm;
 use Datascribe\Form\ItemSearchForm;
 use Omeka\Stdlib\Message;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class ItemController extends AbstractActionController
 {

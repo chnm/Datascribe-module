@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 class DatasetSyncForm extends Form
 {

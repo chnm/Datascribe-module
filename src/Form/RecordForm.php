@@ -4,9 +4,9 @@ namespace Datascribe\Form;
 use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\DatascribeDataType\Manager;
 use Datascribe\Form\Element as DatascribeElement;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Fieldset;
 
 class RecordForm extends Form
 {

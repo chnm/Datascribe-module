@@ -7,8 +7,8 @@ use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\RecordBatchForm;
 use Datascribe\Form\RecordSearchForm;
 use Omeka\Form\ConfirmForm;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class DatasetRecordController extends AbstractActionController
 {

@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Zend\Form\Element\Select as ZendSelect;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Element\Select as LaminasSelect;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator;
 
-class SecondSelect extends ZendSelect implements InputProviderInterface
+class SecondSelect extends LaminasSelect implements InputProviderInterface
 {
     const SECONDS = [
         0 => '00',

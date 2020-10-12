@@ -1,11 +1,11 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Zend\Form\Element\Radio as ZendRadio;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Element\Radio as LaminasRadio;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator;
 
-class Radio extends ZendRadio implements InputProviderInterface
+class Radio extends LaminasRadio implements InputProviderInterface
 {
     public function __construct($name = null, $options = [])
     {

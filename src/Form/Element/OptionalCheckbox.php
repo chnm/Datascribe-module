@@ -1,8 +1,8 @@
 <?php
 namespace Datascribe\Form\Element;
 
-use Zend\Form\Element\Checkbox;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Form\Element\Checkbox;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * By default, ZF3 sets Checkbox elements as required. This makes it optional.

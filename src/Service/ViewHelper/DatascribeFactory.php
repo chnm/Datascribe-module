@@ -3,7 +3,7 @@ namespace Datascribe\Service\ViewHelper;
 
 use Datascribe\ViewHelper\Datascribe;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DatascribeFactory implements FactoryInterface
 {

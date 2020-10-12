@@ -1,8 +1,8 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
 
 abstract class AbstractSelection implements DataTypeInterface
 {

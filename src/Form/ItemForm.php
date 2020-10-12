@@ -1,7 +1,7 @@
 <?php
 namespace Datascribe\Form;
 
-use Zend\Form\Element;
+use Laminas\Form\Element;
 
 class ItemForm extends AbstractForm
 {
