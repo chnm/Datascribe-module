@@ -1,7 +1,6 @@
 <?php
 namespace Datascribe\DatascribeDataType;
 
-use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 
 interface DataTypeInterface

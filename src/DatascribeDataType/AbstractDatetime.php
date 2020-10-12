@@ -19,7 +19,7 @@ abstract class AbstractDatetime implements DataTypeInterface
     protected function emptyValuesToNull(array $array) : array
     {
         // Make empty strings null so validation works.
-        return array_map(function($value) {
+        return array_map(function ($value) {
             return (is_string($value) && ('' === trim($value))) ? null : $value;
         }, $array);
     }

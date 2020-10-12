@@ -280,7 +280,7 @@ SQL;
         $userCanAssertion = new AssertionAggregate;
         $userCanAssertion->addAssertions([
             new ReviewerCanAssertion,
-            new TranscriberCanAssertion
+            new TranscriberCanAssertion,
         ]);
         $userCanAssertion->setMode(AssertionAggregate::MODE_AT_LEAST_ONE);
         // If an Omeka admin user is also a DataScribe project user, deny all
@@ -408,7 +408,7 @@ SQL;
             'Datascribe\Entity\DatascribeRecord',
             [
                 'update',
-                'delete'
+                'delete',
             ],
             $userCanAssertion
         );
@@ -473,7 +473,8 @@ SQL;
      * @throws PermissionDeniedException
      * @param Event $event
      */
-    public function assertCreateRecordPrivilege(Event $event) {
+    public function assertCreateRecordPrivilege(Event $event)
+    {
         $services = $this->getServiceLocator();
         $user = $services->get('Omeka\AuthenticationService')->getIdentity();
         $userIsAdmin = in_array($user->getRole(), [Acl::ROLE_GLOBAL_ADMIN, Acl::ROLE_SITE_ADMIN]);
@@ -514,7 +515,8 @@ SQL;
      *
      * @param Event $event
      */
-    public function handleRecordPositionChange(Event $event) {
+    public function handleRecordPositionChange(Event $event)
+    {
         $services = $this->getServiceLocator();
         $conn = $services->get('Omeka\Connection');
         $record = $event->getTarget();

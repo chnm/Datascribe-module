@@ -12,7 +12,6 @@ use Omeka\Entity\User;
  * DateTime because Doctrine does not call @PreUpdate or @PostUpdate when the
  * computed changeset is empty. Any API adapters of entities using this trait
  * must call setModified() when hydrating an UPDATE request.
- * 
  */
 trait TraitOwnership
 {

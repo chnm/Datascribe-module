@@ -261,5 +261,4 @@ class DatascribeItemRepresentation extends AbstractEntityRepresentation
     {
         return (bool) $this->getAdapter()->getNeedsWorkCount($this->resource);
     }
-
 }

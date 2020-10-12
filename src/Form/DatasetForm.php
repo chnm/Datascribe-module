@@ -5,7 +5,6 @@ use Datascribe\Api\Representation\DatascribeFieldRepresentation;
 use Datascribe\DatascribeDataType\DataTypeInterface;
 use Datascribe\DatascribeDataType\Manager;
 use Datascribe\DatascribeDataType\Unknown;
-use Datascribe\Entity\DatascribeField;
 use Datascribe\Form\Element as DatascribeElement;
 use Omeka\Form\Element\ItemSetSelect;
 use Laminas\Form\Element;

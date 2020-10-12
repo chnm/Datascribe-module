@@ -3,7 +3,6 @@ namespace Datascribe\DatascribeDataType;
 
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilter;
 
 class Unknown implements DataTypeInterface
 {

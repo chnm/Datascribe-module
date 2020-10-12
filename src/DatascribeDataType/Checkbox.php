@@ -4,8 +4,6 @@ namespace Datascribe\DatascribeDataType;
 use Datascribe\Form\Element as DatascribeElement;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilter;
-use Laminas\Validator\ValidatorChain;
 
 class Checkbox implements DataTypeInterface
 {

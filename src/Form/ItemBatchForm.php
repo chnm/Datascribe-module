@@ -1,8 +1,6 @@
 <?php
 namespace Datascribe\Form;
 
-use Datascribe\Entity\DatascribeUser;
-
 class ItemBatchForm extends AbstractForm
 {
     public function init()

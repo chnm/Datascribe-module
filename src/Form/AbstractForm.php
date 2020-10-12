@@ -6,7 +6,6 @@ use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\Api\Representation\DatascribeProjectRepresentation;
 use Datascribe\Entity\DatascribeUser;
 use Doctrine\ORM\EntityManager;
-use Omeka\Entity\User;
 use Laminas\Form\Form;
 
 abstract class AbstractForm extends Form

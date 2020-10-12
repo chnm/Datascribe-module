@@ -385,10 +385,10 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
     {
         $data = parent::preprocessBatchUpdate($data, $request);
         $rawData = $request->getContent();
-        $data['priority_action'] =  $rawData['priority_action'] ?? null;
-        $data['lock_action'] =  $rawData['lock_action'] ?? null;
-        $data['submit_action'] =  $rawData['submit_action'] ?? null;
-        $data['review_action'] =  $rawData['review_action'] ?? null;
+        $data['priority_action'] = $rawData['priority_action'] ?? null;
+        $data['lock_action'] = $rawData['lock_action'] ?? null;
+        $data['submit_action'] = $rawData['submit_action'] ?? null;
+        $data['review_action'] = $rawData['review_action'] ?? null;
         return $data;
     }
 

@@ -1,10 +1,6 @@
 <?php
 namespace Datascribe\Form;
 
-use Datascribe\Api\Representation\DatascribeProjectRepresentation;
-use Doctrine\ORM\EntityManager;
-use Omeka\Form\Element\UserSelect;
-
 class ItemSearchForm extends AbstractForm
 {
     public function init()

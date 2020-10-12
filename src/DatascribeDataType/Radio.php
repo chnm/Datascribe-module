@@ -2,7 +2,6 @@
 namespace Datascribe\DatascribeDataType;
 
 use Datascribe\Form\Element as DatascribeElement;
-use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Validator\ValidatorChain;
 

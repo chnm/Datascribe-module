@@ -1,13 +1,6 @@
 <?php
 namespace Datascribe\ViewHelper;
 
-use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
-use Datascribe\Api\Representation\DatascribeRecordRepresentation;
-use Datascribe\Entity\DatascribeField;
-use Datascribe\Form\DatasetForm;
-use Laminas\Form\Element;
-use Laminas\Form\Fieldset;
-use Laminas\Form\Form;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
 
@@ -32,7 +25,7 @@ class Datascribe extends AbstractHelper
     public function __construct(ServiceLocatorInterface $services)
     {
         $this->services = $services;
-        $this->bcRouteMap = include('breadcrumbs_route_map.php');
+        $this->bcRouteMap = include 'breadcrumbs_route_map.php';
     }
 
     /**
@@ -44,7 +37,7 @@ class Datascribe extends AbstractHelper
     {
         $bc = [];
         $view = $this->getView();
-        $routeMatch =  $this->services->get('Application')->getMvcEvent()->getRouteMatch();
+        $routeMatch = $this->services->get('Application')->getMvcEvent()->getRouteMatch();
         $routeName = $routeMatch->getMatchedRouteName();
         if (!isset($this->bcRouteMap[$routeName])) {
             return '';

@@ -1,7 +1,6 @@
 <?php
 namespace Datascribe\Form;
 
-use Datascribe\Api\Representation\DatascribeDatasetRepresentation;
 use Datascribe\DatascribeDataType\Manager;
 use Datascribe\Form\Element as DatascribeElement;
 use Laminas\Form\Element;

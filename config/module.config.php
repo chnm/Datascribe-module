@@ -124,7 +124,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-project' =>  [
+                    'datascribe-project' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/project[/:action]',
@@ -138,7 +138,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-project-id' =>  [
+                    'datascribe-project-id' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id[/:action]',
@@ -153,7 +153,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-dataset' =>  [
+                    'datascribe-dataset' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/dataset[/:action]',
@@ -168,7 +168,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-dataset-id' =>  [
+                    'datascribe-dataset-id' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id[/:action]',
@@ -184,7 +184,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-dataset-record' =>  [
+                    'datascribe-dataset-record' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id/record[/:action]',
@@ -200,7 +200,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-item' =>  [
+                    'datascribe-item' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id/item[/:action]',
@@ -216,7 +216,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-item-id' =>  [
+                    'datascribe-item-id' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id/:item-id[/:action]',
@@ -233,7 +233,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-record' =>  [
+                    'datascribe-record' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id/:item-id/record[/:action]',
@@ -250,7 +250,7 @@ return [
                             ],
                         ],
                     ],
-                    'datascribe-record-id' =>  [
+                    'datascribe-record-id' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/datascribe/:project-id/:dataset-id/:item-id/:record-id[/:action]',
