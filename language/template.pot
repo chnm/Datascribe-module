@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-27 13:11-0400\n"
+"POT-Creation-Date: 2020-11-04 10:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Set an item set here."
 msgstr ""
 
-#: src/Form/DatasetForm.php:163
+#: src/Form/DatasetForm.php:162
 msgid "New field"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:24
 #: view/datascribe/admin/record/browse.phtml:24
-#: view/datascribe/admin/record/form.phtml:133
+#: view/datascribe/admin/record/form.phtml:135
 msgid "Position"
 msgstr ""
 
@@ -180,14 +180,14 @@ msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:137
 #: view/datascribe/admin/record/browse.phtml:120
-#: view/datascribe/admin/record/form.phtml:121
+#: view/datascribe/admin/record/form.phtml:123
 #: view/datascribe/admin/record/show-details.phtml:47
 msgid "Needs review"
 msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:138
 #: view/datascribe/admin/record/browse.phtml:121
-#: view/datascribe/admin/record/form.phtml:127
+#: view/datascribe/admin/record/form.phtml:129
 #: view/datascribe/admin/record/show-details.phtml:51
 msgid "Needs work"
 msgstr ""
@@ -273,7 +273,7 @@ msgid "Date created"
 msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:36
-#: view/datascribe/admin/index/index.phtml:129
+#: view/datascribe/admin/index/index.phtml:143
 #: view/datascribe/admin/project/browse.phtml:37
 #: view/datascribe/admin/record/browse.phtml:91
 msgid "Created by"
@@ -309,18 +309,19 @@ msgstr ""
 msgid "Form Builder"
 msgstr ""
 
-#: view/datascribe/admin/dataset/edit.phtml:59
+#: view/datascribe/admin/dataset/edit.phtml:56
+#: view/datascribe/admin/record/form.phtml:99
+msgid "Back to top"
+msgstr ""
+
+#: view/datascribe/admin/dataset/edit.phtml:60
 msgid "Add a field to the form"
 msgstr ""
 
-#: view/datascribe/admin/dataset/edit.phtml:61
-#: view/datascribe/admin/record/form.phtml:116
+#: view/datascribe/admin/dataset/edit.phtml:62
+#: view/datascribe/admin/record/form.phtml:118
 #, php-format
 msgid "Last saved: %s on %s"
-msgstr ""
-
-#: view/datascribe/admin/dataset/edit.phtml:69
-msgid "Back to top"
 msgstr ""
 
 #: view/datascribe/admin/dataset/form-builder-buttons.phtml:1
@@ -520,11 +521,15 @@ msgstr ""
 msgid "Needs my re-review"
 msgstr ""
 
-#: view/datascribe/admin/index/index.phtml:124
+#: view/datascribe/admin/index/index.phtml:112
+msgid "Records needing review"
+msgstr ""
+
+#: view/datascribe/admin/index/index.phtml:138
 msgid "All projects"
 msgstr ""
 
-#: view/datascribe/admin/index/index.phtml:149
+#: view/datascribe/admin/index/index.phtml:163
 #: view/datascribe/admin/project/browse.phtml:92
 msgid "No projects found."
 msgstr ""
@@ -700,14 +705,14 @@ msgstr ""
 
 #: view/datascribe/admin/item/show-details.phtml:82
 #: view/datascribe/admin/record/browse.phtml:286
-#: view/datascribe/admin/record/form.phtml:142
+#: view/datascribe/admin/record/form.phtml:144
 #: view/datascribe/admin/record/show-details.phtml:55
 msgid "Transcriber notes"
 msgstr ""
 
 #: view/datascribe/admin/item/show-details.phtml:86
 #: view/datascribe/admin/record/browse.phtml:292
-#: view/datascribe/admin/record/form.phtml:148
+#: view/datascribe/admin/record/form.phtml:150
 #: view/datascribe/admin/record/show-details.phtml:59
 msgid "Reviewer notes"
 msgstr ""
@@ -881,76 +886,76 @@ msgstr ""
 msgid "Stay on this record"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:74
+#: view/datascribe/admin/record/form.phtml:75
 msgid "This field's data type is unknown. The value cannot be added."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:78
+#: view/datascribe/admin/record/form.phtml:79
 msgid "This field's data type is unknown. The value cannot be edited."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:80
+#: view/datascribe/admin/record/form.phtml:81
 msgid ""
 "This value is invalid. Please correct it below and save this form to update."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:82
+#: view/datascribe/admin/record/form.phtml:83
 msgid ""
 "This value is marked as invalid but does not appear to be invalid. Either re-"
 "validate the dataset or save this form as-is."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:92
+#: view/datascribe/admin/record/form.phtml:93
 msgid "Is missing"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:93
+#: view/datascribe/admin/record/form.phtml:94
 msgid "Is illegible"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:94
+#: view/datascribe/admin/record/form.phtml:95
 msgid "Reset value"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:102
+#: view/datascribe/admin/record/form.phtml:104
 #, php-format
 msgid "This dataset has no form. %s"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:103
+#: view/datascribe/admin/record/form.phtml:105
 msgid "Build the form."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:106
+#: view/datascribe/admin/record/form.phtml:108
 msgid "This dataset has no form."
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:112
+#: view/datascribe/admin/record/form.phtml:114
 msgid "Record actions"
 msgstr ""
 
-#: view/datascribe/admin/record/form.phtml:159
+#: view/datascribe/admin/record/form.phtml:161
 msgid "Next records"
 msgstr ""
 
-#: view/datascribe/admin/record/media-viewer.phtml:18
+#: view/datascribe/admin/record/media-viewer.phtml:19
 #, php-format
 msgid "%s. %s"
 msgstr ""
 
-#: view/datascribe/admin/record/media-viewer.phtml:29
+#: view/datascribe/admin/record/media-viewer.phtml:30
 msgid "Zoom in"
 msgstr ""
 
-#: view/datascribe/admin/record/media-viewer.phtml:30
+#: view/datascribe/admin/record/media-viewer.phtml:31
 msgid "Zoom out"
 msgstr ""
 
-#: view/datascribe/admin/record/media-viewer.phtml:31
+#: view/datascribe/admin/record/media-viewer.phtml:32
 msgid "Rotate left"
 msgstr ""
 
-#: view/datascribe/admin/record/media-viewer.phtml:32
+#: view/datascribe/admin/record/media-viewer.phtml:33
 msgid "Rotate right"
 msgstr ""
 
@@ -966,160 +971,177 @@ msgstr ""
 msgid "[None]"
 msgstr ""
 
-#: view/datascribe/admin/record/show.phtml:6
-msgid "Show"
+#: config/module.config.php:29
+msgid "Disable focus mode"
+msgstr ""
+
+#: config/module.config.php:31
+msgid "Disable fast entry mode"
 msgstr ""
 
 #: src/ViewHelper/breadcrumbs_route_map.php:35
 msgid "Record"
 msgstr ""
 
-#: src/Api/Representation/DatascribeItemRepresentation.php:243
-#: src/Form/ItemSearchForm.php:25
-msgid "Approved"
+#: src/DatascribeDataType/Textarea.php:13
+msgid "Textarea"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeProjectAdapter.php:82
-msgid "An owner must have an ID"
+#: src/DatascribeDataType/Textarea.php:19
+msgid "Textarea label"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeProjectAdapter.php:149
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:195
-#, php-format
-msgid "The name \"%s\" is already taken."
+#: src/DatascribeDataType/Textarea.php:24
+msgid "Rows"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeProjectAdapter.php:154
-msgid "A project name must not be null"
+#: src/DatascribeDataType/Textarea.php:30 src/DatascribeDataType/Text.php:24
+msgid "Minimum length"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeItemAdapter.php:36
+#: src/DatascribeDataType/Textarea.php:31 src/DatascribeDataType/Text.php:25
 msgid ""
-"The DatascribeItemAdapter adapter does not implement the create operation."
+"The minimum number of characters long the input can be and still be "
+"considered valid."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeItemAdapter.php:377
-msgid "A DataScribe dataset must not be null"
+#: src/DatascribeDataType/Textarea.php:37 src/DatascribeDataType/Text.php:31
+msgid "Maximum length"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeItemAdapter.php:380
-msgid "An item must not be null"
+#: src/DatascribeDataType/Textarea.php:38 src/DatascribeDataType/Text.php:32
+msgid "The maximum number of characters the input should accept."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:56
-msgid "Invalid project format passed in request."
+#: src/DatascribeDataType/Textarea.php:44 src/DatascribeDataType/Number.php:42
+#: src/DatascribeDataType/Text.php:38
+msgid "Placeholder"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:60
-msgid "Invalid item set format passed in request."
+#: src/DatascribeDataType/Textarea.php:45 src/DatascribeDataType/Number.php:43
+#: src/DatascribeDataType/Text.php:39
+msgid "An exemplar value to display in the input field whenever it is empty."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:63
-#: src/Api/Adapter/DatascribeRecordAdapter.php:140
-msgid "Invalid owner format passed in request."
+#: src/DatascribeDataType/Textarea.php:50 src/DatascribeDataType/Number.php:48
+#: src/DatascribeDataType/Text.php:44
+msgid "Regex pattern"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:67
-msgid "Invalid fields format passed in request."
+#: src/DatascribeDataType/Textarea.php:51 src/DatascribeDataType/Number.php:49
+#: src/DatascribeDataType/Text.php:45
+msgid ""
+"A regular expression the input's contents must match in order to be valid."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:200
-msgid "A dataset name must not be null"
+#: src/DatascribeDataType/Textarea.php:56 src/DatascribeDataType/Number.php:54
+#: src/DatascribeDataType/AbstractSelection.php:24
+#: src/DatascribeDataType/Text.php:50
+msgid "Default value"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:203
-msgid "A project must not be null"
+#: src/DatascribeDataType/Number.php:13 src/DatascribeDataType/Number.php:113
+msgid "Number"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeDatasetAdapter.php:209
-#, php-format
-msgid "Invalid field data for field \"%s\"."
+#: src/DatascribeDataType/Number.php:19
+msgid "Number input label"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeRecordAdapter.php:136
-msgid "Invalid item format passed in request."
+#: src/DatascribeDataType/Number.php:24
+msgid "Minimum value"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeRecordAdapter.php:144
-msgid "Invalid values format passed in request."
+#: src/DatascribeDataType/Number.php:25
+msgid "The minimum value to accept for this input."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeRecordAdapter.php:272
-msgid "Missing item."
+#: src/DatascribeDataType/Number.php:30
+msgid "Maximum value"
 msgstr ""
 
-#: src/Api/Adapter/DatascribeRecordAdapter.php:279
-msgid "Invalid field. Field not in dataset."
+#: src/DatascribeDataType/Number.php:31
+msgid "The maximum value to accept for this input."
 msgstr ""
 
-#: src/Api/Adapter/DatascribeRecordAdapter.php:286
-#, php-format
-msgid "Invalid value text for field \"%s\"."
+#: src/DatascribeDataType/Number.php:36
+msgid "Stepping interval"
+msgstr ""
+
+#: src/DatascribeDataType/Number.php:37
+msgid "A number that specifies the granularity that the value must adhere to."
+msgstr ""
+
+#: src/DatascribeDataType/Number.php:59 src/DatascribeDataType/Text.php:55
+msgid "Datalist"
+msgstr ""
+
+#: src/DatascribeDataType/Number.php:60 src/DatascribeDataType/Text.php:56
+msgid "Recommended options available to choose, separated by new lines."
+msgstr ""
+
+#: src/DatascribeDataType/AbstractSelection.php:12
+msgid "Selection label"
+msgstr ""
+
+#: src/DatascribeDataType/AbstractSelection.php:18
+msgid "The selection options separated by new lines."
+msgstr ""
+
+#: src/DatascribeDataType/Text.php:19
+msgid "Text input label"
+msgstr ""
+
+#: src/DatascribeDataType/Unknown.php:22 src/DatascribeDataType/Unknown.php:54
+msgid "Unknown data type"
+msgstr ""
+
+#: src/DatascribeDataType/Unknown.php:28
+msgid "Field data"
+msgstr ""
+
+#: src/DatascribeDataType/Unknown.php:60
+msgid "Value text"
+msgstr ""
+
+#: src/DatascribeDataType/Select.php:22 src/Form/Element/Radio.php:17
+msgid "[No selection]"
+msgstr ""
+
+#: src/DatascribeDataType/Time.php:11
+msgid "Time"
+msgstr ""
+
+#: src/DatascribeDataType/Radio.php:12
+msgid "Radio"
 msgstr ""
 
 #: src/DatascribeDataType/Datetime.php:11
 msgid "DateTime"
 msgstr ""
 
-#: src/DatascribeDataType/Radio.php:13
-msgid "Radio"
+#: src/DatascribeDataType/Checkbox.php:15
+msgid "Checkbox"
 msgstr ""
 
-#: src/DatascribeDataType/Textarea.php:14
-msgid "Textarea"
+#: src/DatascribeDataType/Checkbox.php:21
+msgid "Checkbox label"
 msgstr ""
 
-#: src/DatascribeDataType/Textarea.php:20
-msgid "Textarea label"
+#: src/DatascribeDataType/Checkbox.php:26
+msgid "Checked value"
 msgstr ""
 
-#: src/DatascribeDataType/Textarea.php:25
-msgid "Rows"
+#: src/DatascribeDataType/Checkbox.php:31
+msgid "Unhecked value"
 msgstr ""
 
-#: src/DatascribeDataType/Textarea.php:31 src/DatascribeDataType/Text.php:25
-msgid "Minimum length"
+#: src/DatascribeDataType/Checkbox.php:36
+msgid "Checked by default"
 msgstr ""
 
-#: src/DatascribeDataType/Textarea.php:32 src/DatascribeDataType/Text.php:26
-msgid ""
-"The minimum number of characters long the input can be and still be "
-"considered valid."
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:38 src/DatascribeDataType/Text.php:32
-msgid "Maximum length"
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:39 src/DatascribeDataType/Text.php:33
-msgid "The maximum number of characters the input should accept."
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:45 src/DatascribeDataType/Text.php:39
-#: src/DatascribeDataType/Number.php:43
-msgid "Placeholder"
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:46 src/DatascribeDataType/Text.php:40
-#: src/DatascribeDataType/Number.php:44
-msgid "An exemplar value to display in the input field whenever it is empty."
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:51 src/DatascribeDataType/Text.php:45
-#: src/DatascribeDataType/Number.php:49
-msgid "Regex pattern"
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:52 src/DatascribeDataType/Text.php:46
-#: src/DatascribeDataType/Number.php:50
-msgid ""
-"A regular expression the input's contents must match in order to be valid."
-msgstr ""
-
-#: src/DatascribeDataType/Textarea.php:57 src/DatascribeDataType/Text.php:51
-#: src/DatascribeDataType/AbstractSelection.php:24
-#: src/DatascribeDataType/Number.php:55
-msgid "Default value"
+#: src/DatascribeDataType/Checkbox.php:70
+msgid "Check"
 msgstr ""
 
 #: src/DatascribeDataType/AbstractDatetime.php:42
@@ -1178,100 +1200,41 @@ msgstr ""
 msgid "Second"
 msgstr ""
 
-#: src/DatascribeDataType/Text.php:20
-msgid "Text input label"
+#: src/Controller/Admin/DatasetRecordController.php:119
+#: src/Controller/Admin/RecordController.php:327
+msgid "Records successfully edited."
 msgstr ""
 
-#: src/DatascribeDataType/Text.php:56 src/DatascribeDataType/Number.php:60
-msgid "Datalist"
+#: src/Controller/Admin/DatasetRecordController.php:170
+#: src/Controller/Admin/RecordController.php:381
+msgid "Editing records. This may take a while."
 msgstr ""
 
-#: src/DatascribeDataType/Text.php:57 src/DatascribeDataType/Number.php:61
-msgid "Recommended options available to choose, separated by new lines."
+#: src/Controller/Admin/DatasetRecordController.php:202
+#: src/Controller/Admin/RecordController.php:415
+msgid "You must select at least one record to batch delete."
 msgstr ""
 
-#: src/DatascribeDataType/Checkbox.php:17
-msgid "Checkbox"
+#: src/Controller/Admin/DatasetRecordController.php:211
+#: src/Controller/Admin/RecordController.php:424
+msgid "Records successfully deleted"
 msgstr ""
 
-#: src/DatascribeDataType/Checkbox.php:23
-msgid "Checkbox label"
+#: src/Controller/Admin/DatasetRecordController.php:249
+#: src/Controller/Admin/RecordController.php:463
+msgid "Deleting records. This may take a while."
 msgstr ""
 
-#: src/DatascribeDataType/Checkbox.php:28
-msgid "Checked value"
+#: src/Controller/Admin/ProjectController.php:23
+msgid "Project successfully created."
 msgstr ""
 
-#: src/DatascribeDataType/Checkbox.php:33
-msgid "Unhecked value"
+#: src/Controller/Admin/ProjectController.php:52
+msgid "Project successfully edited."
 msgstr ""
 
-#: src/DatascribeDataType/Checkbox.php:38
-msgid "Checked by default"
-msgstr ""
-
-#: src/DatascribeDataType/Checkbox.php:72
-msgid "Check"
-msgstr ""
-
-#: src/DatascribeDataType/Select.php:24 src/Form/Element/Radio.php:17
-msgid "[No selection]"
-msgstr ""
-
-#: src/DatascribeDataType/Time.php:11
-msgid "Time"
-msgstr ""
-
-#: src/DatascribeDataType/AbstractSelection.php:12
-msgid "Selection label"
-msgstr ""
-
-#: src/DatascribeDataType/AbstractSelection.php:18
-msgid "The selection options separated by new lines."
-msgstr ""
-
-#: src/DatascribeDataType/Unknown.php:23 src/DatascribeDataType/Unknown.php:55
-msgid "Unknown data type"
-msgstr ""
-
-#: src/DatascribeDataType/Unknown.php:29
-msgid "Field data"
-msgstr ""
-
-#: src/DatascribeDataType/Unknown.php:61
-msgid "Value text"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:14 src/DatascribeDataType/Number.php:114
-msgid "Number"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:20
-msgid "Number input label"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:25
-msgid "Minimum value"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:26
-msgid "The minimum value to accept for this input."
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:31
-msgid "Maximum value"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:32
-msgid "The maximum value to accept for this input."
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:37
-msgid "Stepping interval"
-msgstr ""
-
-#: src/DatascribeDataType/Number.php:38
-msgid "A number that specifies the granularity that the value must adhere to."
+#: src/Controller/Admin/ProjectController.php:77
+msgid "Project successfully deleted"
 msgstr ""
 
 #: src/Controller/Admin/RecordController.php:51
@@ -1310,29 +1273,13 @@ msgstr ""
 msgid "Record successfully deleted"
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:327
-#: src/Controller/Admin/DatasetRecordController.php:119
-msgid "Records successfully edited."
+#: src/Controller/Admin/ItemController.php:36
+#, php-format
+msgid "This dataset has no item set. %s"
 msgstr ""
 
-#: src/Controller/Admin/RecordController.php:381
-#: src/Controller/Admin/DatasetRecordController.php:170
-msgid "Editing records. This may take a while."
-msgstr ""
-
-#: src/Controller/Admin/RecordController.php:415
-#: src/Controller/Admin/DatasetRecordController.php:202
-msgid "You must select at least one record to batch delete."
-msgstr ""
-
-#: src/Controller/Admin/RecordController.php:424
-#: src/Controller/Admin/DatasetRecordController.php:211
-msgid "Records successfully deleted"
-msgstr ""
-
-#: src/Controller/Admin/RecordController.php:463
-#: src/Controller/Admin/DatasetRecordController.php:249
-msgid "Deleting records. This may take a while."
+#: src/Controller/Admin/ItemController.php:139
+msgid "Items successfully edited."
 msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:35
@@ -1362,91 +1309,87 @@ msgstr ""
 msgid "Exporting dataset. This may take a while. %s"
 msgstr ""
 
-#: src/Controller/Admin/ItemController.php:36
+#: src/Api/Adapter/DatascribeItemAdapter.php:36
+msgid ""
+"The DatascribeItemAdapter adapter does not implement the create operation."
+msgstr ""
+
+#: src/Api/Adapter/DatascribeItemAdapter.php:377
+msgid "A DataScribe dataset must not be null"
+msgstr ""
+
+#: src/Api/Adapter/DatascribeItemAdapter.php:380
+msgid "An item must not be null"
+msgstr ""
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:56
+msgid "Invalid project format passed in request."
+msgstr ""
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:60
+msgid "Invalid item set format passed in request."
+msgstr ""
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:63
+#: src/Api/Adapter/DatascribeRecordAdapter.php:140
+msgid "Invalid owner format passed in request."
+msgstr ""
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:67
+msgid "Invalid fields format passed in request."
+msgstr ""
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:195
+#: src/Api/Adapter/DatascribeProjectAdapter.php:149
 #, php-format
-msgid "This dataset has no item set. %s"
+msgid "The name \"%s\" is already taken."
 msgstr ""
 
-#: src/Controller/Admin/ItemController.php:139
-msgid "Items successfully edited."
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:200
+msgid "A dataset name must not be null"
 msgstr ""
 
-#: src/Controller/Admin/ProjectController.php:23
-msgid "Project successfully created."
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:203
+msgid "A project must not be null"
 msgstr ""
 
-#: src/Controller/Admin/ProjectController.php:52
-msgid "Project successfully edited."
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:209
+#, php-format
+msgid "Invalid field data for field \"%s\"."
 msgstr ""
 
-#: src/Controller/Admin/ProjectController.php:77
-msgid "Project successfully deleted"
+#: src/Api/Adapter/DatascribeRecordAdapter.php:136
+msgid "Invalid item format passed in request."
 msgstr ""
 
-#: src/Form/ProjectForm.php:15
-msgid "Enter the name of this project."
+#: src/Api/Adapter/DatascribeRecordAdapter.php:144
+msgid "Invalid values format passed in request."
 msgstr ""
 
-#: src/Form/ProjectForm.php:27
-msgid "Enter the description of this project."
+#: src/Api/Adapter/DatascribeRecordAdapter.php:272
+msgid "Missing item."
 msgstr ""
 
-#: src/Form/ItemSearchForm.php:23
-msgid "Need review"
+#: src/Api/Adapter/DatascribeRecordAdapter.php:279
+msgid "Invalid field. Field not in dataset."
 msgstr ""
 
-#: src/Form/ItemSearchForm.php:30 src/Form/ItemSearchForm.php:54
-#: src/Form/ItemSearchForm.php:78 src/Form/ItemSearchForm.php:102
-msgid "Select status"
+#: src/Api/Adapter/DatascribeRecordAdapter.php:286
+#, php-format
+msgid "Invalid value text for field \"%s\"."
 msgstr ""
 
-#: src/Form/ItemSearchForm.php:37
-msgid "Submitted by"
+#: src/Api/Adapter/DatascribeProjectAdapter.php:82
+msgid "An owner must have an ID"
 msgstr ""
 
-#: src/Form/ItemSearchForm.php:48
-msgid "Submitted status"
+#: src/Api/Adapter/DatascribeProjectAdapter.php:154
+msgid "A project name must not be null"
 msgstr ""
 
-#: src/Form/ItemSearchForm.php:61
-msgid "Reviewed by"
-msgstr ""
-
-#: src/Form/ItemSearchForm.php:72
-msgid "Reviewed status"
-msgstr ""
-
-#: src/Form/ItemSearchForm.php:85
-msgid "Locked by"
-msgstr ""
-
-#: src/Form/ItemSearchForm.php:96
-msgid "Locked status"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:14
-msgid "Needs review?"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:23 src/Form/RecordSearchForm.php:40
-#: src/Form/RecordSearchForm.php:57
-msgid "Select one"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:31
-msgid "Needs work?"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:48
-msgid "Has invalid values?"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:75 src/Form/RecordSearchForm.php:93
-msgid "Select user"
-msgstr ""
-
-#: src/Form/RecordSearchForm.php:87
-msgid "Modified by"
+#: src/Api/Representation/DatascribeItemRepresentation.php:243
+#: src/Form/ItemSearchForm.php:21
+msgid "Approved"
 msgstr ""
 
 #: src/Form/Element/MonthSelect.php:11
@@ -1497,52 +1440,50 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: src/Form/RecordForm.php:137
+#: src/Form/RecordForm.php:136
 msgid "Invalid value"
 msgstr ""
 
-#: src/Form/RecordForm.php:148
+#: src/Form/RecordForm.php:147
 msgid "Set to null"
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:13 src/Form/ItemForm.php:66
-msgid "Unlock"
+#: src/Form/DatasetForm.php:81
+msgid "Enter the name of this dataset."
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:14 src/Form/ItemForm.php:69
-msgid "Lock to me"
+#: src/Form/DatasetForm.php:93
+msgid "Enter the description of this dataset."
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:20
-msgid "Lock action"
+#: src/Form/DatasetForm.php:105
+msgid "Enter guidelines for transcribing this dataset."
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:33
-msgid "Review action"
+#: src/Form/DatasetForm.php:117
+msgid ""
+"Select the item set used to synchronize dataset items. Once synchronized, "
+"this dataset will contain every item in this item set."
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:36 src/Form/ItemForm.php:48
-msgid "Mark as approved"
+#: src/Form/DatasetForm.php:123
+msgid "Select an item set"
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:37 src/Form/ItemForm.php:51
-msgid "Mark as not approved"
+#: src/Form/DatasetForm.php:229
+msgid "Field name"
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:38 src/Form/ItemForm.php:54
-msgid "Mark as not reviewed"
+#: src/Form/DatasetForm.php:238
+msgid "Field description"
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:50
-msgid "Priority action"
+#: src/Form/DatasetForm.php:247
+msgid "Field is primary"
 msgstr ""
 
-#: src/Form/ItemBatchForm.php:53 src/Form/ItemForm.php:84
-msgid "Mark as prioritized"
-msgstr ""
-
-#: src/Form/ItemBatchForm.php:54 src/Form/ItemForm.php:87
-msgid "Mark as not prioritized"
+#: src/Form/DatasetForm.php:256
+msgid "Field is required"
 msgstr ""
 
 #: src/Form/ItemForm.php:33
@@ -1553,108 +1494,168 @@ msgstr ""
 msgid "Mark as not submitted"
 msgstr ""
 
-#: src/Form/DatasetForm.php:82
-msgid "Enter the name of this dataset."
+#: src/Form/ItemForm.php:48 src/Form/ItemBatchForm.php:34
+msgid "Mark as approved"
 msgstr ""
 
-#: src/Form/DatasetForm.php:94
-msgid "Enter the description of this dataset."
+#: src/Form/ItemForm.php:51 src/Form/ItemBatchForm.php:35
+msgid "Mark as not approved"
 msgstr ""
 
-#: src/Form/DatasetForm.php:106
-msgid "Enter guidelines for transcribing this dataset."
+#: src/Form/ItemForm.php:54 src/Form/ItemBatchForm.php:36
+msgid "Mark as not reviewed"
 msgstr ""
 
-#: src/Form/DatasetForm.php:118
-msgid ""
-"Select the item set used to synchronize dataset items. Once synchronized, "
-"this dataset will contain every item in this item set."
+#: src/Form/ItemForm.php:66 src/Form/ItemBatchForm.php:11
+msgid "Unlock"
 msgstr ""
 
-#: src/Form/DatasetForm.php:124
-msgid "Select an item set"
+#: src/Form/ItemForm.php:69 src/Form/ItemBatchForm.php:12
+msgid "Lock to me"
 msgstr ""
 
-#: src/Form/DatasetForm.php:230
-msgid "Field name"
+#: src/Form/ItemForm.php:84 src/Form/ItemBatchForm.php:51
+msgid "Mark as prioritized"
 msgstr ""
 
-#: src/Form/DatasetForm.php:239
-msgid "Field description"
+#: src/Form/ItemForm.php:87 src/Form/ItemBatchForm.php:52
+msgid "Mark as not prioritized"
 msgstr ""
 
-#: src/Form/DatasetForm.php:248
-msgid "Field is primary"
-msgstr ""
-
-#: src/Form/DatasetForm.php:257
-msgid "Field is required"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:16
-msgid "Needs review action"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:19
-msgid "Mark as needs review"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:20
-msgid "Mark as does not need review"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:32
-msgid "Needs work action"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:35
-msgid "Mark as needs work"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:36
-msgid "Mark as does not need work"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:75
-msgid "Is missing action"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:78
-msgid "Mark as missing"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:79
-msgid "Mark as not missing"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:91
-msgid "Is illegible action"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:94
-msgid "Mark as illegible"
-msgstr ""
-
-#: src/Form/RecordBatchForm.php:95
-msgid "Mark as not illegible"
-msgstr ""
-
-#: src/Form/AbstractForm.php:102
+#: src/Form/AbstractForm.php:101
 msgid "Lock to transcriber"
 msgstr ""
 
-#: src/Form/AbstractForm.php:106
+#: src/Form/AbstractForm.php:105
 msgid "Lock to reviewer"
 msgstr ""
 
-#: src/Form/AbstractForm.php:110
+#: src/Form/AbstractForm.php:109
 msgid "Lock to admin"
 msgstr ""
 
-#: config/module.config.php:29
-msgid "Disable focus mode"
+#: src/Form/RecordSearchForm.php:14
+msgid "Needs review?"
 msgstr ""
 
-#: config/module.config.php:31
-msgid "Disable fast entry mode"
+#: src/Form/RecordSearchForm.php:23 src/Form/RecordSearchForm.php:40
+#: src/Form/RecordSearchForm.php:57
+msgid "Select one"
+msgstr ""
+
+#: src/Form/RecordSearchForm.php:31
+msgid "Needs work?"
+msgstr ""
+
+#: src/Form/RecordSearchForm.php:48
+msgid "Has invalid values?"
+msgstr ""
+
+#: src/Form/RecordSearchForm.php:75 src/Form/RecordSearchForm.php:93
+msgid "Select user"
+msgstr ""
+
+#: src/Form/RecordSearchForm.php:87
+msgid "Modified by"
+msgstr ""
+
+#: src/Form/ItemBatchForm.php:18
+msgid "Lock action"
+msgstr ""
+
+#: src/Form/ItemBatchForm.php:31
+msgid "Review action"
+msgstr ""
+
+#: src/Form/ItemBatchForm.php:48
+msgid "Priority action"
+msgstr ""
+
+#: src/Form/ProjectForm.php:15
+msgid "Enter the name of this project."
+msgstr ""
+
+#: src/Form/ProjectForm.php:27
+msgid "Enter the description of this project."
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:19
+msgid "Need review"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:26 src/Form/ItemSearchForm.php:50
+#: src/Form/ItemSearchForm.php:74 src/Form/ItemSearchForm.php:98
+msgid "Select status"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:33
+msgid "Submitted by"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:44
+msgid "Submitted status"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:57
+msgid "Reviewed by"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:68
+msgid "Reviewed status"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:81
+msgid "Locked by"
+msgstr ""
+
+#: src/Form/ItemSearchForm.php:92
+msgid "Locked status"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:14
+msgid "Needs review action"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:17
+msgid "Mark as needs review"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:18
+msgid "Mark as does not need review"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:30
+msgid "Needs work action"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:33
+msgid "Mark as needs work"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:34
+msgid "Mark as does not need work"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:73
+msgid "Is missing action"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:76
+msgid "Mark as missing"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:77
+msgid "Mark as not missing"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:89
+msgid "Is illegible action"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:92
+msgid "Mark as illegible"
+msgstr ""
+
+#: src/Form/RecordBatchForm.php:93
+msgid "Mark as not illegible"
 msgstr ""

@@ -4,8 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Pols12 <poltron54@gmail.com>, 2020
-# Judith Hannoun <judith.hannoun@gmail.com>, 2020
+# Rivo Zängov <eraser@eraser.ee>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -14,43 +13,43 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-04 10:55-0500\n"
 "PO-Revision-Date: 2020-02-03 14:36+0000\n"
-"Last-Translator: Judith Hannoun <judith.hannoun@gmail.com>, 2020\n"
-"Language-Team: French (https://www.transifex.com/omeka/teams/14184/fr/)\n"
+"Last-Translator: Rivo Zängov <eraser@eraser.ee>, 2020\n"
+"Language-Team: Estonian (https://www.transifex.com/omeka/teams/14184/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/Api/Representation/DatascribeRecordRepresentation.php:154
 #, php-format
 msgid "Record #%s: %s"
-msgstr "Enregistrement %s : %s"
+msgstr ""
 
 #: src/Api/Representation/DatascribeRecordRepresentation.php:159
 #, php-format
 msgid "Record #%s"
-msgstr "Enregistrement %s"
+msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:171
 msgid "See this job for sync progress."
-msgstr "Consultez la tâche pour la progression de la synchronisation."
+msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:195
 msgid "See this job for validate progress."
-msgstr "Consultez la tâche pour la progression de la validation."
+msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:219
 msgid "See this job for export progress."
-msgstr "Consultez la tâche pour la progression de l’exportation."
+msgstr ""
 
 #: src/Controller/Admin/ItemController.php:40
 msgid "Set an item set here."
-msgstr "Indiquez une collection ici."
+msgstr "Määra siin ühikute kogum."
 
 #: src/Form/DatasetForm.php:162
 msgid "New field"
-msgstr "Nouveau champ"
+msgstr "Uus väli"
 
 #: view/datascribe/admin/dataset-record/batch-edit-all.phtml:6
 #: view/datascribe/admin/dataset-record/batch-edit.phtml:6
@@ -62,64 +61,64 @@ msgstr "Nouveau champ"
 #: view/datascribe/admin/item/browse.phtml:83
 #: view/datascribe/admin/item/search.phtml:7
 msgid "DataScribe: Dataset"
-msgstr "DataScribe : jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/batch-edit-all.phtml:6
 #: view/datascribe/admin/record/batch-edit-all.phtml:6
 msgid "Batch edit all records"
-msgstr "Modifier ensemble tous les enregistrements"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/batch-edit-all.phtml:23
 #: view/datascribe/admin/dataset-record/batch-edit.phtml:25
 #: view/datascribe/admin/record/batch-edit-all.phtml:23
 #: view/datascribe/admin/record/batch-edit.phtml:25
 msgid "Affected records"
-msgstr "Enregistrements affectés"
+msgstr "Mõjutatud sissekanded"
 
 #: view/datascribe/admin/dataset-record/batch-edit-all.phtml:24
 #: view/datascribe/admin/record/batch-edit-all.phtml:24
 #, php-format
 msgid "You are editing %s records"
-msgstr "Vous êtes en train de modifier %s enregistrements"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/batch-edit.phtml:6
 #: view/datascribe/admin/record/batch-edit.phtml:6
 msgid "Batch edit records"
-msgstr "Modifier ensemble les enregistrements"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/batch-edit.phtml:26
 #: view/datascribe/admin/record/batch-edit.phtml:26
 #, php-format
 msgid "You are editing the following %s records"
-msgstr "Vous allez modifier les %s enregistrements suivants"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:10
 #: view/datascribe/admin/record/browse.phtml:10
 msgid "Records that need review"
-msgstr "Enregistrements qui doivent être révisés"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:14
 #: view/datascribe/admin/record/browse.phtml:14
 msgid "Records that need work"
-msgstr "Enregistrements qui doivent être retravaillés"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:18
 #: view/datascribe/admin/record/browse.phtml:18
 msgid "Records with values marked as invalid"
-msgstr "Enregistrements ayant des valeurs marquées comme invalides"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:24
 #: view/datascribe/admin/record/browse.phtml:24
 #: view/datascribe/admin/record/form.phtml:135
 msgid "Position"
-msgstr "Position"
+msgstr "Asukoht"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:28
 #: view/datascribe/admin/item/browse.phtml:106
 #: view/datascribe/admin/item/browse.phtml:157
 #: view/datascribe/admin/item/show-details.phtml:3
 msgid "Item #"
-msgstr "Contenu "
+msgstr "Ühiku nr."
 
 #: view/datascribe/admin/dataset-record/browse.phtml:32
 #: view/datascribe/admin/dataset-record/browse.phtml:107
@@ -128,74 +127,74 @@ msgstr "Contenu "
 #: view/datascribe/admin/record/previous-next-records.phtml:13
 #: view/datascribe/admin/record/show-details.phtml:3
 msgid "Record #"
-msgstr "Enregistrement "
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:36
 #: view/datascribe/admin/record/browse.phtml:32
 msgid "Record created"
-msgstr "Enregistrement créé"
+msgstr "Sissekanne on loodud"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:48
 #: view/datascribe/admin/record/browse.phtml:44
 msgid "Records"
-msgstr "Enregistrements"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:51
 msgid "Browse items"
-msgstr "Parcourir les contenus"
+msgstr "Sirvi ühikuid"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:53
 #: view/datascribe/admin/item/browse.phtml:88
 msgid "Edit dataset"
-msgstr "Modifier le jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:55
 #: view/datascribe/admin/item/browse.phtml:90
 msgid "More actions"
-msgstr "Autres actions"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:57
 #: view/datascribe/admin/dataset/form-sidebars.phtml:3
 #: view/datascribe/admin/item/browse.phtml:92
 msgid "Sync dataset"
-msgstr "Synchroniser le jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:58
 #: view/datascribe/admin/dataset/form-sidebars.phtml:14
 #: view/datascribe/admin/item/browse.phtml:93
 msgid "Validate dataset"
-msgstr "Valider le jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:59
 #: view/datascribe/admin/dataset/form-sidebars.phtml:21
 #: view/datascribe/admin/item/browse.phtml:94
 msgid "Export dataset"
-msgstr "Exporter le jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:131
 #: view/datascribe/admin/record/browse.phtml:114
 msgid "Select records"
-msgstr "Choisissez les enregistrements"
+msgstr "Vali sissekanded"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:136
 #: view/datascribe/admin/item/browse.phtml:173
 #: view/datascribe/admin/record/browse.phtml:119
 msgid "Has invalid values"
-msgstr "A des valeurs invalides"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:137
 #: view/datascribe/admin/record/browse.phtml:120
 #: view/datascribe/admin/record/form.phtml:123
 #: view/datascribe/admin/record/show-details.phtml:47
 msgid "Needs review"
-msgstr "Doit être révisé"
+msgstr "Vajab ülevaatamist"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:138
 #: view/datascribe/admin/record/browse.phtml:121
 #: view/datascribe/admin/record/form.phtml:129
 #: view/datascribe/admin/record/show-details.phtml:51
 msgid "Needs work"
-msgstr "Doit être retravaillé"
+msgstr "Vajab tööd"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:164
 #: view/datascribe/admin/dataset-record/browse.phtml:176
@@ -207,7 +206,7 @@ msgstr "Doit être retravaillé"
 #: view/datascribe/admin/record/show.phtml:15
 #: view/datascribe/admin/record/show.phtml:26
 msgid "unknown"
-msgstr "inconnu"
+msgstr "tundmatu"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:166
 #: view/datascribe/admin/dataset-record/browse.phtml:173
@@ -219,7 +218,7 @@ msgstr "inconnu"
 #: view/datascribe/admin/record/show.phtml:17
 #: view/datascribe/admin/record/show.phtml:23
 msgid "invalid"
-msgstr "invalide"
+msgstr "vigane"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:168
 #: view/datascribe/admin/dataset-record/browse.phtml:175
@@ -231,7 +230,7 @@ msgstr "invalide"
 #: view/datascribe/admin/record/show.phtml:19
 #: view/datascribe/admin/record/show.phtml:25
 msgid "null"
-msgstr "nulle"
+msgstr ""
 
 #: view/datascribe/admin/dataset-record/browse.phtml:174
 #: view/datascribe/admin/record/browse.phtml:159
@@ -239,63 +238,63 @@ msgstr "nulle"
 #: view/datascribe/admin/record/show-details.phtml:14
 #: view/datascribe/admin/record/show.phtml:24
 msgid "empty"
-msgstr "vide"
+msgstr "tühi"
 
 #: view/datascribe/admin/dataset-record/browse.phtml:194
 #: view/datascribe/admin/record/browse.phtml:179
 msgid "No records found."
-msgstr "Aucun enregistrement trouvé."
+msgstr "Sissekandeid ei leitud."
 
 #: view/datascribe/admin/dataset-record/search.phtml:7
 msgid "Record search"
-msgstr "Recherche d’enregistrements"
+msgstr ""
 
 #: view/datascribe/admin/dataset/add.phtml:8
 #: view/datascribe/admin/dataset/browse.phtml:5
 #: view/datascribe/admin/project/edit.phtml:7
 msgid "DataScribe: Project"
-msgstr "DataScribe : projet"
+msgstr ""
 
 #: view/datascribe/admin/dataset/add.phtml:8
 msgid "New dataset"
-msgstr "Nouveau jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:5
 msgid "Datasets"
-msgstr "Jeux de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:9
 msgid "Edit project"
-msgstr "Modifier le projet"
+msgstr "Muuda projekti"
 
 #: view/datascribe/admin/dataset/browse.phtml:10
 msgid "Add new dataset"
-msgstr "Ajouter un nouveau jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:20
 #: view/datascribe/admin/project/browse.phtml:21
 msgid "Date created"
-msgstr "Date de création"
+msgstr "Loomise kuupäev"
 
 #: view/datascribe/admin/dataset/browse.phtml:36
 #: view/datascribe/admin/index/index.phtml:143
 #: view/datascribe/admin/project/browse.phtml:37
 #: view/datascribe/admin/record/browse.phtml:91
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Lisas"
 
 #: view/datascribe/admin/dataset/browse.phtml:83
 #, php-format
 msgid "No datasets found for this project. %s"
-msgstr "Aucun jeu de données trouvé pour ce projet. %s"
+msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:84
 msgid "Add a new dataset."
-msgstr "Ajouter un nouveau jeu de données."
+msgstr ""
 
 #: view/datascribe/admin/dataset/browse.phtml:87
 msgid "No datasets found for this project."
-msgstr "Aucun jeu de données trouvé pour ce projet."
+msgstr ""
 
 #: view/datascribe/admin/dataset/edit.phtml:32
 #: view/datascribe/admin/record/form.phtml:47
@@ -312,7 +311,7 @@ msgstr ""
 
 #: view/datascribe/admin/dataset/edit.phtml:42
 msgid "Form Builder"
-msgstr "Constructeur de formulaire"
+msgstr "Vormi ehitaja"
 
 #: view/datascribe/admin/dataset/edit.phtml:56
 #: view/datascribe/admin/record/form.phtml:99
@@ -321,13 +320,13 @@ msgstr ""
 
 #: view/datascribe/admin/dataset/edit.phtml:60
 msgid "Add a field to the form"
-msgstr "Ajouter un champ au formulaire"
+msgstr "Lisa väli vormile"
 
 #: view/datascribe/admin/dataset/edit.phtml:62
 #: view/datascribe/admin/record/form.phtml:118
 #, php-format
 msgid "Last saved: %s on %s"
-msgstr "Dernière sauvegarde : %s le %s"
+msgstr ""
 
 #: view/datascribe/admin/dataset/form-builder-buttons.phtml:1
 msgid "Drag to change order"
@@ -335,15 +334,15 @@ msgstr ""
 
 #: view/datascribe/admin/dataset/form-builder-buttons.phtml:3
 msgid "Move Up"
-msgstr "Remonter"
+msgstr "Liiguta üles"
 
 #: view/datascribe/admin/dataset/form-builder-buttons.phtml:4
 msgid "Move Down"
-msgstr "Descendre"
+msgstr "Liiguta alla"
 
 #: view/datascribe/admin/dataset/form-builder-buttons.phtml:6
 msgid "Undo"
-msgstr "Annuler"
+msgstr "Tühista"
 
 #: view/datascribe/admin/dataset/form-builder-flags.phtml:2
 msgid "Primary field"
@@ -352,8 +351,6 @@ msgstr ""
 #: view/datascribe/admin/dataset/form-sidebars.phtml:5
 msgid "This dataset has no item set. Set an item set to enable syncing."
 msgstr ""
-"Ce jeu de données n’a aucune collection. Définissez une collection pour "
-"activer la synchronisation."
 
 #: view/datascribe/admin/dataset/form-sidebars.phtml:7
 msgid ""
@@ -361,18 +358,12 @@ msgid ""
 "this dataset will contain every item in the item set. You should synchronize"
 " periodically, any time items are added or removed from the item set."
 msgstr ""
-"Synchroniser le jeu de données avec la collection configurée. Une fois "
-"synchronisé, le jeu de données contiendra tous les contenus de la "
-"collection. Vous devriez synchroniser périodiquement, à chaque fois que des "
-"contenus sont ajoutés ou retirés de la collection."
 
 #: view/datascribe/admin/dataset/form-sidebars.phtml:8
 msgid ""
 "Warning: items that have been removed from the configured item set since the"
 " last sync will be deleted from this dataset."
 msgstr ""
-"Attention : les contenus qui ont été retirées de la collection configurée "
-"depuis la dernière synchronisation seront supprimés de ce jeu de données."
 
 #: view/datascribe/admin/dataset/form-sidebars.phtml:15
 msgid ""
@@ -388,23 +379,19 @@ msgid ""
 "records from approved items, and that invalid values will be null. This will"
 " overwrite an existing export file."
 msgstr ""
-"Exporte ce jeu de données dans un fichier CSV. Notez que le fichier ne "
-"contiendra que des enregistrements issus de contenus approuvés, et que les "
-"valeurs non valides seront nulles. Cela écrasera un fichier d'exportation "
-"déjà existant."
 
 #: view/datascribe/admin/dataset/show-details.phtml:1
 msgid "Dataset metadata"
-msgstr "Métadonnées du jeu de données"
+msgstr ""
 
 #: view/datascribe/admin/dataset/show-details.phtml:13
 #: view/datascribe/admin/project/show-details.phtml:9
 msgid "[No description]"
-msgstr "[aucune description]"
+msgstr "[Kirjeldus pole]"
 
 #: view/datascribe/admin/dataset/show-details.phtml:25
 msgid "Not set"
-msgstr ""
+msgstr "Pole määratud"
 
 #: view/datascribe/admin/dataset/show-details.phtml:27
 #: view/datascribe/admin/dataset/show-details.phtml:37
@@ -424,34 +411,34 @@ msgstr ""
 #: view/datascribe/admin/record/show-details.phtml:26
 #: view/datascribe/admin/record/show-details.phtml:41
 msgid "[Unknown]"
-msgstr "[Inconnu]"
+msgstr "[tundmatu]"
 
 #: view/datascribe/admin/dataset/show-details.phtml:35
 #: view/datascribe/admin/project/show-details.phtml:19
 #: view/datascribe/admin/record/show-details.phtml:24
 #, php-format
 msgid "%s by %s"
-msgstr "%s par %s"
+msgstr ""
 
 #: view/datascribe/admin/dataset/show-details.phtml:41
 #: view/datascribe/admin/project/show-details.phtml:25
 #: view/datascribe/admin/record/show-details.phtml:30
 msgid "Last modified"
-msgstr "Dernière modification"
+msgstr "Viimati muudetud"
 
 #: view/datascribe/admin/dataset/show-details.phtml:54
 #: view/datascribe/admin/project/show-details.phtml:38
 #: view/datascribe/admin/record/show-details.phtml:43
 msgid "[Not modified]"
-msgstr "[Non modifié]"
+msgstr "[Pole muudetud]"
 
 #: view/datascribe/admin/dataset/show-details.phtml:58
 msgid "Last synced"
-msgstr "Dernière synchronisation"
+msgstr "Viimati sünkroonitud"
 
 #: view/datascribe/admin/dataset/show-details.phtml:71
 msgid "[Not synced]"
-msgstr "[Non synchronisé]"
+msgstr "[Pole sünkroonitud]"
 
 #: view/datascribe/admin/dataset/show-details.phtml:75
 msgid "Last validated"
@@ -463,42 +450,42 @@ msgstr ""
 
 #: view/datascribe/admin/dataset/show-details.phtml:92
 msgid "Last exported"
-msgstr "Dernier export"
+msgstr "Viimati eksporditud"
 
 #: view/datascribe/admin/dataset/show-details.phtml:105
 msgid "[Not exported]"
-msgstr "[Non exporté]"
+msgstr "[Pole eksporditud]"
 
 #: view/datascribe/admin/dataset/show-details.phtml:109
 msgid "Export file"
-msgstr "Fichier d'exportation"
+msgstr "Ekspordi fail"
 
 #: view/datascribe/admin/dataset/show-details.phtml:112
 msgid "Click to download CSV file"
-msgstr "Cliquez pour télécharger le fichier CSV"
+msgstr ""
 
 #: view/datascribe/admin/dataset/show-details.phtml:114
 msgid "[No export file available]"
-msgstr "[Pas de fichier d'exportation disponible]"
+msgstr ""
 
 #: view/datascribe/admin/index/index.phtml:5
 msgid "Dashboard"
-msgstr ""
+msgstr "Töölaud"
 
 #: view/datascribe/admin/index/index.phtml:5
 #: view/datascribe/admin/project/add.phtml:7
 #: view/datascribe/admin/project/browse.phtml:5
 msgid "DataScribe"
-msgstr ""
+msgstr "DataScribe"
 
 #: view/datascribe/admin/index/index.phtml:8
 msgid "Browse projects"
-msgstr ""
+msgstr "Sirvi projekte"
 
 #: view/datascribe/admin/index/index.phtml:9
 #: view/datascribe/admin/project/browse.phtml:10
 msgid "Add new project"
-msgstr ""
+msgstr "Lisa uus projekt"
 
 #: view/datascribe/admin/index/index.phtml:12
 msgid "Welcome to DataScribe."
@@ -506,7 +493,7 @@ msgstr ""
 
 #: view/datascribe/admin/index/index.phtml:16
 msgid "My projects"
-msgstr "Mes projets"
+msgstr "Minu projektid"
 
 #: view/datascribe/admin/index/index.phtml:25
 msgid "Unlocked items"
@@ -515,20 +502,20 @@ msgstr ""
 #: view/datascribe/admin/index/index.phtml:28
 #: view/datascribe/admin/index/index.phtml:53
 msgid "New"
-msgstr "Nouveau"
+msgstr "Uus"
 
 #: view/datascribe/admin/index/index.phtml:39
 #: view/datascribe/admin/index/index.phtml:64
 msgid "In progress"
-msgstr "En cours"
+msgstr "Töös"
 
 #: view/datascribe/admin/index/index.phtml:50
 msgid "My items"
-msgstr ""
+msgstr "Minu ühikud"
 
 #: view/datascribe/admin/index/index.phtml:75
 msgid "Not approved"
-msgstr "Non approuvé"
+msgstr ""
 
 #: view/datascribe/admin/index/index.phtml:87
 msgid "Items needing review"
@@ -544,12 +531,12 @@ msgstr ""
 
 #: view/datascribe/admin/index/index.phtml:138
 msgid "All projects"
-msgstr ""
+msgstr "Kõik projektid"
 
 #: view/datascribe/admin/index/index.phtml:163
 #: view/datascribe/admin/project/browse.phtml:92
 msgid "No projects found."
-msgstr ""
+msgstr "Ühtegi projekti ei leitud."
 
 #: view/datascribe/admin/item/batch-edit-all.phtml:5
 msgid "Batch edit all items"
@@ -575,7 +562,7 @@ msgstr ""
 
 #: view/datascribe/admin/item/browse.phtml:14
 msgid "My new items"
-msgstr ""
+msgstr "Minu uued ühikud"
 
 #: view/datascribe/admin/item/browse.phtml:18
 msgid "My in progress items"
@@ -587,7 +574,7 @@ msgstr ""
 
 #: view/datascribe/admin/item/browse.phtml:26
 msgid "My items that are not approved"
-msgstr ""
+msgstr "Minu ühikud pole heaks kidietud"
 
 #: view/datascribe/admin/item/browse.phtml:30
 msgid "My items that are approved"
@@ -631,7 +618,7 @@ msgstr ""
 
 #: view/datascribe/admin/item/browse.phtml:86
 msgid "Browse records"
-msgstr ""
+msgstr "Sirvi sissekandeid"
 
 #: view/datascribe/admin/item/browse.phtml:110
 #: view/datascribe/admin/record/browse.phtml:268
@@ -646,25 +633,25 @@ msgstr ""
 #: view/datascribe/admin/item/browse.phtml:118
 #: view/datascribe/admin/record/browse.phtml:248
 msgid "Reviewed"
-msgstr ""
+msgstr "Ülevaadatud"
 
 #: view/datascribe/admin/item/browse.phtml:160
 #: view/datascribe/admin/item/show-details.phtml:31
 msgid "Last submitted"
-msgstr ""
+msgstr "Viimati lisatud"
 
 #: view/datascribe/admin/item/browse.phtml:161
 #: view/datascribe/admin/item/show-details.phtml:48
 msgid "Last reviewed"
-msgstr ""
+msgstr "Viimati üle vaadatud"
 
 #: view/datascribe/admin/item/browse.phtml:162
 msgid "Review status"
-msgstr ""
+msgstr "Ülevaatamise staatus"
 
 #: view/datascribe/admin/item/browse.phtml:170
 msgid "Select items"
-msgstr ""
+msgstr "Vali ühikud"
 
 #: view/datascribe/admin/item/browse.phtml:208
 #, php-format
@@ -683,11 +670,11 @@ msgstr ""
 
 #: view/datascribe/admin/item/browse.phtml:215
 msgid "No items found."
-msgstr ""
+msgstr "Ühtegi ühikut ei leitud."
 
 #: view/datascribe/admin/item/show-details.phtml:1
 msgid "Item metadata"
-msgstr ""
+msgstr "Ühiku metaandmed"
 
 #: view/datascribe/admin/item/show-details.phtml:7
 msgid "DataScribe item"
@@ -695,7 +682,7 @@ msgstr ""
 
 #: view/datascribe/admin/item/show-details.phtml:11
 msgid "Omeka item"
-msgstr ""
+msgstr "Omeka ühik"
 
 #: view/datascribe/admin/item/show-details.phtml:27
 msgid "Record count"
@@ -704,12 +691,12 @@ msgstr ""
 #: view/datascribe/admin/item/show-details.phtml:44
 #: view/datascribe/admin/record/browse.phtml:228
 msgid "Not submitted"
-msgstr ""
+msgstr "Pole lisatud"
 
 #: view/datascribe/admin/item/show-details.phtml:61
 #: view/datascribe/admin/record/browse.phtml:248
 msgid "Not reviewed"
-msgstr ""
+msgstr "Pole üle vaadatud"
 
 #: view/datascribe/admin/item/show-details.phtml:65
 msgid "Last locked"
@@ -718,7 +705,7 @@ msgstr ""
 #: view/datascribe/admin/item/show-details.phtml:78
 #: view/datascribe/admin/record/browse.phtml:208
 msgid "Unlocked"
-msgstr ""
+msgstr "Avatud"
 
 #: view/datascribe/admin/item/show-details.phtml:82
 #: view/datascribe/admin/record/browse.phtml:286
@@ -732,33 +719,33 @@ msgstr ""
 #: view/datascribe/admin/record/form.phtml:150
 #: view/datascribe/admin/record/show-details.phtml:59
 msgid "Reviewer notes"
-msgstr ""
+msgstr "Ülevaataja märkused"
 
 #: view/datascribe/admin/project/add.phtml:7
 msgid "New project"
-msgstr ""
+msgstr "Uus projekt"
 
 #: view/datascribe/admin/project/add.phtml:10
 #: view/datascribe/admin/project/edit.phtml:10
 msgid "Configuration"
-msgstr ""
+msgstr "Seadistamine"
 
 #: view/datascribe/admin/project/browse.phtml:5
 msgid "Projects"
-msgstr ""
+msgstr "Projektid"
 
 #: view/datascribe/admin/project/browse.phtml:88
 #, php-format
 msgid "No projects found. %s"
-msgstr ""
+msgstr "Ühtegi projekti ei leitud. %s"
 
 #: view/datascribe/admin/project/browse.phtml:89
 msgid "Add a new project."
-msgstr ""
+msgstr "Lisa uus projekt."
 
 #: view/datascribe/admin/project/show-details.phtml:1
 msgid "Project metadata"
-msgstr ""
+msgstr "Projekti metaandmed"
 
 #: view/datascribe/admin/project/users-form.phtml:13
 msgid "Click on a user to add them to the project."
@@ -778,7 +765,7 @@ msgstr ""
 
 #: view/datascribe/admin/record/browse.phtml:188
 msgid "Add new record"
-msgstr ""
+msgstr "Lisa uus sissekanne"
 
 #: view/datascribe/admin/record/browse.phtml:197
 msgid "Item actions"
@@ -790,11 +777,11 @@ msgstr ""
 
 #: view/datascribe/admin/record/browse.phtml:207
 msgid "Lock status:"
-msgstr ""
+msgstr "Lukustamise staatus:"
 
 #: view/datascribe/admin/record/browse.phtml:208
 msgid "Locked"
-msgstr ""
+msgstr "ukustatud"
 
 #: view/datascribe/admin/record/browse.phtml:214
 #, php-format
@@ -812,7 +799,7 @@ msgstr ""
 
 #: view/datascribe/admin/record/browse.phtml:247
 msgid "Review status:"
-msgstr ""
+msgstr "Ülevaatamise staatus:"
 
 #: view/datascribe/admin/record/browse.phtml:254
 #, php-format
@@ -835,7 +822,7 @@ msgstr ""
 #: view/datascribe/admin/record/form-sidebars.phtml:5
 #: view/datascribe/admin/record/form-sidebars.phtml:21
 msgid "Delete records"
-msgstr ""
+msgstr "Kustuta sissekanded"
 
 #: view/datascribe/admin/record/form-sidebars.phtml:6
 msgid "Are you sure you would like to delete the selected records?"
@@ -856,7 +843,7 @@ msgstr ""
 
 #: view/datascribe/admin/record/form.phtml:13
 msgid "New record"
-msgstr ""
+msgstr "Uus sissekanne"
 
 #: view/datascribe/admin/record/form.phtml:15
 #: view/datascribe/admin/record/show.phtml:6
@@ -877,23 +864,23 @@ msgstr ""
 
 #: view/datascribe/admin/record/form.phtml:25
 msgid "Layout"
-msgstr ""
+msgstr "Paigutus"
 
 #: view/datascribe/admin/record/form.phtml:26
 msgid "Horizontal view"
-msgstr ""
+msgstr "Horisontaalne vaade"
 
 #: view/datascribe/admin/record/form.phtml:27
 msgid "Vertical view"
-msgstr ""
+msgstr "ertikaalne vaade"
 
 #: view/datascribe/admin/record/form.phtml:30
 msgid "Guidelines"
-msgstr ""
+msgstr "Juhendid"
 
 #: view/datascribe/admin/record/form.phtml:50
 msgid "Add another "
-msgstr ""
+msgstr "sa veel üks"
 
 #: view/datascribe/admin/record/form.phtml:52
 msgid "Return to records"
@@ -941,7 +928,7 @@ msgstr ""
 
 #: view/datascribe/admin/record/form.phtml:105
 msgid "Build the form."
-msgstr ""
+msgstr "Ehita vorm."
 
 #: view/datascribe/admin/record/form.phtml:108
 msgid "This dataset has no form."
@@ -953,7 +940,7 @@ msgstr ""
 
 #: view/datascribe/admin/record/form.phtml:161
 msgid "Next records"
-msgstr ""
+msgstr "Järgmised sissekanded"
 
 #: view/datascribe/admin/record/media-viewer.phtml:19
 #, php-format
@@ -970,11 +957,11 @@ msgstr ""
 
 #: view/datascribe/admin/record/media-viewer.phtml:32
 msgid "Rotate left"
-msgstr ""
+msgstr "Pööra vasakule"
 
 #: view/datascribe/admin/record/media-viewer.phtml:33
 msgid "Rotate right"
-msgstr ""
+msgstr "Pööra paremale"
 
 #: view/datascribe/admin/record/show-details.phtml:1
 msgid "Record metadata"
@@ -982,11 +969,11 @@ msgstr ""
 
 #: view/datascribe/admin/record/show-details.phtml:7
 msgid "Primary value"
-msgstr ""
+msgstr "Peamine väärtus"
 
 #: view/datascribe/admin/record/show-details.phtml:18
 msgid "[None]"
-msgstr ""
+msgstr "[Pole]"
 
 #: config/module.config.php:29
 msgid "Disable focus mode"
@@ -1002,19 +989,19 @@ msgstr ""
 
 #: src/DatascribeDataType/Textarea.php:13
 msgid "Textarea"
-msgstr ""
+msgstr "Tekstiala"
 
 #: src/DatascribeDataType/Textarea.php:19
 msgid "Textarea label"
-msgstr ""
+msgstr "Tekstiala silt"
 
 #: src/DatascribeDataType/Textarea.php:24
 msgid "Rows"
-msgstr ""
+msgstr "Ridasid"
 
 #: src/DatascribeDataType/Textarea.php:30 src/DatascribeDataType/Text.php:24
 msgid "Minimum length"
-msgstr ""
+msgstr "Minimaalne pikkus"
 
 #: src/DatascribeDataType/Textarea.php:31 src/DatascribeDataType/Text.php:25
 msgid ""
@@ -1024,7 +1011,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Textarea.php:37 src/DatascribeDataType/Text.php:31
 msgid "Maximum length"
-msgstr ""
+msgstr "Maksimaalne pikkus"
 
 #: src/DatascribeDataType/Textarea.php:38 src/DatascribeDataType/Text.php:32
 msgid "The maximum number of characters the input should accept."
@@ -1059,7 +1046,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Number.php:13 src/DatascribeDataType/Number.php:113
 msgid "Number"
-msgstr ""
+msgstr "Number"
 
 #: src/DatascribeDataType/Number.php:19
 msgid "Number input label"
@@ -1067,7 +1054,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Number.php:24
 msgid "Minimum value"
-msgstr ""
+msgstr "Minimaalne väärtus"
 
 #: src/DatascribeDataType/Number.php:25
 msgid "The minimum value to accept for this input."
@@ -1075,7 +1062,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Number.php:30
 msgid "Maximum value"
-msgstr ""
+msgstr "Maksimaalne väärtus"
 
 #: src/DatascribeDataType/Number.php:31
 msgid "The maximum value to accept for this input."
@@ -1099,7 +1086,7 @@ msgstr ""
 
 #: src/DatascribeDataType/AbstractSelection.php:12
 msgid "Selection label"
-msgstr ""
+msgstr "Valiku silt"
 
 #: src/DatascribeDataType/AbstractSelection.php:18
 msgid "The selection options separated by new lines."
@@ -1123,15 +1110,15 @@ msgstr ""
 
 #: src/DatascribeDataType/Select.php:22 src/Form/Element/Radio.php:17
 msgid "[No selection]"
-msgstr ""
+msgstr "[Valikut pole]"
 
 #: src/DatascribeDataType/Time.php:11
 msgid "Time"
-msgstr ""
+msgstr "Kellaaeg"
 
 #: src/DatascribeDataType/Radio.php:12
 msgid "Radio"
-msgstr ""
+msgstr "Raadio"
 
 #: src/DatascribeDataType/Datetime.php:11
 msgid "DateTime"
@@ -1139,7 +1126,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Checkbox.php:15
 msgid "Checkbox"
-msgstr ""
+msgstr "Märkekast"
 
 #: src/DatascribeDataType/Checkbox.php:21
 msgid "Checkbox label"
@@ -1151,7 +1138,7 @@ msgstr ""
 
 #: src/DatascribeDataType/Checkbox.php:31
 msgid "Unhecked value"
-msgstr ""
+msgstr "Märkimata väärtus"
 
 #: src/DatascribeDataType/Checkbox.php:36
 msgid "Checked by default"
@@ -1163,31 +1150,31 @@ msgstr ""
 
 #: src/DatascribeDataType/AbstractDatetime.php:42
 msgid "Minimum year"
-msgstr ""
+msgstr "Minimaalne aasta"
 
 #: src/DatascribeDataType/AbstractDatetime.php:54
 msgid "Maximum year"
-msgstr ""
+msgstr "Maksimaalne aasta"
 
 #: src/DatascribeDataType/AbstractDatetime.php:64
 msgid "Default year"
-msgstr ""
+msgstr "Vaikimisi aasta"
 
 #: src/DatascribeDataType/AbstractDatetime.php:74
 msgid "Default month"
-msgstr ""
+msgstr "Vaikimisi kuu"
 
 #: src/DatascribeDataType/AbstractDatetime.php:81
 msgid "Default day"
-msgstr ""
+msgstr "Vaikimisi päev"
 
 #: src/DatascribeDataType/AbstractDatetime.php:91
 msgid "Default hour"
-msgstr ""
+msgstr "Vaikimisi tund"
 
 #: src/DatascribeDataType/AbstractDatetime.php:98
 msgid "Default minute"
-msgstr ""
+msgstr "Vaikimisi minut"
 
 #: src/DatascribeDataType/AbstractDatetime.php:105
 msgid "Default second"
@@ -1195,27 +1182,27 @@ msgstr ""
 
 #: src/DatascribeDataType/AbstractDatetime.php:154
 msgid "Year"
-msgstr ""
+msgstr "Aasta"
 
 #: src/DatascribeDataType/AbstractDatetime.php:168
 msgid "Month"
-msgstr ""
+msgstr "Kuu"
 
 #: src/DatascribeDataType/AbstractDatetime.php:182
 msgid "Day"
-msgstr ""
+msgstr "Päev"
 
 #: src/DatascribeDataType/AbstractDatetime.php:199
 msgid "Hour"
-msgstr ""
+msgstr "Tund"
 
 #: src/DatascribeDataType/AbstractDatetime.php:213
 msgid "Minute"
-msgstr ""
+msgstr "Minut"
 
 #: src/DatascribeDataType/AbstractDatetime.php:227
 msgid "Second"
-msgstr ""
+msgstr "Sekund"
 
 #: src/Controller/Admin/DatasetRecordController.php:119
 #: src/Controller/Admin/RecordController.php:327
@@ -1297,7 +1284,7 @@ msgstr ""
 
 #: src/Controller/Admin/ItemController.php:139
 msgid "Items successfully edited."
-msgstr ""
+msgstr "Ühikud on muudetud."
 
 #: src/Controller/Admin/DatasetController.php:35
 msgid "Dataset successfully created."
@@ -1305,7 +1292,7 @@ msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:72
 msgid "Dataset successfully edited."
-msgstr "Jeu de données édité avec succès"
+msgstr ""
 
 #: src/Controller/Admin/DatasetController.php:103
 msgid "Dataset successfully deleted"
@@ -1385,7 +1372,7 @@ msgstr ""
 
 #: src/Api/Adapter/DatascribeRecordAdapter.php:272
 msgid "Missing item."
-msgstr ""
+msgstr "Puuduv ühik."
 
 #: src/Api/Adapter/DatascribeRecordAdapter.php:279
 msgid "Invalid field. Field not in dataset."
@@ -1407,59 +1394,59 @@ msgstr ""
 #: src/Api/Representation/DatascribeItemRepresentation.php:243
 #: src/Form/ItemSearchForm.php:21
 msgid "Approved"
-msgstr ""
+msgstr "Heaks kiidetud"
 
 #: src/Form/Element/MonthSelect.php:11
 msgid "January"
-msgstr ""
+msgstr "Jaanuar"
 
 #: src/Form/Element/MonthSelect.php:12
 msgid "February"
-msgstr ""
+msgstr "Veebruar"
 
 #: src/Form/Element/MonthSelect.php:13
 msgid "March"
-msgstr ""
+msgstr "Märts"
 
 #: src/Form/Element/MonthSelect.php:14
 msgid "April"
-msgstr ""
+msgstr "Aprill"
 
 #: src/Form/Element/MonthSelect.php:15
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: src/Form/Element/MonthSelect.php:16
 msgid "June"
-msgstr ""
+msgstr "Juuni"
 
 #: src/Form/Element/MonthSelect.php:17
 msgid "July"
-msgstr ""
+msgstr "Juuli"
 
 #: src/Form/Element/MonthSelect.php:18
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: src/Form/Element/MonthSelect.php:19
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: src/Form/Element/MonthSelect.php:20
 msgid "October"
-msgstr ""
+msgstr "Oktoober"
 
 #: src/Form/Element/MonthSelect.php:21
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: src/Form/Element/MonthSelect.php:22
 msgid "December"
-msgstr ""
+msgstr "Detsember"
 
 #: src/Form/RecordForm.php:136
 msgid "Invalid value"
-msgstr ""
+msgstr "Vigane väärtus"
 
 #: src/Form/RecordForm.php:147
 msgid "Set to null"
@@ -1485,15 +1472,15 @@ msgstr ""
 
 #: src/Form/DatasetForm.php:123
 msgid "Select an item set"
-msgstr ""
+msgstr "Vali ühikute kogum"
 
 #: src/Form/DatasetForm.php:229
 msgid "Field name"
-msgstr ""
+msgstr "Välja nimi"
 
 #: src/Form/DatasetForm.php:238
 msgid "Field description"
-msgstr ""
+msgstr "Välja kirjeldus"
 
 #: src/Form/DatasetForm.php:247
 msgid "Field is primary"
@@ -1501,7 +1488,7 @@ msgstr ""
 
 #: src/Form/DatasetForm.php:256
 msgid "Field is required"
-msgstr ""
+msgstr "Väli on kohustuslik"
 
 #: src/Form/ItemForm.php:33
 msgid "Submit for review"
@@ -1513,7 +1500,7 @@ msgstr ""
 
 #: src/Form/ItemForm.php:48 src/Form/ItemBatchForm.php:34
 msgid "Mark as approved"
-msgstr ""
+msgstr "Märgi heakskiidetuks"
 
 #: src/Form/ItemForm.php:51 src/Form/ItemBatchForm.php:35
 msgid "Mark as not approved"
@@ -1521,15 +1508,15 @@ msgstr ""
 
 #: src/Form/ItemForm.php:54 src/Form/ItemBatchForm.php:36
 msgid "Mark as not reviewed"
-msgstr ""
+msgstr "Märgi kui mitte üle vaadatud"
 
 #: src/Form/ItemForm.php:66 src/Form/ItemBatchForm.php:11
 msgid "Unlock"
-msgstr ""
+msgstr "Ava"
 
 #: src/Form/ItemForm.php:69 src/Form/ItemBatchForm.php:12
 msgid "Lock to me"
-msgstr ""
+msgstr "Lukusta mulle"
 
 #: src/Form/ItemForm.php:84 src/Form/ItemBatchForm.php:51
 msgid "Mark as prioritized"
@@ -1553,16 +1540,16 @@ msgstr ""
 
 #: src/Form/RecordSearchForm.php:14
 msgid "Needs review?"
-msgstr ""
+msgstr "Vajab ülevaatamist?"
 
 #: src/Form/RecordSearchForm.php:23 src/Form/RecordSearchForm.php:40
 #: src/Form/RecordSearchForm.php:57
 msgid "Select one"
-msgstr ""
+msgstr "Vali üks"
 
 #: src/Form/RecordSearchForm.php:31
 msgid "Needs work?"
-msgstr ""
+msgstr "Vajab tööd?"
 
 #: src/Form/RecordSearchForm.php:48
 msgid "Has invalid values?"
@@ -1570,11 +1557,11 @@ msgstr ""
 
 #: src/Form/RecordSearchForm.php:75 src/Form/RecordSearchForm.php:93
 msgid "Select user"
-msgstr ""
+msgstr "Vali kasutaja"
 
 #: src/Form/RecordSearchForm.php:87
 msgid "Modified by"
-msgstr ""
+msgstr "Muutis"
 
 #: src/Form/ItemBatchForm.php:18
 msgid "Lock action"
@@ -1598,12 +1585,12 @@ msgstr ""
 
 #: src/Form/ItemSearchForm.php:19
 msgid "Need review"
-msgstr ""
+msgstr "Vajab ülevaatamist"
 
 #: src/Form/ItemSearchForm.php:26 src/Form/ItemSearchForm.php:50
 #: src/Form/ItemSearchForm.php:74 src/Form/ItemSearchForm.php:98
 msgid "Select status"
-msgstr ""
+msgstr "Vali staatus"
 
 #: src/Form/ItemSearchForm.php:33
 msgid "Submitted by"
@@ -1611,11 +1598,11 @@ msgstr ""
 
 #: src/Form/ItemSearchForm.php:44
 msgid "Submitted status"
-msgstr ""
+msgstr "Lisamise staatus"
 
 #: src/Form/ItemSearchForm.php:57
 msgid "Reviewed by"
-msgstr ""
+msgstr "Üle vaatas"
 
 #: src/Form/ItemSearchForm.php:68
 msgid "Reviewed status"
@@ -1623,7 +1610,7 @@ msgstr ""
 
 #: src/Form/ItemSearchForm.php:81
 msgid "Locked by"
-msgstr ""
+msgstr "Lukustas"
 
 #: src/Form/ItemSearchForm.php:92
 msgid "Locked status"
@@ -1635,7 +1622,7 @@ msgstr ""
 
 #: src/Form/RecordBatchForm.php:17
 msgid "Mark as needs review"
-msgstr ""
+msgstr "Märgi, et vajab ülevaatamist"
 
 #: src/Form/RecordBatchForm.php:18
 msgid "Mark as does not need review"
@@ -1659,7 +1646,7 @@ msgstr ""
 
 #: src/Form/RecordBatchForm.php:76
 msgid "Mark as missing"
-msgstr ""
+msgstr "Märgi puuduvaks"
 
 #: src/Form/RecordBatchForm.php:77
 msgid "Mark as not missing"
