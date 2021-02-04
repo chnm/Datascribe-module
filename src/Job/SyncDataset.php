@@ -16,6 +16,8 @@ class SyncDataset extends AbstractJob
      */
     public function perform()
     {
+        ini_set('memory_limit', '500M'); // Set a high memory limit.
+
         if (!is_numeric($this->getArg('datascribe_dataset_id'))) {
             throw new Exception\RuntimeException('Missing datascribe_dataset_id');
         }
