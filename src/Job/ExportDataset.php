@@ -13,6 +13,8 @@ class ExportDataset extends AbstractJob
      */
     public function perform()
     {
+        ini_set('memory_limit', '500M'); // Set a high memory limit.
+
         $services = $this->getServiceLocator();
         $em = $services->get('Omeka\EntityManager');
         $dispatcher = $services->get('Omeka\Job\Dispatcher');
