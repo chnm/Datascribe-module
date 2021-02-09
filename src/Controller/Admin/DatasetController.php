@@ -24,7 +24,8 @@ class DatasetController extends AbstractActionController
         $form = $this->getForm(DatasetForm::class);
 
         if ($this->getRequest()->isPost()) {
-            $form->setData($this->params()->fromPost());
+            $postData = $this->recomposeFormData($this->params()->fromPost('data'));
+            $form->setData($postData);
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $formData['o-module-datascribe:project']['o:id'] = $project->id();
@@ -60,8 +61,7 @@ class DatasetController extends AbstractActionController
         ]);
 
         if ($this->getRequest()->isPost()) {
-            $postData = http_build_query(json_decode($this->params()->fromPost('data'), true));
-            parse_str($postData, $postData);
+            $postData = $this->recomposeFormData($this->params()->fromPost('data'));
             $form->removeDeletedFields($postData)->setData($postData);
             if ($form->isValid()) {
                 // Note that the form cannot validate new fields. Instead we
@@ -224,5 +224,27 @@ class DatasetController extends AbstractActionController
             }
         }
         return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
+    }
+
+    /**
+     * Recompose form data
+     *
+     * To avoid reaching PHP's max_input_vars limit, the form posts one variable
+     * continaing serialized form data. Here we recompose the data into a format
+     * that PHP would have automatically generated during a normal form
+     * submission.
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function recomposeFormData($data)
+    {
+        $data = json_decode($data, true);
+        $postData = [];
+        foreach (array_chunk($data, 500, true) as $dataChunk) {
+            parse_str(http_build_query($dataChunk), $parsedData);
+            $postData = array_replace_recursive($postData, $parsedData);
+        }
+        return $postData;
     }
 }

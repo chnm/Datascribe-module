@@ -114,18 +114,19 @@ new Sortable($('.dataset-fields')[0], {
   forceFallback: true
 });
 
+// Send form data via one variable to avoid reaching PHP's max_input_vars limit.
 const datasetForm = document.getElementById('dataset-form');
 datasetForm.addEventListener('submit', e => {
     e.preventDefault();
     const form = document.createElement('form');
     const input = document.createElement('input');
     const formData = Object.fromEntries(new FormData(datasetForm));
+    formData[e.submitter.name] = true;
     form.method = 'post';
     input.name = 'data';
     input.value = JSON.stringify(formData);
     form.appendChild(input);
     document.body.appendChild(form);
-    console.log(input.value);
     form.submit();
 });
 
