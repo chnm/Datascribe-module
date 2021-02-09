@@ -113,4 +113,20 @@ new Sortable($('.dataset-fields')[0], {
   animation: 150,
   forceFallback: true
 });
+
+const datasetForm = document.getElementById('dataset-form');
+datasetForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const formData = Object.fromEntries(new FormData(datasetForm));
+    form.method = 'post';
+    input.name = 'data';
+    input.value = JSON.stringify(formData);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    console.log(input.value);
+    form.submit();
+});
+
 });

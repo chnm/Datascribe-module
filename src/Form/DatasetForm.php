@@ -42,6 +42,8 @@ class DatasetForm extends Form
 
     public function init()
     {
+        $this->setAttribute('id', 'dataset-form');
+
         $this->addCommonElements();
         if ($this->getOption('dataset')) {
             $this->addFieldsElements();

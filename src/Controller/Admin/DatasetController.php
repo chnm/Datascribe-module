@@ -60,7 +60,8 @@ class DatasetController extends AbstractActionController
         ]);
 
         if ($this->getRequest()->isPost()) {
-            $postData = $this->params()->fromPost();
+            $postData = http_build_query(json_decode($this->params()->fromPost('data'), true));
+            parse_str($postData, $postData);
             $form->removeDeletedFields($postData)->setData($postData);
             if ($form->isValid()) {
                 // Note that the form cannot validate new fields. Instead we
