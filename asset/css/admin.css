@@ -525,10 +525,11 @@
   width: calc(100% - 36px);
 }
 
-.current-row .panzoom-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.current-row #panzoom-container {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  top: 3rem;
 }
 
 .expanded-right .current-row.horizontal #media-viewer,
