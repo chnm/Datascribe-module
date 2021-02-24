@@ -210,6 +210,9 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
             }
         }
+        if (isset($query['all_prioritized'])) {
+            $qb->andWhere($qb->expr()->isNotNull('omeka_root.prioritized'));
+        }
     }
 
     protected function buildStatusQuery(QueryBuilder $qb, $status)

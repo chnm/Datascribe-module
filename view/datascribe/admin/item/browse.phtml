@@ -3,6 +3,10 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item browse');
 $canViewBatchUpdate = $dataset->userIsAllowed('datascribe_view_item_batch_update');
 $filters = [
     [
+        'label' => $this->translate('All prioritized items'),
+        'value' => 'all_prioritized',
+    ],
+    [
         'label' => $this->translate('All unlocked and new items'),
         'value' => 'all_unlocked_and_new'
     ],
