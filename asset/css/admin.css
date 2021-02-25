@@ -475,6 +475,7 @@
   height: 50%;
   overflow: hidden;
   margin-bottom: 12px;
+  position: relative;
 }
 
 .current-row.horizontal .media-container {
