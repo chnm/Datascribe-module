@@ -1,0 +1,1708 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# María del Pilar Ramírez Restrepo <pilar@neogranadina.org>, 2021
+# Juan Cobo Betancourt <juan@neogranadina.org>, 2021
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-11 10:24-0500\n"
+"PO-Revision-Date: 2021-01-14 10:17-0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es_419\n"
+
+#: src/Api/Representation/DatascribeRecordRepresentation.php:154
+#, php-format
+msgid "Record #%s: %s"
+msgstr "Registro #%s: %s"
+
+#: src/Api/Representation/DatascribeRecordRepresentation.php:159
+#, php-format
+msgid "Record #%s"
+msgstr "Registro #%s"
+
+#: src/Controller/Admin/DatasetController.php:171
+msgid "See this job for sync progress."
+msgstr "Ver este trabajo para sincronizar progreso."
+
+#: src/Controller/Admin/DatasetController.php:195
+msgid "See this job for validate progress."
+msgstr "Ver este trabajo para validar progreso."
+
+#: src/Controller/Admin/DatasetController.php:219
+msgid "See this job for export progress."
+msgstr "Ver este trabajo para exportar progreso."
+
+#: src/Controller/Admin/ItemController.php:40
+msgid "Set an item set here."
+msgstr "Establecer un conjunto de elementos acá."
+
+#: src/Form/DatasetForm.php:162
+msgid "New field"
+msgstr "Nuevo campo"
+
+#: view/datascribe/admin/dataset-record/batch-edit-all.phtml:6
+#: view/datascribe/admin/dataset-record/batch-edit.phtml:6
+#: view/datascribe/admin/dataset-record/browse.phtml:48
+#: view/datascribe/admin/dataset-record/search.phtml:7
+#: view/datascribe/admin/dataset/edit.phtml:9
+#: view/datascribe/admin/item/batch-edit-all.phtml:5
+#: view/datascribe/admin/item/batch-edit.phtml:5
+#: view/datascribe/admin/item/browse.phtml:83
+#: view/datascribe/admin/item/search.phtml:7
+msgid "DataScribe: Dataset"
+msgstr "DataScribe: conjunto de datos"
+
+#: view/datascribe/admin/dataset-record/batch-edit-all.phtml:6
+#: view/datascribe/admin/record/batch-edit-all.phtml:6
+msgid "Batch edit all records"
+msgstr "Editar todos los registros en bloque"
+
+#: view/datascribe/admin/dataset-record/batch-edit-all.phtml:23
+#: view/datascribe/admin/dataset-record/batch-edit.phtml:25
+#: view/datascribe/admin/record/batch-edit-all.phtml:23
+#: view/datascribe/admin/record/batch-edit.phtml:25
+msgid "Affected records"
+msgstr "Registros impactados"
+
+#: view/datascribe/admin/dataset-record/batch-edit-all.phtml:24
+#: view/datascribe/admin/record/batch-edit-all.phtml:24
+#, php-format
+msgid "You are editing %s records"
+msgstr "Usted está editando los registros %s"
+
+#: view/datascribe/admin/dataset-record/batch-edit.phtml:6
+#: view/datascribe/admin/record/batch-edit.phtml:6
+msgid "Batch edit records"
+msgstr "Editar registros en bloque"
+
+#: view/datascribe/admin/dataset-record/batch-edit.phtml:26
+#: view/datascribe/admin/record/batch-edit.phtml:26
+#, php-format
+msgid "You are editing the following %s records"
+msgstr "Usted está editando los siguientes %s registros"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:10
+#: view/datascribe/admin/record/browse.phtml:10
+msgid "Records that need review"
+msgstr "Registros que requieren revisión"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:14
+#: view/datascribe/admin/record/browse.phtml:14
+msgid "Records that need work"
+msgstr "Registros que requieren trabajo"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:18
+#: view/datascribe/admin/record/browse.phtml:18
+msgid "Records with values marked as invalid"
+msgstr "Registros con valores marcados como no válidos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:24
+#: view/datascribe/admin/record/browse.phtml:24
+#: view/datascribe/admin/record/form.phtml:135
+msgid "Position"
+msgstr "Posición"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:28
+#: view/datascribe/admin/item/browse.phtml:106
+#: view/datascribe/admin/item/browse.phtml:157
+#: view/datascribe/admin/item/show-details.phtml:3
+msgid "Item #"
+msgstr "Elemento #"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:32
+#: view/datascribe/admin/dataset-record/browse.phtml:107
+#: view/datascribe/admin/record/browse.phtml:28
+#: view/datascribe/admin/record/browse.phtml:88
+#: view/datascribe/admin/record/previous-next-records.phtml:13
+#: view/datascribe/admin/record/show-details.phtml:3
+msgid "Record #"
+msgstr "Registro #"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:36
+#: view/datascribe/admin/record/browse.phtml:32
+msgid "Record created"
+msgstr "Registro creado"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:48
+#: view/datascribe/admin/record/browse.phtml:44
+msgid "Records"
+msgstr "Registros"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:51
+msgid "Browse items"
+msgstr "Examinar elementos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:53
+#: view/datascribe/admin/item/browse.phtml:88
+msgid "Edit dataset"
+msgstr "Editar conjunto de datos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:55
+#: view/datascribe/admin/item/browse.phtml:90
+msgid "More actions"
+msgstr "Más acciones para marcar"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:57
+#: view/datascribe/admin/dataset/form-sidebars.phtml:3
+#: view/datascribe/admin/item/browse.phtml:92
+msgid "Sync dataset"
+msgstr "Sincronizar conjunto de datos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:58
+#: view/datascribe/admin/dataset/form-sidebars.phtml:14
+#: view/datascribe/admin/item/browse.phtml:93
+msgid "Validate dataset"
+msgstr "Validar conjunto de datos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:59
+#: view/datascribe/admin/dataset/form-sidebars.phtml:21
+#: view/datascribe/admin/item/browse.phtml:94
+msgid "Export dataset"
+msgstr "Exportar conjunto de datos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:131
+#: view/datascribe/admin/record/browse.phtml:114
+msgid "Select records"
+msgstr "Seleccionar registros"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:136
+#: view/datascribe/admin/item/browse.phtml:173
+#: view/datascribe/admin/record/browse.phtml:119
+msgid "Has invalid values"
+msgstr "Tiene valores no válidos"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:137
+#: view/datascribe/admin/record/browse.phtml:120
+#: view/datascribe/admin/record/form.phtml:123
+#: view/datascribe/admin/record/show-details.phtml:47
+msgid "Needs review"
+msgstr "Necesita revisión"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:138
+#: view/datascribe/admin/record/browse.phtml:121
+#: view/datascribe/admin/record/form.phtml:129
+#: view/datascribe/admin/record/show-details.phtml:51
+msgid "Needs work"
+msgstr "Necesita trabajo"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:164
+#: view/datascribe/admin/dataset-record/browse.phtml:176
+#: view/datascribe/admin/record/browse.phtml:149
+#: view/datascribe/admin/record/browse.phtml:161
+#: view/datascribe/admin/record/previous-next-records.phtml:31
+#: view/datascribe/admin/record/previous-next-records.phtml:43
+#: view/datascribe/admin/record/show-details.phtml:16
+#: view/datascribe/admin/record/show.phtml:15
+#: view/datascribe/admin/record/show.phtml:26
+msgid "unknown"
+msgstr "desconocido"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:166
+#: view/datascribe/admin/dataset-record/browse.phtml:173
+#: view/datascribe/admin/record/browse.phtml:151
+#: view/datascribe/admin/record/browse.phtml:158
+#: view/datascribe/admin/record/previous-next-records.phtml:33
+#: view/datascribe/admin/record/previous-next-records.phtml:40
+#: view/datascribe/admin/record/show-details.phtml:13
+#: view/datascribe/admin/record/show.phtml:17
+#: view/datascribe/admin/record/show.phtml:23
+msgid "invalid"
+msgstr "no válido"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:168
+#: view/datascribe/admin/dataset-record/browse.phtml:175
+#: view/datascribe/admin/record/browse.phtml:153
+#: view/datascribe/admin/record/browse.phtml:160
+#: view/datascribe/admin/record/previous-next-records.phtml:35
+#: view/datascribe/admin/record/previous-next-records.phtml:42
+#: view/datascribe/admin/record/show-details.phtml:15
+#: view/datascribe/admin/record/show.phtml:19
+#: view/datascribe/admin/record/show.phtml:25
+msgid "null"
+msgstr "nulo"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:174
+#: view/datascribe/admin/record/browse.phtml:159
+#: view/datascribe/admin/record/previous-next-records.phtml:41
+#: view/datascribe/admin/record/show-details.phtml:14
+#: view/datascribe/admin/record/show.phtml:24
+msgid "empty"
+msgstr "vacío"
+
+#: view/datascribe/admin/dataset-record/browse.phtml:194
+#: view/datascribe/admin/record/browse.phtml:179
+msgid "No records found."
+msgstr "No se encuentran registros."
+
+#: view/datascribe/admin/dataset-record/search.phtml:7
+msgid "Record search"
+msgstr "Buscar registros"
+
+#: view/datascribe/admin/dataset/add.phtml:8
+#: view/datascribe/admin/dataset/browse.phtml:5
+#: view/datascribe/admin/project/edit.phtml:7
+msgid "DataScribe: Project"
+msgstr "DataScribe: Proyecto"
+
+#: view/datascribe/admin/dataset/add.phtml:8
+msgid "New dataset"
+msgstr "Nuevo conjunto de datos"
+
+#: view/datascribe/admin/dataset/browse.phtml:5
+msgid "Datasets"
+msgstr "Conjuntos de datos"
+
+#: view/datascribe/admin/dataset/browse.phtml:9
+msgid "Edit project"
+msgstr "Editar proyecto"
+
+#: view/datascribe/admin/dataset/browse.phtml:10
+msgid "Add new dataset"
+msgstr "Añadir conjuntos de datos"
+
+#: view/datascribe/admin/dataset/browse.phtml:20
+#: view/datascribe/admin/project/browse.phtml:21
+msgid "Date created"
+msgstr "Fecha de creación"
+
+#: view/datascribe/admin/dataset/browse.phtml:36
+#: view/datascribe/admin/index/index.phtml:143
+#: view/datascribe/admin/project/browse.phtml:37
+#: view/datascribe/admin/record/browse.phtml:91
+msgid "Created by"
+msgstr "Creado por"
+
+#: view/datascribe/admin/dataset/browse.phtml:83
+#, php-format
+msgid "No datasets found for this project. %s"
+msgstr "No se encuentran conjuntos de datos para este proyecto. %s"
+
+#: view/datascribe/admin/dataset/browse.phtml:84
+msgid "Add a new dataset."
+msgstr "Añadir un conjunto de datos nuevo."
+
+#: view/datascribe/admin/dataset/browse.phtml:87
+msgid "No datasets found for this project."
+msgstr "No se encuentran conjuntos de datos para este proyecto."
+
+#: view/datascribe/admin/dataset/edit.phtml:32
+#: view/datascribe/admin/record/form.phtml:47
+msgid "Save and&hellip;"
+msgstr "Guardar y&hellip;"
+
+#: view/datascribe/admin/dataset/edit.phtml:34
+msgid "Return to dataset items"
+msgstr "Regresar a los elementos del conjunto de datos"
+
+#: view/datascribe/admin/dataset/edit.phtml:35
+msgid "Continue editing dataset"
+msgstr "Continuar editando conjunto de datos"
+
+#: view/datascribe/admin/dataset/edit.phtml:42
+msgid "Form Builder"
+msgstr "Crear formulario"
+
+#: view/datascribe/admin/dataset/edit.phtml:56
+#: view/datascribe/admin/record/form.phtml:99
+msgid "Back to top"
+msgstr "Regresar arriba"
+
+#: view/datascribe/admin/dataset/edit.phtml:60
+msgid "Add a field to the form"
+msgstr "Añadir un campo al formulario"
+
+#: view/datascribe/admin/dataset/edit.phtml:62
+#: view/datascribe/admin/record/form.phtml:118
+#, php-format
+msgid "Last saved: %s on %s"
+msgstr "Últimos cambios guardados: %s en %s"
+
+#: view/datascribe/admin/dataset/form-builder-buttons.phtml:1
+msgid "Drag to change order"
+msgstr "Arrastrar para cambiar orden"
+
+#: view/datascribe/admin/dataset/form-builder-buttons.phtml:3
+msgid "Move Up"
+msgstr "Mover arriba"
+
+#: view/datascribe/admin/dataset/form-builder-buttons.phtml:4
+msgid "Move Down"
+msgstr "Mover abajo"
+
+#: view/datascribe/admin/dataset/form-builder-buttons.phtml:6
+msgid "Undo"
+msgstr "Deshacer"
+
+#: view/datascribe/admin/dataset/form-builder-flags.phtml:2
+msgid "Primary field"
+msgstr "Campo principal"
+
+#: view/datascribe/admin/dataset/form-sidebars.phtml:5
+msgid "This dataset has no item set. Set an item set to enable syncing."
+msgstr ""
+"Este conjunto de datos no tiene un conjunto de elementos. Configurar un "
+"conjunto de elementos para habilitar la sincronización."
+
+#: view/datascribe/admin/dataset/form-sidebars.phtml:7
+msgid ""
+"Synchronize this dataset with the configured item set. Once synchronized, "
+"this dataset will contain every item in the item set. You should synchronize "
+"periodically, any time items are added or removed from the item set."
+msgstr ""
+"Sincronizar este conjunto de datos con el conjunto de elementos que está "
+"configurado. Una vez sincronizada, este conjunto de datos tendrá cada "
+"elemento en un conjunto de elementos. Usted debe hacer la sincronización "
+"periódicamente, siempre que se añada o se eliminen elementos del conjunto de "
+"elementos."
+
+#: view/datascribe/admin/dataset/form-sidebars.phtml:8
+msgid ""
+"Warning: items that have been removed from the configured item set since the "
+"last sync will be deleted from this dataset."
+msgstr ""
+"Cuidado: elementos que han sido eliminados del conjunto de elementos "
+"configurado desde la última sincronización será eliminado de este conjunto "
+"de datos."
+
+#: view/datascribe/admin/dataset/form-sidebars.phtml:15
+msgid ""
+"Validate this dataset against the rules currently set in the form builder. "
+"Once validated, invalid values will be marked as invalid. You should "
+"validate periodically, after fields are added to the form, after field "
+"validation rules change, and before exporting the dataset."
+msgstr ""
+"Validar este conjunto de datos aunque no siga las reglas establecidas "
+"actualmente en el creador de formularios. Una vez validados, los valores no "
+"válidos se marcarán como no válidos. Debe validar periódicamente, después de "
+"agregar campos al formulario, después de que cambien las reglas de "
+"validación de campos y antes de exportar la base de datos."
+
+#: view/datascribe/admin/dataset/form-sidebars.phtml:22
+msgid ""
+"Export this dataset to a CSV file. Note that the file will only include "
+"records from approved items, and that invalid values will be null. This will "
+"overwrite an existing export file."
+msgstr ""
+"Exportar este conjunto de datos a un archivo CSV. Tenga en cuenta que el "
+"archivo solo incluirá registros de elementos aprobados y que los valores no "
+"válidos serán anulados. Esto sobrescribirá un archivo de exportación "
+"existente."
+
+#: view/datascribe/admin/dataset/show-details.phtml:1
+msgid "Dataset metadata"
+msgstr "Metadatos de conjunto de datos"
+
+#: view/datascribe/admin/dataset/show-details.phtml:13
+#: view/datascribe/admin/project/show-details.phtml:9
+msgid "[No description]"
+msgstr "[Sin descripción]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:25
+msgid "Not set"
+msgstr "Sin configurar"
+
+#: view/datascribe/admin/dataset/show-details.phtml:27
+#: view/datascribe/admin/dataset/show-details.phtml:37
+#: view/datascribe/admin/dataset/show-details.phtml:52
+#: view/datascribe/admin/dataset/show-details.phtml:69
+#: view/datascribe/admin/dataset/show-details.phtml:86
+#: view/datascribe/admin/dataset/show-details.phtml:103
+#: view/datascribe/admin/item/show-details.phtml:42
+#: view/datascribe/admin/item/show-details.phtml:59
+#: view/datascribe/admin/item/show-details.phtml:76
+#: view/datascribe/admin/project/show-details.phtml:21
+#: view/datascribe/admin/project/show-details.phtml:36
+#: view/datascribe/admin/record/browse.phtml:215
+#: view/datascribe/admin/record/browse.phtml:235
+#: view/datascribe/admin/record/browse.phtml:255
+#: view/datascribe/admin/record/browse.phtml:275
+#: view/datascribe/admin/record/show-details.phtml:26
+#: view/datascribe/admin/record/show-details.phtml:41
+msgid "[Unknown]"
+msgstr "[Desconocido]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:35
+#: view/datascribe/admin/project/show-details.phtml:19
+#: view/datascribe/admin/record/show-details.phtml:24
+#, php-format
+msgid "%s by %s"
+msgstr "%s por %s"
+
+#: view/datascribe/admin/dataset/show-details.phtml:41
+#: view/datascribe/admin/project/show-details.phtml:25
+#: view/datascribe/admin/record/show-details.phtml:30
+msgid "Last modified"
+msgstr "Última modificación"
+
+#: view/datascribe/admin/dataset/show-details.phtml:54
+#: view/datascribe/admin/project/show-details.phtml:38
+#: view/datascribe/admin/record/show-details.phtml:43
+msgid "[Not modified]"
+msgstr "[Sin modificar]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:58
+msgid "Last synced"
+msgstr "Última sincronización"
+
+#: view/datascribe/admin/dataset/show-details.phtml:71
+msgid "[Not synced]"
+msgstr "[No sincronizado]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:75
+msgid "Last validated"
+msgstr "Última confirmación"
+
+#: view/datascribe/admin/dataset/show-details.phtml:88
+msgid "[Not validated]"
+msgstr "[Sin validar]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:92
+msgid "Last exported"
+msgstr "Última exportación"
+
+#: view/datascribe/admin/dataset/show-details.phtml:105
+msgid "[Not exported]"
+msgstr "[Sin exportar]"
+
+#: view/datascribe/admin/dataset/show-details.phtml:109
+msgid "Export file"
+msgstr "Exportar documento"
+
+#: view/datascribe/admin/dataset/show-details.phtml:112
+msgid "Click to download CSV file"
+msgstr "Haga click para descargar documento CSV"
+
+#: view/datascribe/admin/dataset/show-details.phtml:114
+msgid "[No export file available]"
+msgstr "[Documento de exportación no disponible]"
+
+#: view/datascribe/admin/index/index.phtml:5
+msgid "Dashboard"
+msgstr "Panel"
+
+#: view/datascribe/admin/index/index.phtml:5
+#: view/datascribe/admin/project/add.phtml:7
+#: view/datascribe/admin/project/browse.phtml:5
+msgid "DataScribe"
+msgstr "DataScribe"
+
+#: view/datascribe/admin/index/index.phtml:8
+msgid "Browse projects"
+msgstr "Examinar proyectos"
+
+#: view/datascribe/admin/index/index.phtml:9
+#: view/datascribe/admin/project/browse.phtml:10
+msgid "Add new project"
+msgstr "Añadir nuevo proyecto"
+
+#: view/datascribe/admin/index/index.phtml:12
+msgid "Welcome to DataScribe."
+msgstr "Bienvenido a DataScribe."
+
+#: view/datascribe/admin/index/index.phtml:16
+msgid "My projects"
+msgstr "Mis proyectos"
+
+#: view/datascribe/admin/index/index.phtml:25
+msgid "Unlocked items"
+msgstr "Elementos no asignados"
+
+#: view/datascribe/admin/index/index.phtml:28
+#: view/datascribe/admin/index/index.phtml:53
+msgid "New"
+msgstr "Nuevo"
+
+#: view/datascribe/admin/index/index.phtml:39
+#: view/datascribe/admin/index/index.phtml:64
+msgid "In progress"
+msgstr "En progreso"
+
+#: view/datascribe/admin/index/index.phtml:50
+msgid "My items"
+msgstr "Mis elementos"
+
+#: view/datascribe/admin/index/index.phtml:75
+msgid "Not approved"
+msgstr "No aprobado"
+
+#: view/datascribe/admin/index/index.phtml:87
+msgid "Items needing review"
+msgstr "Elementos que necesitan revisión"
+
+#: view/datascribe/admin/index/index.phtml:101
+msgid "Needs my re-review"
+msgstr "Requiere mi revisión"
+
+#: view/datascribe/admin/index/index.phtml:112
+msgid "Records needing review"
+msgstr "Registros que necesitan revisión"
+
+#: view/datascribe/admin/index/index.phtml:138
+msgid "All projects"
+msgstr "Todos los proyectos"
+
+#: view/datascribe/admin/index/index.phtml:163
+#: view/datascribe/admin/project/browse.phtml:92
+msgid "No projects found."
+msgstr "No se encuentran proyectos."
+
+#: view/datascribe/admin/item/batch-edit-all.phtml:5
+msgid "Batch edit all items"
+msgstr "Editar todos los elementos en bloque"
+
+#: view/datascribe/admin/item/batch-edit-all.phtml:23
+#, php-format
+msgid "You are editing %s items"
+msgstr "Usted está editando %s elementos"
+
+#: view/datascribe/admin/item/batch-edit.phtml:25
+#, php-format
+msgid "You are editing the following %s items"
+msgstr "Usted está editando los siguientes %s elementos"
+
+#: view/datascribe/admin/item/browse.phtml:6
+msgid "All unlocked and new items"
+msgstr "Todos los elementos no asignados y nuevos"
+
+#: view/datascribe/admin/item/browse.phtml:10
+msgid "All unlocked and in progress items"
+msgstr "Todos los elementos no asignados y en progreso"
+
+#: view/datascribe/admin/item/browse.phtml:14
+msgid "My new items"
+msgstr "Mis nuevos elementos"
+
+#: view/datascribe/admin/item/browse.phtml:18
+msgid "My in progress items"
+msgstr "Mis elementos en progreso"
+
+#: view/datascribe/admin/item/browse.phtml:22
+msgid "My items that need review"
+msgstr "Mis elementos que requieren revisión"
+
+#: view/datascribe/admin/item/browse.phtml:26
+msgid "My items that are not approved"
+msgstr "Mis elementos que no han sido aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:30
+msgid "My items that are approved"
+msgstr "Mis elementos que han sido aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:36
+msgid "Items with values marked as invalid"
+msgstr "Elementos con valores marcados como no válidos"
+
+#: view/datascribe/admin/item/browse.phtml:43
+msgid "All items that are not approved"
+msgstr "Todos los elementos que están aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:47
+msgid "All items that are approved"
+msgstr "Todos los elementos que están aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:51
+msgid "All items that need review"
+msgstr "Todos los elementos que requieren revisión"
+
+#: view/datascribe/admin/item/browse.phtml:55
+msgid "All items that need initial review"
+msgstr "Todos los elementos que requieren una revisión inicial"
+
+#: view/datascribe/admin/item/browse.phtml:59
+msgid "All items that need re-review"
+msgstr "Todos los elementos que requieren una revisión adicional"
+
+#: view/datascribe/admin/item/browse.phtml:65
+msgid "Items I reviewed that need re-review"
+msgstr "Elementos revisados por mí que requieren una revisión adicional"
+
+#: view/datascribe/admin/item/browse.phtml:69
+msgid "Items I reviewed that are not approved"
+msgstr "Elementos revisados por mí que no han sido aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:73
+msgid "Items I reviewed that are approved"
+msgstr "Elementos revisados por mí que están aprobados"
+
+#: view/datascribe/admin/item/browse.phtml:86
+msgid "Browse records"
+msgstr "Ver registros"
+
+#: view/datascribe/admin/item/browse.phtml:110
+#: view/datascribe/admin/record/browse.phtml:268
+msgid "Prioritized"
+msgstr "Prioritarios"
+
+#: view/datascribe/admin/item/browse.phtml:114
+#: view/datascribe/admin/record/browse.phtml:228
+msgid "Submitted"
+msgstr "Enviados"
+
+#: view/datascribe/admin/item/browse.phtml:118
+#: view/datascribe/admin/record/browse.phtml:248
+msgid "Reviewed"
+msgstr "Revisados"
+
+#: view/datascribe/admin/item/browse.phtml:160
+#: view/datascribe/admin/item/show-details.phtml:31
+msgid "Last submitted"
+msgstr "Último envío"
+
+#: view/datascribe/admin/item/browse.phtml:161
+#: view/datascribe/admin/item/show-details.phtml:48
+msgid "Last reviewed"
+msgstr "Última revisión"
+
+#: view/datascribe/admin/item/browse.phtml:162
+msgid "Review status"
+msgstr "Revisar estado"
+
+#: view/datascribe/admin/item/browse.phtml:170
+msgid "Select items"
+msgstr "Seleccionar elementos"
+
+#: view/datascribe/admin/item/browse.phtml:208
+#, php-format
+msgid "No items found. %s"
+msgstr "Elementos no encontrados. %s"
+
+#: view/datascribe/admin/item/browse.phtml:209
+msgid "Sync this dataset."
+msgstr "Sincronizar este conjunto de datos."
+
+#: view/datascribe/admin/item/browse.phtml:212
+msgid ""
+"If you have recently synced, the sync job likely has not finished<br>and/or "
+"you need to refresh this page."
+msgstr ""
+"Si usted ha sincronizado recientemente, es probable que el trabajo de "
+"sincronización no ha terminado<br>y/o usted necesita refrescar la página."
+
+#: view/datascribe/admin/item/browse.phtml:215
+msgid "No items found."
+msgstr "Elementos no encontrados."
+
+#: view/datascribe/admin/item/show-details.phtml:1
+msgid "Item metadata"
+msgstr "Metadatos de elemento"
+
+#: view/datascribe/admin/item/show-details.phtml:7
+msgid "DataScribe item"
+msgstr "Elemento de DataScribe"
+
+#: view/datascribe/admin/item/show-details.phtml:11
+msgid "Omeka item"
+msgstr "Elemento de Omeka"
+
+#: view/datascribe/admin/item/show-details.phtml:27
+msgid "Record count"
+msgstr "Conteo de registros"
+
+#: view/datascribe/admin/item/show-details.phtml:44
+#: view/datascribe/admin/record/browse.phtml:228
+msgid "Not submitted"
+msgstr "No enviado"
+
+#: view/datascribe/admin/item/show-details.phtml:61
+#: view/datascribe/admin/record/browse.phtml:248
+msgid "Not reviewed"
+msgstr "No revisado"
+
+#: view/datascribe/admin/item/show-details.phtml:65
+msgid "Last locked"
+msgstr "Último asignado"
+
+#: view/datascribe/admin/item/show-details.phtml:78
+#: view/datascribe/admin/record/browse.phtml:208
+msgid "Unlocked"
+msgstr "No asignado"
+
+#: view/datascribe/admin/item/show-details.phtml:82
+#: view/datascribe/admin/record/browse.phtml:286
+#: view/datascribe/admin/record/form.phtml:144
+#: view/datascribe/admin/record/show-details.phtml:55
+msgid "Transcriber notes"
+msgstr "Notas de transcriptor"
+
+#: view/datascribe/admin/item/show-details.phtml:86
+#: view/datascribe/admin/record/browse.phtml:292
+#: view/datascribe/admin/record/form.phtml:150
+#: view/datascribe/admin/record/show-details.phtml:59
+msgid "Reviewer notes"
+msgstr "Notas de quien revisa"
+
+#: view/datascribe/admin/project/add.phtml:7
+msgid "New project"
+msgstr "Nuevo proyecto"
+
+#: view/datascribe/admin/project/add.phtml:10
+#: view/datascribe/admin/project/edit.phtml:10
+msgid "Configuration"
+msgstr "Configuración"
+
+#: view/datascribe/admin/project/browse.phtml:5
+msgid "Projects"
+msgstr "Proyectos"
+
+#: view/datascribe/admin/project/browse.phtml:88
+#, php-format
+msgid "No projects found. %s"
+msgstr "Proyectos no encontrados. %s"
+
+#: view/datascribe/admin/project/browse.phtml:89
+msgid "Add a new project."
+msgstr "Añadir un nuevo proyecto."
+
+#: view/datascribe/admin/project/show-details.phtml:1
+msgid "Project metadata"
+msgstr "Metadatos de proyecto"
+
+#: view/datascribe/admin/project/users-form.phtml:13
+msgid "Click on a user to add them to the project."
+msgstr "Haga click en un usuario para añadirlo al proyecto."
+
+#: view/datascribe/admin/project/users-form.phtml:18
+msgid "Transcriber"
+msgstr "Transcriptor"
+
+#: view/datascribe/admin/record/batch-edit-all.phtml:6
+#: view/datascribe/admin/record/batch-edit.phtml:6
+#: view/datascribe/admin/record/browse.phtml:44
+#: view/datascribe/admin/record/form.phtml:13
+#: view/datascribe/admin/record/search.phtml:7
+msgid "DataScribe: Item"
+msgstr "DataScribe: Elemento"
+
+#: view/datascribe/admin/record/browse.phtml:188
+msgid "Add new record"
+msgstr "Añadir nuevo registro"
+
+#: view/datascribe/admin/record/browse.phtml:197
+msgid "Item actions"
+msgstr "Acción de marcar de elemento"
+
+#: view/datascribe/admin/record/browse.phtml:200
+msgid "Item status:"
+msgstr "Estado de elemento:"
+
+#: view/datascribe/admin/record/browse.phtml:207
+msgid "Lock status:"
+msgstr "Estado de asignación:"
+
+#: view/datascribe/admin/record/browse.phtml:208
+msgid "Locked"
+msgstr "Asignado"
+
+#: view/datascribe/admin/record/browse.phtml:214
+#, php-format
+msgid "Last locked to %s on %s"
+msgstr "Último asignado a %s en %s"
+
+#: view/datascribe/admin/record/browse.phtml:227
+msgid "Submission status:"
+msgstr "Estado de envío:"
+
+#: view/datascribe/admin/record/browse.phtml:234
+#, php-format
+msgid "Last submitted by %s on %s"
+msgstr "Último envío por %s en %s"
+
+#: view/datascribe/admin/record/browse.phtml:247
+msgid "Review status:"
+msgstr "Estado de revisión:"
+
+#: view/datascribe/admin/record/browse.phtml:254
+#, php-format
+msgid "Last reviewed by %s on %s"
+msgstr "Última revisión por %s en %s"
+
+#: view/datascribe/admin/record/browse.phtml:267
+msgid "Priority status:"
+msgstr "Prioridad:"
+
+#: view/datascribe/admin/record/browse.phtml:268
+msgid "Not prioritized"
+msgstr "No es prioritario"
+
+#: view/datascribe/admin/record/browse.phtml:274
+#, php-format
+msgid "Last prioritized by %s on %s"
+msgstr "Fue señalado como prioritario por última vez por %s en %s"
+
+#: view/datascribe/admin/record/form-sidebars.phtml:5
+#: view/datascribe/admin/record/form-sidebars.phtml:21
+msgid "Delete records"
+msgstr "Eliminar registros"
+
+#: view/datascribe/admin/record/form-sidebars.phtml:6
+msgid "Are you sure you would like to delete the selected records?"
+msgstr "¿Está seguro que desea eliminar los registros seleccionados?"
+
+#: view/datascribe/admin/record/form-sidebars.phtml:8
+#: view/datascribe/admin/record/form-sidebars.phtml:24
+#, php-format
+msgid ""
+"%1$s: this action will permanently delete %2$s records and cannot be undone."
+msgstr ""
+"%1$s: esta acción de marcar borrará permanentemente los expedientes %2$s y "
+"no podrá deshacerse."
+
+#: view/datascribe/admin/record/form-sidebars.phtml:22
+msgid ""
+"Are you sure you would like to delete all records on all pages of this "
+"result?"
+msgstr ""
+"¿Está seguro que desea eliminar todos los registros en todas las páginas de "
+"este resultado?"
+
+#: view/datascribe/admin/record/form.phtml:13
+msgid "New record"
+msgstr "Nuevo registro"
+
+#: view/datascribe/admin/record/form.phtml:15
+#: view/datascribe/admin/record/show.phtml:6
+msgid "DataScribe: Record"
+msgstr "DataScribe: Registro"
+
+#: view/datascribe/admin/record/form.phtml:19
+msgid "Previous records"
+msgstr "Registro previo"
+
+#: view/datascribe/admin/record/form.phtml:22
+msgid "Enable focus mode"
+msgstr "Agrandar espacio de trabajo"
+
+#: view/datascribe/admin/record/form.phtml:23
+msgid "Enable fast entry mode"
+msgstr "Activar modo de entrada rápida"
+
+#: view/datascribe/admin/record/form.phtml:25
+msgid "Layout"
+msgstr "Diseño"
+
+#: view/datascribe/admin/record/form.phtml:26
+msgid "Horizontal view"
+msgstr "Vista horizontal"
+
+#: view/datascribe/admin/record/form.phtml:27
+msgid "Vertical view"
+msgstr "Vista vertical"
+
+#: view/datascribe/admin/record/form.phtml:30
+msgid "Guidelines"
+msgstr "Guía"
+
+#: view/datascribe/admin/record/form.phtml:50
+msgid "Add another "
+msgstr "Añadir otro "
+
+#: view/datascribe/admin/record/form.phtml:52
+msgid "Return to records"
+msgstr "Regresar a registros"
+
+#: view/datascribe/admin/record/form.phtml:53
+msgid "Stay on this record"
+msgstr "Quedarse en este registro"
+
+#: view/datascribe/admin/record/form.phtml:75
+msgid "This field's data type is unknown. The value cannot be added."
+msgstr ""
+"Este tipo de datos del campo es desconocido. El valor no puede añadirse."
+
+#: view/datascribe/admin/record/form.phtml:79
+msgid "This field's data type is unknown. The value cannot be edited."
+msgstr ""
+"Este tipo de datos del campo es desconocido. El valor no puede editarse."
+
+#: view/datascribe/admin/record/form.phtml:81
+msgid ""
+"This value is invalid. Please correct it below and save this form to update."
+msgstr ""
+"Este valor no es válido. Por favor corríjalo abajo y guarde este formulario "
+"para actualizarlo."
+
+#: view/datascribe/admin/record/form.phtml:83
+msgid ""
+"This value is marked as invalid but does not appear to be invalid. Either re-"
+"validate the dataset or save this form as-is."
+msgstr ""
+"Este valor está marcado como no válido pero no parece serlo. Revalide el "
+"conjunto de datos o guarde este formulario tal cual está."
+
+#: view/datascribe/admin/record/form.phtml:93
+msgid "Is missing"
+msgstr "Faltante"
+
+#: view/datascribe/admin/record/form.phtml:94
+msgid "Is illegible"
+msgstr "Es ilegible"
+
+#: view/datascribe/admin/record/form.phtml:95
+msgid "Reset value"
+msgstr "Restablecer valor"
+
+#: view/datascribe/admin/record/form.phtml:104
+#, php-format
+msgid "This dataset has no form. %s"
+msgstr "Este conjunto de datos no tiene formulario. %s"
+
+#: view/datascribe/admin/record/form.phtml:105
+msgid "Build the form."
+msgstr "Crear el formulario."
+
+#: view/datascribe/admin/record/form.phtml:108
+msgid "This dataset has no form."
+msgstr "Este conjunto de datos no tiene formulario."
+
+#: view/datascribe/admin/record/form.phtml:114
+msgid "Record actions"
+msgstr "Acciones de marcar de registro"
+
+#: view/datascribe/admin/record/form.phtml:161
+msgid "Next records"
+msgstr "Siguientes registros"
+
+#: view/datascribe/admin/record/media-viewer.phtml:19
+#, php-format
+msgid "%s. %s"
+msgstr "%s. %s"
+
+#: view/datascribe/admin/record/media-viewer.phtml:30
+msgid "Zoom in"
+msgstr "Acercar"
+
+#: view/datascribe/admin/record/media-viewer.phtml:31
+msgid "Zoom out"
+msgstr "Alejar"
+
+#: view/datascribe/admin/record/media-viewer.phtml:32
+msgid "Rotate left"
+msgstr "Rotar a la izquierda"
+
+#: view/datascribe/admin/record/media-viewer.phtml:33
+msgid "Rotate right"
+msgstr "Rotar a la derecha"
+
+#: view/datascribe/admin/record/show-details.phtml:1
+msgid "Record metadata"
+msgstr "Metadatos de registros"
+
+#: view/datascribe/admin/record/show-details.phtml:7
+msgid "Primary value"
+msgstr "Valor principal"
+
+#: view/datascribe/admin/record/show-details.phtml:18
+msgid "[None]"
+msgstr "[Ninguno]"
+
+#: config/module.config.php:29
+msgid "Disable focus mode"
+msgstr "Desagrandar espacio de trabajo"
+
+#: config/module.config.php:31
+msgid "Disable fast entry mode"
+msgstr "Deshabilitar modo de entrada rápida"
+
+#: src/ViewHelper/breadcrumbs_route_map.php:35
+msgid "Record"
+msgstr "Registro"
+
+#: src/DatascribeDataType/Textarea.php:13
+msgid "Textarea"
+msgstr "Textarea"
+
+#: src/DatascribeDataType/Textarea.php:19
+msgid "Textarea label"
+msgstr "Etiqueta Textarea"
+
+#: src/DatascribeDataType/Textarea.php:24
+msgid "Rows"
+msgstr "Filas"
+
+#: src/DatascribeDataType/Textarea.php:30 src/DatascribeDataType/Text.php:24
+msgid "Minimum length"
+msgstr "Longitud mínima"
+
+#: src/DatascribeDataType/Textarea.php:31 src/DatascribeDataType/Text.php:25
+msgid ""
+"The minimum number of characters long the input can be and still be "
+"considered valid."
+msgstr "El número mínimo de caracteres para que se considere válido."
+
+#: src/DatascribeDataType/Textarea.php:37 src/DatascribeDataType/Text.php:31
+msgid "Maximum length"
+msgstr "Longitud máxima"
+
+#: src/DatascribeDataType/Textarea.php:38 src/DatascribeDataType/Text.php:32
+msgid "The maximum number of characters the input should accept."
+msgstr "El número máximo de caracteres que la entrada debe aceptar."
+
+#: src/DatascribeDataType/Textarea.php:44 src/DatascribeDataType/Number.php:42
+#: src/DatascribeDataType/Text.php:38
+msgid "Placeholder"
+msgstr "Texto predeterminado"
+
+#: src/DatascribeDataType/Textarea.php:45 src/DatascribeDataType/Number.php:43
+#: src/DatascribeDataType/Text.php:39
+msgid "An exemplar value to display in the input field whenever it is empty."
+msgstr ""
+"Un valor de ejemplo para mostrar en el campo de entrada siempre que esté "
+"vacío."
+
+#: src/DatascribeDataType/Textarea.php:50 src/DatascribeDataType/Number.php:48
+#: src/DatascribeDataType/Text.php:44
+msgid "Regex pattern"
+msgstr "Patrón de regex"
+
+#: src/DatascribeDataType/Textarea.php:51 src/DatascribeDataType/Number.php:49
+#: src/DatascribeDataType/Text.php:45
+msgid ""
+"A regular expression the input's contents must match in order to be valid."
+msgstr ""
+"Expresión regular con la que el contenido de la entrada debe coincidir para "
+"que sea válida."
+
+#: src/DatascribeDataType/Textarea.php:56 src/DatascribeDataType/Number.php:54
+#: src/DatascribeDataType/AbstractSelection.php:24
+#: src/DatascribeDataType/Text.php:50
+msgid "Default value"
+msgstr "Valor por defecto"
+
+#: src/DatascribeDataType/Number.php:13 src/DatascribeDataType/Number.php:113
+msgid "Number"
+msgstr "Número"
+
+#: src/DatascribeDataType/Number.php:19
+msgid "Number input label"
+msgstr "Etiqueta para el campo de número"
+
+#: src/DatascribeDataType/Number.php:24
+msgid "Minimum value"
+msgstr "Valor mínimo"
+
+#: src/DatascribeDataType/Number.php:25
+msgid "The minimum value to accept for this input."
+msgstr "Valor mínimo para aceptar para esta entrada."
+
+#: src/DatascribeDataType/Number.php:30
+msgid "Maximum value"
+msgstr "Valor máximo"
+
+#: src/DatascribeDataType/Number.php:31
+msgid "The maximum value to accept for this input."
+msgstr "Valor mínimo para aceptar para esta entrada."
+
+#: src/DatascribeDataType/Number.php:36
+msgid "Stepping interval"
+msgstr ""
+
+#: src/DatascribeDataType/Number.php:37
+msgid "A number that specifies the granularity that the value must adhere to."
+msgstr ""
+"Un número que especifica la granularidad a la que debe adherirse el valor."
+
+#: src/DatascribeDataType/Number.php:59 src/DatascribeDataType/Text.php:55
+msgid "Datalist"
+msgstr "Lista de datos"
+
+#: src/DatascribeDataType/Number.php:60 src/DatascribeDataType/Text.php:56
+msgid "Recommended options available to choose, separated by new lines."
+msgstr ""
+"Opciones recomendadas disponibles para elegir, separadas por nuevas líneas."
+
+#: src/DatascribeDataType/AbstractSelection.php:12
+msgid "Selection label"
+msgstr "Etiqueta de selección"
+
+#: src/DatascribeDataType/AbstractSelection.php:18
+msgid "The selection options separated by new lines."
+msgstr "Las opciones de selección separadas por nuevas líneas."
+
+#: src/DatascribeDataType/Text.php:19
+msgid "Text input label"
+msgstr "Etiqueta de entrada de texto"
+
+#: src/DatascribeDataType/Unknown.php:22 src/DatascribeDataType/Unknown.php:54
+msgid "Unknown data type"
+msgstr "Tipo de datos desconocido"
+
+#: src/DatascribeDataType/Unknown.php:28
+msgid "Field data"
+msgstr "Datos de campo"
+
+#: src/DatascribeDataType/Unknown.php:60
+msgid "Value text"
+msgstr "Texto de valor"
+
+#: src/DatascribeDataType/Select.php:22 src/Form/Element/Radio.php:17
+msgid "[No selection]"
+msgstr "[Sin seleccionar]"
+
+#: src/DatascribeDataType/Time.php:11
+msgid "Time"
+msgstr "Hora"
+
+#: src/DatascribeDataType/Radio.php:12
+msgid "Radio"
+msgstr "Botón de opción"
+
+#: src/DatascribeDataType/Datetime.php:11
+msgid "DateTime"
+msgstr "FechaHora"
+
+#: src/DatascribeDataType/Checkbox.php:15
+msgid "Checkbox"
+msgstr "Casilla de verificación"
+
+#: src/DatascribeDataType/Checkbox.php:21
+msgid "Checkbox label"
+msgstr "Etiqueta de casilla de verificación"
+
+#: src/DatascribeDataType/Checkbox.php:26
+msgid "Checked value"
+msgstr "Valor verificado"
+
+#: src/DatascribeDataType/Checkbox.php:31
+msgid "Unhecked value"
+msgstr "Valor sin verificar"
+
+#: src/DatascribeDataType/Checkbox.php:36
+msgid "Checked by default"
+msgstr "Verificado por defecto"
+
+#: src/DatascribeDataType/Checkbox.php:70
+msgid "Check"
+msgstr "Verificar"
+
+#: src/DatascribeDataType/AbstractDatetime.php:42
+msgid "Minimum year"
+msgstr "Año mínimo"
+
+#: src/DatascribeDataType/AbstractDatetime.php:54
+msgid "Maximum year"
+msgstr "Año máximo"
+
+#: src/DatascribeDataType/AbstractDatetime.php:64
+msgid "Default year"
+msgstr "Año predeterminado"
+
+#: src/DatascribeDataType/AbstractDatetime.php:74
+msgid "Default month"
+msgstr "Mes predeterminado"
+
+#: src/DatascribeDataType/AbstractDatetime.php:81
+msgid "Default day"
+msgstr "Día predeterminado"
+
+#: src/DatascribeDataType/AbstractDatetime.php:91
+msgid "Default hour"
+msgstr "Hora predeterminada"
+
+#: src/DatascribeDataType/AbstractDatetime.php:98
+msgid "Default minute"
+msgstr "Minuto predeterminado"
+
+#: src/DatascribeDataType/AbstractDatetime.php:105
+msgid "Default second"
+msgstr "Segundo predeterminado"
+
+#: src/DatascribeDataType/AbstractDatetime.php:154
+msgid "Year"
+msgstr "Año"
+
+#: src/DatascribeDataType/AbstractDatetime.php:168
+msgid "Month"
+msgstr "Mes"
+
+#: src/DatascribeDataType/AbstractDatetime.php:182
+msgid "Day"
+msgstr "Día"
+
+#: src/DatascribeDataType/AbstractDatetime.php:199
+msgid "Hour"
+msgstr "Hora"
+
+#: src/DatascribeDataType/AbstractDatetime.php:213
+msgid "Minute"
+msgstr "Minuto"
+
+#: src/DatascribeDataType/AbstractDatetime.php:227
+msgid "Second"
+msgstr "Segundo"
+
+#: src/Controller/Admin/DatasetRecordController.php:119
+#: src/Controller/Admin/RecordController.php:327
+msgid "Records successfully edited."
+msgstr "Registros editados exitosamente."
+
+#: src/Controller/Admin/DatasetRecordController.php:170
+#: src/Controller/Admin/RecordController.php:381
+msgid "Editing records. This may take a while."
+msgstr "Editando registros. Esto puede tomar un tiempo."
+
+#: src/Controller/Admin/DatasetRecordController.php:202
+#: src/Controller/Admin/RecordController.php:415
+msgid "You must select at least one record to batch delete."
+msgstr ""
+"Usted debe seleccionar al menos un registro para poder eliminar en bloque."
+
+#: src/Controller/Admin/DatasetRecordController.php:211
+#: src/Controller/Admin/RecordController.php:424
+msgid "Records successfully deleted"
+msgstr "Los registros han sido borrados exitosamente"
+
+#: src/Controller/Admin/DatasetRecordController.php:249
+#: src/Controller/Admin/RecordController.php:463
+msgid "Deleting records. This may take a while."
+msgstr "Eliminando registros. Esto puede tomar un tiempo."
+
+#: src/Controller/Admin/ProjectController.php:23
+msgid "Project successfully created."
+msgstr "El proyecto ha sido creado exitosamente."
+
+#: src/Controller/Admin/ProjectController.php:52
+msgid "Project successfully edited."
+msgstr "El proyecto ha sido editado exitosamente."
+
+#: src/Controller/Admin/ProjectController.php:77
+msgid "Project successfully deleted"
+msgstr "El proyecto ha sido eliminado de manera exitosa"
+
+#: src/Controller/Admin/RecordController.php:51
+msgid "Item successfully updated and submitted for review."
+msgstr "Elemento actualizado exitosamente y enviado para revisión."
+
+#: src/Controller/Admin/RecordController.php:54
+msgid "Item successfully updated and marked as approved."
+msgstr "Elemento actualizado exitosamente y marcado para aprobación."
+
+#: src/Controller/Admin/RecordController.php:57
+msgid "Item successfully updated."
+msgstr "Elemento actualizado exitosamente."
+
+#: src/Controller/Admin/RecordController.php:167
+msgid "Record successfully added. Add another record below."
+msgstr "Registro añadido exitosamente. Añadir otro registro abajo."
+
+#: src/Controller/Admin/RecordController.php:170
+msgid "Record successfully added. Continue editing it below."
+msgstr "Registro añadido exitosamente. Continúe editándolo abajo."
+
+#: src/Controller/Admin/RecordController.php:173
+msgid "Record successfully added."
+msgstr "Registro añadido exitosamente."
+
+#: src/Controller/Admin/RecordController.php:230
+msgid "Record successfully saved. Continue editing it below."
+msgstr "Registro guardado exitosamente. Continúe editándolo abajo."
+
+#: src/Controller/Admin/RecordController.php:233
+msgid "Record successfully saved."
+msgstr "Registro guardado exitosamente."
+
+#: src/Controller/Admin/RecordController.php:287
+msgid "Record successfully deleted"
+msgstr "Registro eliminado exitosamente"
+
+#: src/Controller/Admin/ItemController.php:36
+#, php-format
+msgid "This dataset has no item set. %s"
+msgstr "Este conjunto de datos no tiene un conjunto de elementos. %s"
+
+#: src/Controller/Admin/ItemController.php:139
+msgid "Items successfully edited."
+msgstr "Elementos editados exitosamente."
+
+#: src/Controller/Admin/DatasetController.php:35
+msgid "Dataset successfully created."
+msgstr "Conjunto de datos creado exitosamente."
+
+#: src/Controller/Admin/DatasetController.php:72
+msgid "Dataset successfully edited."
+msgstr "Conjunto de datos editado exitosamente."
+
+#: src/Controller/Admin/DatasetController.php:103
+msgid "Dataset successfully deleted"
+msgstr "Conjunto de datos borrado exitosamente"
+
+#: src/Controller/Admin/DatasetController.php:167
+#, php-format
+msgid "Syncing dataset. This may take a while. %s"
+msgstr "Sincronizando conjunto de datos. Esto puede tomar un tiempo. %s"
+
+#: src/Controller/Admin/DatasetController.php:191
+#, php-format
+msgid "Validating dataset. This may take a while. %s"
+msgstr "Validando conjunto de datos. Esto puede tomar un tiempo. %s"
+
+#: src/Controller/Admin/DatasetController.php:215
+#, php-format
+msgid "Exporting dataset. This may take a while. %s"
+msgstr "Exportando conjunto de datos. Esto puede tomar un tiempo. %s"
+
+#: src/Api/Adapter/DatascribeItemAdapter.php:36
+msgid ""
+"The DatascribeItemAdapter adapter does not implement the create operation."
+msgstr ""
+"El adaptador de DatascribeItemAdapter no implementa la operación de creación."
+
+#: src/Api/Adapter/DatascribeItemAdapter.php:377
+msgid "A DataScribe dataset must not be null"
+msgstr "Un conjunto de datos de DataScribe no debe ser nulo"
+
+#: src/Api/Adapter/DatascribeItemAdapter.php:380
+msgid "An item must not be null"
+msgstr "Un elemento no debe ser nulo"
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:56
+msgid "Invalid project format passed in request."
+msgstr "Formato de proyecto no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:60
+msgid "Invalid item set format passed in request."
+msgstr "Conjunto de elementos no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:63
+#: src/Api/Adapter/DatascribeRecordAdapter.php:140
+msgid "Invalid owner format passed in request."
+msgstr "Formato de propietario no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:67
+msgid "Invalid fields format passed in request."
+msgstr "Formato de campos no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:195
+#: src/Api/Adapter/DatascribeProjectAdapter.php:149
+#, php-format
+msgid "The name \"%s\" is already taken."
+msgstr "El nombre “%s” ya ha sido elegido."
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:200
+msgid "A dataset name must not be null"
+msgstr "El nombre de un conjunto de datos no debe ser nulo"
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:203
+msgid "A project must not be null"
+msgstr "Un proyecto no debe ser nulo"
+
+#: src/Api/Adapter/DatascribeDatasetAdapter.php:209
+#, php-format
+msgid "Invalid field data for field \"%s\"."
+msgstr "Datos de campo no válidos para campo ”%s”."
+
+#: src/Api/Adapter/DatascribeRecordAdapter.php:136
+msgid "Invalid item format passed in request."
+msgstr "Formato de elemento no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeRecordAdapter.php:144
+msgid "Invalid values format passed in request."
+msgstr "Formato de valores no válido aprobado en la solicitud."
+
+#: src/Api/Adapter/DatascribeRecordAdapter.php:272
+msgid "Missing item."
+msgstr "Elemento faltante."
+
+#: src/Api/Adapter/DatascribeRecordAdapter.php:279
+msgid "Invalid field. Field not in dataset."
+msgstr "Campo no válido. El campo no está en el conjunto de datos."
+
+#: src/Api/Adapter/DatascribeRecordAdapter.php:286
+#, php-format
+msgid "Invalid value text for field \"%s\"."
+msgstr "Texto de valor no válido para el campo “%s”."
+
+#: src/Api/Adapter/DatascribeProjectAdapter.php:82
+msgid "An owner must have an ID"
+msgstr "Un propietario debe tener un ID"
+
+#: src/Api/Adapter/DatascribeProjectAdapter.php:154
+msgid "A project name must not be null"
+msgstr "El nombre de un proyecto no debe ser nulo"
+
+#: src/Api/Representation/DatascribeItemRepresentation.php:243
+#: src/Form/ItemSearchForm.php:21
+msgid "Approved"
+msgstr "Aprobado"
+
+#: src/Form/Element/MonthSelect.php:11
+msgid "January"
+msgstr "Enero"
+
+#: src/Form/Element/MonthSelect.php:12
+msgid "February"
+msgstr "Febrero"
+
+#: src/Form/Element/MonthSelect.php:13
+msgid "March"
+msgstr "Marzo"
+
+#: src/Form/Element/MonthSelect.php:14
+msgid "April"
+msgstr "Abril"
+
+#: src/Form/Element/MonthSelect.php:15
+msgid "May"
+msgstr "Mayo"
+
+#: src/Form/Element/MonthSelect.php:16
+msgid "June"
+msgstr "Junio"
+
+#: src/Form/Element/MonthSelect.php:17
+msgid "July"
+msgstr "Julio"
+
+#: src/Form/Element/MonthSelect.php:18
+msgid "August"
+msgstr "Agosto"
+
+#: src/Form/Element/MonthSelect.php:19
+msgid "September"
+msgstr "Septiembre"
+
+#: src/Form/Element/MonthSelect.php:20
+msgid "October"
+msgstr "Octubre"
+
+#: src/Form/Element/MonthSelect.php:21
+msgid "November"
+msgstr "Noviembre"
+
+#: src/Form/Element/MonthSelect.php:22
+msgid "December"
+msgstr "Diciembre"
+
+#: src/Form/RecordForm.php:136
+msgid "Invalid value"
+msgstr "Valor no válido"
+
+#: src/Form/RecordForm.php:147
+msgid "Set to null"
+msgstr "Establecer como nulo"
+
+#: src/Form/DatasetForm.php:81
+msgid "Enter the name of this dataset."
+msgstr "Ingresar el nombre de este conjunto de datos."
+
+#: src/Form/DatasetForm.php:93
+msgid "Enter the description of this dataset."
+msgstr "Ingresar la descripción de este conjunto de datos."
+
+#: src/Form/DatasetForm.php:105
+msgid "Enter guidelines for transcribing this dataset."
+msgstr "Entrar guía para transcribir este conjunto de datos."
+
+#: src/Form/DatasetForm.php:117
+msgid ""
+"Select the item set used to synchronize dataset items. Once synchronized, "
+"this dataset will contain every item in this item set."
+msgstr ""
+"Seleccionar el conjunto de elementos usado para sincronizar los elementos "
+"del conjunto de datos. Una vez sincronizada, la base de datos contendrá cada "
+"elemento en este conjunto de elementos."
+
+#: src/Form/DatasetForm.php:123
+msgid "Select an item set"
+msgstr "Seleccionar conjunto de elementos"
+
+#: src/Form/DatasetForm.php:229
+msgid "Field name"
+msgstr "Nombre de campo"
+
+#: src/Form/DatasetForm.php:238
+msgid "Field description"
+msgstr "Descripción de campo"
+
+#: src/Form/DatasetForm.php:247
+msgid "Field is primary"
+msgstr "El campo es principal"
+
+#: src/Form/DatasetForm.php:256
+msgid "Field is required"
+msgstr "El campo es necesario"
+
+#: src/Form/ItemForm.php:33
+msgid "Submit for review"
+msgstr "Enviar para revisión"
+
+#: src/Form/ItemForm.php:36
+msgid "Mark as not submitted"
+msgstr "Marcar como no enviado"
+
+#: src/Form/ItemForm.php:48 src/Form/ItemBatchForm.php:34
+msgid "Mark as approved"
+msgstr "Marcar como aprobado"
+
+#: src/Form/ItemForm.php:51 src/Form/ItemBatchForm.php:35
+msgid "Mark as not approved"
+msgstr "Marcar como no aprobado"
+
+#: src/Form/ItemForm.php:54 src/Form/ItemBatchForm.php:36
+msgid "Mark as not reviewed"
+msgstr "Marcar como no revisado"
+
+#: src/Form/ItemForm.php:66 src/Form/ItemBatchForm.php:11
+msgid "Unlock"
+msgstr "Desasignar"
+
+#: src/Form/ItemForm.php:69 src/Form/ItemBatchForm.php:12
+msgid "Lock to me"
+msgstr "Asignar a mí"
+
+#: src/Form/ItemForm.php:84 src/Form/ItemBatchForm.php:51
+msgid "Mark as prioritized"
+msgstr "Marcar como prioritario"
+
+#: src/Form/ItemForm.php:87 src/Form/ItemBatchForm.php:52
+msgid "Mark as not prioritized"
+msgstr "Marcar como no prioritario"
+
+#: src/Form/AbstractForm.php:101
+msgid "Lock to transcriber"
+msgstr "Asignar a transcriptor"
+
+#: src/Form/AbstractForm.php:105
+msgid "Lock to reviewer"
+msgstr "Asignar a quien revisa"
+
+#: src/Form/AbstractForm.php:109
+msgid "Lock to admin"
+msgstr "Asignar a admin"
+
+#: src/Form/RecordSearchForm.php:14
+msgid "Needs review?"
+msgstr "¿Requiere revisión?"
+
+#: src/Form/RecordSearchForm.php:23 src/Form/RecordSearchForm.php:40
+#: src/Form/RecordSearchForm.php:57
+msgid "Select one"
+msgstr "Seleccionar uno"
+
+#: src/Form/RecordSearchForm.php:31
+msgid "Needs work?"
+msgstr "¿Requiere más trabajo?"
+
+#: src/Form/RecordSearchForm.php:48
+msgid "Has invalid values?"
+msgstr "¿Tiene valores no válidos?"
+
+#: src/Form/RecordSearchForm.php:75 src/Form/RecordSearchForm.php:93
+msgid "Select user"
+msgstr "Seleccionar usuario"
+
+#: src/Form/RecordSearchForm.php:87
+msgid "Modified by"
+msgstr "Modificado por"
+
+#: src/Form/ItemBatchForm.php:18
+msgid "Lock action"
+msgstr "Asignar acción de marcar"
+
+#: src/Form/ItemBatchForm.php:31
+msgid "Review action"
+msgstr "Revisar acción de marcar"
+
+#: src/Form/ItemBatchForm.php:48
+msgid "Priority action"
+msgstr "Acción de marcar prioritaria"
+
+#: src/Form/ProjectForm.php:15
+msgid "Enter the name of this project."
+msgstr "Ingresar el nombre de este proyecto."
+
+#: src/Form/ProjectForm.php:27
+msgid "Enter the description of this project."
+msgstr "Ingresar la descripción de este proyecto."
+
+#: src/Form/ItemSearchForm.php:19
+msgid "Need review"
+msgstr "Requiere revisión"
+
+#: src/Form/ItemSearchForm.php:26 src/Form/ItemSearchForm.php:50
+#: src/Form/ItemSearchForm.php:74 src/Form/ItemSearchForm.php:98
+msgid "Select status"
+msgstr "Seleccionar estado"
+
+#: src/Form/ItemSearchForm.php:33
+msgid "Submitted by"
+msgstr "Enviado por"
+
+#: src/Form/ItemSearchForm.php:44
+msgid "Submitted status"
+msgstr "Estado de envío"
+
+#: src/Form/ItemSearchForm.php:57
+msgid "Reviewed by"
+msgstr "Revisado por"
+
+#: src/Form/ItemSearchForm.php:68
+msgid "Reviewed status"
+msgstr "Estado de revisión"
+
+#: src/Form/ItemSearchForm.php:81
+msgid "Locked by"
+msgstr "Asignado por"
+
+#: src/Form/ItemSearchForm.php:92
+msgid "Locked status"
+msgstr "Estado de asignación"
+
+#: src/Form/RecordBatchForm.php:14
+msgid "Needs review action"
+msgstr "Requiere acción de marcar para revisión"
+
+#: src/Form/RecordBatchForm.php:17
+msgid "Mark as needs review"
+msgstr "Marcar como que requiere revisión"
+
+#: src/Form/RecordBatchForm.php:18
+msgid "Mark as does not need review"
+msgstr "Marcar como que no requiere revisión"
+
+#: src/Form/RecordBatchForm.php:30
+msgid "Needs work action"
+msgstr "Requiere acción de marcar para trabajo"
+
+#: src/Form/RecordBatchForm.php:33
+msgid "Mark as needs work"
+msgstr "Marcar como que requiere más trabajo"
+
+#: src/Form/RecordBatchForm.php:34
+msgid "Mark as does not need work"
+msgstr "Marcar como que no necesita más trabajo"
+
+#: src/Form/RecordBatchForm.php:73
+msgid "Is missing action"
+msgstr "Acción de marcar como faltante"
+
+#: src/Form/RecordBatchForm.php:76
+msgid "Mark as missing"
+msgstr "Marcar como faltante"
+
+#: src/Form/RecordBatchForm.php:77
+msgid "Mark as not missing"
+msgstr "Marcar como no faltante"
+
+#: src/Form/RecordBatchForm.php:89
+msgid "Is illegible action"
+msgstr "Acción de marcar como ilegible"
+
+#: src/Form/RecordBatchForm.php:92
+msgid "Mark as illegible"
+msgstr "Marcar como ilegible"
+
+#: src/Form/RecordBatchForm.php:93
+msgid "Mark as not illegible"
+msgstr "Marcar como no ilegible"
