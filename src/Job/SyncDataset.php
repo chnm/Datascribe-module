@@ -16,6 +16,8 @@ class SyncDataset extends AbstractJob
      */
     public function perform()
     {
+        ini_set('memory_limit', '500M'); // Set a high memory limit.
+
         if (!is_numeric($this->getArg('datascribe_dataset_id'))) {
             throw new Exception\RuntimeException('Missing datascribe_dataset_id');
         }
@@ -39,13 +41,16 @@ class SyncDataset extends AbstractJob
         $toCreate = array_diff($oItems, $dsItems);
 
         // Create new DataScribe items.
-        foreach ($toCreate as $oItemId) {
-            $dsItem = new DatascribeItem;
-            $dsItem->setDataset($dataset);
-            $dsItem->setItem($em->getReference(Item::class, $oItemId));
-            $dsItem->setSynced(new DateTime('now'));
-            $dsItem->setSyncedBy($this->job->getOwner());
-            $em->persist($dsItem);
+        foreach (array_chunk($toCreate, 100) as $toCreateChunk) {
+            foreach ($toCreateChunk as $oItemId) {
+                $dsItem = new DatascribeItem;
+                $dsItem->setDataset($dataset);
+                $dsItem->setItem($em->getReference(Item::class, $oItemId));
+                $dsItem->setSynced(new DateTime('now'));
+                $dsItem->setSyncedBy($this->job->getOwner());
+                $em->persist($dsItem);
+            }
+            $em->flush();
         }
 
         // Delete removed DataScribe items.

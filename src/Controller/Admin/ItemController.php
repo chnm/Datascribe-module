@@ -22,7 +22,8 @@ class ItemController extends AbstractActionController
             return $this->redirect()->toRoute('admin/datascribe');
         }
 
-        $this->setBrowseDefaults('id', 'asc');
+        // Sort by prioritized by default.
+        $this->setBrowseDefaults('prioritized', 'desc');
         $query = array_merge(
             $this->params()->fromQuery(),
             ['datascribe_dataset_id' => $dataset->id()]

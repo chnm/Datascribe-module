@@ -210,6 +210,9 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->andWhere($qb->expr()->not($qb->expr()->exists($subQb->getDQL())));
             }
         }
+        if (isset($query['all_prioritized'])) {
+            $qb->andWhere($qb->expr()->isNotNull('omeka_root.prioritized'));
+        }
     }
 
     protected function buildStatusQuery(QueryBuilder $qb, $status)
@@ -288,15 +291,18 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $qb->addOrderBy("$alias.title", $query['sort_order']);
                 break;
             case 'submitted':
-                $qb->addOrderBy("omeka_root.submitted", $query['sort_order']);
+                $qb->addOrderBy('omeka_root.submitted', $query['sort_order']);
                 break;
             case 'reviewed':
-                $qb->addOrderBy("omeka_root.reviewed", $query['sort_order']);
+                $qb->addOrderBy('omeka_root.reviewed', $query['sort_order']);
                 break;
-            default:
-                // Sort by prioritized by default.
-                $qb->addOrderBy("omeka_root.prioritized", $query['sort_order']);
+            case 'prioritized':
+                $qb->addOrderBy('omeka_root.prioritized', $query['sort_order']);
                 break;
+        }
+        if ('id' !== $query['sort_by']) {
+            // Order by ascending ID if not sorting by ID.
+            $qb->addOrderBy('omeka_root.id', 'asc');
         }
     }
 

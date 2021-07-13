@@ -14,6 +14,8 @@ class ValidateDataset extends AbstractJob
      */
     public function perform()
     {
+        ini_set('memory_limit', '500M'); // Set a high memory limit.
+
         $services = $this->getServiceLocator();
         $em = $services->get('Omeka\EntityManager');
         $conn = $services->get('Omeka\Connection');

@@ -6,6 +6,7 @@ use Datascribe\Form\RecordBatchForm;
 use Datascribe\Form\RecordForm;
 use Datascribe\Form\RecordSearchForm;
 use Omeka\Form\ConfirmForm;
+use Omeka\Stdlib\Message;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -48,10 +49,27 @@ class RecordController extends AbstractActionController
                 $response = $this->api($form)->update('datascribe_items', $item->id(), $formData);
                 if ($response) {
                     if ('submitted' === $postData['submit_action']) {
-                        $this->messenger()->addSuccess('Item successfully updated and submitted for review.'); // @translate
-                        return $this->redirect()->toRoute('admin/datascribe-item', [], true);
+                        $message = new Message(
+                            'Item successfully updated and submitted for review. %s', // @translate
+                            sprintf(
+                                '<a href="%s">%s</a> <a href="%s">%s</a>',
+                                htmlspecialchars($this->url()->fromRoute('admin/datascribe-item', [], ['query' => ['my_new' => '1']], true)),
+                                $this->translate('View my new items.'),
+                                htmlspecialchars($this->url()->fromRoute('admin/datascribe-item', [], ['query' => ['all_unlocked_and_new' => '1']], true)),
+                                $this->translate('View all unlocked and new items.')
+                            ));
+                        $message->setEscapeHtml(false);
+                        $this->messenger()->addSuccess($message); // @translate
                     } elseif ('approved' === $postData['review_action']) {
-                        $this->messenger()->addSuccess('Item successfully updated and marked as approved.'); // @translate
+                        $message = new Message(
+                            'Item successfully updated and marked as approved. %s', // @translate
+                            sprintf(
+                                '<a href="%s">%s</a>',
+                                htmlspecialchars($this->url()->fromRoute('admin/datascribe-item', [], ['query' => ['all_need_review' => '1']], true)),
+                                $this->translate('View all items that need review.')
+                            ));
+                        $message->setEscapeHtml(false);
+                        $this->messenger()->addSuccess($message); // @translate
                         return $this->redirect()->toRoute('admin/datascribe-item', [], true);
                     } else {
                         $this->messenger()->addSuccess('Item successfully updated.'); // @translate
