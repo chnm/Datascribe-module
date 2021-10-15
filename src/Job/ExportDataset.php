@@ -48,6 +48,7 @@ class ExportDataset extends AbstractJob
 
         // Add the header row.
         $headerRow = [
+            'Omeka Item #',
             'DataScribe Item #',
             'DataScribe Record #',
             'DataScribe Record Position',
@@ -79,6 +80,7 @@ class ExportDataset extends AbstractJob
                 // begin each row with the item's unique ID and the record's
                 // unique ID and position.
                 $row = [
+                    $record->getItem()->getItem()->getId(),
                     $record->getItem()->getId(),
                     $record->getId(),
                     $record->getPosition(),
