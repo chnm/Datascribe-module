@@ -810,11 +810,11 @@ fieldset.open .dataset-field-data legend {
 /* Sidebar */
 
 body.sidebar-open #content.expanded {
-    width: calc(81.25% - 12px);
+    width: calc(81.25% - 24px);
 }
 
 .sidebar.always-open {
-    padding-left: 23px;
+    padding-left: 35px;
 }
 
 .sidebar.always-open.collapsed {
@@ -827,10 +827,10 @@ button.sidebar-drawer {
     top: 48px;
     left: 75%;
     bottom: -12px;
-    width: 12px;
+    width: 24px;
     padding: 0;
     border-radius: 0;
-    background-color: #f7f7f7;
+    background-color: #eee;
     box-shadow: none;
     border-right: 1px solid #dfdfdf;
     border-left: 1px solid #dfdfdf;
@@ -839,7 +839,7 @@ button.sidebar-drawer {
 }
 
 button.sidebar-drawer.expand {
-    left: calc(100% - 12px);
+    left: calc(100% - 24px);
 }
 
 button.sidebar-drawer:hover {
@@ -848,17 +848,17 @@ button.sidebar-drawer:hover {
 
 button.sidebar-drawer:after {
     color: #676767;
-    font-size: 12px;
+    font-size: 20px;
     text-align: center;
     margin-left: 0;
 }
 
 button.sidebar-drawer.expand:after {
-    content: "\f104";
+    content: "\f0d9";
 }
 
 button.sidebar-drawer.collapse:after {
-    content: "\f105";
+    content: "\f0da";
 }
 
 .sidebar .status-row h4,
