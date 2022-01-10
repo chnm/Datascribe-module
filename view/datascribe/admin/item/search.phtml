@@ -2,6 +2,7 @@
 $this->headLink()->prependStylesheet($this->assetUrl('css/advanced-search.css', 'Omeka'));
 $this->headScript()->appendFile($this->assetUrl('js/advanced-search.js', 'Omeka'));
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
+$form->setAttribute('id', 'advanced-search');
 ?>
 
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Search')); ?>
@@ -13,6 +14,12 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe item search');
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
     <?php echo $this->formCollection($form, false); ?>
-    <?php echo $this->partial('common/advanced-search/resource-class', ['query' => $this->params()->fromQuery()]); ?>
-    <?php echo $this->partial('common/advanced-search/resource-template', ['query' => $this->params()->fromQuery()]); ?>
+    <?php echo $this->partial('common/advanced-search.phtml', [
+        'query' => $this->params()->fromQuery(),
+        'partialExcludelist' => [
+            'common/advanced-search/owner',
+            'common/advanced-search/sort',
+            'common/advanced-search/site',
+        ],
+    ]); ?>
 <?php echo $this->form()->closeTag(); ?>

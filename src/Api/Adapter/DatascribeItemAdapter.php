@@ -85,6 +85,23 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 ));
             }
         }
+        if (isset($query['item_set_id'])) {
+            $itemSets = $query['item_set_id'];
+            if (!is_array($itemSets)) {
+                $itemSets = [$itemSets];
+            }
+            $itemSets = array_filter($itemSets, 'is_numeric');
+            if ($itemSets) {
+                $itemAlias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $itemAlias);
+                $itemSetAlias = $this->createAlias();
+                $qb->innerJoin(
+                    sprintf('%s.itemSets', $itemAlias),
+                    $itemSetAlias, 'WITH',
+                    $qb->expr()->in("$itemSetAlias.id", $this->createNamedParameter($qb, $itemSets))
+                );
+            }
+        }
         if (isset($query['status'])) {
             $this->buildStatusQuery($qb, $query['status']);
         }
