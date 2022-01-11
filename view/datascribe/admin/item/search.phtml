@@ -13,7 +13,9 @@ $form->setAttribute('id', 'advanced-search');
         <?php echo $this->hyperlink($this->translate('Cancel'), $this->url('admin/datascribe-item', ['action' => 'browse'], true), ['class' => 'button']); ?>
         <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
     </div>
+    <h3><?php echo $this->translate('DataScribe item'); ?></h3>
     <?php echo $this->formCollection($form, false); ?>
+    <h3><?php echo $this->translate('Omeka item'); ?></h3>
     <?php echo $this->partial('common/advanced-search.phtml', [
         'query' => $this->params()->fromQuery(),
         'partialExcludelist' => [
