@@ -1,87 +1,6 @@
 <?php
 $this->htmlElement('body')->appendAttribute('class', 'datascribe item browse');
 $canViewBatchUpdate = $dataset->userIsAllowed('datascribe_view_item_batch_update');
-$filters = [
-    [
-        'label' => $this->translate('All prioritized items'),
-        'value' => 'all_prioritized',
-    ],
-    [
-        'label' => $this->translate('All unlocked and new items'),
-        'value' => 'all_unlocked_and_new'
-    ],
-    [
-        'label' => $this->translate('All unlocked and in progress items'),
-        'value' => 'all_unlocked_and_in_progress'
-    ],
-    [
-        'label' => $this->translate('My new items'),
-        'value' => 'my_new'
-    ],
-    [
-        'label' => $this->translate('My in progress items'),
-        'value' => 'my_in_progress'
-    ],
-    [
-        'label' => $this->translate('My items that need review'),
-        'value' => 'my_need_review'
-    ],
-    [
-        'label' => $this->translate('My items that are not approved'),
-        'value' => 'my_not_approved'
-    ],
-    [
-        'label' => $this->translate('My items that are approved'),
-        'value' => 'my_approved'
-    ],
-];
-$invalidFilter = [
-    [
-        'label' => $this->translate('Items with values marked as invalid'),
-        'value' => 'has_invalid_values'
-    ],
-];
-if ($canViewBatchUpdate) {
-    $approvalNeedReviewFilters = [
-        [
-            'label' => $this->translate('All items that are not approved'),
-            'value' => 'all_not_approved'
-        ],
-        [
-            'label' => $this->translate('All items that are approved'),
-            'value' => 'all_approved'
-        ],
-        [
-            'label' => $this->translate('All items that need review'),
-            'value' => 'all_need_review'
-        ],
-        [
-            'label' => $this->translate('All items that need initial review'),
-            'value' => 'all_need_initial_review'
-        ],
-        [
-            'label' => $this->translate('All items that need re-review'),
-            'value' => 'all_need_rereview'
-        ],      
-    ];
-    $iApprovedFilters = [
-        [
-            'label' => $this->translate('Items I reviewed that need re-review'),
-            'value' => 'my_reviewed_and_need_review'
-        ],
-        [
-            'label' => $this->translate('Items I reviewed that are not approved'),
-            'value' => 'my_reviewed_and_not_approved'
-        ],
-        [
-            'label' => $this->translate('Items I reviewed that are approved'),
-            'value' => 'my_reviewed_and_approved'
-        ],      
-    ];
-    $filters = array_merge($approvalNeedReviewFilters, $invalidFilter, $iApprovedFilters, $filters);
-} else {
-    $filters = array_merge($invalidFilter, $filters);
-}
 ?>
 
 <?php echo $this->pageTitle($dataset->name(), 1, $this->translate('DataScribe: Dataset'), $this->translate('Items')); ?>
@@ -128,7 +47,69 @@ if ($canViewBatchUpdate) {
         ],
     ]); ?>
     <?php echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true), ['class' => 'advanced-search']); ?>
-    <?php echo $this->filterSelector($filters); ?>
+
+    <?php
+    // Build and render the custom DataScribe filter control.
+    $filterOption = function ($value, $label) {
+        echo sprintf(
+            '<option value="%s"%s>%s</option>',
+            $this->escapeHtml($value),
+            $this->params()->fromQuery($value) ? ' selected' : null,
+            $this->escapeHtml($label),
+        );
+    };
+    ?>
+    <form class="datascribe-filter-form" method="get">
+        <select class="datascribe-filter-select">
+            <option value="">No filter</option>
+             <?php if ($canViewBatchUpdate): ?>
+            <optgroup label="<?php echo $this->translate('Items that need review'); ?>">
+                <?php $filterOption('all_need_review', $this->translate('All items that need review')); ?>
+                <?php $filterOption('all_need_initial_review', $this->translate('All items that need initial review')); ?>
+                <?php $filterOption('all_need_rereview', $this->translate('All items that need re-review')); ?>
+                <?php $filterOption('has_invalid_values', $this->translate('Items with values marked as invalid')); ?>
+            </optgroup>
+            <optgroup label="<?php echo $this->translate('Items I reviewed'); ?>">
+                <?php $filterOption('my_reviewed_and_need_review', $this->translate('Items I reviewed that need re-review')); ?>
+                <?php $filterOption('my_reviewed_and_not_approved', $this->translate('Items I reviewed that are not approved')); ?>
+                <?php $filterOption('my_reviewed_and_approved', $this->translate('Items I reviewed that are approved')); ?>
+            </optgroup>
+            <?php endif; ?>
+            <optgroup label="<?php echo $this->translate('My items (locked to me)'); ?>">
+                <?php $filterOption('my_new', $this->translate('My new items')); ?>
+                <?php $filterOption('my_in_progress', $this->translate('My in progress items')); ?>
+                <?php $filterOption('my_need_review', $this->translate('My items that need review')); ?>
+                <?php $filterOption('my_not_approved', $this->translate('My items that are not approved')); ?>
+                <?php $filterOption('my_approved', $this->translate('My items that are approved')); ?>
+            </optgroup>
+            <optgroup label="<?php echo $this->translate('All items'); ?>">
+                <?php $filterOption('all_prioritized', $this->translate('All prioritized items')); ?>
+                <?php $filterOption('all_unlocked_and_new', $this->translate('All unlocked and new items')); ?>
+                <?php $filterOption('all_unlocked_and_in_progress', $this->translate('All unlocked and in progress items')); ?>
+                <?php if ($canViewBatchUpdate): ?>
+                <?php $filterOption('all_not_approved', $this->translate('All items that are not approved')); ?>
+                <?php $filterOption('all_approved', $this->translate('All items that are approved')); ?>
+                <?php endif; ?>
+            </optgroup>
+       </select>
+        <input type="hidden" class="datascribe-filter">
+        <?php echo $this->queryToHiddenInputs([
+            'all_prioritized', 'all_unlocked_and_new', 'all_unlocked_and_in_progress', 'all_not_approved', 'all_approved',
+            'all_need_review', 'all_need_initial_review', 'all_need_rereview', 'has_invalid_values',
+            'my_reviewed_and_need_review', 'my_reviewed_and_not_approved', 'my_reviewed_and_approved',
+            'my_new', 'my_in_progress', 'my_need_review', 'my_not_approved', 'my_approved',
+            'page',
+        ]); ?>
+        <button type="submit"><?php echo $this->translate('Filter'); ?></button>
+    </form>
+    <script>
+        $('.datascribe-filter-form').on('submit', function(e) {
+            const thisForm = $(this);
+            const filter = thisForm.find('.datascribe-filter-select').val();
+            thisForm.find('.datascribe-filter').attr('name', filter).val('1');
+        });
+    </script>
+
 </div>
 
 <?php if ($items): ?>
