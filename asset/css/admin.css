@@ -1097,6 +1097,7 @@ div[role="main"].fullscreen > h1:first-of-type {
   margin: 1rem auto;
   padding: 1rem;
   position: relative;
+  overflow: auto;
 }
 
 .close-guidelines {
