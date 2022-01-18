@@ -77,4 +77,19 @@ class Datascribe extends AbstractPlugin
         }
         return $project;
     }
+
+    /**
+     * Revert the DataScribe item's review status to "not reviewed".
+     *
+     * @param int $itemId The DataScribe item ID
+     */
+    public function revertReviewStatus($itemId)
+    {
+        $em = $this->services->get('Omeka\EntityManager');
+        $itemEntity = $em->find('Datascribe\Entity\DatascribeItem', $itemId);
+        $itemEntity->setReviewed(null);
+        $itemEntity->setReviewedBy(null);
+        $itemEntity->setIsApproved(null);
+        $em->flush();
+    }
 }
