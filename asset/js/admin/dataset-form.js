@@ -44,6 +44,7 @@ $('#data-types').on('click', '.option', function(e) {
     addFieldControls(field);
     field.find('legend').first().append(fieldsData.data('field-flags'));
     fieldsContainer.append(field);
+    field.find('.field-expand, .field-collapse').toggleClass('active');
     field[0].scrollIntoView();
 });
 // Handle the field is primary controls.

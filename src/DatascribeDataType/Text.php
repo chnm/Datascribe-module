@@ -80,8 +80,16 @@ class Text implements DataTypeInterface
         $fieldData['label'] =
             (isset($userData['label']) && preg_match('/^.+$/', $userData['label']))
             ? $userData['label'] : null;
-        if (isset($userData['datalist']) && preg_match('/^.+$/s', $userData['datalist'])) {
-            $options = explode("\n", $userData['datalist']);
+        if (isset($userData['datalist'])) {
+            // The user data is usually a new line-delimited string, but it is
+            // an array if it originates from form import.
+            if (is_array($userData['datalist'])) {
+                $options = $userData['datalist'];
+            } elseif (preg_match('/^.+$/s', $userData['datalist'])) {
+                $options = explode("\n", $userData['datalist']);
+            } else {
+                $options = [];
+            }
             $options = array_map('trim', $options);
             $options = array_filter($options);
             $options = array_unique($options);

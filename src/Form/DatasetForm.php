@@ -139,6 +139,18 @@ class DatasetForm extends Form
                 'id' => 'o-module-datascribe-revert-review-status'
             ],
         ]);
+        $this->add([
+            'type' => 'file',
+            'name' => 'import_form',
+            'options' => [
+                'label' => 'Import form', // @translate
+                'info' => 'You may import fields that were exported from another form.', // @translate
+            ],
+            'attributes' => [
+                'id' => 'import-form',
+                'accept' => '.json,application/json',
+            ],
+        ]);
     }
 
     /**

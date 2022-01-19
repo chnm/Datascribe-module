@@ -29,8 +29,16 @@ abstract class AbstractSelection implements DataTypeInterface
     public function getFieldDataFromUserData(array $userData) : array
     {
         $fieldData = [];
-        if (isset($userData['options']) && preg_match('/^.+$/s', $userData['options'])) {
-            $options = explode("\n", $userData['options']);
+        if (isset($userData['options'])) {
+            // The user data is usually a new line-delimited string, but it is
+            // an array if it originates from form import.
+            if (is_array($userData['options'])) {
+                $options = $userData['options'];
+            } elseif (preg_match('/^.+$/s', $userData['options'])) {
+                $options = explode("\n", $userData['options']);
+            } else {
+                $options = [];
+            }
             $options = array_map('trim', $options);
             $options = array_filter($options);
             $options = array_unique($options);
