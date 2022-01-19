@@ -11,9 +11,9 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
 
 <p class="welcome"><?php echo $this->translate('Welcome to DataScribe.'); ?></p>
 
-<?php if ($myProjects): ?>
 <div class="my-projects">
     <h2><?php echo $this->translate('My projects'); ?></h2>
+    <?php if ($myProjects): ?>
     <ul class="user-projects">
         <?php foreach ($myProjects as $myProject): ?>
         <li class="project"><?php echo sprintf('%s (%s)', $myProject['project']->link($myProject['project']->name()), implode('/', $myProject['roles'])); ?>
@@ -47,7 +47,7 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
                             ?>
                         </li>
                         <li class="category">
-                            <span class="category-label"><?php echo $this->translate('My items'); ?></span>
+                            <span class="category-label"><?php echo $this->translate('My items (locked to me)'); ?></span>
                             <?php
                             echo $this->hyperlink(
                                 $this->translate('New'),
@@ -130,8 +130,10 @@ $this->htmlElement('body')->appendAttribute('class', 'datascribe dashboard');
         </li>
         <?php endforeach; ?>
     </ul>
+    <?php else: ?>
+    <p><?php echo $this->translate('You do not own or belong to any projects.'); ?></p>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
 
 <?php if ($allProjects): ?>
 <div class="project browse">
