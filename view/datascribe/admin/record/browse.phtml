@@ -76,7 +76,7 @@ foreach ($fields as $field) {
 <?php endif; ?>
 
 <div class="tablesaw-swipe-wrapper">
-<table class="tablesaw batch-edit" data-tablesaw-mode="swipe" data-tablesaw-swipe-media="(max-width: 2000px)"  data-tablesaw-minimap>
+<table class="tablesaw batch-edit" data-tablesaw-mode="swipe"  data-tablesaw-minimap>
     <thead>
         <tr>
             <th scope="col" class="row-select" data-tablesaw-priority="persist">
@@ -121,7 +121,7 @@ foreach ($fields as $field) {
                 ); ?>
                 <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
                 <?php endif; ?>
-                <span class="record-number"><?php echo $record->link($record->id()); ?></span>
+                <span class="record-number"><?php echo $record->link($record->id(), '', ['aria-label' => $this->translate('Show record values'), 'title' => $this->translate('Show record values')]); ?></span>
                 <ul class="actions">
                     <?php if ($record->userIsAllowed('update')): ?>
                     <li><?php echo $record->link('', 'edit', [
@@ -306,3 +306,12 @@ foreach ($fields as $field) {
 </div>
 
 <?php echo $this->partial('datascribe/admin/record/form-sidebars.phtml'); ?>
+
+<script>
+jQuery(document).ready(function() {
+    window.setTimeout(function() {
+        jQuery(window).trigger('Tablesaw.events.resize');
+        console.log('resize tablesaw');
+    }, 5000);
+});
+</script>
