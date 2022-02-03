@@ -121,7 +121,7 @@ foreach ($fields as $field) {
                 ); ?>
                 <span class="alert" title="<?php echo $alertString; ?>"><?php echo $alertString; ?></span>
                 <?php endif; ?>
-                <span class="record-number"><?php echo $record->link($record->id(), '', ['aria-label' => $this->translate('Show record values'), 'title' => $this->translate('Show record values')]); ?></span>
+                <span class="record-number"><?php echo $record->link($record->id(), '', ['aria-label' => $this->translate('View record values'), 'title' => $this->translate('View record values')]); ?></span>
                 <ul class="actions">
                     <?php if ($record->userIsAllowed('update')): ?>
                     <li><?php echo $record->link('', 'edit', [

@@ -30,6 +30,12 @@ class DatasetController extends AbstractActionController
                 $formData['o-module-datascribe:project']['o:id'] = $project->id();
                 $formData['o:item_set'] = ['o:id' => $formData['o:item_set']];
                 $formData['o:is_public'] = $this->params()->fromPost('o:is_public');
+                // Import form if file was uploaded.
+                $files = $this->getRequest()->getFiles()->toArray();
+                if ($files['import_form']['tmp_name']) {
+                    $importForm = json_decode(file_get_contents($files['import_form']['tmp_name']), true);
+                    $formData['o-module-datascribe:field'] = $importForm;
+                }
                 $response = $this->api($form)->create('datascribe_datasets', $formData);
                 if ($response) {
                     $this->messenger()->addSuccess('Dataset successfully created.'); // @translate
@@ -223,5 +229,39 @@ class DatasetController extends AbstractActionController
             }
         }
         return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
+    }
+
+    public function exportFormAction()
+    {
+        $dataset = $this->datascribe()->getRepresentation(
+            $this->params('project-id'),
+            $this->params('dataset-id')
+        );
+        if (!$dataset) {
+            return $this->redirect()->toRoute('admin/datascribe');
+        }
+
+        $response = $this->getResponse();
+        $fields = [];
+        foreach ($dataset->fields() as $field) {
+            $fields[] = [
+                'data_type' => $field->dataType(),
+                'name' => $field->name(),
+                // DatascribeDatasetAdapter::validateRequest() requires description to be set.
+                'description' => $field->description() ?? '',
+                'is_primary' => $field->isPrimary(),
+                'is_required' => $field->isRequired(),
+                'data' => $field->data(),
+            ];
+        }
+        $response->setContent(json_encode($fields, JSON_PRETTY_PRINT));
+
+        $headers = $response->getHeaders();
+        $headers->addHeaders([
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => 'attachment; filename="form_export.json"',
+        ]);
+
+        return $response;
     }
 }

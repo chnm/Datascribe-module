@@ -83,7 +83,7 @@
     box-shadow: none;
     width: 100%;
     margin-bottom: 0;
-    text-align: left;    
+    text-align: left;
 }
 
 #page-action-menu .expand:after {
@@ -183,12 +183,12 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-.datascribe.item.browse td:first-child, 
+.datascribe.item.browse td:first-child,
 .datascribe.item.browse th:first-child {
   width: auto;
 }
 
-.datascribe.item.browse td:nth-child(2), 
+.datascribe.item.browse td:nth-child(2),
 .datascribe.item.browse th:nth-child(2) {
   width: 50%;
 }
@@ -198,7 +198,7 @@
   margin-left: auto;
 }
 
-.datascribe.record.browse td:first-child, 
+.datascribe.record.browse td:first-child,
 .datascribe.record.browse th:first-child,
 .tablesaw-swipe .tablesaw-swipe-cellpersist {
   width: 7rem !important;
@@ -268,7 +268,7 @@
 
 .tablesaw-swipe-wrapper > .tablesaw-bar:before {
   content: "";
-  background-color:rgba(0,0,0,0.04);  
+  background-color:rgba(0,0,0,0.04);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -299,7 +299,7 @@
 
 .batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar:before {
   content: none;
-} 
+}
 
 .batch-inputs ~ .tablesaw-swipe-wrapper > .tablesaw-bar .minimap {
   display: flex !important;
@@ -366,7 +366,7 @@
 
 /* Record Add/Edit */
 
-.record.add div[role="main"], 
+.record.add div[role="main"],
 .record.edit div[role="main"] {
   overflow: visible;
 }
@@ -417,7 +417,7 @@
   display: inline-block;
   margin-bottom: 0;
 }
-  
+
 .previous-next-rows-header a.button {
   display: inline-block;
   box-shadow: none;
@@ -502,7 +502,7 @@
 }
 
 .current-row.vertical .media-container {
-  height: calc(100% - 42px);  
+  height: calc(100% - 42px);
 }
 
 .current-row.vertical #media-viewer img {
@@ -1146,13 +1146,13 @@ div[role="main"].fullscreen > h1:first-of-type {
 
 .dashboard .project.browse:not(:only-child) {
   width: calc(50% - 6px);
-  margin-right: 12px;
-  float: left;
+  display: inline-block;
 }
 
 .my-projects {
   width: calc(50% - 6px);
-  display: inline-block;
+  margin-right: 12px;
+  float: left;
 }
 
 .my-projects h2 {
@@ -1184,7 +1184,7 @@ div[role="main"].fullscreen > h1:first-of-type {
 
 .user-projects li.project:not(:last-child) {
   border-bottom: 1px solid #dfdfdf;
-  
+
 }
 
 .user-projects li {
