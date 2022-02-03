@@ -216,13 +216,13 @@
 
 .record.browse .record-number-cell {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
 }
 
 .record.browse .record-number {
   text-align: right;
   margin-right: auto;
+  padding-right: 1rem;
 }
 
 .record.browse .record-number-cell .actions {
@@ -249,9 +249,11 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
+  width: 100%;
   height: 2.25rem;
   padding-right: .25rem;
+  display: flex;
+  align-items: center;
 }
 
 .primary-field {
@@ -307,11 +309,6 @@
   line-height: 1;
   order: 1;
   margin-left: auto;
-}
-
-.tablesaw-bar {
-  display: flex;
-  align-items: center;
 }
 
 .tablesaw-advance {
