@@ -98,5 +98,51 @@ class ItemSearchForm extends AbstractForm
                 'data-placeholder' => 'Select status', // @translate
             ],
         ]);
+        $this->add([
+            'type' => 'select',
+            'name' => 'item_transcriber_notes_status',
+            'options' => [
+                'label' => 'Transcriber notes status', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    'is_not_null' => 'Has notes', // @translate
+                    'is_null' => 'Has no notes', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Select status', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'select',
+            'name' => 'item_reviewer_notes_status',
+            'options' => [
+                'label' => 'Reviewer notes status', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    'is_not_null' => 'Has notes', // @translate
+                    'is_null' => 'Has no notes', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Select status', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'item_transcriber_notes',
+            'options' => [
+                'label' => 'Search transcriber notes', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'item_reviewer_notes',
+            'options' => [
+                'label' => 'Search reviewer notes', // @translate
+            ],
+        ]);
     }
 }

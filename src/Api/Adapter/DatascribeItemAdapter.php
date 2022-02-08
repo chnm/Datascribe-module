@@ -55,6 +55,32 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $query['item_id']))
             );
         }
+        if (isset($query['item_transcriber_notes_status'])) {
+            if ('is_not_null' === $query['item_transcriber_notes_status']) {
+                $qb->andWhere($qb->expr()->isNotNull('omeka_root.transcriberNotes'));
+            } elseif ('is_null'=== $query['item_transcriber_notes_status']) {
+                $qb->andWhere($qb->expr()->isNull('omeka_root.transcriberNotes'));
+            }
+        }
+        if (isset($query['item_reviewer_notes_status'])) {
+            if ('is_not_null' === $query['item_reviewer_notes_status']) {
+                $qb->andWhere($qb->expr()->isNotNull('omeka_root.reviewerNotes'));
+            } elseif ('is_null'=== $query['item_reviewer_notes_status']) {
+                $qb->andWhere($qb->expr()->isNull('omeka_root.reviewerNotes'));
+            }
+        }
+        if (isset($query['item_transcriber_notes']) && '' !== trim($query['item_transcriber_notes'])) {
+            $qb->andWhere($qb->expr()->like(
+                'omeka_root.transcriberNotes',
+                $this->createNamedParameter($qb, '%' . $query['item_transcriber_notes'] . '%'))
+            );
+        }
+        if (isset($query['item_reviewer_notes']) && '' !== trim($query['item_reviewer_notes'])) {
+            $qb->andWhere($qb->expr()->like(
+                'omeka_root.reviewerNotes',
+                $this->createNamedParameter($qb, '%' . $query['item_reviewer_notes'] . '%'))
+            );
+        }
         if (isset($query['resource_class_id'])) {
             $classes = $query['resource_class_id'];
             if (!is_array($classes)) {

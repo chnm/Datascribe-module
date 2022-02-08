@@ -93,5 +93,52 @@ class RecordSearchForm extends AbstractForm
                 'data-placeholder' => 'Select user', // @translate
             ],
         ]);
+
+        $this->add([
+            'type' => 'select',
+            'name' => 'transcriber_notes_status',
+            'options' => [
+                'label' => 'Transcriber notes status', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    'is_not_null' => 'Has notes', // @translate
+                    'is_null' => 'Has no notes', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Select status', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'select',
+            'name' => 'reviewer_notes_status',
+            'options' => [
+                'label' => 'Reviewer notes status', // @translate
+                'empty_option' => '',
+                'value_options' => [
+                    'is_not_null' => 'Has notes', // @translate
+                    'is_null' => 'Has no notes', // @translate
+                ],
+            ],
+            'attributes' => [
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Select status', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'transcriber_notes',
+            'options' => [
+                'label' => 'Search transcriber notes', // @translate
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'reviewer_notes',
+            'options' => [
+                'label' => 'Search reviewer notes', // @translate
+            ],
+        ]);
     }
 }
