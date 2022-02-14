@@ -106,12 +106,18 @@
     ?></div>
 </div>
 <div class="meta-group">
-    <h4><?php echo $this->translate('Export file'); ?></h4>
+    <h4><?php echo $this->translate('Export form'); ?></h4>
+    <div class="value">
+        <?php echo $this->hyperlink($this->translate('Click to export form (JSON)'), $dataset->url('export-form')); ?>
+    </div>
+</div>
+<div class="meta-group">
+    <h4><?php echo $this->translate('Download dataset'); ?></h4>
     <div class="value">
         <?php if ($dataset->exportStorageId()): ?>
-        <?php echo $this->hyperlink($this->translate('Click to download CSV file'), $dataset->exportUrl()); ?>
+        <?php echo $this->hyperlink($this->translate('Click to download dataset (CSV)'), $dataset->exportUrl()); ?>
         <?php else: ?>
-        <?php echo $this->translate('[No export file available]'); ?>
+        <?php echo $this->translate('[No download available]'); ?>
         <?php endif; ?>
     </div>
 </div>

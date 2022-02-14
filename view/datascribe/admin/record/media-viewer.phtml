@@ -22,8 +22,8 @@ $mediaPage = 1;
         <nav id="media-pagination" class="media pagination">
             <input id="media-page" type="number" min="1" max="<?php echo $mediaCount; ?>" value="1" disabled="disabled">
             <span class="media-count"><?php echo sprintf($this->translate('of %s'), $mediaCount); ?></span>
-            <button id="media-previous" class="o-icon-prev previous button" disabled="disabled" aria-label="<?php echo $this->translate('Previous'); ?>"></button>
-            <button id="media-next" class="o-icon-next next button" disabled="disabled" aria-label="<?php echo $this->translate('Next'); ?>"></button>
+            <button id="media-previous" class="o-icon-prev previous button" disabled="disabled" title="<?php echo $this->translate('Previous media'); ?>" aria-label="<?php echo $this->translate('Previous media'); ?>"></button>
+            <button id="media-next" class="o-icon-next next button" disabled="disabled" title="<?php echo $this->translate('Next media'); ?>" aria-label="<?php echo $this->translate('Next media'); ?>"></button>
         </nav>
     </div>
     <div id="panzoom-buttons">
