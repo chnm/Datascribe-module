@@ -39,6 +39,9 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
+        // Build Omeka item queries.
+        $this->buildOmekaItemQuery($qb, $query);
+
         if (isset($query['datascribe_dataset_id']) && is_numeric($query['datascribe_dataset_id'])) {
             $alias = $this->createAlias();
             $qb->innerJoin('omeka_root.dataset', $alias);
@@ -305,6 +308,203 @@ class DatascribeItemAdapter extends AbstractEntityAdapter
                 break;
             default:
                 break;
+        }
+    }
+
+    protected function buildOmekaItemQuery(QueryBuilder $qb, array $query)
+    {
+        // Fulltext search adapted from Module::searchFulltext().
+        if (isset($query['fulltext_search']) && ('' !== trim($query['fulltext_search']))) {
+            $itemAlias = $this->createAlias();
+            $qb->innerJoin('omeka_root.item', $itemAlias);
+            $searchAlias = $this->createAlias();
+            $match = sprintf(
+                'MATCH(%s.title, %s.text) AGAINST (%s)',
+                $searchAlias,
+                $searchAlias,
+                $this->createNamedParameter($qb, $query['fulltext_search'])
+            );
+            $joinConditions = sprintf(
+                '%s.id = %s.id AND %s.resource = %s',
+                $searchAlias,
+                $itemAlias,
+                $searchAlias,
+                $this->createNamedParameter($qb, 'items')
+            );
+            $qb->innerJoin('Omeka\Entity\FulltextSearch', $searchAlias, 'WITH', $joinConditions)
+                ->andWhere(sprintf('%s > 0', $match))
+                ->orderBy($match, 'DESC');
+            $acl = $this->getServiceLocator()->get('Omeka\Acl');
+            if ($acl->userIsAllowed('Omeka\Entity\Resource', 'view-all')) {
+                return;
+            }
+            $constraints = $qb->expr()->eq(sprintf('%s.isPublic', $searchAlias), true);
+            $identity = $this->getServiceLocator()->get('Omeka\AuthenticationService')->getIdentity();
+            if ($identity) {
+                $constraints = $qb->expr()->orX(
+                    $constraints,
+                    $qb->expr()->eq(sprintf('%s.owner', $searchAlias), $identity->getId())
+                );
+            }
+            $qb->andWhere($constraints);
+        }
+        // Resource class search adapted from AbstractResourceEntityAdapter::buildQuery().
+        if (isset($query['resource_class_id'])) {
+            $classes = $query['resource_class_id'];
+            if (!is_array($classes)) {
+                $classes = [$classes];
+            }
+            $classes = array_filter($classes, 'is_numeric');
+            if ($classes) {
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->andWhere($qb->expr()->in(
+                    "$alias.resourceClass",
+                    $this->createNamedParameter($qb, $classes)
+                ));
+            }
+        }
+        // Resource template search adapted from AbstractResourceEntityAdapter::buildQuery().
+        if (isset($query['resource_template_id'])) {
+            $templates = $query['resource_template_id'];
+            if (!is_array($templates)) {
+                $templates = [$templates];
+            }
+            $templates = array_filter($templates, 'is_numeric');
+            if ($templates) {
+                $alias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $alias);
+                $qb->andWhere($qb->expr()->in(
+                    "$alias.resourceTemplate",
+                    $this->createNamedParameter($qb, $templates)
+                ));
+            }
+        }
+        // Item set search adapted from ItemAdapter::buildQuery().
+        if (isset($query['item_set_id'])) {
+            $itemSets = $query['item_set_id'];
+            if (!is_array($itemSets)) {
+                $itemSets = [$itemSets];
+            }
+            $itemSets = array_filter($itemSets, 'is_numeric');
+            if ($itemSets) {
+                $itemAlias = $this->createAlias();
+                $qb->innerJoin('omeka_root.item', $itemAlias);
+                $itemSetAlias = $this->createAlias();
+                $qb->innerJoin(
+                    sprintf('%s.itemSets', $itemAlias),
+                    $itemSetAlias, 'WITH',
+                    $qb->expr()->in("$itemSetAlias.id", $this->createNamedParameter($qb, $itemSets))
+                );
+            }
+        }
+        // Property search adapted from AbstractResourceEntityAdapter::buildPropertyQuery().
+        if (isset($query['property']) && is_array($query['property'])) {
+            $itemAlias = $this->createAlias();
+            $qb->innerJoin('omeka_root.item', $itemAlias);
+            $valuesJoin = sprintf('%s.values', $itemAlias);
+            $where = '';
+            foreach ($query['property'] as $queryRow) {
+                if (!(is_array($queryRow)
+                    && array_key_exists('property', $queryRow)
+                    && array_key_exists('type', $queryRow)
+                )) {
+                    continue;
+                }
+                $propertyId = $queryRow['property'];
+                $queryType = $queryRow['type'];
+                $joiner = isset($queryRow['joiner']) ? $queryRow['joiner'] : null;
+                $value = isset($queryRow['text']) ? $queryRow['text'] : null;
+                if (!$value && $queryType !== 'nex' && $queryType !== 'ex') {
+                    continue;
+                }
+                $valuesAlias = $this->createAlias();
+                $positive = true;
+                switch ($queryType) {
+                    case 'neq':
+                        $positive = false;
+                    case 'eq':
+                        $param = $this->createNamedParameter($qb, $value);
+                        $subqueryAlias = $this->createAlias();
+                        $subquery = $this->getEntityManager()
+                            ->createQueryBuilder()
+                            ->select("$subqueryAlias.id")
+                            ->from('Omeka\Entity\Resource', $subqueryAlias)
+                            ->where($qb->expr()->eq("$subqueryAlias.title", $param));
+                        $predicateExpr = $qb->expr()->orX(
+                            $qb->expr()->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                            $qb->expr()->eq("$valuesAlias.value", $param),
+                            $qb->expr()->eq("$valuesAlias.uri", $param)
+                        );
+                        break;
+                    case 'nin':
+                        $positive = false;
+                    case 'in':
+                        $param = $this->createNamedParameter($qb, "%$value%");
+                        $subqueryAlias = $this->createAlias();
+                        $subquery = $this->getEntityManager()
+                            ->createQueryBuilder()
+                            ->select("$subqueryAlias.id")
+                            ->from('Omeka\Entity\Resource', $subqueryAlias)
+                            ->where($qb->expr()->like("$subqueryAlias.title", $param));
+                        $predicateExpr = $qb->expr()->orX(
+                            $qb->expr()->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                            $qb->expr()->like("$valuesAlias.value", $param),
+                            $qb->expr()->like("$valuesAlias.uri", $param)
+                        );
+                        break;
+                    case 'nres':
+                        $positive = false;
+                    case 'res':
+                        $predicateExpr = $qb->expr()->eq(
+                            "$valuesAlias.valueResource",
+                            $this->createNamedParameter($qb, $value)
+                        );
+                        break;
+                    case 'nex':
+                        $positive = false;
+                    case 'ex':
+                        $predicateExpr = $qb->expr()->isNotNull("$valuesAlias.id");
+                        break;
+                    default:
+                        continue 2;
+                }
+                $joinConditions = [];
+                if ($propertyId) {
+                    if (is_numeric($propertyId)) {
+                        $propertyId = (int) $propertyId;
+                    } else {
+                        $property = $this->getPropertyByTerm($propertyId);
+                        if ($property) {
+                            $propertyId = $property->getId();
+                        } else {
+                            $propertyId = 0;
+                        }
+                    }
+                    $joinConditions[] = $qb->expr()->eq("$valuesAlias.property", (int) $propertyId);
+                }
+                if ($positive) {
+                    $whereClause = '(' . $predicateExpr . ')';
+                } else {
+                    $joinConditions[] = $predicateExpr;
+                    $whereClause = $qb->expr()->isNull("$valuesAlias.id");
+                }
+                if ($joinConditions) {
+                    $qb->leftJoin($valuesJoin, $valuesAlias, 'WITH', $qb->expr()->andX(...$joinConditions));
+                } else {
+                    $qb->leftJoin($valuesJoin, $valuesAlias);
+                }
+                if ($where == '') {
+                    $where = $whereClause;
+                } elseif ($joiner == 'or') {
+                    $where .= " OR $whereClause";
+                } else {
+                    $where .= " AND $whereClause";
+                }
+            }
+            if ($where) {
+                $qb->andWhere($where);
+            }
         }
     }
 
