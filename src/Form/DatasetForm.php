@@ -69,6 +69,10 @@ class DatasetForm extends Form
                 ['name' => 'toNull'],
             ],
         ]);
+        $inputFilter->add([
+            'name' => 'o-module-datascribe:approved_item_behavior',
+            'required' => false,
+        ]);
     }
 
     protected function addCommonElements()
@@ -122,6 +126,17 @@ class DatasetForm extends Form
                 'class' => 'chosen-select',
                 'data-placeholder' => 'Select an item set', // @translate
                 'id' => 'o-item-set',
+            ],
+        ]);
+        $this->add([
+            'type' => 'checkbox',
+            'name' => 'o-module-datascribe:revert_review_status',
+            'options' => [
+                'label' => 'Revert review status', // @translate
+                'info' => 'Check this to automatically revert an approved item\'s review status to "not reviewed" when a record belonging to the item is added or modified. The default behavior is to retain the approved review status.', // @translate
+            ],
+            'attributes' => [
+                'id' => 'o-module-datascribe-revert-review-status'
             ],
         ]);
         $this->add([

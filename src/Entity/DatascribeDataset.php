@@ -80,6 +80,17 @@ class DatascribeDataset extends AbstractEntity
 
     /**
      * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default": false
+     *     }
+     * )
+     */
+    protected $revertReviewStatus;
+
+    /**
+     * @Column(
      *     type="string",
      *     length=255,
      *     nullable=true
@@ -168,6 +179,16 @@ class DatascribeDataset extends AbstractEntity
     public function getGuidelines() : ?string
     {
         return $this->guidelines;
+    }
+
+    public function setRevertReviewStatus(bool $revertReviewStatus) : void
+    {
+        $this->revertReviewStatus = $revertReviewStatus;
+    }
+
+    public function getRevertReviewStatus() : bool
+    {
+        return $this->revertReviewStatus;
     }
 
     public function setExportStorageId(?string $exportStorageId) : void

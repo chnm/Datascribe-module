@@ -180,6 +180,9 @@ class RecordController extends AbstractActionController
                 $formData['o-module-datascribe:item']['o:id'] = $item->id();
                 $response = $this->api($form)->create('datascribe_records', $formData);
                 if ($response) {
+                    if ('approved' === $item->status() && $dataset->revertReviewStatus()) {
+                        $this->datascribe()->revertReviewStatus($item->id());
+                    }
                     $record = $response->getContent();
                     if (isset($postData['submit-add-another'])) {
                         $this->messenger()->addSuccess('Record successfully added. Add another record below.'); // @translate
@@ -244,6 +247,9 @@ class RecordController extends AbstractActionController
                 $formData = $form->getData();
                 $response = $this->api($form)->update('datascribe_records', $record->id(), $formData);
                 if ($response) {
+                    if ('approved' === $item->status() && $dataset->revertReviewStatus()) {
+                        $this->datascribe()->revertReviewStatus($item->id());
+                    }
                     if (isset($postData['submit-save-progress'])) {
                         $this->messenger()->addSuccess('Record successfully saved. Continue editing it below.'); // @translate
                         return $this->redirect()->toRoute(null, [], true);

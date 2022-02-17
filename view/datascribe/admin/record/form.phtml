@@ -15,6 +15,11 @@ if ('add' === $action) {
     echo $this->pageTitle($record->displayTitle(), 1, $this->translate('DataScribe: Record'), $this->translate('Edit'));
 }
 ?>
+<?php if ('approved' === $item->status() && $dataset->revertReviewStatus()): ?>
+<ul class="messages">
+    <li class="warning"><?php echo $this->translate('This record belongs to an approved item. The item will revert to "not reviewed" once you save this record.'); ?></li>
+</ul>
+<?php endif; ?>
 <div class="rows">
     <?php echo $this->partial('previous-next-records', ['dataset' => $dataset, 'records' => $recordsPrevious, 'heading' => $this->translate('Previous records'), 'previousNext' => 'previous']); ?>
     <div class="current-row horizontal">
