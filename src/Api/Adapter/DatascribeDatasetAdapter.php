@@ -109,6 +109,9 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
             $htmlPurifier = $this->getServiceLocator()->get('Omeka\HtmlPurifier');
             $entity->setGuidelines($htmlPurifier->purify($request->getValue('o-module-datascribe:guidelines')));
         }
+        if ($this->shouldHydrate($request, 'o-module-datascribe:revert_review_status')) {
+            $entity->setRevertReviewStatus($request->getValue('o-module-datascribe:revert_review_status', false));
+        }
         if ($this->shouldHydrate($request, 'o:is_public')) {
             $entity->setIsPublic($request->getValue('o:is_public', true));
         }

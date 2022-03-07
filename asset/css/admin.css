@@ -216,12 +216,13 @@
 
 .record.browse .record-number-cell {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
 }
 
 .record.browse .record-number {
   text-align: right;
+  margin-right: auto;
+  padding-right: 1rem;
 }
 
 .record.browse .record-number-cell .actions {
@@ -248,8 +249,11 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
-  padding: 0 .5rem 0 0;
+  width: 100%;
+  height: 2.25rem;
+  padding-right: .25rem;
+  display: flex;
+  align-items: center;
 }
 
 .primary-field {
@@ -270,8 +274,7 @@
   bottom: 0;
   left: -100%;
   right: 0;
-  padding: 5px;
-  min-height: 30px;
+  min-height: 2.25rem;
 }
 
 .tablesaw-swipe-wrapper table {
@@ -317,17 +320,28 @@
   vertical-align: bottom;
 }
 
-.tablesaw-advance-dots {
-  display: flex;
+.tablesaw-advance.minimap {
+  order: 0;
+  display: flex !important;
+  justify-content: flex-end;
   flex-wrap: wrap;
+  width: calc(100% - 60px);
 }
 
-.tablesaw-advance-dots li {
+.tablesaw-advance.minimap li {
   padding: 0 .2em;
 }
 
-.tablesaw-advance-dots li i {
+.tablesaw-advance.minimap li i {
   vertical-align: middle;
+}
+
+.tablesaw-advance-dots {
+  line-height: 1;
+}
+
+.tablesaw-advance-dots li {
+  display: inline-block !important;
 }
 
 .tablesaw-swipe-wrapper > .tablesaw-bar + .tablesaw {
@@ -1097,6 +1111,7 @@ div[role="main"].fullscreen > h1:first-of-type {
   margin: 1rem auto;
   padding: 1rem;
   position: relative;
+  overflow: auto;
 }
 
 .close-guidelines {
