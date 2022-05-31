@@ -1,13 +1,17 @@
 <?php
 namespace Datascribe\Controller\Admin;
 
+use Datascribe\Entity\DatascribeDataset;
+use Datascribe\Entity\DatascribeProject;
 use Datascribe\Form\DatasetForm;
 use Datascribe\Form\DatasetExportForm;
+use Datascribe\Form\DatasetMoveForm;
 use Datascribe\Form\DatasetSyncForm;
 use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Job\ExportDataset;
 use Datascribe\Job\SyncDataset;
 use Datascribe\Job\ValidateDataset;
+use Doctrine\ORM\EntityManager;
 use Omeka\Form\ConfirmForm;
 use Omeka\Stdlib\Message;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -15,6 +19,13 @@ use Laminas\View\Model\ViewModel;
 
 class DatasetController extends AbstractActionController
 {
+    protected $entityManager;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public function addAction()
     {
         $project = $this->datascribe()->getRepresentation($this->params('project-id'));
@@ -226,6 +237,31 @@ class DatasetController extends AbstractActionController
                     ));
                 $message->setEscapeHtml(false);
                 $this->messenger()->addSuccess($message);
+            }
+        }
+        return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
+    }
+
+    public function moveAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $dataset = $this->datascribe()->getRepresentation(
+                $this->params('project-id'),
+                $this->params('dataset-id')
+            );
+            if (!$dataset) {
+                return $this->redirect()->toRoute('admin/datascribe');
+            }
+            $form = $this->getForm(DatasetMoveForm::class, ['dataset' => $dataset]);
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $projectEntity = $this->entityManager->find(DatascribeProject::class, $formData['project_id']);
+                $datasetEntity = $this->entityManager->find(DatascribeDataset::class, $dataset->id());
+                $datasetEntity->setProject($projectEntity);
+                $this->entityManager->flush();
+                $this->messenger()->addSuccess('Dataset successfully moved'); // @translate
+                return $this->redirect()->toUrl($dataset->url());
             }
         }
         return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
