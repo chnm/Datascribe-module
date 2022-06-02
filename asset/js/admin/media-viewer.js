@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', e => {
 
+// localStorage.clear();
+
 const mediaSelect            = document.getElementById('media-select');
 const mediaPageInput         = document.getElementById('media-page');
 const previousButton         = document.getElementById('media-previous');
 const nextButton             = document.getElementById('media-next');
+const panzoomButtons         = document.getElementById('panzoom-buttons');
 const panzoomContainer       = document.getElementById('panzoom-container');
+const iiifContainer          = document.getElementById('iiif-container');
 const panzoomElem            = document.getElementById('panzoom');
 const panzoomImg             = document.getElementById('panzoom-img');
 const zoomInButton           = document.getElementById('panzoom-zoom-in');
@@ -18,6 +22,7 @@ const horizontalLayoutButton = document.getElementById('horizontal-layout');
 const verticalLayoutButton   = document.getElementById('vertical-layout');
 
 let panzoom;
+let iiifViewer;
 let state;
 let rotateDeg;
 
@@ -80,8 +85,8 @@ resetButton.addEventListener('click', e => {
     panzoom.reset();
     resetRotate();
     // Delete the current image's state.
-    delete state.panzoom[panzoomImg.src];
-    delete state.rotate[panzoomImg.src];
+    delete state.viewer[mediaSelect.value];
+    delete state.rotate[mediaSelect.value];
     saveState();
 });
 // Handle the rotate left button.
@@ -89,7 +94,7 @@ rotateLeftButton.addEventListener('click', e => {
     rotateDeg = rotateDeg - 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
-    state.rotate[panzoomImg.src] = rotateDeg;
+    state.rotate[mediaSelect.value] = rotateDeg;
     saveState();
 });
 // Handle the rotate right button.
@@ -97,7 +102,7 @@ rotateRightButton.addEventListener('click', e => {
     rotateDeg = rotateDeg + 90;
     panzoomImg.style.transition = 'transform 0.25s';
     panzoomImg.style.transform = `rotate(${rotateDeg}deg)`;
-    state.rotate[panzoomImg.src] = rotateDeg;
+    state.rotate[mediaSelect.value] = rotateDeg;
     saveState();
 });
 // Handle the fullscreen (focus) button.
@@ -108,24 +113,27 @@ fullscreenButton.addEventListener('click', e => {
     } else {
         enableFullscreen();
     }
-    state.fullscreen[panzoomImg.src] = body.classList.contains('fullscreen');
+    state.fullscreen[mediaSelect.value] = body.classList.contains('fullscreen');
     saveState();
 });
 // Handle the horizontal layout button.
 horizontalLayoutButton.addEventListener('click', e => {
     enableHorizontalLayout();
-    state.layout[panzoomImg.src] = 'horizontal';
+    state.layout[mediaSelect.value] = 'horizontal';
     saveState();
 });
 // Handle the vertical layout button.
 verticalLayoutButton.addEventListener('click', e => {
     enableVerticalLayout();
-    state.layout[panzoomImg.src] = 'vertical';
+    state.layout[mediaSelect.value] = 'vertical';
     saveState();
 });
 // Set panzoom state on change.
 panzoomElem.addEventListener('panzoomchange', (event) => {
-    state.panzoom[panzoomImg.src] = event.detail;
+    if ('iiif' === getSelectedMedia().dataset.mediaRenderer) {
+        return;
+    }
+    state.viewer[mediaSelect.value] = event.detail;
     saveState();
 });
 // Set the state in local storage on form submit.
@@ -136,7 +144,31 @@ document.getElementById('record-form').addEventListener('submit', e => {
 // Initialize the media viewer.
 function initMediaViewer() {
     rotateDeg = 0
+    // Initialize the Panzoom image viewer.
     panzoom = Panzoom(panzoomElem, {});
+    // Initialize the IIIF OpenSeadragon image viewer.
+    iiifViewer = OpenSeadragon({
+        id: 'iiif-container',
+        prefixUrl: iiifContainer.dataset.prefixUrl,
+    });
+    iiifViewer.addHandler('open', function() {
+        if (!state.viewer[mediaSelect.value]) {
+            return;
+        }
+        const bounds = new OpenSeadragon.Rect(
+            state.viewer[mediaSelect.value].x,
+            state.viewer[mediaSelect.value].y,
+            state.viewer[mediaSelect.value].width,
+            state.viewer[mediaSelect.value].height,
+            state.viewer[mediaSelect.value].degrees,
+        );
+        iiifViewer.viewport.fitBounds(bounds, true);
+    });
+    iiifViewer.addHandler('viewport-change', function(e) {
+        state.viewer[mediaSelect.value] = iiifViewer.viewport.getBounds();
+        saveState();
+    });
+
     if (1 < mediaSelect.options.length) {
         // There is more than one page.
         mediaPageInput.disabled = false;
@@ -146,20 +178,20 @@ function initMediaViewer() {
     state = JSON.parse(localStorage.getItem('datascribe_media_viewer_state'));
     if (null === state) {
         state = {
-            panzoom: {},
+            id: null,
+            viewer: {},
             rotate: {},
             fullscreen: {},
-            layout: {},
-            src: null
+            layout: {}
         };
         saveState();
     }
-    if (state.src) {
-        let option = mediaSelect.querySelector(`[value="${state.src}"]`);
+    if (state.id) {
+        let option = mediaSelect.querySelector(`[value="${state.id}"]`);
         if (option) {
             option.selected = true;
         } else {
-            state.src = null;
+            state.id = null;
             saveState();
         }
     }
@@ -185,8 +217,7 @@ function gotoPage(page) {
     }
     mediaSelect.selectedIndex = page - 1;
     mediaPageInput.value = page;
-    panzoomImg.src = mediaSelect.value;
-    state.src = mediaSelect.value;
+    state.id = getSelectedMedia().value;
     saveState();
     applyState();
 }
@@ -234,28 +265,43 @@ function enableVerticalLayout() {
     currentRow.classList.remove('horizontal');
     currentRow.classList.add('vertical');
 }
-// Apply panzoom and rotate state for the current image.
+// Apply viewer state for the current media selection.
 function applyState() {
-    let panzoomState = state.panzoom[panzoomImg.src];
-    let rotateState = state.rotate[panzoomImg.src];
-    let fullscreenState = state.fullscreen[panzoomImg.src];
-    let layoutState = state.layout[panzoomImg.src];
-    if (panzoomState) {
-        panzoom.zoom(panzoomState.scale);
-        // Must use setTimeout() due to async nature of Panzoom.
-        // @see https://github.com/timmywil/panzoom#a-note-on-the-async-nature-of-panzoom
-        setTimeout(() => panzoom.pan(panzoomState.x, panzoomState.y))
+    let viewerState = state.viewer[mediaSelect.value];
+    let rotateState = state.rotate[mediaSelect.value];
+    let fullscreenState = state.fullscreen[mediaSelect.value];
+    let layoutState = state.layout[mediaSelect.value];
+
+    const selectedMedia = getSelectedMedia();
+    if ('iiif' === selectedMedia.dataset.mediaRenderer) {
+        // Apply state to the IIIF viewer
+        iiifContainer.style.display = 'block';
+        panzoomButtons.style.display = 'none';
+        panzoomContainer.style.display = 'none';
+        iiifViewer.open(JSON.parse(selectedMedia.dataset.mediaData));
     } else {
-        panzoom.reset();
-    }
-    if (rotateState) {
-        rotateDeg = rotateState;
-        // Must set transition to none to prevent the image from unwinding when
-        // rotating back to 0deg.
-        panzoomImg.style.transition = 'none';
-        panzoomImg.style.transform = `rotate(${rotateState}deg)`;
-    } else {
-        resetRotate();
+        iiifContainer.style.display = 'none';
+        panzoomButtons.style.display = 'block';
+        panzoomContainer.style.display = 'block';
+        // Apply state to the image viewer.
+        panzoomImg.src = selectedMedia.dataset.mediaSrc;
+        if (viewerState) {
+            panzoom.zoom(viewerState.scale);
+            // Must use setTimeout() due to async nature of Panzoom.
+            // @see https://github.com/timmywil/panzoom#a-note-on-the-async-nature-of-panzoom
+            setTimeout(() => panzoom.pan(viewerState.x, viewerState.y))
+        } else {
+            panzoom.reset();
+        }
+        if (rotateState) {
+            rotateDeg = rotateState;
+            // Must set transition to none to prevent the image from unwinding when
+            // rotating back to 0deg.
+            panzoomImg.style.transition = 'none';
+            panzoomImg.style.transform = `rotate(${rotateState}deg)`;
+        } else {
+            resetRotate();
+        }
     }
     if (fullscreenState) {
         enableFullscreen();
@@ -267,6 +313,10 @@ function applyState() {
     } else {
         enableHorizontalLayout();
     }
+}
+// Get the selected media option.
+function getSelectedMedia() {
+    return mediaSelect.options[mediaSelect.selectedIndex];
 }
 // Save the state to local storage.
 function saveState() {

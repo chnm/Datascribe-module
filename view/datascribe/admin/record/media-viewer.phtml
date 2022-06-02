@@ -1,10 +1,11 @@
 <?php
+$this->headScript()->appendFile($this->assetUrl('vendor/openseadragon/openseadragon.min.js', 'Omeka'));
 $this->headScript()->appendFile($this->assetUrl('vendor/panzoom-4.3.1/dist/panzoom.min.js', 'Datascribe'));
 $this->headScript()->appendFile($this->assetUrl('js/admin/media-viewer.js', 'Datascribe'));
 $allowedMediaTypes = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
 $medias = [];
 foreach ($oItem->media() as $media) {
-    if (in_array($media->mediaType(), $allowedMediaTypes)) {
+    if (in_array($media->mediaType(), $allowedMediaTypes) || 'iiif' === $media->renderer()) {
         $medias[$media->id()] = $media;
     }
 }
@@ -16,7 +17,13 @@ $mediaPage = 1;
     <div id="media-select-controls">
         <select id="media-select">
             <?php foreach ($medias as $media): ?>
-            <option value="<?php echo $this->escapeHtml($media->originalUrl()); ?>"><?php echo sprintf($this->translate('%s. %s'), $mediaPage++, $media->displayTitle()); ?></option>
+            <option value="<?php echo $this->escapeHtml($media->id()); ?>"
+                data-media-src="<?php echo $this->escapeHtml($media->originalUrl()); ?>"
+                data-media-type="<?php echo $this->escapeHtml($media->mediaType()); ?>"
+                data-media-renderer="<?php echo $this->escapeHtml($media->renderer()); ?>"
+                data-media-data="<?php echo $this->escapeHtml(json_encode($media->mediaData())); ?>">
+                <?php echo sprintf($this->translate('%s. %s'), $mediaPage++, $media->displayTitle()); ?>
+            </option>
             <?php endforeach; ?>
         </select>
         <nav id="media-pagination" class="media pagination">
@@ -38,5 +45,6 @@ $mediaPage = 1;
             <img id="panzoom-img" src="<?php echo $this->escapeHtml($oItem->primaryMedia()->originalUrl()); ?>">
         </div>
     </div>
+    <div id="iiif-container" style="height: 500px;" data-prefix-url="<?php echo $this->escapeHtml($this->assetUrl('vendor/openseadragon/images/', 'Omeka', false, false)); ?>"></div>
     <?php endif; ?>
 </div>
