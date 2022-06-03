@@ -45,6 +45,6 @@ $mediaPage = 1;
             <img id="panzoom-img" src="<?php echo $this->escapeHtml($oItem->primaryMedia()->originalUrl()); ?>">
         </div>
     </div>
-    <div id="iiif-container" style="height: 500px;" data-prefix-url="<?php echo $this->escapeHtml($this->assetUrl('vendor/openseadragon/images/', 'Omeka', false, false)); ?>"></div>
+    <div id="iiif-container" style="height: 100%;" data-prefix-url="<?php echo $this->escapeHtml($this->assetUrl('vendor/openseadragon/images/', 'Omeka', false, false)); ?>"></div>
     <?php endif; ?>
 </div>

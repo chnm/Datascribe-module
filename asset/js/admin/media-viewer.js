@@ -164,7 +164,9 @@ function initMediaViewer() {
         );
         iiifViewer.viewport.fitBounds(bounds, true);
     });
-    iiifViewer.addHandler('viewport-change', function(e) {
+    iiifViewer.addHandler('animation', function(e) {
+        console.log(state.id);
+        console.log(mediaSelect.value);
         state.viewer[mediaSelect.value] = iiifViewer.viewport.getBounds();
         saveState();
     });
@@ -221,6 +223,55 @@ function gotoPage(page) {
     saveState();
     applyState();
 }
+// Apply viewer state for the current media selection.
+function applyState() {
+    let viewerState = state.viewer[mediaSelect.value];
+    let rotateState = state.rotate[mediaSelect.value];
+    let fullscreenState = state.fullscreen[mediaSelect.value];
+    let layoutState = state.layout[mediaSelect.value];
+
+    const selectedMedia = getSelectedMedia();
+    if ('iiif' === selectedMedia.dataset.mediaRenderer) {
+        // Apply state to the IIIF viewer
+        iiifContainer.style.visibility = 'visible';
+        panzoomButtons.style.visibility = 'hidden';
+        panzoomContainer.style.visibility = 'hidden';
+        iiifViewer.open(JSON.parse(selectedMedia.dataset.mediaData));
+    } else {
+        iiifContainer.style.visibility = 'hidden';
+        panzoomButtons.style.visibility = 'visible';
+        panzoomContainer.style.visibility = 'visible';
+        // Apply state to the image viewer.
+        panzoomImg.src = selectedMedia.dataset.mediaSrc;
+        if (viewerState) {
+            panzoom.zoom(viewerState.scale);
+            // Must use setTimeout() due to async nature of Panzoom.
+            // @see https://github.com/timmywil/panzoom#a-note-on-the-async-nature-of-panzoom
+            setTimeout(() => panzoom.pan(viewerState.x, viewerState.y))
+        } else {
+            panzoom.reset();
+        }
+        if (rotateState) {
+            rotateDeg = rotateState;
+            // Must set transition to none to prevent the image from unwinding when
+            // rotating back to 0deg.
+            panzoomImg.style.transition = 'none';
+            panzoomImg.style.transform = `rotate(${rotateState}deg)`;
+        } else {
+            resetRotate();
+        }
+    }
+    if (fullscreenState) {
+        enableFullscreen();
+    } else {
+        disableFullscreen();
+    }
+    if ('vertical' === layoutState) {
+        enableVerticalLayout();
+    } else {
+        enableHorizontalLayout();
+    }
+}
 // Reset rotation.
 function resetRotate() {
     rotateDeg = 0;
@@ -264,55 +315,6 @@ function enableVerticalLayout() {
     horizontalLayoutButton.disabled = false;
     currentRow.classList.remove('horizontal');
     currentRow.classList.add('vertical');
-}
-// Apply viewer state for the current media selection.
-function applyState() {
-    let viewerState = state.viewer[mediaSelect.value];
-    let rotateState = state.rotate[mediaSelect.value];
-    let fullscreenState = state.fullscreen[mediaSelect.value];
-    let layoutState = state.layout[mediaSelect.value];
-
-    const selectedMedia = getSelectedMedia();
-    if ('iiif' === selectedMedia.dataset.mediaRenderer) {
-        // Apply state to the IIIF viewer
-        iiifContainer.style.display = 'block';
-        panzoomButtons.style.display = 'none';
-        panzoomContainer.style.display = 'none';
-        iiifViewer.open(JSON.parse(selectedMedia.dataset.mediaData));
-    } else {
-        iiifContainer.style.display = 'none';
-        panzoomButtons.style.display = 'block';
-        panzoomContainer.style.display = 'block';
-        // Apply state to the image viewer.
-        panzoomImg.src = selectedMedia.dataset.mediaSrc;
-        if (viewerState) {
-            panzoom.zoom(viewerState.scale);
-            // Must use setTimeout() due to async nature of Panzoom.
-            // @see https://github.com/timmywil/panzoom#a-note-on-the-async-nature-of-panzoom
-            setTimeout(() => panzoom.pan(viewerState.x, viewerState.y))
-        } else {
-            panzoom.reset();
-        }
-        if (rotateState) {
-            rotateDeg = rotateState;
-            // Must set transition to none to prevent the image from unwinding when
-            // rotating back to 0deg.
-            panzoomImg.style.transition = 'none';
-            panzoomImg.style.transform = `rotate(${rotateState}deg)`;
-        } else {
-            resetRotate();
-        }
-    }
-    if (fullscreenState) {
-        enableFullscreen();
-    } else {
-        disableFullscreen();
-    }
-    if ('vertical' === layoutState) {
-        enableVerticalLayout();
-    } else {
-        enableHorizontalLayout();
-    }
 }
 // Get the selected media option.
 function getSelectedMedia() {
