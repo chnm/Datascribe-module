@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', e => {
 
-// localStorage.clear();
-
 const mediaSelect            = document.getElementById('media-select');
 const mediaPageInput         = document.getElementById('media-page');
 const previousButton         = document.getElementById('media-previous');
@@ -165,8 +163,6 @@ function initMediaViewer() {
         iiifViewer.viewport.fitBounds(bounds, true);
     });
     iiifViewer.addHandler('animation', function(e) {
-        console.log(state.id);
-        console.log(mediaSelect.value);
         state.viewer[mediaSelect.value] = iiifViewer.viewport.getBounds();
         saveState();
     });
