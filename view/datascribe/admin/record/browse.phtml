@@ -306,12 +306,3 @@ foreach ($fields as $field) {
 </div>
 
 <?php echo $this->partial('datascribe/admin/record/form-sidebars.phtml'); ?>
-
-<script>
-jQuery(document).ready(function() {
-    window.setTimeout(function() {
-        jQuery(window).trigger('Tablesaw.events.resize');
-        console.log('resize tablesaw');
-    }, 5000);
-});
-</script>
