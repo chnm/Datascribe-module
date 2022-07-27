@@ -60,10 +60,12 @@ return [
         'invokables' => [
             'Datascribe\Controller\Admin\Index' => Controller\Admin\IndexController::class,
             'Datascribe\Controller\Admin\Project' => Controller\Admin\ProjectController::class,
-            'Datascribe\Controller\Admin\Dataset' => Controller\Admin\DatasetController::class,
             'Datascribe\Controller\Admin\DatasetRecord' => Controller\Admin\DatasetRecordController::class,
             'Datascribe\Controller\Admin\Item' => Controller\Admin\ItemController::class,
             'Datascribe\Controller\Admin\Record' => Controller\Admin\RecordController::class,
+        ],
+        'factories' => [
+            'Datascribe\Controller\Admin\Dataset' => Service\Controller\Admin\DatasetControllerFactory::class,
         ],
     ],
     'controller_plugins' => [

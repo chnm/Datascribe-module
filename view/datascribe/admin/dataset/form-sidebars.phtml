@@ -22,3 +22,10 @@
     <p><?php echo $this->translate('Export this dataset to a CSV file. Note that the file will only include records from approved items, and that invalid values will be null. This will overwrite an existing export file.'); ?></p>
     <?php echo $this->form($formExport); ?>
 </div>
+
+<div id="move-dataset" class="sidebar">
+    <?php echo $this->hyperlink('', '#', ['class' => 'sidebar-close o-icon-close', 'title' => $this->translate('Close')]); ?>
+    <h3><?php echo $this->translate('Move dataset'); ?></h3>
+    <p><?php echo $this->translate('Move this dataset to another project.'); ?></p>
+    <?php echo $this->form($formMove); ?>
+</div>
