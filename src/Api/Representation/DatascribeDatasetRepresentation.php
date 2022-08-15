@@ -30,7 +30,6 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
             'o-module-datascribe:description' => $this->description(),
             'o-module-datascribe:guidelines' => $this->guidelines(),
             'o-module-datascribe:revert_review_status' => $this->revertReviewStatus(),
-            'o-module-datascribe:export_missing_illegible' => $this->exportMissingIllegible(),
             'o:is_public' => $this->isPublic(),
             'o:item_set' => $itemSet ? $itemSet->getReference() : null,
             'o:owner' => $owner ? $owner->getReference() : null,
@@ -78,11 +77,6 @@ class DatascribeDatasetRepresentation extends AbstractEntityRepresentation
     public function revertReviewStatus()
     {
         return $this->resource->getRevertReviewStatus();
-    }
-
-    public function exportMissingIllegible()
-    {
-        return $this->resource->getExportMissingIllegible();
     }
 
     public function isPublic()
