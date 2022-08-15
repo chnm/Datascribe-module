@@ -55,12 +55,6 @@ class ExportDataset extends AbstractJob
         ];
         foreach ($fields as $field) {
             $headerRow[] = $field->getName();
-            if ($dataset->getExportMissingIllegible()) {
-                // If configured to do so, include the is_missing & is_illegible
-                // columns after each field.
-                $headerRow[] = 'is_missing';
-                $headerRow[] = 'is_illegible';
-            }
         }
         fputcsv($fp, $headerRow);
 
@@ -102,12 +96,6 @@ class ExportDataset extends AbstractJob
                         $valueText = $value->getText();
                     }
                     $row[] = $valueText;
-                    if ($dataset->getExportMissingIllegible()) {
-                        // If configured to do so, include the is_missing &
-                        // is_illegible columns after each value.
-                        $row[] = $value ? $value->getIsMissing() : null;
-                        $row[] = $value ? $value->getIsIllegible() : null;
-                    }
                 }
                 $table[] = $row;
             }

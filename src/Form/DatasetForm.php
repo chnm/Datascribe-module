@@ -140,17 +140,6 @@ class DatasetForm extends Form
             ],
         ]);
         $this->add([
-            'type' => 'checkbox',
-            'name' => 'o-module-datascribe:export_missing_illegible',
-            'options' => [
-                'label' => 'Export missing and illegible', // @translate
-                'info' => 'Check this to flag values as missing and/or illegible in the exported dataset. This will add two columns to the right of every value: is_missing and is_illegible. The default behavior is to omit the is_missing and is_illegible columns.', // @translate
-            ],
-            'attributes' => [
-                'id' => 'o-module-datascribe-export-missing-illegible'
-            ],
-        ]);
-        $this->add([
             'type' => 'file',
             'name' => 'import_form',
             'options' => [

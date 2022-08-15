@@ -66,10 +66,10 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'revertReviewStatus', 'exportMissingIllegible', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+            return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'revertReviewStatus', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
         }
 
-        return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'revertReviewStatus', 'exportMissingIllegible', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
+        return ['__isInitialized__', 'project', 'itemSet', 'validatedBy', 'exportedBy', 'guidelines', 'revertReviewStatus', 'exportStorageId', 'validated', 'exported', 'fields', 'id', 'name', 'description', 'syncedBy', 'synced', 'owner', 'createdBy', 'modifiedBy', 'created', 'modified', 'isPublic'];
     }
 
     /**
@@ -306,28 +306,6 @@ class DatascribeDataset extends \Datascribe\Entity\DatascribeDataset implements 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRevertReviewStatus', []);
 
         return parent::getRevertReviewStatus();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setExportMissingIllegible(bool $exportMissingIllegible): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setExportMissingIllegible', [$exportMissingIllegible]);
-
-        parent::setExportMissingIllegible($exportMissingIllegible);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getExportMissingIllegible(): bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExportMissingIllegible', []);
-
-        return parent::getExportMissingIllegible();
     }
 
     /**
