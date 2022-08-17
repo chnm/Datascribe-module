@@ -91,6 +91,17 @@ class DatascribeDataset extends AbstractEntity
 
     /**
      * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default": false
+     *     }
+     * )
+     */
+    protected $exportMissingIllegible;
+
+    /**
+     * @Column(
      *     type="string",
      *     length=255,
      *     nullable=true
@@ -189,6 +200,16 @@ class DatascribeDataset extends AbstractEntity
     public function getRevertReviewStatus() : bool
     {
         return $this->revertReviewStatus;
+    }
+
+    public function setExportMissingIllegible(bool $exportMissingIllegible) : void
+    {
+        $this->exportMissingIllegible = $exportMissingIllegible;
+    }
+
+    public function getExportMissingIllegible() : bool
+    {
+        return $this->exportMissingIllegible;
     }
 
     public function setExportStorageId(?string $exportStorageId) : void

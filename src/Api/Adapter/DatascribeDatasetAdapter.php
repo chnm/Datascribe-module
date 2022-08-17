@@ -112,6 +112,9 @@ class DatascribeDatasetAdapter extends AbstractEntityAdapter
         if ($this->shouldHydrate($request, 'o-module-datascribe:revert_review_status')) {
             $entity->setRevertReviewStatus($request->getValue('o-module-datascribe:revert_review_status', false));
         }
+        if ($this->shouldHydrate($request, 'o-module-datascribe:export_missing_illegible')) {
+            $entity->setExportMissingIllegible($request->getValue('o-module-datascribe:export_missing_illegible', false));
+        }
         if ($this->shouldHydrate($request, 'o:is_public')) {
             $entity->setIsPublic($request->getValue('o:is_public', true));
         }
