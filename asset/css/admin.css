@@ -263,11 +263,11 @@
   table-layout: auto;
 }
 
-#batch-form .batch-inputs {
+.record.browse #batch-form .batch-inputs {
   display: none;
 }
 
-#batch-form .tablesaw-swipe-wrapper .batch-inputs {
+.record.browse #batch-form .tablesaw-swipe-wrapper .batch-inputs {
   display: flex;
   background-color: transparent;
 }
