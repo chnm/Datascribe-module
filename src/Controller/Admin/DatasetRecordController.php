@@ -2,6 +2,7 @@
 namespace Datascribe\Controller\Admin;
 
 use Datascribe\Form\DatasetExportForm;
+use Datascribe\Form\DatasetMoveForm;
 use Datascribe\Form\DatasetSyncForm;
 use Datascribe\Form\DatasetValidateForm;
 use Datascribe\Form\RecordBatchForm;
@@ -51,6 +52,9 @@ class DatasetRecordController extends AbstractActionController
         $formExport = $this->getForm(DatasetExportForm::class, ['dataset' => $dataset]);
         $formExport->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'export'], true));
 
+        $formMove = $this->getForm(DatasetMoveForm::class, ['dataset' => $dataset]);
+        $formMove->setAttribute('action', $this->url()->fromRoute('admin/datascribe-dataset-id', ['action' => 'move'], true));
+
         $view = new ViewModel;
         $view->setVariable('project', $dataset->project());
         $view->setVariable('dataset', $dataset);
@@ -61,6 +65,7 @@ class DatasetRecordController extends AbstractActionController
         $view->setVariable('formSync', $formSync);
         $view->setVariable('formValidate', $formValidate);
         $view->setVariable('formExport', $formExport);
+        $view->setVariable('formMove', $formMove);
         return $view;
     }
 
