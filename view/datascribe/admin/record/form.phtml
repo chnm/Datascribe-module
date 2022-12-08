@@ -146,13 +146,13 @@ if ('add' === $action) {
                 <?php endif; ?>
                 <?php if ($form->has('o-module-datascribe:transcriber_notes')): ?>
                 <div class="meta-group">
-                    <h4><?php echo $this->translate('Transcriber notes'); ?></h4>
+                    <h4><?php echo $this->translate('Transcriber record notes'); ?></h4>
                     <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:transcriber_notes')); ?></div>
                 </div>
                 <?php endif; ?>
                 <?php if ($form->has('o-module-datascribe:reviewer_notes')): ?>
                 <div class="meta-group">
-                    <h4><?php echo $this->translate('Reviewer notes'); ?></h4>
+                    <h4><?php echo $this->translate('Reviewer record notes'); ?></h4>
                     <div class="value"><?php echo $this->formElement($form->get('o-module-datascribe:reviewer_notes')); ?></div>
                 </div>
                 <?php endif; ?>
