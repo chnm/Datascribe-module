@@ -7,10 +7,8 @@ tags:
 authors:
  - name: Jessica M. Otis
    orcid: 0000-0001-5519-8331
-   equal-contrib: true
    affiliation: 1
  - name: James Safley
-   equal-contrib: true
    affiliation: 2
  - name: Megan Brett
    orcid: 0000-0002-7474-7196
