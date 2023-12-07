@@ -41,26 +41,3 @@ Projects using DataScribe include Death by Numbers (2016-ongoing), which is tran
 Development of this software was funded by the National Endowment for the Humanities (grant number HAA-266444-19).
 
 # References
-
-ABBYY FineReader; https://pdf.abbyy.com
-
-Adasme, Hernán. 2022a. "Peste Bubónica en Iquique, 1903." DataScribe.tech; https://datascribe.tech/casestudies/PesteBubonica_Iquique1903.pdf
-
-Adasme, Hernán. 2022b. "Plague in Inquique, 1903." DataScribe.tech; https://datascribe.tech/casestudies/Plague_Iquique1903.pdf
-
-Adasme, Hernán, Daniel Howlett, and Emily Meyers. 2022. "Death by Numbers." DataScribe.tech; https://datascribe.tech/casestudies/DataScribe_BillsOfMortality_CaseStudy.pdf.
-
-Brett, Megan. 2022. "1950 United States Census." DataScribe.tech; https://datascribe.tech/casestudies/DataScribeCaseStudy_1950CensusUS.pdf.
-
-Death by Numbers project team. 2016-ongoing. "Death by Numbers." Roy Rosenzweig Center for History and New Media, George Mason University; https://deathbynumbers.org/.
-
-Mapping Religious Ecologies project team. 2018-ongoing. "Mapping Religious Ecologies." Roy Rosenzweig Center for History and New Media, George Mason University; https://religiousecologies.org/.
-
-Swain, Greta. 2022. "Religious Ecologies." DataScribe.tech; https://datascribe.tech/casestudies/CaseStudy_AmericanReligiousEcologies.pdf
-
-Scripto; https://scripto.org
-
-Tesseract; https://tesseract-ocr.github.io
-
-Zooniverse Project Builder; https://www.zooniverse.org/lab.
-
