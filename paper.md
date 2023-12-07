@@ -24,6 +24,7 @@ affiliations:
  - name: Jefferson Library, Monticello
    index: 3
 date: 19 April 2023
+bibliography: paper.bib
 ---
 
 # Summary
